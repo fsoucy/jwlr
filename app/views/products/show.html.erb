@@ -1,0 +1,18 @@
+<% title = "Product by " + @product.user.name %>
+<% provide(:title, "Product") %>
+<div class="container">
+  <div class="col-md-4 center">
+    <h1><%= @product.commodity %></h1>
+    <center><%= image_tag @product.picture_url(:thumb) %></center>
+    <center>
+     <% if @product.user == current_user %><%= link_to "Delete this product", @product, method: :delete,
+    data: { confirm: "Are you sure you wish to delete this?" } %><% end %></center>
+  </div>
+  <div class="col-md-8 center">
+    <h1>Product Details</h1>
+    <h3>Price: <%= @product.price %></h3>
+    <h3>Address: <%= @product.full_street_address %></h3>
+    <h3>Owner: <%= @product.user.name %></h3>
+    <h3>Description: <%= @product.description %></h3>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<% provide(:title, @user.name) %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+	<%= gravatar_for @user %>
+	<%= @user.name %>
+      </h1>
+    </section>
+    <div id="description">
+      <p>This user has been using iGold for 3 months..<p>
+      <p>Products sold: 100</p>
+      <p>Identifies as: Public Seller</p>
+      <p>Location: Boston, MA</p>
+    </div>
+  </aside>
+  <div class="container">
+    <div class="col-md-8">
+      <h1>Product Gallery</h1>
+	<% @user.products.each do |p| %>
+	 <%= image_tag p.picture_url(:thumb) %>
+	<% end %>
+
+    </div>
+  </div>
+</div>
+	

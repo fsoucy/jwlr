@@ -1,0 +1,30 @@
+<% provide(:title, "Product Upload") %>
+<h1>Upload a new product.</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@product,  html: { multipart: true}) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      
+      <%= f.label :picture, "Upload Product Picture" %>
+      <%= f.file_field :picture, class: 'file' %>
+
+
+      <%= f.label :commodity, "Commodity Type" %>
+      <%= f.select :commodity, options_for_select([['Select a commodity type', 'Unselected'], 
+	  ['Gold Coins', 'Gold Coins'], ['Gold bricks', 'Gold Bricks'],
+          ['Jewelry', 'Jewelry'], ['Precious Stones', 'Precious Stones']], 'Unselected') %>
+
+      <%= f.label :price, "Price" %>
+      <%= f.number_field :price, class: 'form-control' %>
+
+      <%= f.label :full_street_address, "Address of Product" %>
+      <%= f.text_field :full_street_address, class: 'form-control' %>
+
+      <%= f.label :description, "Description of Product" %>
+      <%= f.text_area :description, class: 'form-control' %>
+
+      <%= f.submit "Upload product", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

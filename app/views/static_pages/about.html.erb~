@@ -1,0 +1,11 @@
+<% provide(:title, "About") %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= yield(:title) %></title>
+  </head>
+  <body>
+    <h1>About</h1>
+    <p>This is the about page for iGold</p>
+  </body>
+</html>

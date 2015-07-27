@@ -1,0 +1,12 @@
+class UserMailer < ApplicationMailer
+      
+  def account_activation(user)
+    @user = user
+    mail to: user.email, subject: "iGold Account activation"
+  end
+
+  def password_reset(user)
+    @user = user
+    mail to: user.email, subject: "iGold Password Reset"
+  end
+end

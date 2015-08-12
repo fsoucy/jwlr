@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	alert('hello');
 	$('.gold_coins_div').hide();
 	$('.jewelry_div').hide();
 	$('.gold_bricks_div').hide();

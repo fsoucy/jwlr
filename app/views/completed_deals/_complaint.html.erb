@@ -1,0 +1,11 @@
+<% if current_user.id == @completed_deal.buyer_id %>
+<%= form_for(@completed_deal) do |f|%>
+<div><%= f.hidden_field :complaint_buyer, :value => true %></div>
+<%=f.submit "Invoice Complaint", class: "btn btn-primary" %>
+  <% end %>
+<% elsif current_user.id == @completed_deal.seller_id %>
+  <%= form_for(@completed_deal) do |f| %>
+    <div><%= f.hidden_field :complaint_seller, :value => true %></div>
+    <%=f.submit "Invoice Complaint", class: "btn btn-primary" %>
+  <% end %>
+<% end %>

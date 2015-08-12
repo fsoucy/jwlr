@@ -1,0 +1,12 @@
+<% if current_user.id == @deal.buyer_id %>
+  <h1>Seller Preferences</h1>
+  
+  <p>Price: <%= @deal.seller_price %></p>
+  <p>Exchange Type: <%= @deal.seller_exchange %></p>
+  <p>Exchange Time: <%= @deal.seller_time %></p>
+<% else %>
+  <h1>Buyer Preferences</h1>
+  <p>Price: <%= @deal.buyer_price %></p>
+  <p>Exchange Type: <%= @deal.buyer_exchange %></p>
+  <p>Exchange Time: <%= @deal.buyer_time %></p>
+<% end %>

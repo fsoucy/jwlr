@@ -1,0 +1,4 @@
+$('.gal').on('click', function() {
+        $(this).removeClass('show');
+	$(this).addClass('detail');
+    }

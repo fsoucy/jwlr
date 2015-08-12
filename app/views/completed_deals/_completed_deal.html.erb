@@ -1,0 +1,7 @@
+<% if current_user.id == completed_deal.buyer_id %>
+  <% text = "Bought $" + completed_deal.price.to_s + " of " + completed_deal.commodity.downcase + " from " + User.find(completed_deal.seller_id).name + "." %>
+<% else %>
+  <% text = "Sold $" + completed_deal.price.to_s + " of " + completed_deal.commodity.downcase + " to " + User.find(completed_deal.buyer_id).name + "." %>
+<% end %>
+<%= link_to text, completed_deal %><br>
+  

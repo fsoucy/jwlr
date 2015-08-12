@@ -56,4 +56,21 @@ class UsersControllerTest < ActionController::TestCase
     end
     assert_redirected_to root_url
   end
+
+  test "should redirect selling when not logged in" do
+    get :selling, id: @user
+    assert_redirected_to login_url
+  end
+
+  test "should redirect selling when wrong user" do
+    log_in_as(@other_user)
+    get :selling, id: @user
+    assert_redirected_to root_url
+  end
+
+  test "should get selling when right user" do
+    log_in_as(@user)
+    get :selling, id: @user
+    assert_response :success
+  end
 end

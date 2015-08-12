@@ -54,6 +54,15 @@ class UsersControllerTest < ActionController::TestCase
     assert_no_difference 'User.count' do
       delete :destroy, id: @user
     end
-    assert_redirect_to root_url
+    assert_redirected_to root_url
+  end
+
+  test "should redirect selling when not logged in" do
+  end
+
+  test "should redirect selling when wrong user" do
+  end
+
+  test "should get selling when right user" do
   end
 end

@@ -6,6 +6,7 @@
   <p>Maximum Buying Price: $<%= status.maxPrice %></p>
   <p>Location: <%= status.full_street_address %></p>
   <p>Travel Range: <%= status.toTravel %> miles</p>
+  <p>Description/Keywords: <%= status.description %></p>
   <div class="status_a">
     <%= link_to "View", status %>
     <%= link_to "Scan Matches", matches_status_path(status) %>

@@ -3,4 +3,6 @@ class Product < ActiveRecord::Base
   after_validation :geocode
   belongs_to :user
   mount_uploader :picture, PictureUploader
+  attr_accessor :hits
+
 end

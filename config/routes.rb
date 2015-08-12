@@ -8,13 +8,20 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
-  resources :users
+  resources :users do
+    member do
+      get :selling, :buying, :completed
+    end
+  end
+  resources :completed_deals, only: [:create, :destroy, :show, :update]
+  resources :pending_deals, only: [:create, :destroy, :show, :update]
   resources :products, only: [:new, :create, :show, :destroy]
   resources :statuses, only: [:new, :create, :destroy, :show] do
     member do
-      get 'matches' => 'statuses#matches'
+      get :matches
     end
   end
   resources :account_activations, only: [:edit]
+  
   resources :password_resets, only: [:new, :create, :edit, :update]
 end

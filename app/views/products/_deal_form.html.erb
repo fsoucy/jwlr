@@ -1,0 +1,9 @@
+<% if logged_in? && current_user != @product.user %>
+  <div id="follow_form">
+  <% if current_user.active_deals.find_by(product_id: @product.id) == nil %>
+     <%= render 'begin_deal' %>
+   <% else %>
+     <%= render 'end_deal' %>
+   <% end %>
+ </div>
+<% end %>

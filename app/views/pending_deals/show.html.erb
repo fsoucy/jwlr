@@ -1,0 +1,18 @@
+<% provide(:title, "Pending Deal") %>
+<div class="container">
+  <div class="col-md-4 center">
+    <h1><%= Product.find(@deal.product_id).commodity %></h1>
+    <center><%= image_tag Product.find(@deal.product_id).picture_url(:thumb) %></center>
+    <center><%= link_to "Delete this deal", @deal, method: :delete,
+    data: { confirm: "Are you sure you wish to delete this?" } %>
+  </div>
+  <div class="col-md-4 center">
+    <%= render 'deal_edit_form' %>
+    <% if @deal.match && current_user.id == @deal.buyer_id %>
+      <%= render 'buy_form' %>
+    <% end %>
+  </div>
+  <div class="col-md-4 center">
+    <%= render 'deal_display_other_preferences' %>
+  </div>
+</div>

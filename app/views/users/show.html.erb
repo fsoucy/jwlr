@@ -17,10 +17,37 @@
   <div class="container">
     <div class="col-md-8">
       <h1>Product Gallery</h1>
-	<% @user.products.each do |p| %>
-	 <!--<%= image_tag p.picture_url(:thumb) %>-->
-	 <%= link_to image_tag(p.picture_url(:thumb)), p %>
-	<% end %>
+        <p class="product_nav active all">All</p>
+	<p class="product_nav inactive gold_coins">Gold Coins</p>
+	<p class="product_nav inactive jewelry">Jewelry</p>
+	<p class="product_nav inactive gold_bricks">Gold Bricks</p>
+	<p class="product_nav inactive precious_stones">Precious Stones</p>
+	<div class="all_div">
+	  <% @products.each do |p| %>
+	   <!--<%= image_tag p.picture_url(:thumb) %>-->
+	   <%= link_to image_tag(p.picture_url(:thumb)), p %>
+	  <% end %>
+	</div>
+	<div class="gold_coins_div">
+	  <% @gold_coins.each do |g| %>
+	    <%= link_to image_tag(g.picture_url(:thumb)), g %>
+	  <% end %>
+	</div>
+	<div class="jewelry_div">
+	  <% @jewelry.each do |j| %>
+	    <%= link_to image_tag(j.picture_url(:thumb)), j %>
+	  <% end %>
+	</div>
+	<div class="gold_bricks_div">
+	  <% @gold_bricks.each do |g| %>
+	    <%= link_to image_tag(g.picture_url(:thumb)), g %>
+	  <% end %>
+	</div>
+	<div class="precious_stones_div">
+	  <% @precious_stones.each do |p| %>
+	    <%= link_to image_tag(p.picture_url(:thumb)), p %>
+	  <% end %>
+	</div>
 
     </div>
   </div>

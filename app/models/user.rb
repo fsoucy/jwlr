@@ -10,8 +10,16 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :statuses, dependent: :destroy
   has_many :products, dependent: :destroy
+  has_many :active_deals, class_name: "PendingDeal", foreign_key: "buyer_id",
+  	   		  	      dependent: :destroy
+  has_many :passive_deals, class_name: "PendingDeal",
+  	   		foreign_key: "seller_id", dependent: :destroy
+  has_many :active_completed_deals, class_name: "CompletedDeal", foreign_key: "buyer_id",
+  	   			    		dependent: :destroy
+  has_many :passive_completed_deals, class_name: "CompletedDeal", foreign_key: "seller_id",
+  	   			     		 dependent: :destroy
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-  
+   
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
     	   					  BCrypt::Engine.cost
@@ -63,6 +71,14 @@ class User < ActiveRecord::Base
     digest = send("#{attribute}_digest")
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
+  end
+
+  def selling_feed
+    PendingDeal.where("seller_id = ? AND active = ?", id, true)
+  end
+
+  def buying_feed
+    PendingDeal.where("buyer_id = ? AND active = ?", id, true)
   end
 
   private

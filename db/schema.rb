@@ -11,7 +11,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725000030) do
+ActiveRecord::Schema.define(version: 20150811185434) do
+
+  create_table "completed_deals", force: :cascade do |t|
+    t.float    "price"
+    t.string   "exchange"
+    t.string   "location"
+    t.string   "commodity"
+    t.integer  "seller_id"
+    t.integer  "buyer_id"
+    t.boolean  "fulfilled"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "pending_deal_id"
+    t.boolean  "fulfilled_buyer"
+    t.boolean  "fulfilled_seller"
+    t.boolean  "complaint_buyer"
+    t.boolean  "complaint_seller"
+  end
+
+  add_index "completed_deals", ["pending_deal_id"], name: "index_completed_deals_on_pending_deal_id", unique: true
+
+  create_table "pending_deals", force: :cascade do |t|
+    t.integer  "buyer_id"
+    t.integer  "seller_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "product_id"
+    t.float    "buyer_price"
+    t.string   "buyer_exchange"
+    t.datetime "buyer_datetime"
+    t.float    "seller_price"
+    t.string   "seller_exchange"
+    t.datetime "seller_datetime"
+    t.boolean  "completed"
+    t.integer  "completed_deal_id"
+    t.boolean  "active"
+  end
+
+  add_index "pending_deals", ["buyer_id"], name: "index_pending_deals_on_buyer_id"
+  add_index "pending_deals", ["product_id", "seller_id", "buyer_id"], name: "index_pending_deals_on_product_id_and_seller_id_and_buyer_id", unique: true
+  add_index "pending_deals", ["product_id"], name: "index_pending_deals_on_product_id"
+  add_index "pending_deals", ["seller_id"], name: "index_pending_deals_on_seller_id"
 
   create_table "products", force: :cascade do |t|
     t.float    "price"
@@ -40,6 +81,7 @@ ActiveRecord::Schema.define(version: 20150725000030) do
     t.datetime "updated_at",          null: false
     t.string   "full_street_address"
     t.string   "commodity"
+    t.text     "description"
   end
 
   add_index "statuses", ["user_id"], name: "index_statuses_on_user_id"

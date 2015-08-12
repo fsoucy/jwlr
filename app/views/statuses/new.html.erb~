@@ -7,9 +7,9 @@
     <%= form_for(@status) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       
-      <%= f.label :commodity_type, "Commodity Type" %>
-      <%= f.select :commodity_type, options_for_select([['Select a commodity type', 0], ['Gold Coins', 1], ['Gold bricks', 2],
-	  ['Jewelry', 3], ['Precious Stones', 4]], 0) %>
+      <%= f.label :commodity, "Commodity Type" %>
+      <%= f.select :commodity, options_for_select([['Select a commodity type', 0], ['Gold Coins', 'Gold Coins'], ['Gold bricks', 'Gold Bricks'],
+	  ['Jewelry', 'Jewelry'], ['Precious Stones', 'Precious Stones']], 0) %>
       
       <%= f.label :minPrice, "Minimum Price" %>
       <%= f.number_field :minPrice, class: 'form-control' %>

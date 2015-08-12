@@ -1,3 +1,4 @@
+<% title = "Product by " + @product.user.name %>
 <% provide(:title, "Product") %>
 <div class="container">
   <div class="col-md-4 center">
@@ -6,6 +7,7 @@
     <center>
      <% if @product.user == current_user %><%= link_to "Delete this product", @product, method: :delete,
     data: { confirm: "Are you sure you wish to delete this?" } %><% end %></center>
+    <% render 'deal_form' %>
   </div>
   <div class="col-md-8 center">
     <h1>Product Details</h1>

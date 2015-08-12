@@ -8,6 +8,23 @@
 
 .product_desc
 {
+  img
+  {
+    left: 50%;
+    margin-right: -50%;
+  }
+  
+  a
+  {
+    left: 50%;
+    margin-right: -50%;
+  }
+
+  h1
+  {
+    left: 50%;
+    margin-right: -50%;
+  }
 }
 
 /* universal */
@@ -274,6 +291,28 @@ input
   border: 1px solid #08c;
 }
 
+.product_feed
+{
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  border: 1px solid #08c;
+  width: 50%;
+  img
+  {
+  }
+  div
+  {
+    margin-top: 10px;
+    width: auto;
+    p
+    {
+    }
+    
+  }
+
+}
+
 .status_a
 {
   margin-top: -10px;
@@ -287,4 +326,15 @@ input
 {
   border: none;
   margin-top: 3px;
+}
+
+.product_nav
+{
+  display: inline-block;
+  cursor: pointer;
+}
+
+.active
+{
+  color: red;
 }

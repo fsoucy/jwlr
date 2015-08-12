@@ -1,0 +1,2 @@
+module PendingDealsHelper
+end

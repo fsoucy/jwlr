@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed]
+  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed]
   before_action :admin_user, only: :destroy  
   
   def new
@@ -13,7 +13,11 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @product = current_user.products.first
+    @products = Product.where("user_id = ?", @user.id)
+    @gold_coins = Product.where("user_id = ? AND commodity = ?", @user.id, "Gold Coins")
+    @jewelry = Product.where("user_id = ? AND commodity = ?", @user.id, "Jewelry")
+    @gold_bricks = Product.where("user_id = ? AND commodity = ?", @user.id, "Gold Bricks")
+    @precious_stones = Product.where("user_id = ? AND commodity = ?", @user.id, "Precious Stones")
   end
   
   def create
@@ -45,6 +49,19 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     flash[:success] = "User deleted"
     redirect_to users_url
+  end
+
+  def selling
+    @deals = User.find(params[:id]).selling_feed
+  end
+
+  def buying
+    @deals = User.find(params[:id]).buying_feed
+  end
+
+  def completed
+    user = User.find(params[:id])
+    @deals = user.active_completed_deals + user.passive_completed_deals
   end
 
   private

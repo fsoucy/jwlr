@@ -1,0 +1,3 @@
+CompletedDealMailer#complaint
+
+<%= @greeting %>, find me in app/views/completed_deal_mailer/complaint.text.erb

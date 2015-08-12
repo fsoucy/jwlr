@@ -1,0 +1,9 @@
+<% if !@deal.completed %>
+  <%= form_for(current_user.active_completed_deals.build) do |f| %>
+    <div><%= hidden_field_tag :pending_deal_id, @deal.id %></div>
+    <%= f.submit "Buy Product", class: "btn btn-primary completed" %>
+  <% end %>
+<% else %>
+  <% completed = CompletedDeal.find(@deal.completed_deal_id) %>
+  <%= link_to "Already purchased!", completed, class: "btn btn-primary completed" %>
+<% end %>

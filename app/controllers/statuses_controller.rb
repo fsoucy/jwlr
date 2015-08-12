@@ -29,11 +29,12 @@ class StatusesController < ApplicationController
 
   def matches
     @status = Status.find_by(id: params[:id])
+    @products = @status.matching_products
   end
 
   private
     def status_params
-      params.require(:status).permit(:minPrice, :maxPrice, :toTravel, :full_street_address, :buying, :commodity)
+      params.require(:status).permit(:minPrice, :maxPrice, :toTravel, :full_street_address, :buying, :commodity, :description)
     end
   
     def logged_in_user

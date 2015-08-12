@@ -22,6 +22,9 @@
       
       <%= f.label :toTravel, "Miles Willing to Travel" %>
       <%= f.number_field :toTravel, class: 'form-control' %>
+
+      <%= f.label :description, "Description/Keywords" %>
+      <%= f.text_field :description, class: 'form-control' %>
       
       <%= f.label :buying, class: "checkbox inline" do %>
         <%= f.check_box :buying %>

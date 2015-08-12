@@ -16,6 +16,8 @@ class UsersController < ApplicationController
     @products = Product.where("user_id = ?", @user.id)
     @gold_coins = Product.where("user_id = ? AND commodity = ?", @user.id, "Gold Coins")
     @jewelry = Product.where("user_id = ? AND commodity = ?", @user.id, "Jewelry")
+    @gold_bricks = Product.where("user_id = ? AND commodity = ?", @user.id, "Gold Bricks")
+    @precious_stones = Product.where("user_id = ? AND commodity = ?", @user.id, "Precious Stones")
   end
   
   def create

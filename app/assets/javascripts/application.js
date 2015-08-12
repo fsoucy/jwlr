@@ -11,10 +11,10 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery-migrate-min
 //= require jquery_ujs
-//= require jquery.turbolinks
-//= require turbolinks
 //= require personal_style.js
 //= require bootstrap
+//= require turbolinks
 //= require_tree .

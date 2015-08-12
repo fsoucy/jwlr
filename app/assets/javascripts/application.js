@@ -12,8 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require personal_style.js
+//= require jquery.turbolinks
 //= require bootstrap
 //= require turbolinks
-//= require jquery.turbolinks
+//= require personal_style.js
 //= require_tree .

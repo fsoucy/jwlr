@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery.turbolinks
-//= require jquery-migrate-min
 //= require jquery_ujs
 //= require personal_style.js
 //= require bootstrap

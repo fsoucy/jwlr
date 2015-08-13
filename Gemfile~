@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.3'
+gem 'jquery-migrate-rails'
 gem 'carrierwave', '0.10.0'
 gem 'mini_magick'
 gem 'fog', '1.32.0'

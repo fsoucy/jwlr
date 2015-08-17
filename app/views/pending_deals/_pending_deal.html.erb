@@ -1,7 +1,9 @@
 <% if current_user.id == pending_deal.buyer_id %>
   <% text =  "Buying " + Product.find(pending_deal.product_id).commodity.downcase + " from " + User.find(pending_deal.seller_id).name + ", currently priced at $" + pending_deal.seller_price.to_s + "."  %>
+  <br>
 <% else %>
   <% text = "Selling " + Product.find(pending_deal.product_id).commodity.downcase + " to " + User.find(pending_deal.buyer_id).name + ", currently priced at $" + pending_deal.seller_price.to_s + "." %>
+  <br>
 <% end %>
 
 <%= link_to text, pending_deal %>

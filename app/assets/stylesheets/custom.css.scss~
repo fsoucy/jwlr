@@ -338,3 +338,8 @@ input
 {
   color: red;
 }
+
+.completed
+{
+  margin-top: 30px;
+}

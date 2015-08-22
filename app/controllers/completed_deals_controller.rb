@@ -21,6 +21,14 @@ class CompletedDealsController < ApplicationController
       redirect_to completed.seller
     end
   end
+  
+  def destroy
+    @completed_deal = CompletedDeal.find(params[:id])
+    @pending_deal = PendingDeal.find(@completed_deal.pending_deal_id)
+    @completed_deal.destroy
+    @pending_deal.destroy
+    redirect_to root_url
+  end
 
   def update
     @completed_deal = CompletedDeal.find(params[:id])
@@ -34,11 +42,15 @@ class CompletedDealsController < ApplicationController
     end
     if @completed_deal.complaint_buyer
       CompletedDealMailer.complaint(User.find(@completed_deal.buyer_id)).deliver_now
+      flash[:success] = "Your complaint has been registered. You will receive an email from administration shortly."
     end
     if @completed_deal.complaint_seller
       CompletedDealMailer.complaint(User.find(@completed_deal.seller_id)).deliver_now
+      flash[:success] =	"Your complaint	has been registered. You will receive an email from administration shortly."
     end
-    flash[:success] = "Updated successfully!"
+    if @completed_deal.complaint_buyer == false && @completed_deal.complaint_seller == false
+      flash[:success] = "Updated successfully!"
+    end
     redirect_to @completed_deal
   end
 

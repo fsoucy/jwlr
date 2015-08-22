@@ -1,4 +1,8 @@
 <% provide(:title, "Completed Deal") %>
+<% if current_user.admin %>
+  <h3><%= @completed_deal.inspect %></h3>
+  <%= link_to "Destroy", @completed_deal, method: :delete, data: { confirm: "Are you sure?" } %>
+<% end %>
 <% if !@completed_deal.complaint_buyer && !@completed_deal.complaint_seller %>
   <% if !@completed_deal.fulfilled %>
     <% if current_user.id == @completed_deal.seller_id %>
@@ -9,16 +13,23 @@
       <h3>Congratulations! You are buying <%= @completed_deal.commodity.downcase %> from <%= @completed_deal.seller.name %>.</h3>
       <h3>You need to arrive at <%= @completed_deal.location %> at this datetime: <%= PendingDeal.find(@completed_deal.pending_deal_id).buyer_datetime %>, according to the priorly arranged agreement.</h3>
       <h3>You will need to pick up the product at this time and pay the seller $<%= @completed_deal.price %></h3>
-  <% else %>
+    <% else %>
       <h3>Why are you on this page!?!?!</h3>
     <% end %>
     <div class="container">
       <div class="row">
         <div class="col-md-6">
+	  <% if (current_user.id == @completed_deal.seller_id && !@completed_deal.fulfilled_seller) || (current_user.id == @completed_deal.buyer_id && !@completed_deal.fulfilled_buyer) %>
           <%= render 'fulfilled' %>
+	  <% else %>
+	  <% user_fulfilled = true %>
+	  <h3>We're happy that you're satisfied with the transaction. We are currently waiting on your trading partner to state his fulfillment.</h3>
+	  <% end %>
         </div>
         <div class="col-md-6">
+	<% if user_fulfilled != true %>
           <%= render 'complaint' %>
+	<% end %>
         </div>
       </div>
     </div>
@@ -32,7 +43,7 @@
     <% end %>
   <% end %>
 <% else %>
-  <h3>There has been a complaint registered, concerning the deal between <%= completed_deal.seller.name %> and <%= completed_deal.buyer.name %></h3>
+  <h3>There has been a complaint registered, concerning the deal between <%= @completed_deal.seller.name %> and <%= @completed_deal.buyer.name %></h3>
   <h3>Administration is currently handling this issue.</h3>
   <%= render 'undo_complaint' %>
 <% end %>

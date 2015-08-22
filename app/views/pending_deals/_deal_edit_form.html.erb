@@ -10,7 +10,7 @@
 	["Dropoff", "Dropoff"]], @deal.buyer_exchange) %>
     
       <%= f.label :buyer_datetime, "Exchange Time" %>
-      <%= f.datetime_field :buyer_datetime %>
+      <%= f.datetime_select :buyer_datetime, prompt: {month: "Choose month", day: "Choose day", year: "Choose year", hour: "Choose hour", minute: "Chose minute" } %>
     
       <%= f.submit "Change", class: "btn btn-primary" %>
     <% end %>

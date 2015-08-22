@@ -42,6 +42,7 @@ class PendingDealsController < ApplicationController
     product = Product.find(deal.product_id)
     CompletedDeal.find(deal.completed_deal_id).destroy if deal.completed
     deal.destroy
+    flash[:success] = "Successfully deleted pending deal."
     redirect_to product
   end
 

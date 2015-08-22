@@ -11,6 +11,7 @@ class PendingDealsController < ApplicationController
     deal.buyer_price = product.price
     deal.buyer_exchange = "Dropoff"
     deal.buyer_datetime = 2.days.from_now
+    deal.active = true
     deal.save
     redirect_to product
   end

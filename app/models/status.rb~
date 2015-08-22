@@ -27,7 +27,7 @@ class Status < ActiveRecord::Base
   def match_for_desc(product)
     productDesc = product.description.split(" ")
     statusDesc = self.description.split(" ")
-    thing = 0
+    product.hits = 0
     statusDesc.each do |s|
       productDesc.each do |p|
         if s == p

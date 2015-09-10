@@ -21,7 +21,7 @@
       <%= f.label :full_street_address, "Address of Product" %>
       <%= f.text_field :full_street_address, class: 'form-control' %>
 
-      <%= f.label :description, "Description of Product" %>
+      <%= f.label :description, "Description of Product + Keywords" %>
       <%= f.text_area :description, class: 'form-control' %>
 
       <%= f.submit "Upload product", class: "btn btn-primary" %>

@@ -8,7 +8,8 @@
       </h1>
     </section>
     <div id="description">
-      <p>This user has been using iGold for 3 months..<p>
+      <p>@user.description<p>
+      <%= link_to edit_description_user_path(@user.id) %>
       <p>Products sold: 100</p>
       <p>Identifies as: Public Seller</p>
       <p>Location: Boston, MA</p>
@@ -17,11 +18,13 @@
   <div class="container">
     <div class="col-md-8">
       <h1>Product Gallery</h1>
+        <center>
         <p class="product_nav active all">All</p>
 	<p class="product_nav inactive gold_coins">Gold Coins</p>
 	<p class="product_nav inactive jewelry">Jewelry</p>
 	<p class="product_nav inactive gold_bricks">Gold Bricks</p>
 	<p class="product_nav inactive precious_stones">Precious Stones</p>
+	</center>
 	<div class="all_div">
 	  <% @products.each do |p| %>
 	   <!--<%= image_tag p.picture_url(:thumb) %>-->

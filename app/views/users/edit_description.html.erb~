@@ -1,0 +1,15 @@
+<% provide(:title, "Edit description") %>
+<h1>Change your description to tell us a little bit more about yourself.</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      
+      <%= f.label :description %>
+      <%= f.text_area :description, class: 'form_control' %>
+
+      <%= f.submit "Save changes", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

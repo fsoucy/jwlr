@@ -8,7 +8,10 @@
       </h1>
     </section>
     <div id="description">
-      <p>This user has been using iGold for 3 months..<p>
+      <p><%= @user.description %><p>
+      <% if @user == current_user %>
+        <%= link_to "Edit your description", edit_description_user_path(@user.id) %>
+      <% end %>
       <p>Products sold: 100</p>
       <p>Identifies as: Public Seller</p>
       <p>Location: Boston, MA</p>

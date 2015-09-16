@@ -27,7 +27,8 @@ class CompletedDealsController < ApplicationController
     @pending_deal = PendingDeal.find(@completed_deal.pending_deal_id)
     @completed_deal.destroy
     @pending_deal.destroy
-    redir
+    redirect_to root_url
+  end
 
   def update
     @completed_deal = CompletedDeal.find(params[:id])

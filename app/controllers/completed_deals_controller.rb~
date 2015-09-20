@@ -16,6 +16,8 @@ class CompletedDealsController < ApplicationController
     completed.complaint_buyer = false
     completed.complaint_seller = false    
     if completed.save
+      product.hold = true
+      product.save
       redirect_to completed
     else
       redirect_to completed.seller

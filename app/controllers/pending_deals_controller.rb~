@@ -13,6 +13,9 @@ class PendingDealsController < ApplicationController
     deal.buyer_datetime = 2.days.from_now
     deal.active = true
     deal.save
+    product = Product.find(params[:product_id])
+    product.hold = true
+    product.save
     redirect_to product
   end
 
@@ -42,6 +45,7 @@ class PendingDealsController < ApplicationController
     product = Product.find(deal.product_id)
     CompletedDeal.find(deal.completed_deal_id).destroy if deal.completed
     deal.destroy
+    flash[:success] = "Successfully deleted pending deal."
     redirect_to product
   end
 

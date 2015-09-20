@@ -16,6 +16,8 @@ class CompletedDealsController < ApplicationController
     completed.complaint_buyer = false
     completed.complaint_seller = false    
     if completed.save
+      product.hold = true
+      product.save
       redirect_to completed
     else
       redirect_to completed.seller
@@ -25,6 +27,9 @@ class CompletedDealsController < ApplicationController
   def destroy
     @completed_deal = CompletedDeal.find(params[:id])
     @pending_deal = PendingDeal.find(@completed_deal.pending_deal_id)
+    product = Product.find(@pending_deal.product_id)
+    product.hold = false
+    product.save
     @completed_deal.destroy
     @pending_deal.destroy
     redirect_to root_url

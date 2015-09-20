@@ -15,7 +15,9 @@ class Status < ActiveRecord::Base
     near_products.each { |p| products_price.push(p) if p.price >= self.minPrice && p.price <= self.maxPrice }
     products = Array.new
     products_price.each { |p| products.push(p) if p.commodity == self.commodity }
-    self.match_for_all_desc(products)
+    final = Array.new
+    products.each { |p| final.push(p) if p.user_id != self.user_id }
+    self.match_for_all_desc(final)
   end
   
   def match_for_all_desc(products)

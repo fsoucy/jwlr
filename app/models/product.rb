@@ -4,5 +4,5 @@ class Product < ActiveRecord::Base
   belongs_to :user
   mount_uploader :picture, PictureUploader
   attr_accessor :hits
-
+  has_many :pending_deals, dependent: :destroy
 end

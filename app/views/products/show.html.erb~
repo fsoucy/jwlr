@@ -17,8 +17,8 @@
     <% if !(normal || has_deal) %>
       <%= render 'deal_form' %>
     <% end %>
-    <% if has_dael %>
-      <%= link_to Pendin
+    <% if has_deall %>
+      <%= link_to "Current Deal", current_user.active_deals.find_by(product_id: @product.id) %>
     <% end %>
   </div>
   <div class="col-md-8 center">

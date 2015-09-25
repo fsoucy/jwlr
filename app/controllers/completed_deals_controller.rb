@@ -40,8 +40,13 @@ class CompletedDealsController < ApplicationController
     @completed_deal.update_attributes(update_params)
     if @completed_deal.fulfilled_buyer == true && @completed_deal.fulfilled_seller == true
       pending = PendingDeal.find(@completed_deal.pending_deal_id)
-      pending.active = false
-      pending.save
+      product = Product.find_by(id: pending.product_id)
+      product.sold = true
+      product.save
+      product.pending_deals.each do |p|
+        p.active = false
+	p.save
+      end
       @completed_deal.fulfilled = true
       @completed_deal.save
     end

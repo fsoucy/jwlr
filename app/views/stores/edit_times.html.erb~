@@ -1,0 +1,69 @@
+<% provide(:title, "Edit hours of operation") %>
+<h1>Edit this store's hours of operation</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@store) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <% if @store.mondayopen %>
+        <div class="form-group row">
+        <%= f.label :mondaystart, "Monday Start Time" %>
+        <%= f.time_select :mondaystart, class: 'form-control' %>
+	</div>
+	<%= f.label :mondayend, "Monday Close Time" %>
+        <%= f.time_select :mondayend, class: 'form-control'  %>
+      <% end %>
+      
+      <% if @store.tuesdayopen %>
+        <%= f.label :tuesdaystart, "Tuesday Start Time" %>
+        <%= f.time_select :tuesdaystart, class: 'form-control' %>
+
+	<%= f.label :tuesdayend, "Tuesday Close Time" %>
+        <%= f.time_select :tuesdayend, class: 'form-control' %>
+      <% end %>
+
+      <% if @store.wednesdayopen %>
+        <%= f.label :wednesdaystart, "Wednesday Start Time" %>
+	<%= f.time_select :wednesdaystart, class: 'form-control' %>
+      
+	<%= f.label :wednesdayend, "Wednesday Close Time" %>
+        <%= f.time_select :wednesdayend, class: 'form-control' %>
+      <% end %>
+      
+      <% if @store.thursdayopen %>
+        <%= f.label :thursdaystart, "Thursday Start Time" %>
+        <%= f.time_select :thursdaystart, class: 'form-control' %>
+      
+	<%= f.label :thursdayend, "Thursday Close Time" %>
+        <%= f.time_select :thursdayend, class: 'form-control' %>
+      <% end %>
+
+      <% if @store.fridayopen %>
+        <%= f.label :fridaystart, "Friday Start Time" %>
+        <%= f.time_select :fridaystart, class: 'form-control' %>
+
+	<%= f.label :fridayend, "Friday Close Time" %>
+        <%= f.time_select :fridayend, class: 'form-control' %>
+      <% end %>
+
+      <% if @store.saturdayopen %>
+        <%= f.label :saturdaystart, "Saturday Start Time"  %>
+	<%= f.time_select :saturdaystart, class: 'form-control' %>
+	
+	<%= f.label :saturdayend, "Saturday Close Time"  %>
+        <%= f.time_select :saturdayend, class: 'form-control' %>
+      <% end %>
+
+      <% if @store.sundayopen %>
+        <%= f.label :sundaystart, "Sunday Start Time" %>
+        <%= f.time_select :sundaystart, class: 'form-control' %>
+      
+	<%= f.label :sundayend, "Sunday Close Time" %>
+        <%= f.time_select :sundayend, class: 'form-control' %>
+      <% end %>
+      
+      <%= f.submit "Save changes", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def edit_description
-    if current_user != nil
+    if current_user == User.find(params[:id])
       @user = User.find(params[:id])
     else
       redirect_to root_url

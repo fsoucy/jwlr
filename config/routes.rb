@@ -13,6 +13,11 @@ Rails.application.routes.draw do
       get :selling, :buying, :completed, :edit_description
     end
   end
+  resources :stores do
+    member do
+      get :edit_times
+    end
+  end
   resources :completed_deals, only: [:create, :destroy, :show, :update]
   resources :pending_deals, only: [:create, :destroy, :show, :update]
   resources :products, only: [:new, :create, :show, :destroy]

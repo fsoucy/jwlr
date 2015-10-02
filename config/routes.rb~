@@ -10,9 +10,10 @@ Rails.application.routes.draw do
   delete 'logout' => 'sessions#destroy'
   resources :users do
     member do
-      get :selling, :buying, :completed
+      get :selling, :buying, :completed, :edit_description
     end
   end
+  resources :stores
   resources :completed_deals, only: [:create, :destroy, :show, :update]
   resources :pending_deals, only: [:create, :destroy, :show, :update]
   resources :products, only: [:new, :create, :show, :destroy]

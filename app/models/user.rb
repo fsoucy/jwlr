@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :statuses, dependent: :destroy
   has_many :products, dependent: :destroy
+  has_many :stores, dependent: :destroy
   has_many :active_deals, class_name: "PendingDeal", foreign_key: "buyer_id",
   	   		  	      dependent: :destroy
   has_many :passive_deals, class_name: "PendingDeal",

@@ -6,16 +6,14 @@ class PendingDealsController < ApplicationController
     deal = current_user.active_deals.build(seller_id: params[:seller_id], product_id: params[:product_id])
     product = Product.find_by(id: deal.product_id)
     deal.seller_price = product.price
-    deal.seller_exchange = "Pickup"
-    deal.seller_datetime = 2.days.from_now
     deal.buyer_price = product.price
-    deal.buyer_exchange = "Dropoff"
-    deal.buyer_datetime = 2.days.from_now
     deal.active = true
+    datetime = 2.days.from_now
+    date = datetime.to_date
+    time = datetime.to_time
+    deal.seller_location = product.location
+    
     deal.save
-    product = Product.find(params[:product_id])
-    product.hold = true
-    product.save
     redirect_to product
   end
 
@@ -56,11 +54,11 @@ class PendingDealsController < ApplicationController
   private
 
   def update_params_buyer
-    params.require(:pending_deal).permit(:buyer_exchange, :buyer_price, :buyer_datetime)
+    params.require(:pending_deal).permit(:buyer_location, :buyer_hour, :buyer_month, :buyer_day, buyer_price, buyer_am)
   end
 
   def update_params_seller
-    params.require(:pending_deal).permit(:seller_exchange, :seller_price, :seller_datetime)
+    params.require(:pending_deal).permit(:seller_location, :seller_hour, :seller_month, :seller_day, :seller_price, :seller_am)
   end
 
   def logged_in_user

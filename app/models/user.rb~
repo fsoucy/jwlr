@@ -74,11 +74,11 @@ class User < ActiveRecord::Base
   end
 
   def selling_feed
-    PendingDeal.where("seller_id = ?", id)
+    PendingDeal.where("seller_id = ? AND active = ?", id, true)
   end
 
   def buying_feed
-    PendingDeal.where("buyer_id = ?", id)
+    PendingDeal.where("buyer_id = ? AND active = ?", id, true)
   end
 
   private

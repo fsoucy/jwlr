@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150922210835) do
+ActiveRecord::Schema.define(version: 20151001154615) do
 
   create_table "completed_deals", force: :cascade do |t|
     t.float    "price"
@@ -35,18 +35,26 @@ ActiveRecord::Schema.define(version: 20150922210835) do
   create_table "pending_deals", force: :cascade do |t|
     t.integer  "buyer_id"
     t.integer  "seller_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "product_id"
     t.float    "buyer_price"
-    t.string   "buyer_exchange"
-    t.datetime "buyer_datetime"
     t.float    "seller_price"
-    t.string   "seller_exchange"
-    t.datetime "seller_datetime"
     t.boolean  "completed"
     t.integer  "completed_deal_id"
     t.boolean  "active"
+    t.boolean  "exchange_public_seller"
+    t.boolean  "exchange_public_buyer"
+    t.string   "seller_location"
+    t.string   "buyer_location"
+    t.integer  "buyer_hour"
+    t.integer  "seller_hour"
+    t.integer  "buyer_month"
+    t.integer  "seller_month"
+    t.integer  "buyer_day"
+    t.integer  "seller_day"
+    t.boolean  "seller_am"
+    t.boolean  "buyer_am"
   end
 
   add_index "pending_deals", ["buyer_id"], name: "index_pending_deals_on_buyer_id"
@@ -87,6 +95,39 @@ ActiveRecord::Schema.define(version: 20150922210835) do
   end
 
   add_index "statuses", ["user_id"], name: "index_statuses_on_user_id"
+
+  create_table "stores", force: :cascade do |t|
+    t.string   "full_street_address"
+    t.string   "name"
+    t.integer  "business_days_pickup"
+    t.integer  "user_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "picture"
+    t.boolean  "mondayopen"
+    t.time     "mondaystart"
+    t.time     "mondayend"
+    t.boolean  "tuesdayopen"
+    t.time     "tuesdaystart"
+    t.time     "tuesdayend"
+    t.boolean  "wednesdayopen"
+    t.time     "wednesdaystart"
+    t.time     "wednesdayend"
+    t.boolean  "thursdayopen"
+    t.time     "thursdaystart"
+    t.time     "thursdayend"
+    t.boolean  "fridayopen"
+    t.time     "fridaystart"
+    t.time     "fridayend"
+    t.boolean  "saturdayopen"
+    t.time     "saturdaystart"
+    t.time     "saturdayend"
+    t.boolean  "sundayopen"
+    t.time     "sundaystart"
+    t.time     "sundayend"
+  end
+
+  add_index "stores", ["user_id"], name: "index_stores_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

@@ -3,6 +3,8 @@ $(document).ready(function() {
 	$('.jewelry_div').hide();
 	$('.gold_bricks_div').hide();
 	$('.precious_stones_div').hide();
+	$('.stores_form').hide();
+	$('.address_form').hide();
 	
 	$('.all').click(function() {
 		$(this).removeClass('inactive').addClass('active');
@@ -70,6 +72,19 @@ $(document).ready(function() {
                 $('.precious_stones_div').show();
             });
 
-	
+
+	$('.stores').click(function() {
+		$(this).removeClass('inactive').addClass('active');
+		$('.address').removeClass('active').addClass('inactive');
+		$('.address_form').hide();
+		$('.stores_form').show();
+	    });
+
+	$('.address').click(function() {
+		$(this).removeClass('inactive').addClass('active');
+		$('.stores').removeClass('active').addClass('inactive');
+		$('.stores_form').hide();
+		$('.address_form').show();
+	    });
 
     });

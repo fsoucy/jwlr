@@ -7,12 +7,12 @@
       <%= render 'shared/error_messages', object: f.object %>
 
       <% if @store.mondayopen %>
-        <div class="form-group row">
         <%= f.label :mondaystart, "Monday Start Time" %>
-        <%= f.time_select :mondaystart, class: 'form-control' %>
-	</div>
+
+
+        <%= f.time_select :mondaystart, class: 'form-control'  %>
 	<%= f.label :mondayend, "Monday Close Time" %>
-        <%= f.time_select :mondayend, class: 'form-control'  %>
+        <%= f.time_select :mondayend, class: 'form-control' %>
       <% end %>
       
       <% if @store.tuesdayopen %>

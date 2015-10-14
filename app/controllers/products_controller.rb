@@ -4,6 +4,15 @@ class ProductsController < ApplicationController
   
   def new
     @product = current_user.products.build
+    if @product.user.stores.length > 0
+      stos = Array.new
+      @product.user.stores.each do |s|
+        stos.push([s.name, s.id])
+      end
+      @stos = stos
+      @default = @product.user.stores.first
+    end
+	
   end
   
   def create
@@ -30,7 +39,7 @@ class ProductsController < ApplicationController
 
   private
     def product_params
-      params.require(:product).permit(:price, :commodity, :full_street_address, :picture, :description)
+      params.require(:product).permit(:price, :commodity, :full_street_address, :picture, :description, :store_id)
     end
 
     def logged_in_user

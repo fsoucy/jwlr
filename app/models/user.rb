@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   	    	    format: { with: VALID_EMAIL_REGEX },
 		    uniqueness: { case_sensitive: false }
   has_secure_password
+  has_many :notifications, dependent: :destroy
   has_many :statuses, dependent: :destroy
   has_many :products, dependent: :destroy
   has_many :stores, dependent: :destroy
@@ -81,6 +82,8 @@ class User < ActiveRecord::Base
   def buying_feed
     PendingDeal.where("buyer_id = ? AND active = ?", id, true)
   end
+
+    
 
   private
   

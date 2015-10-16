@@ -1,16 +1,14 @@
 <% provide(:title, "Edit hours of operation") %>
 <h1>Edit this store's hours of operation</h1>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@store) do |f| %>
+    <%= bootstrap_form_for(@store) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
       <% if @store.mondayopen %>
         <%= f.label :mondaystart, "Monday Start Time" %>
-        <%= f.time_select :mondaystart, class: 'form-control'  %>
+        <%= f.time_select :mondaystart%>
 	<%= f.label :mondayend, "Monday Close Time" %>
-        <%= f.time_select :mondayend, class: 'form-control' %>
+        <%= f.time_select :mondayend %>
       <% end %>
       
       <% if @store.tuesdayopen %>
@@ -63,5 +61,4 @@
       
       <%= f.submit "Save changes", class: "btn btn-primary" %>
     <% end %>
-  </div>
-</div>
+

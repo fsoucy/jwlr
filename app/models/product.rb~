@@ -4,5 +4,9 @@ class Product < ActiveRecord::Base
   belongs_to :user
   mount_uploader :picture, PictureUploader
   attr_accessor :hits
-  has_many :pending_deals
+  has_many :pending_deals, dependent: :destroy
+  #validates :address_plus_store
+  
+  #def address_plus_store
+  #  if store_id != nil && full_street Store.find(store_id).full_street_address != full_street_address
 end

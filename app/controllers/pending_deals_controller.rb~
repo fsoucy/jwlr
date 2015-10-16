@@ -8,11 +8,15 @@ class PendingDealsController < ApplicationController
     deal.seller_price = product.price
     deal.buyer_price = product.price
     deal.active = true
-    datetime = 2.days.from_now
-    date = datetime.to_date
-    time = datetime.to_time
-    deal.seller_location = product.location
-    
+    deal.exchange_public_seller = User.find(params[:seller_id]).public
+    deal.exchange_public_buyer = User.find(deal.buyer_id).public
+    #if deal.exchange_public_seller || deal.exchange_public_buyer
+      datetime = 2.days.from_now
+      deal.seller_datetime = datetime
+      deal.buyer_datetime = datetime
+      deal.buyer_exchange = "Pickup"
+      deal.seller_exchange = "Dropoff"
+    #end
     deal.save
     redirect_to product
   end

@@ -1,0 +1,8 @@
+<title>User Stores</title>
+<% if @has %>
+  <h1>User Stores</h1>
+  <%= render @stores %>
+<% else %>
+  <p>It seems that you're not a public account and you don't have any stores.</p>
+  <p>If you would like to register a store, click here.</p>
+<% end %>

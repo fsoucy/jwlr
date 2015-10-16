@@ -5,4 +5,6 @@ class Product < ActiveRecord::Base
   mount_uploader :picture, PictureUploader
   attr_accessor :hits
   has_many :pending_deals, dependent: :destroy
+  validates :full_street_address, presence: true
+  
 end

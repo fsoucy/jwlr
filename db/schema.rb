@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151009053457) do
+ActiveRecord::Schema.define(version: 20151016024153) do
 
   create_table "completed_deals", force: :cascade do |t|
     t.float    "price"
@@ -32,6 +32,14 @@ ActiveRecord::Schema.define(version: 20151009053457) do
 
   add_index "completed_deals", ["pending_deal_id"], name: "index_completed_deals_on_pending_deal_id", unique: true
 
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "message"
+    t.boolean  "read"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pending_deals", force: :cascade do |t|
     t.integer  "buyer_id"
     t.integer  "seller_id"
@@ -45,16 +53,10 @@ ActiveRecord::Schema.define(version: 20151009053457) do
     t.boolean  "active"
     t.boolean  "exchange_public_seller"
     t.boolean  "exchange_public_buyer"
-    t.string   "seller_location"
-    t.string   "buyer_location"
-    t.integer  "buyer_hour"
-    t.integer  "seller_hour"
-    t.integer  "buyer_month"
-    t.integer  "seller_month"
-    t.integer  "buyer_day"
-    t.integer  "seller_day"
-    t.boolean  "seller_am"
-    t.boolean  "buyer_am"
+    t.datetime "buyer_datetime"
+    t.datetime "seller_datetime"
+    t.string   "buyer_exchange"
+    t.string   "seller_exchange"
   end
 
   add_index "pending_deals", ["buyer_id"], name: "index_pending_deals_on_buyer_id"

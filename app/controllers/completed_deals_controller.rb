@@ -43,6 +43,8 @@ class CompletedDealsController < ApplicationController
       product = Product.find_by(id: pending.product_id)
       product.sold = true
       product.save
+      pending.buyer.notifications.create(message: "Congrats on your completed deal with " + pending.seller.name + "!", read: false)
+      pending.seller.notifications.create(message: "Congrats on your completed deal with " + pending.buyer.name + "!", read: false)
       product.pending_deals.each do |p|
         p.active = false
 	p.save

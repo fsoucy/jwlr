@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.3'
+gem 'bootstrap_form'
 gem 'carrierwave', '0.10.0'
 gem 'mini_magick'
 gem 'fog', '1.32.0'

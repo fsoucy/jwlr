@@ -3,6 +3,8 @@ $(document).ready(function() {
 	$('.jewelry_div').hide();
 	$('.gold_bricks_div').hide();
 	$('.precious_stones_div').hide();
+	$('.stores_form').hide();
+	$('.address_form').hide();
 	
 	$('.all').click(function() {
 		$(this).removeClass('inactive').addClass('active');

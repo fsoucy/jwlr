@@ -18,16 +18,15 @@
 
       <%= f.label :price, "Price" %>
       <%= f.number_field :price, class: 'form-control' %>
-      
-      <p class='stores inactive'>Store</p>
-      <p class='address inactive'>Address</p>
 
-      <%= f.label :full_street_address, "Address of Product", class: 'address_form' %>
-      <%= f.text_field :full_street_address, class: 'form-control address_form' %>
-      
-      <%= f.label :store_id, "Address of Product", class: 'stores_form' %>
-      <%= f.select :commodity, options_for_select(@stos, @default), class: 'stores_form' %>
-	
+      <% if @has %> 
+        <%= f.label :store_id, "Store of Product" %>
+        <%= f.select :store_id, options_for_select(@stos, @default) %>
+      <% else %>
+        <%= f.label :full_street_address, "Address of Product" %>
+        <%= f.text_field :full_street_address, class: 'form-control' %>
+      <% end %>
+
       <%= f.label :description, "Description of Product + Keywords" %>
       <%= f.text_area :description, class: 'form-control' %>
 

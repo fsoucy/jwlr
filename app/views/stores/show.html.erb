@@ -1,0 +1,4 @@
+<h1><%= @store.name %>
+<%= image_tag(@store.picture_url(:thumb)) %>
+<h1>Owner: <%= User.find(@store.user_id) %></h1>
+<h1>Location: <%= @store.full_street_address %></h1>

@@ -1,0 +1,19 @@
+<div class="store_contain">
+  <div class="store_part">
+  <%= link_to  image_tag(store.picture_url(:thumb)), store %>
+  </div>
+  
+  <div class="store_part">
+  <p><%= store.name %>
+  <p>Owner: <%= User.find(store.user_id).name %></p>
+  <p>Location: <%= store.full_street_address %></p>
+  </div>
+ 
+  <div class="store_part">
+  <% if User.find(store.user_id) == current_user.id %>
+    <%
+  </div>
+
+
+
+</div>

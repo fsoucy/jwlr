@@ -4,8 +4,17 @@ class ProductsController < ApplicationController
   
   def new
     @product = current_user.products.build
-    stores = Array.new
-    if product.user.public &&     
+    @has = false
+    if @product.user.stores.length > 0
+      @has = true
+      stos = Array.new
+      @product.user.stores.each do |s|
+        stos.push([s.name, s.id])
+      end
+      @stos = stos
+      @default = @product.user.stores.first
+    end
+	
   end
   
   def create

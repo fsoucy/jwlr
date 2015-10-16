@@ -1,0 +1,12 @@
+class NotificationsController < ApplicationController
+  def update
+    notification = Notification.find(params[:id])
+    notification.update_attributes(pars)
+    redirect_to noties_user_path(current_user.id)
+  end
+
+  private
+  def pars
+    params.require(:notification).permit(:read)
+  end
+end

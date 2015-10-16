@@ -341,7 +341,18 @@ input
   color: red;
 }
 
-.completed
+.down
 {
   margin-top: 30px;
+}
+
+.store_part
+{
+  display:inline-block;
+  margin:50px;
+}
+
+.store_contain
+{
+  text-align:center;
 }

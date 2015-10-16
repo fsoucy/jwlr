@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def edit_description
-    if current_user != nil
+    if current_user == User.find(params[:id])
       @user = User.find(params[:id])
     else
       redirect_to root_url
@@ -72,6 +72,19 @@ class UsersController < ApplicationController
     @deals = user.active_completed_deals + user.passive_completed_deals
   end
 
+  def user_stores
+    user = User.find(params[:id])
+    @has = false
+    if user.stores.length > 0
+      @stores = user.stores
+      @has = true
+    end
+  end
+
+  def noties
+#    @notes = User.find(params[:id]).notifications
+  end
+  
   private
 
     def user_params

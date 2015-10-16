@@ -9,26 +9,14 @@ class PendingDealsController < ApplicationController
     deal.buyer_price = product.price
     deal.active = true
     deal.exchange_public_seller = User.find(params[:seller_id]).public
-    deal.exchange_public_buyer = User.find(params[:buyer_id]).public
-    if deal.exchange_public_seller || deal.exchange_public_buyer
+    deal.exchange_public_buyer = User.find(deal.buyer_id).public
+    #if deal.exchange_public_seller || deal.exchange_public_buyer
       datetime = 2.days.from_now
-      date = datetime.to_date
-      time = datetime.to_time
-      deal.seller_location = product.full_street_address
-      deal.buyer_location = product.full_street_address
-      deal.buyer_hour = time.hour
-      deal.seller_hour = time.hour
-      if time.hour > 12
-        buyer_hour = time.hour - 12
-        seller_hour = time.hour - 12
-      end
-      deal.seller_month = date.month
-      deal.buyer_month = date.month
-      deal.buyer_day = date.day
-      deal.seller_day = date.day
-      deal.am = true if time.hour < 12
-      buyer.am = true if time.hour < 12
-    end
+      deal.seller_datetime = datetime
+      deal.buyer_datetime = datetime
+      deal.buyer_exchange = "Pickup"
+      deal.seller_exchange = "Dropoff"
+    #end
     deal.save
     redirect_to product
   end
@@ -70,11 +58,11 @@ class PendingDealsController < ApplicationController
   private
 
   def update_params_buyer
-    params.require(:pending_deal).permit(:buyer_location, :buyer_hour, :buyer_month, :buyer_day, buyer_price, buyer_am)
+    params.require(:pending_deal).permit(:buyer_exchange, :buyer_datetime, :buyer_price)
   end
 
   def update_params_seller
-    params.require(:pending_deal).permit(:seller_location, :seller_hour, :seller_month, :seller_day, :seller_price, :seller_am)
+    params.require(:pending_deal).permit(:seller_datetime, :seller_price, :seller_exchange)
   end
 
   def logged_in_user

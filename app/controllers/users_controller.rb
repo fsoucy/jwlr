@@ -72,6 +72,19 @@ class UsersController < ApplicationController
     @deals = user.active_completed_deals + user.passive_completed_deals
   end
 
+  def user_stores
+    user = User.find(params[:id])
+    @has = false
+    if user.stores.length > 0
+      @stores = user.stores
+      @has = true
+    end
+  end
+
+  def noties
+    @notes = User.find(params[:id]).notifications
+  end
+  
   private
 
     def user_params

@@ -1,2 +1,2 @@
 <p>Hi</p>
-<p><%= notification.message %>
+<p><%= notification.message %></p>

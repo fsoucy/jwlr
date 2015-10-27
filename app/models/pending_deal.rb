@@ -9,7 +9,11 @@ class PendingDeal < ActiveRecord::Base
   validate :buyer_seller_difference
   
   def match
-    return self.buyer_price == self.seller_price && self.buyer_exchange == self.seller_exchange # && self.buyer_datetime == self.seller_datetime
+    if self.product.store_id == nil    
+      return self.buyer_price == self.seller_price && self.buyer_exchange == self.seller_exchange  && self.buyer_datetime == self.seller_datetime
+    else
+      return self.buyer_price == self.seller_price
+    end    
   end 
  
   def all_in_database

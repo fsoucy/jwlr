@@ -9,7 +9,8 @@ class PendingDeal < ActiveRecord::Base
   validate :buyer_seller_difference
   
   def match
-    return self.buyer_price == self.seller_price && self.buyer_exchange == self.seller_exchange # && self.buyer_datetime == self.seller_datetime
+    
+      return self.buyer_price == self.seller_price && self.buyer_exchange == self.seller_exchange  && self.buyer_datetime == self.seller_datetime
   end 
  
   def all_in_database
@@ -23,12 +24,6 @@ class PendingDeal < ActiveRecord::Base
       errors.add(:buyer_id, "Buyer needs to exist")
     end
   end
-
-  def destroy
-    deal = PendingDeal.find(params[:id])
-    deal.destroy
-    flash[:success] = "You have deleted your deal."
-    redirect_to root_url
 
   def buyer_seller_difference
     if seller_id == buyer_id

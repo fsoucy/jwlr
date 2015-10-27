@@ -2,11 +2,15 @@
   <h1>Seller Preferences</h1>
   
   <p>Price: <%= @deal.seller_price %></p>
+  <% if !@public %>
   <p>Exchange Type: <%= @deal.seller_exchange %></p>
   <p>Exchange Time: <%= time_tag(@deal.seller_datetime) %></p>
+  <% end %>
 <% else %>
   <h1>Buyer Preferences</h1>
   <p>Price: <%= @deal.buyer_price %></p>
+  <% if !@public %>
   <p>Exchange Type: <%= @deal.buyer_exchange %></p>
   <p>Exchange Time: <%= time_tag(@deal.buyer_datetime) %></p>
+  <% end %>
 <% end %>

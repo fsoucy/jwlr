@@ -4,7 +4,9 @@ class CompletedDealsController < ApplicationController
     product = Product.find(deal.product_id)
     completed = current_user.active_completed_deals.build
     completed.price = deal.seller_price
-    completed.exchange = deal.seller_exchange
+    if product.store_id == nil
+      completed.exchange = deal.seller_exchange
+    end
     completed.location = product.full_street_address
     completed.commodity = product.commodity
     completed.seller_id = deal.seller_id
@@ -43,8 +45,8 @@ class CompletedDealsController < ApplicationController
       product = Product.find_by(id: pending.product_id)
       product.sold = true
       product.save
-      pending.buyer.notifications.create(message: "Congrats on your completed deal with " + pending.seller.name "!", read: false)
-      pending.seller.notifications.create(message: "Congrats on your completed deal with " + pending.buyer.name "!", read: false)
+      pending.buyer.notifications.create(message: "Congrats on your completed deal with " + pending.seller.name + "!", read: false)
+      pending.seller.notifications.create(message: "Congrats on your completed deal with " + pending.buyer.name + "!", read: false)
       product.pending_deals.each do |p|
         p.active = false
 	p.save

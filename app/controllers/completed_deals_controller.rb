@@ -4,7 +4,9 @@ class CompletedDealsController < ApplicationController
     product = Product.find(deal.product_id)
     completed = current_user.active_completed_deals.build
     completed.price = deal.seller_price
-    completed.exchange = deal.seller_exchange
+    if product.store_id == nil
+      completed.exchange = deal.seller_exchange
+    end
     completed.location = product.full_street_address
     completed.commodity = product.commodity
     completed.seller_id = deal.seller_id
@@ -68,6 +70,7 @@ class CompletedDealsController < ApplicationController
 
   def show
     @completed_deal = CompletedDeal.find(params[:id])
+    @public = @completed_deal.pending_deal.product.store_id != nil
   end
 
   private

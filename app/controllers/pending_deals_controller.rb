@@ -10,13 +10,18 @@ class PendingDealsController < ApplicationController
     deal.active = true
     deal.exchange_public_seller = User.find(params[:seller_id]).public
     deal.exchange_public_buyer = User.find(deal.buyer_id).public
-    #if deal.exchange_public_seller || deal.exchange_public_buyer
+    if deal.product.store_id == nil
       datetime = 2.days.from_now
       deal.seller_datetime = datetime
       deal.buyer_datetime = datetime
       deal.buyer_exchange = "Pickup"
       deal.seller_exchange = "Dropoff"
-    #end
+    else
+      deal.seller_datetime = nil
+      deal.buyer_datetime = nil
+      deal.buyer_exchange = nil
+      deal.seller_exchange = nil
+    end      
     deal.save
     redirect_to product
   end
@@ -53,6 +58,7 @@ class PendingDealsController < ApplicationController
 
   def show
     @deal = PendingDeal.find(params[:id])
+    @public = @deal.product.store_id != nil
   end
 
   private

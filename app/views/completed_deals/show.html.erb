@@ -7,12 +7,20 @@
   <% if !@completed_deal.fulfilled %>
     <% if current_user.id == @completed_deal.seller_id %>
       <h3>Congratulations! You are selling <%= @completed_deal.commodity.downcase %> to <%= @completed_deal.buyer.name %>.</h3>
-      <h3><%= @completed_deal.buyer.name %> will arrive at <%= @completed_deal.location %> at this datetime: <%= PendingDeal.find(@completed_deal.pending_deal_id).buyer_datetime %>, according to the priorly arranged agreement.</h3>
-      <h3>The buyer will pick up the product at this time and pay you $<%= @completed_deal.price %></h3>
+      <% if @public %>
+        <h3><%= @completed_deal.buyer.name %> will arrive at <%= @completed_deal.location %>, during <%= link_to "this store's business hours", @store %>, within your maximum listed pickup time of <%= @store.business_days_pickup %> business days.</h3>
+      <% else %> 
+        <h3><%= @completed_deal.buyer.name %> will arrive at <%= @completed_deal.location %> at this datetime: <%= PendingDeal.find(@completed_deal.pending_deal_id).buyer_datetime %>, according to the priorly arranged agreement.</h3>
+      <% end %>  
+    <h3>The buyer has agreed to pick up the product under these parameters and pay you $<%= @completed_deal.price %></h3>
     <% elsif current_user.id == @completed_deal.buyer_id %>
       <h3>Congratulations! You are buying <%= @completed_deal.commodity.downcase %> from <%= @completed_deal.seller.name %>.</h3>
-      <h3>You need to arrive at <%= @completed_deal.location %> at this datetime: <%= PendingDeal.find(@completed_deal.pending_deal_id).buyer_datetime %>, according to the priorly arranged agreement.</h3>
-      <h3>You will need to pick up the product at this time and pay the seller $<%= @completed_deal.price %></h3>
+      <% if @public %>
+        <h3>You need to arrive at <%= @completed_deal.location %> during <%= link_to "this store's business hours", @store %>, within the maximum listed pickup time of <%= @store.business_days_pickup %> business days.</h3>
+      <% else %>
+        <h3>You need to arrive at <%= @completed_deal.location %> at this datetime: <%= PendingDeal.find(@completed_deal.pending_deal_id).buyer_datetime %>, according to the priorly arranged agreement.</h3>
+      <% end %>
+      <h3>You have agreed to pick up the product under these parameters and pay the seller $<%= @completed_deal.price %></h3>
     <% else %>
       <h3>Why are you on this page!?!?!</h3>
     <% end %>

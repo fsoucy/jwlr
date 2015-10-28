@@ -48,6 +48,14 @@ class StoresController < ApplicationController
   def edit_times
     if current_user == Store.find(params[:id]).user
       @store = Store.find(params[:id])
+      @minutes = []
+      @hours = []
+      for i in 1..12
+        @hours.push([i.to_s, i])
+      end
+      for i in 1..60
+        @minutes.push([i.to_s, i])
+      end
     else
       redirect_to root_url
     end
@@ -55,7 +63,7 @@ class StoresController < ApplicationController
 
   private
     def store_params
-      params.require(:store).permit(:description, :picture, :full_street_address, :name, :business_days_pickup, :mondayopen, :mondaystart, :mondayend, :tuesdayopen, :tuesdaystart, :tuesdayend, :wednesdayopen, :wednesdaystart, :wednesdayend, :thursdayopen, :thursdaystart, :thursdayend, :fridayopen, :fridaystart, :fridayend, :saturdayopen, :saturdaystart, :saturdayend, :sundayopen, :sundaystart, :sundayend)
+      params.require(:store).permit(:description, :picture, :full_street_address, :name, :business_days_pickup, :mondayopen, :mondaystarthour, :mondaystartminute, :mondaystartampm)
     end
 
     def logged_in_user

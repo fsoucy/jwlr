@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027032859) do
+ActiveRecord::Schema.define(version: 20151028195322) do
 
   create_table "completed_deals", force: :cascade do |t|
     t.float    "price"
@@ -108,27 +108,16 @@ ActiveRecord::Schema.define(version: 20151027032859) do
     t.datetime "updated_at",           null: false
     t.string   "picture"
     t.boolean  "mondayopen"
-    t.time     "mondaystart"
-    t.time     "mondayend"
     t.boolean  "tuesdayopen"
-    t.time     "tuesdaystart"
-    t.time     "tuesdayend"
     t.boolean  "wednesdayopen"
-    t.time     "wednesdaystart"
-    t.time     "wednesdayend"
     t.boolean  "thursdayopen"
-    t.time     "thursdaystart"
-    t.time     "thursdayend"
     t.boolean  "fridayopen"
-    t.time     "fridaystart"
-    t.time     "fridayend"
     t.boolean  "saturdayopen"
-    t.time     "saturdaystart"
-    t.time     "saturdayend"
     t.boolean  "sundayopen"
-    t.time     "sundaystart"
-    t.time     "sundayend"
     t.string   "description"
+    t.integer  "mondaystarthour"
+    t.integer  "mondaystartminute"
+    t.string   "mondaystartampm"
   end
 
   add_index "stores", ["user_id"], name: "index_stores_on_user_id"

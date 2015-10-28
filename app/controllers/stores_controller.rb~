@@ -10,7 +10,7 @@ class StoresController < ApplicationController
     @store = current_user.stores.build(store_params)
     if @store.save
       flash[:success] = "Store created!"
-      redirect_to edit_times_stores_path(@store.id)
+      redirect_to edit_times_store_path(@store.id)
     else
       render 'stores/new'
     end

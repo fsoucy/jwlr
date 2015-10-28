@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016024153) do
+ActiveRecord::Schema.define(version: 20151027032859) do
 
   create_table "completed_deals", force: :cascade do |t|
     t.float    "price"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 20151016024153) do
     t.boolean  "sundayopen"
     t.time     "sundaystart"
     t.time     "sundayend"
+    t.string   "description"
   end
 
   add_index "stores", ["user_id"], name: "index_stores_on_user_id"

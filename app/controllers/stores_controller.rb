@@ -55,7 +55,7 @@ class StoresController < ApplicationController
 
   private
     def store_params
-      params.require(:store).permit(:full_street_address, :name, :business_days_pickup, :mondayopen, :mondaystart, :mondayend, :tuesdayopen, :tuesdaystart, :tuesdayend, :wednesdayopen, :wednesdaystart, :wednesdayend, :thursdayopen, :thursdaystart, :thursdayend, :fridayopen, :fridaystart, :fridayend, :saturdayopen, :saturdaystart, :saturdayend, :sundayopen, :sundaystart, :sundayend)
+      params.require(:store).permit(:description, :picture, :full_street_address, :name, :business_days_pickup, :mondayopen, :mondaystart, :mondayend, :tuesdayopen, :tuesdaystart, :tuesdayend, :wednesdayopen, :wednesdaystart, :wednesdayend, :thursdayopen, :thursdaystart, :thursdayend, :fridayopen, :fridaystart, :fridayend, :saturdayopen, :saturdaystart, :saturdayend, :sundayopen, :sundaystart, :sundayend)
     end
 
     def logged_in_user

@@ -4,7 +4,7 @@ class CompletedDeal < ActiveRecord::Base
   belongs_to :pending_deal, class_name: "PendingDeal"
   after_create :completed_pending  
   validates :price, presence: true
-  validates :exchange, presence: true
+  #validates :exchange, presence: true
   validates :location, presence: true
   validates :commodity, presence: true
   validates :seller_id, presence: true

@@ -71,6 +71,9 @@ class CompletedDealsController < ApplicationController
   def show
     @completed_deal = CompletedDeal.find(params[:id])
     @public = @completed_deal.pending_deal.product.store_id != nil
+    if @public
+      @store = Store.find(@completed_deal.pending_deal.product.store_id)
+    end
   end
 
   private

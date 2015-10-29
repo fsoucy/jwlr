@@ -5,17 +5,20 @@
       <%= render 'shared/error_messages', object: f.object %>
 
       <% if @store.mondayopen %>
-        <div class = "row">
+        <p>Monday Start Time:</p>
+        <center>
+	<div class = "row">
 	  <div class="col-md-3">
-	    <%= f.select :mondaystarthour, options_for_select: (@hours, 1) %>
+	    <%= f.select :mondaystarthour, options_for_select(@hours, 1) %>
 	  </div>
 	  <div class="col-md-3">
-	    <%= f.select :mondaystartminute, options_for_select: (@minutes, 1) %>
+	    <%= f.select :mondaystartminute, options_for_select(@minutes, 1) %>
 	  </div>
 	  <div class="col-md-3">
-	    <%= f.select :mondaystartampm, options_for_select: ([["AM", "AM"], ["PM", "PM"]], "AM") %>
+	    <%= f.select :mondaystartampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
 	  </div>
 	</div>
+	</center>
       <% end %>
       
       

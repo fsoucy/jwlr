@@ -10,7 +10,8 @@
 <div class="container">
   <div class="col-md-4 center">
     <h1><%= @product.commodity %></h1>
-    <center><%= image_tag @product.picture_url(:thumb) %></center>
+    <center><%= image_tag @product.picture_url(:thumb), class:"product_image" %></center>
+    <center><%= image_tag @product.picture_url, class: "big_product_image" %></center>
     <center>
      <% if @product.user == current_user %><%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
     data: { confirm: "Are you sure you wish to delete this?" } %><% end %></center>

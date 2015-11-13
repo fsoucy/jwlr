@@ -1,23 +1,24 @@
 <% title = "Product by " + @product.user.name %>
 <% provide(:title, "Product") %>
-<% normal = !@product.hold %>
+<% normal = !@product.hold && !@product.sold %>
 <% has_deal = logged_in? && current_user.active_deals.find_by(product_id: @product.id) != nil %>
 <% if !normal %>
   <% if !has_deal %>
-    <h1>Sorry, this product is currently on hold</h1>
+    <h1>Sorry, this product is currently unavailable.</h1>
   <% end %>
 <% end %>
 <div class="container">
   <div class="col-md-4 center">
     <h1><%= @product.commodity %></h1>
-    <center><%= image_tag @product.picture_url(:thumb) %></center>
+    <center><%= image_tag @product.picture_url(:thumb), class:"product_image" %></center>
+    <center><%= image_tag @product.picture_url, class: "big_product_image") %></center>
     <center>
      <% if @product.user == current_user %><%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
     data: { confirm: "Are you sure you wish to delete this?" } %><% end %></center>
-    <% if !(normal || has_deal) %>
+    <% if normal || has_deal %>
       <%= render 'deal_form' %>
     <% end %>
-    <% if has_deall %>
+    <% if has_deal %>
       <%= link_to "Current Deal", current_user.active_deals.find_by(product_id: @product.id) %>
     <% end %>
   </div>

@@ -26,7 +26,8 @@ class StoresController < ApplicationController
       flash[:success] = "Successfully updated your store!"
       redirect_to @store
     else
-      render 'stores/edit'
+      flash[:danger] = "You need a time for all your stuff!"
+      redirect_to edit_times_store_path(@store.id)
     end         
   end
 
@@ -50,11 +51,14 @@ class StoresController < ApplicationController
       @store = Store.find(params[:id])
       @minutes = []
       @hours = []
+      @minutes.push(["Minute", -1])
+      @hours.push(["Hour", -1])
+      @minutes.push(["00", 0])
       for i in 1..12
-        @hours.push([i.to_s, i])
+        @hours.push([(sprintf("%0.2d", i)).to_s, i])
       end
-      for i in 1..60
-        @minutes.push([i.to_s, i])
+      for i in 1..50
+        @minutes.push([(sprintf("%0.2d", i)).to_s, i])
       end
     else
       redirect_to root_url
@@ -63,7 +67,7 @@ class StoresController < ApplicationController
 
   private
     def store_params
-      params.require(:store).permit(:description, :picture, :full_street_address, :name, :business_days_pickup, :mondayopen, :mondaystarthour, :mondaystartminute, :mondaystartampm)
+      params.require(:store).permit(:description, :picture, :full_street_address, :name, :business_days_pickup, :mondayopen, :mondaystarthour, :mondaystartminute, :mondaystartampm, :mondayendhour, :mondayendminute, :mondayendampm, :tuesdayopen, :tuesdaystarthour, :tuesdaystartminute, :tuesdaystartampm, :tuesdayendhour, :tuesdayendminute, :tuesdayendampm, :wednesdayopen, :wednesdaystarthour, :wednesdaystartminute, :wednesdaystartampm, :wednesdayendhour, :wednesdayendminute, :wednesdayendampm, :thursdayopen, :thursdaystarthour, :thursdaystartminute, :thursdaystartampm, :thursdayendhour, :thursdayendminute, :thursdayendampm, :fridayopen, :fridaystarthour, :fridaystartminute, :fridaystartampm, :fridayendhour, :fridayendminute, :fridayendampm, :saturdayopen, :saturdaystarthour, :saturdaystartminute, :saturdaystartampm, :saturdayendhour, :saturdayendminute, :saturdayendampm, :sundayopen, :sundaystarthour, :sundaystartminute, :sundaystartampm, :sundayendhour, :sundayendminute, :sundayendampm)
     end
 
     def logged_in_user

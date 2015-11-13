@@ -1,10 +1,51 @@
 <div class="row">
   <div class="col-md-4">
-    <h1><%= @store.name %>
+    <h1><%= @store.name %></h1>
     <% if @store.picture != nil %>
-      <%= image_tag(@store.picture_url(:thumb)) %>
+      <center><%= image_tag(@store.picture_url(:thumb)) %></center>
     <% end %>
     <h1>Owner: <%= User.find(@store.user_id).name %></h1>
+    <h1>Hours of Operation</h1>
+    <% if @store.mondayopen %>
+      <p>Monday: <%= @store.mondaystarthour %>:<%= @store.mondaystartminute %> <%= @store.mondaystartampm %> --> <%= @store.mondayendhour %>:<%= @store.mondayendminute %> <%= @store.mondayendampm %></p>
+    <% else %>
+      <p>Monday: Closed</p>
+    <% end %>
+    <% if @store.tuesdayopen %>
+      <p>Tuesday: <%= @store.tuesdaystarthour %>:<%= @store.tuesdaystartminute %> <%= @store.tuesdaystartampm %> --> <%= @store.tuesdayendhour %>:<%= @store.tuesdayendminute %> <%= @store.tuesdayendampm %></p>
+    <% else %>
+      <p>Tuesday: Closed</p>
+    <% end %>
+    <% if @store.wednesdayopen %>
+      <p>Wednesday: <%= @store.wednesdaystarthour %>:<%= @store.wednesdaystartminute %> <%= @store.wednesdaystartampm %> --> <%= @store.wednesdayendhour %>:<%= @store.wednesdayendminute %> <%= @store.wednesdayendampm %></p>
+    <% else %>
+      <p>Wednesday: Closed</p>
+    <% end %>
+
+    <% if @store.thursdayopen %>
+      <p>Thursday: <%= @store.thursdaystarthour %>:<%= @store.thursdaystartminute %> <%= @store.thursdaystartampm %> --> <%= @store.thursdayendhour %>:<%= @store.thursdayendminute %> <%= @store.thursdayendampm %></p>
+    <% else %>
+      <p>Thursday: Closed</p>
+    <% end %>
+
+    <% if @store.fridayopen %>
+      <p>Friday: <%= @store.fridaystarthour %>:<%= @store.fridaystartminute %> <%= @store.fridaystartampm %> --> <%= @store.fridayendhour %>:<%= @store.fridayendminute %> <%= @store.fridayendampm %></p>
+    <% else %>
+      <p>Friday: Closed</p>
+    <% end %>
+
+    <% if @store.saturdayopen %>
+      <p>Saturday: <%= @store.saturdaystarthour %>:<%= @store.saturdaystartminute %> <%= @store.saturdaystartampm %> --> <%= @store.saturdayendhour %>:<%= @store.saturdayendminute %> <%= @store.saturdayendampm %></p>
+    <% else %>
+      <p>Saturday: Closed</p>
+    <% end %>
+
+    <% if @store.sundayopen %>
+      <p>Sunday: <%= @store.sundaystarthour %>:<%= @store.sundaystartminute %> <%= @store.sundaystartampm %> --> <%= @store.sundayendhour %>:<%= @store.sundayendminute %> <%= @store.sundayendampm %></p>
+    <% else %>
+      <p>Sunday: Closed</p>
+    <% end %>
+
   </div>
   <div class="col-md-8">
     <h1>Location: <%= @store.full_street_address %></h1>

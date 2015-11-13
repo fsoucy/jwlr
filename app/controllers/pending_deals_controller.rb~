@@ -1,6 +1,7 @@
 class PendingDealsController < ApplicationController
   before_action :logged_in_user, only: [:create, :update, :destroy, :show]
   before_action :correct_user, only: [:show]
+  before_action :values, only: [:create, :update]
   
   def create
     deal = current_user.active_deals.build(seller_id: params[:seller_id], product_id: params[:product_id])
@@ -58,6 +59,7 @@ class PendingDealsController < ApplicationController
 
   def show
     @deal = PendingDeal.find(params[:id])
+    @public = @deal.product.store_id != nil
   end
 
   private
@@ -84,5 +86,8 @@ class PendingDealsController < ApplicationController
       redirect_to root_url
     end
   end
+
+  def values
+  
   
 end

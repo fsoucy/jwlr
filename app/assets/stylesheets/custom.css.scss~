@@ -349,10 +349,15 @@ input
 .store_part
 {
   display:inline-block;
-  margin:50px;
+  margin:75px;
 }
 
 .store_contain
 {
   text-align:center;
+}
+
+.delete_button
+{
+  margin-top:30px;
 }

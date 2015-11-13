@@ -3,7 +3,7 @@ $(document).ready(function() {
 	$('.jewelry_div').hide();
 	$('.gold_bricks_div').hide();
 	$('.precious_stones_div').hide();
-
+	$('.big_product_image').hide();
 	
 	$('.all').click(function() {
 		$(this).removeClass('inactive').addClass('active');
@@ -70,6 +70,16 @@ $(document).ready(function() {
                 $('.gold_coins_div').hide();
                 $('.precious_stones_div').show();
             });
+
+	$('.product_image').mouseover(function() {
+		$(this).hide();
+		$('.big_product_image').show();
+	    });
+	
+	$('.big_product_image').mouseout(function() {
+		$(this).hide();
+		$('.product_image').show();
+	    });
 
 
 

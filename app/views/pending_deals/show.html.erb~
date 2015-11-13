@@ -1,5 +1,6 @@
 <% provide(:title, "Pending Deal") %>
 <div class="container">
+<h1>Can't purchase right now -- product is currently on hold.</h1>
   <div class="col-md-4 center">
     <h1><%= Product.find(@deal.product_id).commodity %></h1>
     <center><%= image_tag Product.find(@deal.product_id).picture_url(:thumb) %></center>
@@ -8,7 +9,7 @@
   </div>
   <div class="col-md-4 center">
     <%= render 'deal_edit_form' %>
-    <% if @deal.match && current_user.id == @deal.buyer_id %>
+    <% if @deal.match && current_user.id == @deal.buyer_id && !Product.find(@deal.product_id).hold %>
       <%= render 'buy_form' %>
     <% end %>
   </div>

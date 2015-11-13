@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col-md-4">
-    <h1><%= @store.name %>
+    <h1><%= @store.name %></h1>
     <% if @store.picture != nil %>
-      <%= image_tag(@store.picture_url(:thumb)) %>
+      <center><%= image_tag(@store.picture_url(:thumb)) %></center>
     <% end %>
     <h1>Owner: <%= User.find(@store.user_id).name %></h1>
   </div>
   <div class="col-md-8">
     <h1>Location: <%= @store.full_street_address %></h1>
-    <p><%= @store.description %></p>
+    <center><p><%= @store.description %></p></center>
   </div>
 </div>

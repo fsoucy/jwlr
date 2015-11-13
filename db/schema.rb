@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028195322) do
+ActiveRecord::Schema.define(version: 20151029041805) do
 
   create_table "completed_deals", force: :cascade do |t|
     t.float    "price"
@@ -118,6 +118,45 @@ ActiveRecord::Schema.define(version: 20151028195322) do
     t.integer  "mondaystarthour"
     t.integer  "mondaystartminute"
     t.string   "mondaystartampm"
+    t.integer  "tuesdaystarthour"
+    t.integer  "tuesdaystartminute"
+    t.string   "tuesdaystartampm"
+    t.integer  "wednesdaystarthour"
+    t.integer  "wednesdaystartminute"
+    t.string   "wednesdaystartampm"
+    t.integer  "thursdaystarthour"
+    t.integer  "thursdaystartminute"
+    t.string   "thursdaystartampm"
+    t.integer  "fridaystarthour"
+    t.integer  "fridaystartminute"
+    t.string   "fridaystartampm"
+    t.integer  "saturdaystarthour"
+    t.integer  "saturdaystartminute"
+    t.string   "saturdaystartampm"
+    t.integer  "sundaystarthour"
+    t.integer  "sundaystartminute"
+    t.string   "sundaystartampm"
+    t.integer  "mondayendhour"
+    t.integer  "mondayendminute"
+    t.string   "mondayendampm"
+    t.integer  "tuesdayendhour"
+    t.integer  "tuesdayendminute"
+    t.string   "tuesdayendampm"
+    t.integer  "wednesdayendhour"
+    t.integer  "wednesdayendminute"
+    t.string   "wednesdayendampm"
+    t.integer  "thursdayendhour"
+    t.integer  "thursdayendminute"
+    t.string   "thursdayendampm"
+    t.integer  "fridayendhour"
+    t.integer  "fridayendminute"
+    t.string   "fridayendampm"
+    t.integer  "saturdayendhour"
+    t.integer  "saturdayendminute"
+    t.string   "saturdayendampm"
+    t.integer  "sundayendhour"
+    t.integer  "sundayendminute"
+    t.string   "sundayendampm"
   end
 
   add_index "stores", ["user_id"], name: "index_stores_on_user_id"

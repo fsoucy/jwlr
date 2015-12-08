@@ -83,6 +83,8 @@ class User < ActiveRecord::Base
     PendingDeal.where("buyer_id = ? AND active = ?", id, true)
   end
 
+    
+
   private
   
   def create_activation_digest

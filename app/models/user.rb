@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
   end
 
     
-
+    #hi
   private
   
   def create_activation_digest

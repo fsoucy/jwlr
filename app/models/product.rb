@@ -6,5 +6,6 @@ class Product < ActiveRecord::Base
   attr_accessor :hits
   has_many :pending_deals, dependent: :destroy
   validates :full_street_address, presence: true
-  
+
+   
 end

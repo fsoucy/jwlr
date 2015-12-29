@@ -82,8 +82,12 @@ class User < ActiveRecord::Base
   def buying_feed
     PendingDeal.where("buyer_id = ? AND active = ?", id, true)
   end
+  
+  def to_json(options = {})
+    options[:except] ||= [:created_at, :updated_at, :password_digest, :remember_digest, :activation_digest, :activated_at, :reset_digest, :reset_sent_at]
+    super(options)
+  end
 
-    
     #hi
   private
   

@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       get :matches
     end
   end
+  resources :users_api, only: [:create, :destroy, :update]
   resources :account_activations, only: [:edit]
   
   resources :password_resets, only: [:new, :create, :edit, :update]

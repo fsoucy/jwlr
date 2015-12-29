@@ -16,7 +16,7 @@ class Status < ActiveRecord::Base
     products = Array.new
     products_price.each { |p| products.push(p) if p.commodity == self.commodity }
     final = Array.new
-    products.each { |p| final.push(p) if p.user != self.user }
+    products.each { |p| final.push(p) if p.user_id != self.user_id }
     self.match_for_all_desc(final)
   end
   

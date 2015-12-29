@@ -8,6 +8,9 @@ class Status < ActiveRecord::Base
   validates :maxPrice, presence: true
   validates :toTravel, presence: true
 
+  def to_json(options = {})
+    
+  
   def matching_products
     near_products = Product.near([self.latitude, self.longitude],
     	       				    self.toTravel)

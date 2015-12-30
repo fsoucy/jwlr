@@ -8,6 +8,12 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
+  post 'signin' => 'api#signin'
+  post 'signup' => 'api#signup'
+  get 'localusers' => 'api#localusers'
+  post 'newstatus' => 'api#newstatus'  
+  
+  get 'users' => 'api#users'
   resources :users do
     member do
       get :selling, :buying, :completed, :edit_description, :user_stores, :noties
@@ -26,7 +32,6 @@ Rails.application.routes.draw do
       get :matches
     end
   end
-  resources :users_api, only: [:create, :destroy, :update]
   resources :account_activations, only: [:edit]
   
   resources :password_resets, only: [:new, :create, :edit, :update]

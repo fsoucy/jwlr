@@ -10,6 +10,8 @@ class UsersController < ApplicationController
   def index
     @users = User.where(public: true).paginate(page: params[:page])
   end
+
+  
   
   def show
     @user = User.find(params[:id])

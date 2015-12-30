@@ -82,7 +82,7 @@ class UsersController < ApplicationController
   end
 
   def noties
-#    @notes = User.find(params[:id]).notifications
+    @notes = User.find(params[:id]).notifications
   end
   
   private

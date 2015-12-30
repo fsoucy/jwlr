@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   post 'signin' => 'api#signin'
   post 'signup' => 'api#signup'
   get 'localusers' => 'api#localusers'
-  
+  post 'newstatus' => 'api#newstatus'  
   
   get 'users' => 'api#users'
   resources :users do

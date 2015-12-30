@@ -8,12 +8,12 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
-  post 'signin' => 'api#signin'
-  post 'signup' => 'api#signup'
-  get 'localusers' => 'api#localusers'
-  post 'newstatus' => 'api#newstatus'  
+  #post 'signin' => 'api#signin'
+  #post 'signup' => 'api#signup'
+  #get 'localusers' => 'api#localusers'
+  #post 'newstatus' => 'api#newstatus'  
+  #get 'users' => 'api#users'
   
-  get 'users' => 'api#users'
   resources :users do
     member do
       get :selling, :buying, :completed, :edit_description, :user_stores, :noties

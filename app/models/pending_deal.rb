@@ -34,4 +34,9 @@ class PendingDeal < ActiveRecord::Base
       errors.add(:seller_id, "Seller can't be the same as buyer")
     end
   end
+
+  def to_json(options = {})
+    options[:except] ||= [:created_at, :updated_at]
+    super(options)
+  end
 end

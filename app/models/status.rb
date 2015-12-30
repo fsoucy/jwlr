@@ -9,7 +9,9 @@ class Status < ActiveRecord::Base
   validates :toTravel, presence: true
 
   def to_json(options = {})
-    
+    options[:except] ||= [:created_at, :updated_at]
+    super(options)
+  end
   
   def matching_products
     near_products = Product.near([self.latitude, self.longitude],

@@ -12,7 +12,6 @@ class UsersController < ApplicationController
   end
 
   
-  
   def show
     @user = User.find(params[:id])
     @products = Product.where("user_id = ?", @user.id)
@@ -22,6 +21,32 @@ class UsersController < ApplicationController
     @precious_stones = Product.where("user_id = ? AND commodity = ?", @user.id, "Precious Stones")
   end
   
+  def sign_in_mobile
+    if request.post? %% request.headers["Content-Type"] == "application/json"
+      if params && params[:email] && params[:password]
+        user = User.find_by(params[:email])
+	if user
+	  if user.authenticate(params[:password])
+	    user.auth_token = User.new_token
+	    user.auth_expiry = Time.now + 24 * 60 * 60
+	    if user.save
+	      render json: user.to_json, status: 200
+	    end
+	  else
+	    e = Error.new(status: 401, message: "Wrong password")
+	    render json: e.to_json, status: 401
+	  end
+	else
+	  e = Error.new(status: 400, message: "User with that email not found")
+	  render json: e.to_json, status: 400
+	end
+      else
+        e = Error.new(status: 400, message: "Parameters missing")
+	render json: e.to_json, status: 400
+      end
+    end
+  end
+    
   def create
     if request.headers["Content-Type"] == "application/json"
       if params && params[:name] && params[:email] && params[:password] && params[:password_confirmation] && params[:public] && params[:description]

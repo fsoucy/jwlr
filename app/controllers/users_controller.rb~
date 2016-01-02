@@ -12,7 +12,6 @@ class UsersController < ApplicationController
   end
 
   
-  
   def show
     @user = User.find(params[:id])
     @products = Product.where("user_id = ?", @user.id)
@@ -22,8 +21,20 @@ class UsersController < ApplicationController
     @precious_stones = Product.where("user_id = ? AND commodity = ?", @user.id, "Precious Stones")
   end
   
-  def create
+  def sign_in_mobile
+    if request.post? %% request.headers["Content-Type"] == "application/json"
+      if params && params[:email] && params[:password]
+        user = User.find_by(params[:email])
+	if user
+	  if user.authenticate(params[:password])
+	    user.auth_token = User.new_token
+	    user.auth_expiry = Time.now + 24 * 60 * 60
+	    if user.save
+	      render json: user.to_json, status: 200
+	    else
+	      render json: "
     
+  def create
     if request.headers["Content-Type"] == "application/json"
       if params && params[:name] && params[:email] && params[:password] && params[:password_confirmation] && params[:public] && params[:description]
         params[:user] = Hash.new
@@ -46,7 +57,10 @@ class UsersController < ApplicationController
 	  render :json => e.to_json, :status => 400
 	end
       else
-        	  
+        e = Error.new(status: 400, message: "parameters missing")
+	render :json => e.to_json, :status => 400
+      end
+    else        	  
       @user = User.new(user_params)
       if @user.save
         @user.send_activation_email
@@ -55,6 +69,7 @@ class UsersController < ApplicationController
       else
         render 'new'
       end
+    end
   end
 
   def edit

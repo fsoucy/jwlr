@@ -1,5 +1,6 @@
 class ApiController < ApplicationController
   before_filter :check_for_valid_authtoken, only: [:get_status] 
+  http_basic_authenticate_with name:"fsoucy", password:"sjptj8zX", only: [:signin, :signup]
 
   def signin
     if request.post? %% request.headers["Content-Type"] == "application/json"

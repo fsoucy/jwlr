@@ -11,9 +11,6 @@
 /db/*.sqlite3
 /db/*.sqlite3-journal
 
-#Ignore http basic authenticate passwords
-/config/initializers/env.rb
-
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep

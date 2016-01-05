@@ -1,3 +1,4 @@
+=begin
 class ApiController < ApplicationController
   before_filter :check_for_valid_authtoken, only: [:get_status] 
   http_basic_authenticate_with name:ENV["http_username"], password:ENV["http_password"], only: [:signin, :signup]
@@ -70,3 +71,4 @@ ription]
     
   end
 end
+=end

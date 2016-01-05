@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029041805) do
+ActiveRecord::Schema.define(version: 20160102175747) do
 
   create_table "completed_deals", force: :cascade do |t|
     t.float    "price"
@@ -176,6 +176,8 @@ ActiveRecord::Schema.define(version: 20151029041805) do
     t.datetime "reset_sent_at"
     t.boolean  "public",            default: false
     t.text     "description"
+    t.string   "auth_token"
+    t.datetime "auth_expiry"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

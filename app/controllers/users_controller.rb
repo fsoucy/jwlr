@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed]
   before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed]
   before_action :admin_user, only: :destroy  
-  before_filter :check_for_valid_auth_token, 
   
   def new
     @user = User.new

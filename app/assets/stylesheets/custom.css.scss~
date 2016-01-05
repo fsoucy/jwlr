@@ -288,7 +288,37 @@ input
   margin-top: 15px;
   margin-bottom: 15px;
   padding: 5px;
-  border: 1px solid #08c;
+  width: 50%;
+  background-color: #000000;
+  border: 3px solid #ffd733;
+  h4
+  {
+    color: #ffffff;
+  }
+  .posted
+  {
+    color: #ffffff;
+  }
+  .label
+  {
+    display: inline;
+    color: #aeae84;
+    font-size: 95%;
+  }
+  .gold
+  {
+    display: inline;
+    color: #ffd733;
+    font-size: 100%;
+  }
+}
+
+.status_a
+{
+  a
+  {
+    color: #ffffff;
+  }
 }
 
 .product_feed
@@ -311,15 +341,6 @@ input
     
   }
 
-}
-
-.status_a
-{
-  margin-top: -10px;
-  a
-  {
-    margin-right: 11px;
-  }
 }
 
 .file
@@ -359,5 +380,5 @@ input
 
 .delete_button
 {
-  margin-top:30px;
+  margin-top:18px;
 }

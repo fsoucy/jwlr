@@ -288,7 +288,6 @@ input
   margin-top: 15px;
   margin-bottom: 15px;
   padding: 5px;
-  width: 50%;
   background-color: #000000;
   border: 3px solid #ffd733;
   h4
@@ -381,4 +380,12 @@ input
 .delete_button
 {
   margin-top:18px;
+}
+
+.thingy_feed
+{
+  div
+  {
+    display: inline;
+  }
 }

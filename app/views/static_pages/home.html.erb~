@@ -1,18 +1,14 @@
 <% provide(:title, "Home") %>
 
 <% if logged_in? %>
-  <div class="row">
     <aside class="col-md-4">
       <section class="user_info">
 	<%= render 'shared/user_info' %>
       </section>
     </aside>
-    <aside class="col-md=8">
-      <section>
-	<%= render @statuses %>
-      </section>
-    </aside>
-  </div>
+    <div class="feed">
+	<%= render current_user.statuses %>
+    </div>
 <% else %>
   <div class="center jumbotron">
     <h1>Home</h1>

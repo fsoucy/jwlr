@@ -3,7 +3,7 @@ class ApiController < ApplicationController
   http_basic_authenticate_with name:ENV["http_username"], password:ENV["http_password"], only: [:signin, :signup]
 
   def signin
-    if request.post? %% request.headers["Content-Type"] == "application/json"
+    if request.post? && request.headers["Content-Type"] == "application/json"
       if params && params[:email] && params[:password]
         user = User.find_by(params[:email])
         if user

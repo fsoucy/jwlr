@@ -5,12 +5,11 @@
     <aside class="col-md-4">
       <section class="user_info">
 	<%= render 'shared/user_info' %>
-	<%= render @first_three %>
       </section>
     </aside>
     <aside class="col-md=8">
       <section>
-	<%= render @others %>
+	<%= render @statuses %>
       </section>
     </aside>
   </div>

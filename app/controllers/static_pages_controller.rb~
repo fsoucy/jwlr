@@ -1,8 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
     @statuses = current_user.statuses
-    @first_three = current_user.statuses[1..3]
-    @others = current_user.statuses[4:]    
   end
 
   def help

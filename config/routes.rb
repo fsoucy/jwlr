@@ -15,7 +15,8 @@ Rails.application.routes.draw do
   #get 'localusers' => 'api#localusers'
   #post 'newstatus' => 'api#newstatus'  
   #get 'users' => 'api#users'
-  
+    
+
   resources :users do
     member do
       get :selling, :buying, :completed, :edit_description, :user_stores, :noties

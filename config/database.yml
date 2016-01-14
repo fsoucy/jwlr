@@ -23,8 +23,8 @@ test:
 production:
   <<: *default
   adapter: mysql2
-  password: CRt7mefjNqNJP4dWJJcU8ymH
+  password: MyNZw3VkgcSUvnJHufQXDm4J
   database: igold
-  username: root
+  username: igold
   host: localhost
   port: 3306

@@ -36,7 +36,7 @@ group :test do
 end
 
 group :production do
-  gem 'mysql2', '0.3.18'
+  gem 'mysql2', '0.3.20'
   gem 'rails_12factor', '0.0.2'
 end
 

@@ -22,4 +22,9 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  adapter: mysql2
+  password: CRt7mefjNqNJP4dWJJcU8ymH
+  database: igold
+  username: root
+  host: localhost
+  port: 3306

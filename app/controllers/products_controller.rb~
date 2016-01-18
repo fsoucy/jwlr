@@ -3,24 +3,29 @@ class ProductsController < ApplicationController
   before_action :correct_user, only: [:destroy]  
   
   def new
-    @product = current_user.products.build
-    @has = false
-    if @product.user.stores.length > 0
+
+    if current_user.stores.length > 0
       @has = true
       stos = Array.new
+      @product = current_user.products.build
       @product.user.stores.each do |s|
         stos.push([s.name, s.id])
       end
       @stos = stos
       @default = @product.user.stores.first
+    else
+      @product = current_user.products.build
+      @has = false
     end
 	
   end
   
   def create
-    @product = current_user.products.build(product_params)
-    if @product.store_id != nil
+    if params[:store_id] != nil && store = Store.find_by(params[:store_id])
+      @product = store.products.build(product_params)
       @product.full_street_address = Store.find(@product.store_id).full_street_address
+    else
+      @product = current_user.products.build(product_params)
     end
     if @product.save
       flash[:success] = "You have successfully uploaded a new product!"

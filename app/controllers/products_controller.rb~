@@ -19,6 +19,9 @@ class ProductsController < ApplicationController
   
   def create
     @product = current_user.products.build(product_params)
+    if @product.store_id != nil
+      @product.full_street_address = Store.find(@product.store_id).full_street_address
+    end
     if @product.save
       flash[:success] = "You have successfully uploaded a new product!"
       redirect_to @product

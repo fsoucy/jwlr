@@ -2,6 +2,7 @@ class Store < ActiveRecord::Base
   belongs_to :user
   mount_uploader :picture, PictureUploader    
   validate :selected_times
+  has_many :products
 
   def selected_times
     things = []

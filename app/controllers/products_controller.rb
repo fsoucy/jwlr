@@ -18,9 +18,11 @@ class ProductsController < ApplicationController
   end
   
   def create
-    @product = current_user.products.build(product_params)
-    if @product.store_id != nil
+    if params[:store_id] != nil && store = Store.find_by(params[:store_id]
+      @product = store.products.build(product_params)
       @product.full_street_address = Store.find(@product.store_id).full_street_address
+    else
+      @product = current_user.products.build(product_params)
     end
     if @product.save
       flash[:success] = "You have successfully uploaded a new product!"

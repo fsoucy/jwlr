@@ -35,7 +35,7 @@
   color: white;
 }
 
-.special
+.col-md-8
 {
   text-align: center;
 }

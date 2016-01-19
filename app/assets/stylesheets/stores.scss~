@@ -35,28 +35,12 @@
   color: white;
 }
 
-.col-md-8
+.special
 {
   text-align: center;
 }
 
-.slideshow
-{
-  width: 400px;
-  height: 400px;
-}
 
-.slideshow tr
-{
-  width: 400px;
-  height: 200px;
-}
-
-.slideshow img
-{
-  width: 100%;
-  height: 100%;
-}
 
 
 
@@ -94,6 +78,7 @@
   margin-top: 30px;
   border: 5px solid black;
   background-color: lightblue;
+  text-align: center;
 }
 
 /*
@@ -234,6 +219,19 @@ td
   background-color: pink;  
 }
 
+
+
+.search
+{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  width: 100px;	 
+  float: left;
+  margin-left: 6px;
+  clear: both;
+}
+
 .gallery img
 {
   width: 100px;
@@ -272,10 +270,12 @@ td
 }
 
 
-.gmoney p, .gmoney .money, .gcomm p, .gcomm .comm, .gdist p, .gdist .dist
+
+.gmoney .money, .gcomm, .gcomm .comm, .gdist .dist
 {
-  display: inline-block;
-  margin-left: 6px;
+  width: auto !important;
+  display: inline-block !important;
+  margin-left: 6px !important;
 }
 
 .gmoney, .gcomm, .gdist
@@ -295,4 +295,64 @@ td
   margin-left: 6px;
   margin-top: 7px;
   margin-bottom: 5px;
+}
+
+.slideshow
+{
+  position: relative;
+  display: block;
+  border: 2px solid black;
+  height: 300px;
+  width: 500px;
+  #width: 300px;
+  #margin: 0 auto;
+  margin-left: 200px;
+  background-image: url('http://vignette2.wikia.nocookie.net/athletedoper/images/1/1e/Manny_Ramirez.jpg/revision/latest?cb=20140313211357');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.next
+{
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  top: 120px;
+  right: 0px;
+}
+
+.prev
+{
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  top: 120px;
+  left: 0px;
+}
+
+.toggles
+{
+  width: 100%;
+  position: absolute;
+  bottom: 3px;
+  display: block;
+}
+
+.cont
+{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 42px;
+}
+
+.circle
+{
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  border-radius: 10px;
+  background-color: blue;
+  margin-left: 2px;
+  margin-right: 2px;
 }

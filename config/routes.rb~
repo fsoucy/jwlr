@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'api/get_status'
+
   root 'static_pages#home'
   get 'help' =>  'static_pages#help'
   get 'about' =>  'static_pages#about'
@@ -8,12 +10,12 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
-  post 'signin' => 'api#signin'
-  post 'signup' => 'api#signup'
-  get 'localusers' => 'api#localusers'
-  post 'newstatus' => 'api#newstatus'  
+  #post 'signin' => 'api#signin'
+  #post 'signup' => 'api#signup'
+  #get 'localusers' => 'api#localusers'
+  #post 'newstatus' => 'api#newstatus'  
+  #get 'users' => 'api#users'
   
-  get 'users' => 'api#users'
   resources :users do
     member do
       get :selling, :buying, :completed, :edit_description, :user_stores, :noties
@@ -21,7 +23,7 @@ Rails.application.routes.draw do
   end
   resources :stores do
     member do
-      get :edit_times
+      #get :edit_times, :gallery, :
     end
   end
   resources :completed_deals, only: [:create, :destroy, :show, :update]

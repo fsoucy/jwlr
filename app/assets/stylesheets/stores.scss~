@@ -306,7 +306,8 @@ td
   width: 500px;
   #width: 300px;
   #margin: 0 auto;
-  margin-left: 200px;
+  margin-left: auto;
+  margin-right: auto;
   background-image: url('http://vignette2.wikia.nocookie.net/athletedoper/images/1/1e/Manny_Ramirez.jpg/revision/latest?cb=20140313211357');
   background-repeat: no-repeat;
   background-size: cover;

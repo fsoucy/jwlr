@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160102175747) do
+ActiveRecord::Schema.define(version: 20160106024525) do
 
   create_table "completed_deals", force: :cascade do |t|
     t.float    "price"
@@ -106,7 +106,6 @@ ActiveRecord::Schema.define(version: 20160102175747) do
     t.integer  "user_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
-    t.string   "picture"
     t.boolean  "mondayopen"
     t.boolean  "tuesdayopen"
     t.boolean  "wednesdayopen"
@@ -157,6 +156,9 @@ ActiveRecord::Schema.define(version: 20160102175747) do
     t.integer  "sundayendhour"
     t.integer  "sundayendminute"
     t.string   "sundayendampm"
+    t.string   "cover_photo"
+    t.string   "profile_photo"
+    t.string   "specialty_commodity"
   end
 
   add_index "stores", ["user_id"], name: "index_stores_on_user_id"

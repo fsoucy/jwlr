@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   end
   resources :stores do
     member do
-      get :edit_times, :gallery, :about, :blog, :message
+      get :edit_times, :gallery
     end
   end
   resources :completed_deals, only: [:create, :destroy, :show, :update]

@@ -10,7 +10,7 @@ class StoresController < ApplicationController
     @store = Store.find_by(id: params[:id])
     @products = @store.products
   end
-
+  
   def create
     @store = current_user.stores.build(store_params)
     if @store.save

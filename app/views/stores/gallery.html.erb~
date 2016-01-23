@@ -2,7 +2,7 @@
   <% @products.each do |prod| %>
     <div class="store_prod">
       <div class="store_within">
-        <%= image_tag prod.picture_url(:thumb), class: "store_prod_image" %>
+        <%= image_tag prod.picture_url[:thumb], class: "store_prod_image" %>
         <h3 class="store_prod_name"><%= prod.commodity %></h3>
         <h4 class="store_prod_price"><%= prod.price %></h4>
       </div>

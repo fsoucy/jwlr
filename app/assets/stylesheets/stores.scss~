@@ -271,7 +271,7 @@ td
 
 
 
-.gmoney .money, .gcomm, .gcomm .comm, .gdist .dist
+.gmoney .money, .gcomm .comm, .gdist .dist
 {
   width: auto !important;
   display: inline-block !important;
@@ -356,4 +356,33 @@ td
   background-color: blue;
   margin-left: 2px;
   margin-right: 2px;
+}
+
+.storefront_gallery
+{
+  width: 100%;
+  background-color: #e5f2ff;
+  margin-top: -10px;
+}
+
+.store_prod
+{
+  display: inline-block;
+}
+
+.store_prod_image
+{
+  width: 300px;
+  height: 400px;  
+  
+}
+
+.store_prod_name, .store_prod.price
+{
+  color: #eaeaea;
+}
+
+.container
+{
+  width: 100%;
 }

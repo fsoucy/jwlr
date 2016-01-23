@@ -357,3 +357,43 @@ td
   margin-left: 2px;
   margin-right: 2px;
 }
+
+.storefront_gallery
+{
+  width: 100%;
+  background-color: #e5f2ff;
+  margin-top: -10px;
+}
+
+.store_within
+{
+  display: block;
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.store_prod
+{
+  display: inline-block;
+  margin-left: 40px;
+  height: 300px;
+  width: 200px;
+}
+
+.store_prod_image
+{
+  width: 200px;
+  height: 200px;  
+  
+}
+
+.store_prod_name, .store_prod.price
+{
+  color: #eaeaea;
+}
+
+.container
+{
+  width: 100%;
+}

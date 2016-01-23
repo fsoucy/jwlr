@@ -1,6 +1,6 @@
 class Store < ActiveRecord::Base
   belongs_to :user
-  mount_uploader :picture, PictureUploader    
+  mount_uploader :profile_photo, PictureUploader    
   validate :selected_times
 
   def selected_times

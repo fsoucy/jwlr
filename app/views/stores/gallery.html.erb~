@@ -1,0 +1,19 @@
+<div class="storefront_gallery">
+  <div class="storefront_nav">
+    <ul>
+      <li>Gallery</li>
+      <li>About</li>
+      <li>Contact</li>
+      <li>Message</li>
+    </ul>
+  </div>
+  <div class="store_within">
+    <% @products.each do |prod| %>
+      <div class="store_prod">
+        <%= image_tag prod.picture_url(:thumb), class: "store_prod_image" %>
+        <h3 class="store_prod_name"><%= prod.commodity %></h3>
+        <h4 class="store_prod_price"><%= prod.price %></h4>
+      </div>
+    <% end %>
+  </div>
+</div>

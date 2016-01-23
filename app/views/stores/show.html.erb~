@@ -1,13 +1,100 @@
-<div class="row">
-  <div class="col-md-4">
-    <h1><%= @store.name %></h1>
-    <% if @store.picture != nil %>
-      <center><%= image_tag(@store.picture_url(:thumb)) %></center>
-    <% end %>
-    <h1>Owner: <%= User.find(@store.user_id).name %></h1>
-  </div>
-  <div class="col-md-8">
-    <h1>Location: <%= @store.full_street_address %></h1>
-    <center><p><%= @store.description %></p></center>
-  </div>
-</div>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="helper.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="col-md-4">
+        <div class="profile_picture"><img class="try" src = "http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/></div><hr>
+	<table class="wrap">
+	  <td class="info">
+	    <p>Hey</p>
+	    <p>This is another blog article are you interested in reading about it</p>
+	    <p>Listen to some more articles I want you to see them</p>
+	    <p>Keep reading all of these articles I have to offer you pretty please<p>
+	  </td>
+	  <td class="blank"></td>
+	  <td class="blog"><p>Hey</p></td>
+	</table>
+	<!--<table class="slideshow">
+	  <tr><img class="slide_img" src="img1.png"></tr>
+	  <tr><td class="back"><p>Back</p></td>
+	  <td class="next"><p>Forward</p></td></tr>
+	</table>-->
+      </div>
+      <div class="col-md-8 special_8">
+	<div class="slideshow">
+          <img class="next" src="http://calvarytherock.org/images/next2.png">
+          <img class="prev" src="http://www.hko.gov.hk/m/nowcast/images/previous.png">
+          <div class="toggles">
+            <div class="cont">
+              <div class="circle"></div><div class="circle"></div><div class="circle"></div>
+            </div>
+          </div>
+        </div>
+        <div class="description">
+	  <p>This is my store description. We've been in business for 100 years and we have 100 likes. We sell gold bullion and gold coins. We deliver and we accept payments of credit cards, debit cards, cash or check. This is all I'm gonna write but that's all i need to write I don't really know what to say except for the fact that I have nothing more to say.</p>
+	</div>
+	<!--<div class="panel">
+	  <input type="range" min="0" max="255" id="red"></input>
+	  <input type="range" min="0" max="255" id="green"></input>
+	  <input type="range" min="0" max="255" id="blue"></input>
+	</div>-->
+	<div class="gallery_nav">
+	  <img src="http://coinquest.com/cgi-data/cq_ro/response_380/us_gold_replica_1776.jpg">
+	</div>
+	<!--
+	<center>
+	<div class="gallery_nav">
+	  <ul>
+	    <li>Gold Coins</li>
+	    <li>Gold Bullion</li>
+	    <li>All Merchandise</li>
+	    <li>Other Stuff</li>
+	  </ul>
+	</div>
+	</center>
+	-->
+	<div class="gallery">
+	  <img src="http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/>
+	  <img src="http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/>
+	  <img src="http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/>
+	  <img src="http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/>
+	  <img src="http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/>
+	  <img src="http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/>
+	  <img src="http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/>
+	  <img src="http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/>
+	  <img src="http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/>
+	  <img src="http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/>
+	  <img src="http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/>
+	  <img src="http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/>
+	  <img src="http://vignette2.wikia.nocookie.net/disney/images/1/13/2013-miley-cyrus.jpg/revision/latest?cb=20140315161650"/>
+	</div>
+	<div class="gal_options">
+	  <input type="text" class="gal_search" placeholder="Filter keywords">
+	  <h4>Price</h4>
+	  <span class="gmoney"><input type="checkbox" class="money" value="below_50">Below $25</span>
+	  <span class="gmoney"><input type="checkbox" class="money" value="50_100">$50 -> $100</span>
+	  <span class="gmoney"><input type="checkbox" class="money" value="100_500">$100 -> $500</span>
+	  <span class="gmoney"><input type="checkbox" class="money" value="500_1000">$500 -> $1000</span>
+	  <span class="gmoney"><input type="checkbox" class="money" value="above_1000">Above $1000</span>
+	  <h4>Commodity</h4>
+	  <span class="gcomm"><input type="checkbox" class="comm" value="gold_coins">Gold Coins</span>
+	  <span class="gcomm"><input type="checkbox" class="comm" value="gold_bullion">Gold Bullion</span>
+	  <span class="gcomm"><input type="checkbox" class="comm" value="jewelry">Jewelry</span>
+	  <span class="gcomm"><input type="checkbox" class="comm" value="antiques">Antiques</span>
+	  <h4>Distance</h4>
+	  <span class="gdist"><input type="checkbox" class="dist" value="below_2">Below 2 miles</span>
+	  <span class="gdist"><input type="checkbox" class="dist" value="2_10">Between 2 and 10 miles</span>
+	  <span class="gdist"><input type="checkbox" class="dist" value="10_25">Between 10 and 25 miles</span>
+	  <span class="gdist"><input type="checkbox" class="dist" value="above_25">Above 25 miles</span>
+	  <input type="submit" class="btn-success search" text="Search!">
+	</div>
+      </div>
+    </div>
+    
+  </body>
+</html>

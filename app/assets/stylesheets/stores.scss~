@@ -364,15 +364,14 @@ td
   background-color: #e1e1f3;
   margin-top: -10px;
   overflow: auto;
-  position: relative;
 }
 
 .store_within
 {
   position: relative;
-  margin-top: 140px;
+  margin-top: 40px;
   display: block;
-  width: 960px;
+  width: 1000px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -380,33 +379,16 @@ td
 .store_prod
 {
   margin-top: 40px;
-  float: left;
-  margin-left: 20px;
-  margin-right: 20px;
+  display: inline-block;
+  margin-left: 40px;
   height: 300px;
   width: 200px;
-}
-
-.image_container
-{
-  width: 200px;
-  height: 200px;
-  position: relative;
 }
 
 .store_prod_image
 {
   width: 200px;
   height: 200px;    
-}
-
-.quick_view
-{
-  opacity: 0.7;
-  width: 200px;
-  height: 50px;
-  position: absolute;
-  bottom: 0px;
 }
 
 .store_prod_name, .store_prod.price
@@ -421,27 +403,14 @@ td
 
 .storefront_nav
 {
-  z-index: 1;
-  opacity: 0.7;
-  position: fixed;
-  background-color: #eaeaea;
   width: 100%;
   margin-top: 0px;
   height: 100px;	
 }
 
-.storefront_nav_within
-{
-  height: 100%;
-  width: 920px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .storefront_nav ul
 {
-  width: 960px;
+  width: 1000px;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -455,73 +424,8 @@ td
   height: 100%;
 }
 
-.storefront_nav button
+.storefront_nav ul li button
 {
-  background-color: #eaeaea;
-  border: none;
-  float: left;
-  width: 230px;
-  height: 100%;
-  outline: none;
-}
-
-.store_about
-{
-  float: left;
-}
-
-.store_location
-{
-  display: block;
-  float: right;
-}
-
-.pic_and_description
-{
-
-  display: block;
+  border: 0px;
   width: 100%;
-  clear: both;
-  margin-top: 20px;
-}
-
-.store_profile_picture
-{
-  display: block;
-  margin-top: 0px;
-  height: 200px;
-  width: 200px;
-  float: left;
-}
-
-.store_profile_picture:hover
-{
-  opacity: 0.8;
-}
-
-.store_description
-{
-  display: block;
-  float: right;
-  clear: none;
-  margin-top: 0px;
-}
-
-.hoursofoperation
-{
-  float: left;
-}
-
-hours
-{
-  display: block;
-  column-count: 2;
-}
-
-.store_about_container
-{
-  width: 600px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }

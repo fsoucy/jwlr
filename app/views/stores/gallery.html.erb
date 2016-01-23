@@ -1,0 +1,58 @@
+<div class="storefront_gallery">
+  <div class="storefront_nav">
+    <div class="storefront_nav_within">
+      <button class="gallery_button"><a href="#gallery">Gallery</a></button>
+      <button class="about_button"><a href="#about">About</a></button>
+      <button class="contact_button"><a href="#contact">Contact</a></button>
+      <button class="blog_button"><a href="#blog">Blog</a></button>
+    </div>
+  </div>
+  <div class="store_within store_gallery_within store_active">
+    <% @products.each do |prod| %>
+      <div class="store_prod">
+        <div class="image_container">
+          <%= image_tag prod.picture_url(:thumb), class: "store_prod_image" %>
+	  <button class="quick_view">Quick View</button>
+	</div>
+        <h3 class="store_prod_name"><%= prod.commodity %></h3>
+        <h4 class="store_prod_price"><%= prod.price %></h4>
+      </div>
+    <% end %>
+  </div>
+  <div class="store_within store_blog_within store_inactive">
+    <h1>This is my blog</h1>
+    <p>A blog post</p>
+    <p>A blog post</p>
+    <p>Another blog post about my dog</p>
+    <p>Another blog post</p>
+  </div>
+  <div class="store_within store_contact_within store_inactive">
+    <h1>This is my contact info</h1>
+    <p>My hours of operation</p>
+    <p>Monday</p>
+    <p>Tuesday</p>
+    <p>Wed</p>
+    <p>Closed on Sunday</p>
+    <p>You can contact me by calling this number<p>
+  </div>
+  <div class="store_within store_about_within store_inactive">
+    <div class="store_about_container">
+      <h3 class="store_about">About</h2>
+      <h3 class="store_location"><%= @store.full_street_address %></h3>
+      <div class="pic_and_description">
+	<%= image_tag @store.picture_url, class: "store_profile_picture" %>
+	<p class="store_description"><%= @store.description %></p>
+      </div>
+      <!--<h2 class="hoursofoperation">Hours of Operation</h2>
+      <div class="hours">
+	<p>Monday: Closed</p>
+	<p>Tuesday: Closed</p>
+	<p>Wednesday: Closed</p>
+	<p>Thursday: Closed</p>
+	<p>Friday: Closed</p>
+	<p>Saturday: Closed</p>
+	<p>Sunday: Closed</p>
+      </div>-->
+    </div>
+  </div>
+</div>

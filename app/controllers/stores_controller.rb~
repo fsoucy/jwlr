@@ -6,6 +6,11 @@ class StoresController < ApplicationController
     @store = current_user.stores.build
   end
 
+  def gallery
+    @store = Store.find_by(:id)
+    @products = @store.products
+  end
+
   def create
     @store = current_user.stores.build(store_params)
     if @store.save
@@ -51,12 +56,13 @@ class StoresController < ApplicationController
       @store = Store.find(params[:id])
       @minutes = []
       @hours = []
-      @minutes.push(["Minute", 0])
-      @hours.push(["Hour", 0])
+      @minutes.push(["Minute", -1])
+      @hours.push(["Hour", -1])
+      @minutes.push(["00", 0])
       for i in 1..12
         @hours.push([(sprintf("%0.2d", i)).to_s, i])
       end
-      for i in 1..60
+      for i in 1..50
         @minutes.push([(sprintf("%0.2d", i)).to_s, i])
       end
     else

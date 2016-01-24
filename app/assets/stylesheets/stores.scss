@@ -467,31 +467,25 @@ td
 
 .store_about
 {
+  margin-top: 0px;
   float: left;
 }
 
 .store_location
 {
   display: block;
-  float: right;
+  float: left;
+  margin-top: 0px;
 }
 
-.pic_and_description
-{
-
-  display: block;
-  width: 100%;
-  clear: both;
-  margin-top: 20px;
-}
 
 .store_profile_picture
 {
   display: block;
-  margin-top: 0px;
   height: 200px;
   width: 200px;
   float: left;
+  clear: left;
 }
 
 .store_profile_picture:hover
@@ -501,27 +495,61 @@ td
 
 .store_description
 {
+  width: 500px;
   display: block;
-  float: right;
-  clear: none;
-  margin-top: 0px;
+  float: left;
+  clear: left;
 }
 
 .hoursofoperation
 {
+  display: block;
+  clear: left;
   float: left;
 }
 
-hours
+.hours
 {
+  float: left;
+  clear: left;
   display: block;
-  column-count: 2;
 }
 
-.store_about_container
+.store_about_container, .store_contact_container
 {
-  width: 600px;
+  width: 920px;
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.about_right, .contact_right
+{
+  float: right;
+  clear: none;
+  display: block;
+  position: relative;
+  margin-top: 0px;
+}
+
+.about_left, .contact_left
+{
+  float: left;
+  clear: none;
+  display: block;
+  position: relative;
+  margin-top: 0px;
+  width: 520px;
+}
+
+.faq_header, .about_left h5, .about_left p
+{
+  float: left;
+  clear: left;
+}
+
+.contact_left h3, .contact_left h4, .contact_left h5, .contact_left p
+{
+  float: left;
+  clear: left;
 }

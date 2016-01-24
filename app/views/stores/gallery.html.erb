@@ -27,32 +27,41 @@
     <p>Another blog post</p>
   </div>
   <div class="store_within store_contact_within store_inactive">
-    <h1>This is my contact info</h1>
-    <p>My hours of operation</p>
-    <p>Monday</p>
-    <p>Tuesday</p>
-    <p>Wed</p>
-    <p>Closed on Sunday</p>
-    <p>You can contact me by calling this number<p>
+    <div "store_contact_container">
+      <div class="contact_left">
+	<h3>Contact Information</h3>
+	<h4>Phone: 978-882-1146</h4>
+	<h4>Email: franksoucy9@gmail.com</h4>
+	<h4>36 Central Ave, Danvers, MA</h4>
+	<br>
+	<h4>Feel free to message me at any time!</h4>
+      </div>
+      <div class="contact_right">
+	
+      </div>
+    </div>
   </div>
   <div class="store_within store_about_within store_inactive">
     <div class="store_about_container">
-      <h3 class="store_about">About</h2>
-      <h3 class="store_location"><%= @store.full_street_address %></h3>
-      <div class="pic_and_description">
-	<%= image_tag @store.profile_photo_url, class: "store_profile_picture" %>
-	<p class="store_description"><%= @store.description %></p>
+      <div class="about_left">
+	<h3 class="store_about">About</h3>
+	<p class="store_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo ac mauris ac luctus. Phasellus porttitor dignissim risus a auctor. Sed non sollicitudin tortor, vulputate tempus ligula. Fusce nisi turpis, venenatis quis dictum id, pulvinar vel enim. Donec quis lacus viverra, mattis turpis sed, sagittis tortor. Phasellus sit amet tellus tincidunt, rhoncus dui eget, convallis erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed mattis nibh nec tristique feugiat. Etiam convallis elementum ultrices. Curabitur nisi elit, blandit quis libero in, hendrerit consequat dui. Maecenas dignissim nulla vitae porta faucibus. Phasellus eget arcu vitae urna lobortis blandit posuere vitae urna. Praesent ut felis nec justo tempus ultricies. Aliquam pulvinar viverra mauris, non venenatis arcu facilisis eu.</p>
+	<h4 class="faq_header">FAQ</h4>
+	<h5>How much time am I given to pick up a purchased product?</h5>
+	<p>You are given four business days to pick up a purchased product.</p>
+	<h5>How many days do I have to return a product I'm unsatisfied with?</h5>
+	<p>Assuming no damage from its original condition, two business days.</p>
+	<h5>Why don't you list a telephone number on your contact page?</h5>
+	<p>We don't want spam calls... you should use the wonderful messaging tool iGold provides!</p>
       </div>
-      <!--<h2 class="hoursofoperation">Hours of Operation</h2>
-      <div class="hours">
-	<p>Monday: Closed</p>
-	<p>Tuesday: Closed</p>
-	<p>Wednesday: Closed</p>
-	<p>Thursday: Closed</p>
-	<p>Friday: Closed</p>
-	<p>Saturday: Closed</p>
-	<p>Sunday: Closed</p>
-      </div>-->
+      <div class="about_right">
+	<h3 class="store_location">36 Central Ave, Danvers, MA</h3>
+	<%= image_tag @store.profile_photo_url, class: "store_profile_picture" %>
+	<h3 class="hoursofoperation">Hours of Operation</h3>
+	<div class="hours">
+	  <p>Monday: Closed<br>Tuesday: Closed<br>Wednesday: Closed<br>Thursday: Closed<br>Friday: Closed<br>Saturday: Closed<br>Sunday: Closed</p>
+	</div>
+      </div>
     </div>
   </div>
 </div>

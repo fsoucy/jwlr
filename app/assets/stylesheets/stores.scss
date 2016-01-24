@@ -553,3 +553,33 @@ td
   float: left;
   clear: left;
 }
+
+.contact_right input, .contact_right textarea
+{
+  width: 350px;
+  float: left;
+  clear: left;
+  border-radius: 4px;
+  border: 2px solid silver;
+}
+
+.contact_left h3
+{
+  margin-top: 0px;
+}
+
+.contact_right .btn
+{
+  margin-bottom: 4px;
+}
+
+.modal
+{
+  position: absolute;
+  color: white;
+  height: 300px;
+  width: 300px;
+  top: 100px;
+  top: 100px;
+  background-color: #eaeaea;
+}

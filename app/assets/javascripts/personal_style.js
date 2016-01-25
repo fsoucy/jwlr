@@ -2,11 +2,18 @@ $(document).ready(function() {
 
     //storefront
     $('.quick_view').hide();
+
+    $('.quick_view').click(function() {
+	var $toPut = "<div class='modal'><p>What the fuk</p></div>";
+	$('body').append($toPut);
+	
+	//$('body').append(toPut);
+    });
     
     $('.store_inactive').hide();
     $('.store_active').show();
 
-    $('.image_container').mouseover(function() {
+    $('.image_container').mouseenter(function() {
 	$(this).children('.quick_view').slideToggle("slow");
     });
 

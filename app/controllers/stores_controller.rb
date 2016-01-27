@@ -29,6 +29,7 @@ class StoresController < ApplicationController
     if @store.update_attributes(store_params)
       flash[:success] = "Successfully updated your store!"
       redirect_to @store
+	else
       flash[:danger] = "You need a time for all your stuff!"
       redirect_to edit_times_store_path(@store.id)
     end         

@@ -10,7 +10,11 @@ class StoresController < ApplicationController
     @store = current_user.stores.build(store_params)
     if @store.save
       flash[:success] = "Store created!"
-      redirect_to edit_times_store_path(@store.id)
+	  if !@store.mondayopen? && !@store.tuesdayopen? && !@store.wednesdayopen? && !@store.thursdayopen? && !@store.fridayopen? && !@store.saturdayopen? && !@store.sundayopen?
+	    redirect_to @store
+	  else
+	    redirect_to edit_times_store_path(@store.id)
+	  end
     else
       render 'stores/new'
     end
@@ -25,12 +29,10 @@ class StoresController < ApplicationController
     if @store.update_attributes(store_params)
       flash[:success] = "Successfully updated your store!"
       redirect_to @store
-    else
       flash[:danger] = "You need a time for all your stuff!"
       redirect_to edit_times_store_path(@store.id)
     end         
   end
-
     
   def show
     @store = Store.find_by(id: params[:id])

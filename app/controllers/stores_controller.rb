@@ -1,6 +1,6 @@
 class StoresController < ApplicationController
   before_action :logged_in_user
-  before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy, :edit_times]
 
   def new
     @store = current_user.stores.build
@@ -52,21 +52,17 @@ class StoresController < ApplicationController
   end
 
   def edit_times
-    if current_user == Store.find(params[:id]).user
-      @store = Store.find(params[:id])
-      @minutes = []
-      @hours = []
-      @minutes.push(["Minute", -1])
-      @hours.push(["Hour", -1])
-      @minutes.push(["00", 0])
-      for i in 1..12
-        @hours.push([(sprintf("%0.2d", i)).to_s, i])
-      end
-      for i in 1..50
-        @minutes.push([(sprintf("%0.2d", i)).to_s, i])
-      end
-    else
-      redirect_to root_url
+    @store = Store.find(params[:id])
+    @minutes = []
+    @hours = []
+    @minutes.push(["Minute", -1])
+    @hours.push(["Hour", -1])
+    @minutes.push(["00", 0])
+    for i in 1..12
+      @hours.push([(sprintf("%0.2d", i)).to_s, i])
+    end
+    for i in 1..50
+      @minutes.push([(sprintf("%0.2d", i)).to_s, i])
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160106024525) do
+ActiveRecord::Schema.define(version: 20160127003157) do
 
   create_table "completed_deals", force: :cascade do |t|
     t.float    "price"
@@ -159,6 +159,7 @@ ActiveRecord::Schema.define(version: 20160106024525) do
     t.string   "cover_photo"
     t.string   "profile_photo"
     t.string   "specialty_commodity"
+    t.string   "phone"
   end
 
   add_index "stores", ["user_id"], name: "index_stores_on_user_id"

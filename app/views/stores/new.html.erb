@@ -16,6 +16,9 @@
 
       <%= f.label :full_street_address, "Store Location", style: 'inline'%>
       <%= f.text_field :full_street_address, class: 'form-control', style:'inline' %>
+	  
+	  <%= f.label :phone, "Phone number", style: 'inline'%>
+      <%= f.text_field :phone, class: 'form-control', style:'inline' %>
       
       <%= f.label :business_days_pickup, "How many business days will a user have to pick up a purchased product?", style: 'inline' %>
       <%= f.number_field :business_days_pickup, class: 'form-control', style: 'inline' %>

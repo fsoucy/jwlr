@@ -1,54 +1,110 @@
-<div class="row">
-  <div class="col-md-4">
-    <h1><%= @store.name %></h1>
-    <% if @store.profile_photo != nil %>
-      <center><%= image_tag(@store.profile_photo_url(:thumb)) %></center>
-    <% end %>
-    <h1>Owner: <%= User.find(@store.user_id).name %></h1>
-    <h1>Hours of Operation</h1>
-    <% if @store.mondayopen %>
-      <p>Monday: <%= @store.mondaystarthour %>:<%= @store.mondaystartminute %> <%= @store.mondaystartampm %> --> <%= @store.mondayendhour %>:<%= @store.mondayendminute %> <%= @store.mondayendampm %></p>
-    <% else %>
-      <p>Monday: Closed</p>
-    <% end %>
-    <% if @store.tuesdayopen %>
-      <p>Tuesday: <%= @store.tuesdaystarthour %>:<%= @store.tuesdaystartminute %> <%= @store.tuesdaystartampm %> --> <%= @store.tuesdayendhour %>:<%= @store.tuesdayendminute %> <%= @store.tuesdayendampm %></p>
-    <% else %>
-      <p>Tuesday: Closed</p>
-    <% end %>
-    <% if @store.wednesdayopen %>
-      <p>Wednesday: <%= @store.wednesdaystarthour %>:<%= @store.wednesdaystartminute %> <%= @store.wednesdaystartampm %> --> <%= @store.wednesdayendhour %>:<%= @store.wednesdayendminute %> <%= @store.wednesdayendampm %></p>
-    <% else %>
-      <p>Wednesday: Closed</p>
-    <% end %>
-
-    <% if @store.thursdayopen %>
-      <p>Thursday: <%= @store.thursdaystarthour %>:<%= @store.thursdaystartminute %> <%= @store.thursdaystartampm %> --> <%= @store.thursdayendhour %>:<%= @store.thursdayendminute %> <%= @store.thursdayendampm %></p>
-    <% else %>
-      <p>Thursday: Closed</p>
-    <% end %>
-
-    <% if @store.fridayopen %>
-      <p>Friday: <%= @store.fridaystarthour %>:<%= @store.fridaystartminute %> <%= @store.fridaystartampm %> --> <%= @store.fridayendhour %>:<%= @store.fridayendminute %> <%= @store.fridayendampm %></p>
-    <% else %>
-      <p>Friday: Closed</p>
-    <% end %>
-
-    <% if @store.saturdayopen %>
-      <p>Saturday: <%= @store.saturdaystarthour %>:<%= @store.saturdaystartminute %> <%= @store.saturdaystartampm %> --> <%= @store.saturdayendhour %>:<%= @store.saturdayendminute %> <%= @store.saturdayendampm %></p>
-    <% else %>
-      <p>Saturday: Closed</p>
-    <% end %>
-
-    <% if @store.sundayopen %>
-      <p>Sunday: <%= @store.sundaystarthour %>:<%= @store.sundaystartminute %> <%= @store.sundaystartampm %> --> <%= @store.sundayendhour %>:<%= @store.sundayendminute %> <%= @store.sundayendampm %></p>
-    <% else %>
-      <p>Sunday: Closed</p>
-    <% end %>
-
+<div class="storefront_gallery">
+  <div class="storefront_nav">
+    <div class="storefront_nav_within">
+      <button class="gallery_button"><a href="#gallery">Gallery</a></button>
+      <button class="about_button"><a href="#about">About</a></button>
+      <button class="contact_button"><a href="#contact">Contact</a></button>
+      <button class="blog_button"><a href="#blog">Blog</a></button>
+    </div>
   </div>
-  <div class="col-md-8">
-    <h1>Location: <%= @store.full_street_address %></h1>
-    <center><p><%= @store.description %></p></center>
+  <div class="store_title">
+	<h1><%= @store.name %></h1>
+  </div>
+  <div class="store_within store_gallery_within store_active">
+    <% @products.each do |prod| %>
+      <div class="store_prod">
+        <div class="image_container">
+          <%= image_tag prod.picture_url(:thumb), class: "store_prod_image" %>
+	  <button class="quick_view">Quick View</button>
+	</div>
+        <h3 class="store_prod_name"><%= prod.commodity %></h3>
+        <h4 class="store_prod_price"><%= prod.price %></h4>
+      </div>
+    <% end %>
+  </div>
+  <div class="store_within store_blog_within store_inactive">
+    <h1>This is my blog</h1>
+    <p>A blog post</p>
+    <p>A blog post</p>
+    <p>Another blog post about my dog</p>
+    <p>Another blog post</p>
+  </div>
+  <div class="store_within store_contact_within store_inactive">
+    <div "store_contact_container">
+      <div class="contact_left">
+	<h3>Contact Information</h3>
+	<h4>Phone: <%= @store.phone %></h4>
+	<h4>Email: <%= @store.user.email %></h4>
+	<h4><%= @store.full_street_address %></h4>
+	<br>
+	<h4>Feel free to message me at any time!</h4>
+      </div>
+      <div class="contact_right">
+	<input type="text" class="contact_name" placeholder="name">
+	<input type="text" class="contact_email" placeholder="email">
+	<input type="subject" class="contact_subject" placeholder="subject">
+	<textarea class="contact_message" placeholder="Write your message here..."></textarea>
+	<input type="submit" class="btn btn-success">
+      </div>
+    </div>
+  </div>
+  <div class="store_within store_about_within store_inactive">
+    <div class="store_about_container">
+      <div class="about_left">
+	<h3 class="store_about">About</h3>
+	<p class="store_description"><%= @store.description %></p>
+	<h4 class="faq_header">FAQ</h4>
+	<h5>How much time am I given to pick up a purchased product?</h5>
+	<p>You are given four business days to pick up a purchased product.</p>
+	<h5>How many days do I have to return a product I'm unsatisfied with?</h5>
+	<p>Assuming no damage from its original condition, two business days.</p>
+	<h5>Why don't you list a telephone number on your contact page?</h5>
+	<p>We don't want spam calls... you should use the wonderful messaging tool iGold provides!</p>
+      </div>
+      <div class="about_right">
+	<h3 class="store_location"><%= @store.full_street_address %></h3>
+	<%= image_tag @store.profile_photo_url, class: "store_profile_picture" %>
+	<h3 class="hoursofoperation">Hours of Operation</h3>
+	<div class="hours">
+	  <p>
+      Monday: <% if @store.mondayopen %>
+      <%= @store.mondaystarthour %>:<%= @store.mondaystartminute %> <%= @store.mondaystartampm %> --> <%= @store.mondayendhour %>:<%= @store.mondayendminute %> <%= @store.mondayendampm %>
+      <% else %>
+      Closed
+      <% end %>
+      <br>Tuesday: <% if @store.tuesdayopen %>
+      <%= @store.tuesdaystarthour %>:<%= @store.tuesdaystartminute %> <%= @store.tuesdaystartampm %> --> <%= @store.tuesdayendhour %>:<%= @store.tuesdayendminute %> <%= @store.tuesdayendampm %>
+      <% else %>
+      Closed
+      <% end %>
+      <br>Wednesday: <% if @store.wednesdayopen %>
+      <%= @store.wednesdaystarthour %>:<%= @store.wednesdaystartminute %> <%= @store.wednesdaystartampm %> --> <%= @store.wednesdayendhour %>:<%= @store.wednesdayendminute %> <%= @store.wednesdayendampm %>
+      <% else %>
+      Closed
+      <% end %>
+      <br>Thursday: <% if @store.thursdayopen %>
+      <%= @store.thursdaystarthour %>:<%= @store.thursdaystartminute %> <%= @store.thursdaystartampm %> --> <%= @store.thursdayendhour %>:<%= @store.thursdayendminute %> <%= @store.thursdayendampm %>
+      <% else %>
+      Closed
+      <% end %>
+      <br>Friday: <% if @store.fridayopen %>
+      <%= @store.fridaystarthour %>:<%= @store.fridaystartminute %> <%= @store.fridaystartampm %> --> <%= @store.fridayendhour %>:<%= @store.fridayendminute %> <%= @store.fridayendampm %>
+      <% else %>
+      Closed
+      <% end %>
+      <br>Saturday: <% if @store.saturdayopen %>
+      <%= @store.saturdaystarthour %>:<%= @store.saturdaystartminute %> <%= @store.saturdaystartampm %> --> <%= @store.saturdayendhour %>:<%= @store.saturdayendminute %> <%= @store.saturdayendampm %>
+      <% else %>
+      Closed
+      <% end %>
+      <br>Sunday: <% if @store.sundayopen %>
+      <%= @store.sundaystarthour %>:<%= @store.sundaystartminute %> <%= @store.sundaystartampm %> --> <%= @store.sundayendhour %>:<%= @store.sundayendminute %> <%= @store.sundayendampm %>
+      <% else %>
+      Closed
+      <% end %>
+    </p>
+	</div>
+      </div>
+    </div>
   </div>
 </div>

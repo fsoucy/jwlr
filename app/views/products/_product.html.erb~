@@ -1,8 +1,0 @@
-<div class="product_feed">
-<center><%= image_tag product.picture_url(:thumb) %></center>
-<div>
-<center><p>Seller: <%= product.user.name %></p></center>
-<center><p>Price: $<%= product.price %></p></center>
-<center><p>Location: <%= product.full_street_address %></p></center>
-</div>
-</div>

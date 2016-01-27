@@ -1,3 +1,0 @@
-<title>User Stores</title>
-<% if @has %>
-  <% render @stores %>

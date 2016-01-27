@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="store_title">
-	<h1><%= @store.name %></h1>
+	<h1><%= @store.name %> <%= link_to "Edit", edit_store_url(@store) if current_user?(@store.user) %></h1>
   </div>
   <div class="store_within store_gallery_within store_active">
     <h3>Featured Products</h3>
@@ -73,7 +73,7 @@
       <div class="about_right">
 	<h3 class="store_location"><%= @store.full_street_address %></h3>
 	<%= image_tag @store.profile_photo_url, class: "store_profile_picture" %>
-	<h3 class="hoursofoperation">Hours of Operation</h3>
+	<h3 class="hoursofoperation">Hours of Operation <%= link_to "Edit", edit_times_store_url(@store) if current_user?(@store.user) %></h3>
 	<div class="hours">
 	  <p>
       Monday: <% if @store.mondayopen %>

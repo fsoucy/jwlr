@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@faq) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :question, "Question" %>
+      <%= f.text_field :question, class: 'form-control' %>
+
+      <%= f.label :answer, "Answer" %>
+      <%= f.text_field :answer, class: 'form-control' %>
+
+      <%= f.submit "Save FAQ", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+

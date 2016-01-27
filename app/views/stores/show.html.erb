@@ -53,13 +53,21 @@
       <div class="about_left">
 	<h3 class="store_about">About</h3>
 	<p class="store_description"><%= @store.description %></p>
-	<h4 class="faq_header">FAQ</h4>
-	<h5>How much time am I given to pick up a purchased product?</h5>
-	<p>You are given four business days to pick up a purchased product.</p>
-	<h5>How many days do I have to return a product I'm unsatisfied with?</h5>
-	<p>Assuming no damage from its original condition, two business days.</p>
-	<h5>Why don't you list a telephone number on your contact page?</h5>
-	<p>We don't want spam calls... you should use the wonderful messaging tool iGold provides!</p>
+	<% if @store.faqs.any? %>
+		<h4 class="faq_header">FAQ <%= link_to "New", new_faq_path if current_user?(@store.user) %></h4>
+		<% @store.faqs.each do |faq| %>
+		    <h5 class="faq_question"><%= faq.question %>
+        <% if current_user?(faq.store.user) %>
+			  <%= link_to "Delete", faq, method: :delete,
+                                       data: { confirm: "Are you sure?" } %>
+			  | <%= link_to "Edit", edit_faq_path(faq) %>
+      <% end %>
+			</h5>
+			<p><%= faq.answer %></p>
+		<% end %>
+	<% else %>
+		<h4 class="faq_header"><%= link_to "New FAQ", new_faq_path if current_user?(@store.user) %></h4>
+	<% end %>
       </div>
       <div class="about_right">
 	<h3 class="store_location"><%= @store.full_street_address %></h3>

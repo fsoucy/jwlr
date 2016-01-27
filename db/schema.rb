@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127003157) do
+ActiveRecord::Schema.define(version: 20160127013848) do
 
   create_table "completed_deals", force: :cascade do |t|
     t.float    "price"
@@ -31,6 +31,16 @@ ActiveRecord::Schema.define(version: 20160127003157) do
   end
 
   add_index "completed_deals", ["pending_deal_id"], name: "index_completed_deals_on_pending_deal_id", unique: true
+
+  create_table "faqs", force: :cascade do |t|
+    t.text     "question"
+    t.text     "answer"
+    t.integer  "store_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "faqs", ["store_id"], name: "index_faqs_on_store_id"
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id"

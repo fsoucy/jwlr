@@ -2,7 +2,8 @@ class Store < ActiveRecord::Base
   belongs_to :user
   mount_uploader :profile_photo, PictureUploader    
   validate :selected_times
-  has_many :products
+  has_many :products, dependent: :destroy
+  has_many :faqs, dependent: :destroy
 
   def selected_times
     things = []

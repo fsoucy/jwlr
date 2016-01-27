@@ -1,7 +1,7 @@
 <div class="storefront_gallery">
   <div class="storefront_nav">
     <div class="storefront_nav_within">
-      <button class="gallery_button"><a href="#gallery">Gallery</a></button>
+      <button class="gallery_button"><a href="#gallery">Products</a></button>
       <button class="about_button"><a href="#about">About</a></button>
       <button class="contact_button"><a href="#contact">Contact</a></button>
       <button class="blog_button"><a href="#blog">Blog</a></button>
@@ -11,6 +11,7 @@
 	<h1><%= @store.name %></h1>
   </div>
   <div class="store_within store_gallery_within store_active">
+    <h3>Featured Products</h3>
     <% @products.each do |prod| %>
       <div class="store_prod">
         <div class="image_container">

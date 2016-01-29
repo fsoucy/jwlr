@@ -4,6 +4,7 @@ class Store < ActiveRecord::Base
   validate :selected_times
   has_many :products, dependent: :destroy
   has_many :faqs, dependent: :destroy
+  has_many :blogposts, dependent: :destroy
 
   def selected_times
     things = []

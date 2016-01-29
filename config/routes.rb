@@ -25,7 +25,8 @@ Rails.application.routes.draw do
   resources :stores do
     member do
       get :edit_times
-	  resources :faqs, only: [:new, :create, :destroy, :edit, :update]
+	    resources :faqs, only: [:new, :create, :destroy, :edit, :update]
+      resources :blogposts, only: [:new, :create, :destroy, :edit, :update]
     end
   end
   resources :completed_deals, only: [:create, :destroy, :show, :update]

@@ -25,11 +25,15 @@
     <% end %>
   </div>
   <div class="store_within store_blog_within store_inactive">
-    <h1>This is my blog</h1>
-    <p>A blog post</p>
-    <p>A blog post</p>
-    <p>Another blog post about my dog</p>
-    <p>Another blog post</p>
+    <h3>Blog <%= link_to "New", new_blogpost_url if current_user?(@store.user) %></h3>
+    <% @store.blogposts.each do |post| %>
+      <h4><%= post.title %>
+        <% if current_user?(post.store.user) %>
+       	  <%= link_to "Delete", post, method: :delete, data: { confirm: "Are you sure?" } %> | <%= link_to "Edit", edit_blogpost_path(post) %>
+      	<% end %>
+      </h4>
+      <p><%= post.content %></p>
+    <% end %>
   </div>
   <div class="store_within store_contact_within store_inactive">
     <div "store_contact_container">

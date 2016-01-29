@@ -36,10 +36,6 @@ class StatusesController < ApplicationController
     def status_params
       params.require(:status).permit(:minPrice, :maxPrice, :toTravel, :full_street_address, :buying, :commodity, :description)
     end
-  
-    def logged_in_user
-      redirect_to root_url if !logged_in?
-    end
 
     def correct_user
       redirect_to root_url if Status.find_by(id: params[:id]).user !=

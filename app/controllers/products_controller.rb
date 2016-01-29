@@ -52,10 +52,6 @@ class ProductsController < ApplicationController
       params.require(:product).permit(:price, :commodity, :full_street_address, :picture, :description, :store_id)
     end
 
-    def logged_in_user
-      redirect_to root_url if !logged_in?
-    end
-
     def correct_user
       @product  = Product.find_by(id: params[:id])
       if !current_user.products.include?(@product)

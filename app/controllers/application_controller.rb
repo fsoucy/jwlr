@@ -3,8 +3,17 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   
   before_filter :expire_hsts
+ 
   private
     def expire_hsts
       response.headers["Strict-Transport-Security"] = 'max-age=0'
+    end
+
+    def logged_in_user
+      unless logged_in?
+	store_location
+	flash[:danger] = "You must be logged in to do that"
+	redirect_to login_url
+      end
     end
 end

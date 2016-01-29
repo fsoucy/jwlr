@@ -44,10 +44,6 @@ class FaqsController < ApplicationController
       params.require(:faq).permit(:question, :answer)
     end
 
-    def logged_in_user
-      redirect_to root_url if !logged_in?
-    end
-
     def correct_user_store
       @store = current_user.stores.find_by(id: params[:id])
       redirect_to root_url if @store.nil?

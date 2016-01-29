@@ -43,10 +43,6 @@ class BlogpostsController < ApplicationController
     def blogpost_params
       params.require(:blogpost).permit(:title, :content)
     end
-   
-    def logged_in_user
-      redirect_to root_url if !logged_in?
-    end
 
     def correct_user_store
       @store = current_user.stores.find(params[:id])

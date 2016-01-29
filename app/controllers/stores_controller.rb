@@ -70,10 +70,6 @@ class StoresController < ApplicationController
       params.require(:store).permit(:description, :profile_photo, :full_street_address, :name, :phone, :business_days_pickup, :mondayopen, :mondaystarthour, :mondaystartminute, :mondaystartampm, :mondayendhour, :mondayendminute, :mondayendampm, :tuesdayopen, :tuesdaystarthour, :tuesdaystartminute, :tuesdaystartampm, :tuesdayendhour, :tuesdayendminute, :tuesdayendampm, :wednesdayopen, :wednesdaystarthour, :wednesdaystartminute, :wednesdaystartampm, :wednesdayendhour, :wednesdayendminute, :wednesdayendampm, :thursdayopen, :thursdaystarthour, :thursdaystartminute, :thursdaystartampm, :thursdayendhour, :thursdayendminute, :thursdayendampm, :fridayopen, :fridaystarthour, :fridaystartminute, :fridaystartampm, :fridayendhour, :fridayendminute, :fridayendampm, :saturdayopen, :saturdaystarthour, :saturdaystartminute, :saturdaystartampm, :saturdayendhour, :saturdayendminute, :saturdayendampm, :sundayopen, :sundaystarthour, :sundaystartminute, :sundaystartampm, :sundayendhour, :sundayendminute, :sundayendampm)
     end
 
-    def logged_in_user
-      redirect_to root_url if !logged_in?
-    end
-
     def correct_user
       redirect_to root_url if Store.find_by(id: params[:id]).user != current_user
     end

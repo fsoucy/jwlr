@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.3'
+gem 'sunspot_rails'
+gem 'sunspot_solr'
 gem 'bootstrap_form'
 gem 'carrierwave', '0.10.0'
 gem 'mini_magick'

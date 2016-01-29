@@ -1,3 +1,5 @@
+
+
 class Product < ActiveRecord::Base
   geocoded_by :full_street_address
   after_validation :geocode
@@ -10,5 +12,11 @@ class Product < ActiveRecord::Base
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at]
     super(options)
-  end       
+  end
+
+  searchable do
+    text :description
+    text :commodity
+  end
+  
 end

@@ -1,34 +1,27 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <%= link_to "iGold", root_path, id: "logo" %>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home", root_path  %></li>
+<div class="main_navbar_header">
+  <div class="main_navbar_top">
+    <div class="nav_header"><h5><%= link_to "iGold", root_path %></h5></div>
+    <div class="search_header"><input type="text" placeholder="Search"></div>
+    <div class="dropdown dropdown_header">
+      <button class="dropdown-toggle" data-toggle="dropdown">Account Actions</button>
+      <ul class="dropdown-menu">
 	<% if logged_in? %>
-	  <li><%= link_to "Public Users", users_path %></li>
-	  <li><%= link_to "Status", new_status_path %></li>
-	  <li><%= link_to "Product", new_product_path %></li>
-	  <li><%= link_to "Selling", selling_user_path(current_user.id) %></li>
-	  <li><%= link_to "Buying", buying_user_path(current_user.id) %></li>
-	  <li><%= link_to "Completed", completed_user_path(current_user.id) %></li>
-	  <li><%= link_to "Notifications", noties_user_path(current_user.id) %></li>
-	  <li class="dropdown">
-	    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	      Account <b class="caret"></b>
-	    </a>
-	    <ul class="dropdown-menu">
-	      <li><%= link_to "Profile", current_user %></li>
-	      <li><%= link_to "Settings", edit_user_path(current_user) %></li>
-	      <li class="divider"></li>
-	      <li>
-		<%= link_to "Log out", logout_path, method: "delete" %>
-	      </li>
-	    </ul>
-	  </li>
+	<li><%= link_to "Public Users", users_path %></li>
+	<li><%= link_to "Status", new_status_path %></li>
+	<li><%= link_to "Product", new_product_path %></li>
+	<li><%= link_to "Selling", selling_user_path(current_user.id) %></li>
+	<li><%= link_to "Buying", buying_user_path(current_user.id) %></li>
+	<li><%= link_to "Completed", completed_user_path(current_user.id) %></li>
+	<li><%= link_to "Notifications", noties_user_path(current_user.id) %></li>
+	<li><%= link_to "Profile", current_user %></li>
+	<li><%= link_to "Settings", edit_user_path(current_user) %></li>
+	<li class="divider"></li>
+	<li><%= link_to "Log out", logout_path, method: "delete" %></li>
 	<% else %>
-	  <li><%= link_to "Log in", login_path %></li>
+	<li><%= link_to "Log in", login_path %></li>
+	<li>%= link_to "Sign up", new_user_path %></li>
 	<% end %>
       </ul>
-    </nav>
+    </div>
   </div>
-</header>
+</div>

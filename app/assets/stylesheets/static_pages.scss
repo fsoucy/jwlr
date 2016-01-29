@@ -1,3 +1,41 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.side_panel
+{
+  width: 300px;
+  background-color: #e1e1f3;
+  float: left;
+  margin-top: 0px;
+  h4
+  {
+    margin-left: 15px;
+  }
+  p
+  {
+    margin-left: 10px;
+  }
+}
+.home_main
+{
+  margin-top: 0px;
+  float: left;
+  clear: none;
+  width: 50%;
+
+  input
+  {
+    color: red;
+    width: 60%;
+    height: 50px;
+    margin-top: 40px;
+    margin-left: 20px;
+    outline: none;
+    border: 1px solid black;
+  }
+  input:focus
+  {
+    outline:blue solid 2px;
+  }
+}

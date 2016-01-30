@@ -34,10 +34,10 @@ class StoresController < ApplicationController
   def show
     @store = Store.find_by(id: params[:id])
     if @store.nil?
-	   	redirect_to root_url
-	  else
-		  @products = @store.products
-	  end
+      redirect_to root_url
+    else
+      @products = @store.products
+    end
   end
 
   def destroy

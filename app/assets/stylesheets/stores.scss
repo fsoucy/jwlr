@@ -367,6 +367,12 @@ td
   position: relative;
 }
 
+.store_title
+{
+	position: relative;
+	top: 120px;
+}
+
 .store_within
 {
   position: relative;
@@ -546,6 +552,11 @@ td
 {
   float: left;
   clear: left;
+}
+
+.faq_question
+{
+	font-weight: bold;
 }
 
 .contact_left h3, .contact_left h4, .contact_left h5, .contact_left p

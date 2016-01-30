@@ -79,6 +79,8 @@ Rails.application.configure do
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :sendmail
+  host = 'igold.com'
+  config.action_mailer.default_url_options = { host: host }
 
   #config.action_mailer.delivery_method = :smtp
   #host = 'limitless-earth-5876.herokuapp.com'

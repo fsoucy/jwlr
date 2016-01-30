@@ -2,40 +2,37 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.side_panel
-{
-  width: 300px;
-  background-color: #e1e1f3;
-  float: left;
-  margin-top: 0px;
-  h4
-  {
-    margin-left: 15px;
-  }
-  p
-  {
-    margin-left: 10px;
-  }
-}
 .home_main
 {
+  overflow: auto;
+  position: relative;
+  padding: 0px;
   margin-top: 0px;
-  float: left;
-  clear: none;
-  width: 50%;
-
-  input
+  background-color: #eaeaea;
+  h1
   {
-    color: red;
-    width: 60%;
-    height: 50px;
-    margin-top: 40px;
-    margin-left: 20px;
-    outline: none;
-    border: 1px solid black;
+    margin-top: 3px;
+    padding: 0;
   }
-  input:focus
+  li
   {
-    outline:blue solid 2px;
+    display: inline;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
   }
+  a, h3, h4
+  {
+    display: inline;
+  }
+  a
+  {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  br
+  {
+    height: 0px;
+  }
+  text-align: center;
 }

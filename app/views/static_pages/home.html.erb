@@ -1,22 +1,21 @@
 <% provide(:title, "Home") %>
 
 <% if logged_in? %>
-<div class="side_panel">
-  <h4>Pending Deals</h4>
-  <p>Buying $300 of gold coins from iGold Soup</p>
-  <p>Selling $200 of jewelry to Frank Soucy</p>
-  <h4>Watch List</h4>
-  <p>$300 gold bullion</p>
-  <p>A bunch of other stuff</p>
-</div>
-<div class="home_main">
-  <input type="text" placeholder="Search">
-  <h2>Hello</h2>
-</div>
+  <div class="home_main">
+    <h1>Are you looking to...</h1>
+    <br>
+    <ul class="options">
+      <li><%= link_to "Buy", signup_path %></li>
+      <li><h4>Or</h4></li>
+      <li><%= link_to "Sell", signup_path %></li>
+    </ul>
+  </div>
 <% else %>
-  <div class="center jumbotron">
-    <h1>Home</h1>
-    <p>This is the home page for iGold.</p>
-    <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
+  <div class="home_main">
+    <h1>Are you looking to...</h1>
+    <br>
+    <%= link_to "Buy", signup_path %>
+    <p>Or</p>
+    <%= link_to "Sell", signup_path %>
   </div>
 <% end %>

@@ -2,6 +2,44 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.big
+{
+  height: 100px;
+  background-color: green;
+  width: 28%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  .thing
+  {
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 34%;
+    height: 100%;
+  }
+  .or
+  {
+    height: 100%;
+    width: 32%;
+    margin:0;
+    padding:0;
+    float: left;
+    display: table;
+    text-align: center;
+    h2
+    {
+      height: auto;
+      width: auto;
+      display: table-cell;
+      vertical-align:middle;
+      border: 2px solid red;      
+    }
+  }
+  
+}
+
 .home_main
 {
   overflow: auto;
@@ -14,16 +52,25 @@
     margin-top: 3px;
     padding: 0;
   }
-  li
+  .options
   {
-    display: inline;
-    overflow: auto;
+    display: block;
+    position: relative;
+    width: 40%;
+    left: 30%;
+  }
+  button
+  {
+    float: left;
     margin: 0;
     padding: 0;
+    display: block;
+    width: 10%;
+    height: 40px;
   }
   a, h3, h4
   {
-    display: inline;
+    display: inline-block;
   }
   a
   {
@@ -35,4 +82,12 @@
     height: 0px;
   }
   text-align: center;
+  .action_go
+  {
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    line-height: 100%;
+    background-color: purple;
+  }
 }

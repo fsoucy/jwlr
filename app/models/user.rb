@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   	   			    		dependent: :destroy
   has_many :passive_completed_deals, class_name: "CompletedDeal", foreign_key: "seller_id",
   	   			     		 dependent: :destroy
+  has_many :productviews
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
    
   def User.digest(string)

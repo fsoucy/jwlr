@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127185959) do
+ActiveRecord::Schema.define(version: 20160202204653) do
 
   create_table "blogposts", force: :cascade do |t|
     t.text     "title"
@@ -101,6 +101,18 @@ ActiveRecord::Schema.define(version: 20160127185959) do
   end
 
   add_index "products", ["user_id"], name: "index_products_on_user_id"
+
+  create_table "productviews", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "product_id"
+    t.integer  "views",      default: 1
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "productviews", ["product_id"], name: "index_productviews_on_product_id"
+  add_index "productviews", ["user_id", "product_id"], name: "index_productviews_on_user_id_and_product_id", unique: true
+  add_index "productviews", ["user_id"], name: "index_productviews_on_user_id"
 
   create_table "statuses", force: :cascade do |t|
     t.integer  "user_id"

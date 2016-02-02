@@ -3,7 +3,6 @@ class ProductsController < ApplicationController
   before_action :correct_user, only: [:destroy]  
   
   def new
-
     if current_user.stores.length > 0
       @has = true
       stos = Array.new
@@ -38,6 +37,15 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find_by(id: params[:id])
+    if logged_in?
+      productview = current_user.productviews.find_by(product: @product)
+      if productview.nil?
+        productview = current_user.productviews.build(product: @product)
+      else
+        productview.views += 1
+      end
+      productview.save
+    end
   end
 
   def destroy

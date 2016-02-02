@@ -16,7 +16,7 @@
   background-color: #5A8693;
   width: 100%;
   position: relative;
-  .search_header, .nav_header, .dropdown_header
+  .search_header, .nav_header, .dropdown_header, .search_submit
   {
     position: relative;
     top: 10%;
@@ -49,6 +49,13 @@
     margin-top: 0px;
     height: 100%;
     text-align: center;
+  }
+  .search_submit
+  {
+    margin-left: 1%;
+    width: 6%;
+    background-color: #75BBBA;
+    color: #ffffff;
   }
   .search_header
   {

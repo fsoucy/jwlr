@@ -9,12 +9,11 @@
   margin:0;
 }
 
-
 .main_navbar_top
 {
   margin-bottom: 0px;
   height: 100%;
-  background-color: gray;
+  background-color: #5A8693;
   width: 100%;
   position: relative;
   .search_header, .nav_header, .dropdown_header
@@ -30,13 +29,12 @@
 
   .dropdown_header
   {
-
     display: block;
     float: right;
     width: 13%;
     right: 0%;
   }
-.nav_header
+  .nav_header
   {
     width: 13%;
     display:table;
@@ -60,7 +58,7 @@
     {
       border: none;
     }
-input, input:focus
+    input, input:focus
     {
       height: 100%;
       display: block;
@@ -71,7 +69,8 @@ input, input:focus
     }
     input:focus
     {
-      outline: blue solid 1px;
+      border: solid 1px;
+      border-color: #75BBBA;
     }
   }
   .nav_header, .dropdown_header
@@ -85,8 +84,22 @@ input, input:focus
   }
   .dropdown_header button
   {
+    color: #FFFFFF;
     width: 100%;
     height: 100%;
   }
+  .dropdown-toggle
+  {
+    background-color: #75BBBA;
+    border-color: #75BBBA;
+    color: #75BBBA;
+  }
+  .dropdown-menu
+  {
+    background-color: #5A8693;
+  }
+  a
+  {
+    color: #FFFFFF;
+  }
 }
-

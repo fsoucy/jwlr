@@ -6,10 +6,39 @@
     <br>
 
     <div class="big">
-      <button class="thing">Hello</button>
+      <button class="thing">Buy</button>
       <div class="or"><h2>or</h2></div>
-      <button class="thing">Bye</button>
+      <button class="thing">Sell</button>
     </div>
+    <div class="slideshow">
+      <img class="next" src="http://calvarytherock.org/images/next2.png">
+      <img class="prev" src="http://www.hko.gov.hk/m/nowcast/images/previous.png">
+      <div class="toggles">
+	<div class="container">
+	  <% for i in 1..5 %>
+	  <div class="circle"></div>
+	  <% end %>
+	</div>
+      </div>
+    </div>
+  </div>
+  <div class="featured">
+    <h1 class="featured_header">Featured Products</h1>
+    <div class="gallery_home">
+      <% @products.each do |prod| %>
+      <div class="product_home">
+	<div class="image_container_home">
+	  <%= image_tag prod.picture_url(:thumb), class: "product_image_home" %>
+	  <button class="quick_view_home">Quick View</button>
+	</div>
+	<h3 class="product_name_home"><%= prod.commodity %></h3>
+	<h4 class="product_price_home"><%= prod.price %></h4>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="top">
+    <h1 class="top_header">Top Products</h1>
   </div>
 <% else %>
   <div class="home_main">

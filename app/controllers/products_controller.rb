@@ -40,7 +40,7 @@ class ProductsController < ApplicationController
     if logged_in?
       @productview = current_user.productviews.find_by(product: @product)
       if @productview.nil?
-        @productview = current_user.productviews.build(product: @product, views: 1)
+        @productview = current_user.productviews.build(product: @product)
       else
         @productview.views += 1
       end

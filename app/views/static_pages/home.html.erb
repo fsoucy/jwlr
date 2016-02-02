@@ -4,7 +4,7 @@
   <div class="home_main">
     <h1>Are you looking to...</h1>
     <br>
-
+    
     <div class="big">
       <button class="thing">Buy</button>
       <div class="or"><h2>or</h2></div>
@@ -14,31 +14,43 @@
       <img class="next" src="http://calvarytherock.org/images/next2.png">
       <img class="prev" src="http://www.hko.gov.hk/m/nowcast/images/previous.png">
       <div class="toggles">
-	<div class="container">
-	  <% for i in 1..5 %>
+	<div class="container_toggles">
+	  <% for i in 1..3 %>
 	  <div class="circle"></div>
 	  <% end %>
 	</div>
       </div>
     </div>
-  </div>
-  <div class="featured">
-    <h1 class="featured_header">Featured Products</h1>
-    <div class="gallery_home">
-      <% @products.each do |prod| %>
-      <div class="product_home">
-	<div class="image_container_home">
-	  <%= image_tag prod.picture_url(:thumb), class: "product_image_home" %>
-	  <button class="quick_view_home">Quick View</button>
+    <div class="featured">
+      <h1 class="featured_header">Featured Products</h1>
+      <div class="gallery_home">
+	<% @products.each do |prod| %>
+	<div class="product_home">
+	  <div class="image_container_home">
+	    <%= image_tag prod.picture_url(:thumb), class: "product_image_home" %>
+	    <button class="quick_view_home">Quick View</button>
+	  </div>
+	  <h3 class="product_name_home"><%= prod.commodity %></h3>
+	  <h4 class="product_price_home"><%= prod.price %></h4>
 	</div>
-	<h3 class="product_name_home"><%= prod.commodity %></h3>
-	<h4 class="product_price_home"><%= prod.price %></h4>
+	<% end %>
       </div>
-      <% end %>
     </div>
-  </div>
-  <div class="top">
-    <h1 class="top_header">Top Products</h1>
+    <div class="top">
+      <h1 class="top_header">Top Products</h1>
+      <div class="gallery_home">
+	<% @products.each do |prod| %>
+	<div class="product_home">
+	  <div class="image_container_home">
+	    <%= image_tag prod.picture_url(:thumb), class: "product_image_home" %>
+	    <button class="quick_view_home">Quick View</button>
+	  </div>
+	  <h3 class="product_name_home"><%= prod.commodity %></h3>
+	  <h4 class="product_price_home"><%= prod.price %></h4>
+	</div>
+	<% end %>
+      </div>
+    </div>
   </div>
 <% else %>
   <div class="home_main">
@@ -49,3 +61,4 @@
     <%= link_to "Sell", signup_path %>
   </div>
 <% end %>
+  

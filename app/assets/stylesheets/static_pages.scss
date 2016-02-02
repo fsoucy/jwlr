@@ -57,7 +57,7 @@
     width: 40%;
     left: 30%;
   }
-  button
+  .nullclass
   {
     float: left;
     margin: 0;
@@ -65,10 +65,6 @@
     display: block;
     width: 10%;
     height: 40px;
-  }
-  a, h3, h4
-  {
-    display: inline-block;
   }
   a
   {
@@ -79,7 +75,11 @@
   {
     height: 0px;
   }
-  text-align: center;
+
+  h2, h1
+  {
+    text-align: center;
+  }
   .action_go
   {
     text-align: center;
@@ -134,7 +134,7 @@
   display: block;
 }
 
-.container
+.container_toggles
 {
   display: block;
   margin-left: auto;
@@ -160,7 +160,11 @@
   float: left;
   width: 50%;
   height: auto;
-  background-color: purple;
+  overflow: auto;
+}
+
+.featured_header, .top_header
+{
   text-align: center;
 }
 
@@ -168,20 +172,19 @@
 {
   float: right;
   width: 50%;
-  height: 200px;
-  background-color: green;
-  text-align: center;
+  display: block;
+  height: auto;
+  position: relative;
+  overflow: auto;
 }
 
 .gallery_home
 {
-  width: 90%;
-  height: 100%;
-  position: relative;
+  width: 440px;
+  overflow: auto;
   margin-left: auto;
   margin-right: auto;
   display: block;
-  background-color: blue;
 }
 
 .product_home
@@ -190,6 +193,7 @@
   clear: none;
   width: 200px;
   height: 300px;
+  display: block;
   position: relative;
   margin: 10px 10px 10px 10px;
 }
@@ -198,4 +202,25 @@
 {
   width: 200px;
   height: 200px;
+  position: relative;
+}
+
+.another
+{
+  width: 90%;
+  height: 300px;
+  background-color: yellow;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+}
+
+.quick_view_home
+{
+  opacity: 0.7;
+  width: 200px;
+  height: 50px;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
 }

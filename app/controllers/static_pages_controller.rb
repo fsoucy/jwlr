@@ -1,5 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
+    @top_products = Product.joins(:productviews).order('productviews.views DESC').limit(8)
     @products = Product.all
   end
 

@@ -38,13 +38,13 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find_by(id: params[:id])
     if logged_in?
-      @productview = current_user.productviews.find_by(product: @product)
-      if @productview.nil?
-        @productview = current_user.productviews.build(product: @product)
+      productview = current_user.productviews.find_by(product: @product)
+      if productview.nil?
+        productview = current_user.productviews.build(product: @product)
       else
-        @productview.views += 1
+        productview.views += 1
       end
-      @productview.save
+      productview.save
     end
   end
 

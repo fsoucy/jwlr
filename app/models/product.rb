@@ -15,6 +15,10 @@ class Product < ActiveRecord::Base
     super(options)
   end
 
+  def views
+    productviews.sum(:views)
+  end
+
   searchable do
     text :description
     text :commodity

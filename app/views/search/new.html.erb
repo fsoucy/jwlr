@@ -1,0 +1,13 @@
+<div class="search_results">
+  <% @results.each do |prod| %>
+    <div class="product_home">
+      <div class="image_container_home">
+        <%= image_tag prod.picture_url(:thumb), class: "product_image_home" %>
+        <button class="quick_view_home">Quick View</button>
+      </div>
+      <h3 class="product_name_home"><%= prod.commodity %></h3>
+      <h4 class="product_price_home"><%= prod.price %></h4>
+    </div>
+  <% end %>
+  <%= will_paginate @results %>
+</div>

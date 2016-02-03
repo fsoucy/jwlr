@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
+  get 'search' => 'search#new'
   #post 'signin' => 'api#signin'
   #post 'signup' => 'api#signup'
   #get 'localusers' => 'api#localusers'
@@ -21,7 +22,8 @@ Rails.application.routes.draw do
     member do
       get :selling, :buying, :completed, :edit_description, :user_stores, :noties
     end
-  end
+  end  
+
   resources :stores do
     member do
       get :edit_times

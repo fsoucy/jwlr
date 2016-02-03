@@ -24,4 +24,4 @@
 *~
 
 /solr/development/data
-/solr/pids
+/solr/pids/*

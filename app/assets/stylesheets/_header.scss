@@ -9,6 +9,12 @@
   margin:0;
 }
 
+
+h1, h2, h3, h4, h5, h6, p, a
+{
+  font-family: Droid Sans;
+}
+
 .main_navbar_top
 {
   margin-bottom: 0px;
@@ -16,7 +22,7 @@
   background-color: #5A8693;
   width: 100%;
   position: relative;
-  .search_header, .nav_header, .dropdown_header, .search_submit
+  .search_header, .nav_header, .dropdown_header
   {
     position: relative;
     top: 10%;
@@ -40,7 +46,7 @@
     display:table;
     left: 0%;
   }
-  .nav_header h2
+  .nav_header h1
   {
     padding: 0;
     margin:0;
@@ -49,6 +55,16 @@
     margin-top: 0px;
     height: 100%;
     text-align: center;
+  }
+  .nav_header a
+  {
+    text-decoration: none;
+    color: white;
+  }
+  .nav_header a:hover
+  {
+    color: #d8d0e0;
+    text-decoration: underline;
   }
   .search_submit
   {
@@ -61,23 +77,41 @@
   {
     width: 50%;
     margin-left:2%;
-    input
+    .search_string
     {
       border: none;
     }
-    input, input:focus
+    .search_string, .search_string:focus
     {
       height: 100%;
       display: block;
-      padding-left:10px;
-      padding-right:2px;
+      padding-left:1%;
+      padding-right:0.5%;
       padding-top:0px;
       padding-bottom:0px;
+      width: 77.5%;
+      margin-left: 0%;
+      margin-right: 2%;
     }
-    input:focus
+    .search_string:focus
     {
       border: solid 1px;
       border-color: #75BBBA;
+    }
+    .search_submit
+    {
+      padding: 0%;
+      margin: 0%;
+      display: block;
+      width: 18%;
+      height: 100%;
+      background-color: #75BBBA;
+      color: #ffffff;
+    }
+    .search_submit, .search_string
+    {
+      float: left;
+      clear: none;
     }
   }
   .nav_header, .dropdown_header
@@ -95,7 +129,7 @@
     width: 100%;
     height: 100%;
   }
-  .dropdown-toggle
+  .dropdown_toggle_header
   {
     background-color: #75BBBA;
     border-color: #75BBBA;
@@ -110,3 +144,4 @@
     color: #FFFFFF;
   }
 }
+

@@ -52,8 +52,6 @@
 
 .home_main
 {
-  z-index: 1;
-  overflow: hidden;
   border: 2px solid red;
   position: relative;
   padding: 0px;
@@ -183,7 +181,6 @@ h1, h2, h3, h4
   position: relative;
   display: block;
   float: left;
-  clear: left;
   width: 50%;
   height: auto;
   overflow: auto;
@@ -197,7 +194,6 @@ h1, h2, h3, h4
 .top
 {
   float: right;
-  clear: right;
   width: 50%;
   display: block;
   height: auto;

@@ -1,10 +1,12 @@
+<div class="green"></div>
 <div class="main_navbar_header">
+
   <div class="main_navbar_top">
     <div class="nav_header"><h1 class="logoicon"><%= link_to "iGold", root_path, class: 'logolink' %></h1></div>
-      <%= form_tag "/search", method: "get", class: 'search_header' do %>
-        <%= text_field_tag :search_string, 'Search', class: 'search_string' %>
-        <%= submit_tag "Search", class: 'search_submit' %>
-      <% end %>
+    <%= form_tag "/search", method: "get", class: 'search_header' do %>
+    <%= text_field_tag :search_string, 'Search', class: 'search_string' %>
+    <%= submit_tag "Search", class: 'search_submit' %>
+    <% end %>
     <div class="dropdown_header">
       <button class="dropdown_toggle_header">Account Actions</button>
       <ul class="dropdown_menu_header">

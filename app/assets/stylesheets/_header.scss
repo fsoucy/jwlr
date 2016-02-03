@@ -1,3 +1,16 @@
+.green
+{
+  position: absolute;
+  display: block;
+  height: 700px;
+  width: 200px;
+  background-color: green;
+  left: 10%;
+  top: 0%;
+  overflow: visible;
+  z-index: 2;
+}
+
 .main_navbar_header
 {
   position: relative;
@@ -7,8 +20,8 @@
   width: 100%;
   padding: 0;
   margin:0;
+  overflow: visible;
 }
-
 
 h1, h2, h3, h4, h5, h6, p, a
 {
@@ -17,6 +30,7 @@ h1, h2, h3, h4, h5, h6, p, a
 
 .main_navbar_top
 {
+  overflow: visible;
   margin-bottom: 0px;
   height: 100%;
   background-color: #5A8693;
@@ -125,8 +139,10 @@ h1, h2, h3, h4, h5, h6, p, a
     margin-top: 0px;
     padding: 0;
     overflow: visible;
-    li
+    z-index: 1;
+    li a
     {
+      z-index: 1;
       color: black;
     }
   }
@@ -144,13 +160,19 @@ h1, h2, h3, h4, h5, h6, p, a
   }
   .dropdown_menu_header
   {
-    background-color: white;
+    background-color: green;
     color: black;
     height: 200px;
+    z-index: 1 !important;
+    overflow: visible;
   }
   a
   {
     color: #FFFFFF;
+  }
+  .dropdown_header
+  {
+    overflow: visible;
   }
 }
 

@@ -1,7 +1,7 @@
 <div class="main_navbar_header">
   <div class="main_navbar_top">
     <div class="nav_header"><h2><%= link_to "iGold", root_path %></h2></div>
-      <%= form_tag "/search", method: "get", class: 'search_bar' do %>
+      <%= form_tag "/search", method: "get", class: 'search_header' do %>
               <%= text_field_tag :search_string %>
         <%= button_tag "Search", class: 'search_submit' %>
       <% end %>

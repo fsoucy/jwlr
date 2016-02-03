@@ -12,7 +12,7 @@
 
 h1, h2, h3, h4, h5, h6, p, a
 {
-  font-family: Droid Sans;
+  font-family: sans-serif;
 }
 
 .main_navbar_top
@@ -122,6 +122,13 @@ h1, h2, h3, h4, h5, h6, p, a
   .dropdown_header ul
   {
     width: 100%;
+    margin-top: 0px;
+    padding: 0;
+    overflow: visible;
+    li
+    {
+      color: black;
+    }
   }
   .dropdown_header button
   {
@@ -135,9 +142,11 @@ h1, h2, h3, h4, h5, h6, p, a
     border-color: #75BBBA;
     color: #75BBBA;
   }
-  .dropdown-menu
+  .dropdown_menu_header
   {
-    background-color: #5A8693;
+    background-color: white;
+    color: black;
+    height: 200px;
   }
   a
   {

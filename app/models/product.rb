@@ -8,10 +8,15 @@ class Product < ActiveRecord::Base
   mount_uploader :picture, PictureUploader
   attr_accessor :hits
   has_many :pending_deals, dependent: :destroy
+  has_many :productviews, dependent: :destroy
 
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at]
     super(options)
+  end
+
+  def views
+    productviews.sum(:views)
   end
 
   searchable do

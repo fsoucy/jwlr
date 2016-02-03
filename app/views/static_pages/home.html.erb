@@ -39,7 +39,7 @@
   <div class="top">
     <h1 class="top_header">Top Products</h1>
     <div class="gallery_home">
-      <% @products.each do |prod| %>
+      <% @top_products.each do |prod| %>
       <div class="product_home">
 	<div class="image_container_home">
 	  <%= image_tag prod.picture_url(:thumb), class: "product_image_home" %>
@@ -91,7 +91,7 @@
   <div class="top">
     <h1 class="top_header">Top Products</h1>
     <div class="gallery_home">
-      <% @products.each do |prod| %>
+      <% @top_products.each do |prod| %>
       <div class="product_home">
 	<div class="image_container_home">
 	  <%= image_tag prod.picture_url(:thumb), class: "product_image_home" %>

@@ -1,8 +1,10 @@
 <div class="main_navbar_header">
   <div class="main_navbar_top">
     <div class="nav_header"><h2><%= link_to "iGold", root_path %></h2></div>
-    <div class="search_header"><input type="text" placeholder="Search"></div>
-    <button class="search_submit">Go!</button>
+      <%= form_tag "/search", method: "get", class: 'search_bar' do %>
+              <%= text_field_tag :search_string %>
+        <%= button_tag "Search", class: 'search_submit' %>
+      <% end %>
     <div class="dropdown dropdown_header">
       <button class="dropdown-toggle" data-toggle="dropdown">Account Actions</button>
       <ul class="dropdown-menu">

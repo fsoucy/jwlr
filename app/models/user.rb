@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true, length: { maximum: 255 },
   	    	    format: { with: VALID_EMAIL_REGEX },
 		    uniqueness: { case_sensitive: false }
+  validates :full_street_address, presence: true
   has_secure_password
   has_many :notifications, dependent: :destroy
   has_many :statuses, dependent: :destroy
@@ -22,6 +23,8 @@ class User < ActiveRecord::Base
   	   			     		 dependent: :destroy
   has_many :productviews
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  geocoded_by :full_street_address
+  after_validation :geocode
    
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :

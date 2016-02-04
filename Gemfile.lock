@@ -348,6 +348,7 @@ DEPENDENCIES
   mini_magick
   minitest-reporters (= 1.0.5)
   mysql2 (= 0.3.20)
+  net-ssh
   rails (= 4.2.3)
   rails_12factor (= 0.0.2)
   sass-rails (= 5.0.2)

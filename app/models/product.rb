@@ -25,7 +25,7 @@ class Product < ActiveRecord::Base
     text :title
     
     float :price
-    string :full_street_address
+    latlon(:location) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
     boolean :sold
     time :created_at    
   end

@@ -1,15 +1,3 @@
-.green
-{
-  position: absolute;
-  display: block;
-  height: 700px;
-  width: 200px;
-  background-color: green;
-  left: 10%;
-  top: 0%;
-  overflow: visible;
-  z-index: 2;
-}
 
 .main_navbar_header
 {
@@ -49,7 +37,6 @@ h1, h2, h3, h4, h5, h6, p, a
 
   .dropdown_header
   {
-    display: block;
     float: right;
     width: 13%;
     right: 0%;
@@ -133,19 +120,7 @@ h1, h2, h3, h4, h5, h6, p, a
     padding: 0;
     margin:0;
   }
-  .dropdown_header ul
-  {
-    width: 100%;
-    margin-top: 0px;
-    padding: 0;
-    overflow: visible;
-    z-index: 1;
-    li a
-    {
-      z-index: 1;
-      color: black;
-    }
-  }
+
   .dropdown_header button
   {
     color: #FFFFFF;
@@ -160,19 +135,36 @@ h1, h2, h3, h4, h5, h6, p, a
   }
   .dropdown_menu_header
   {
-    background-color: green;
+    display: none;
+    border-radius: 3px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: pink;
     color: black;
-    height: 200px;
-    z-index: 1 !important;
+    height: auto;
+    z-index: 2;
     overflow: visible;
-  }
-  a
-  {
-    color: #FFFFFF;
+    li
+    {
+      padding-left: 3px;
+      list-style-type: none;
+      a
+      {
+        text-decoration: none;
+      }
+    }
+    li:hover
+    {
+      background-color: white;
+      cursor: pointer;
+    }
   }
   .dropdown_header
   {
+    
     overflow: visible;
+    z-index: 2;
   }
 }
 

@@ -1,4 +1,13 @@
 $(document).ready(function() {
+    //home header
+    $('.dropdown_header').mouseenter(function() {
+	$('.dropdown_menu_header').css('display', 'block');
+
+    });
+
+    $('.dropdown_header').mouseleave(function() {
+	$('.dropdown_menu_header').css('display', 'none');
+    });
 
     //storefront
     $('.quick_view').hide();

@@ -8,7 +8,7 @@ class SearchController < ApplicationController
       end
       paginate :page => params[:page]
       order_by(:created_at, :desc) 
-      #with :sold, true
+      with :sold, false
     end
 
     @results = search.results

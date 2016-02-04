@@ -22,6 +22,12 @@ class Product < ActiveRecord::Base
   searchable do
     text :description
     text :commodity
+    text :title
+    
+    float :price
+    string :full_street_address
+    boolean :sold
+    time :created_at    
   end
   
 end

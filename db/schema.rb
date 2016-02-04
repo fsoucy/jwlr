@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202204653) do
+ActiveRecord::Schema.define(version: 20160204070804) do
 
   create_table "blogposts", force: :cascade do |t|
     t.text     "title"
@@ -90,14 +90,15 @@ ActiveRecord::Schema.define(version: 20160202204653) do
     t.float    "latitude"
     t.float    "longitude"
     t.integer  "user_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "picture"
     t.text     "description"
     t.string   "commodity"
     t.boolean  "hold"
-    t.boolean  "sold"
+    t.boolean  "sold",                default: false
     t.integer  "store_id"
+    t.string   "title"
   end
 
   add_index "products", ["user_id"], name: "index_products_on_user_id"

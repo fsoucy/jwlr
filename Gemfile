@@ -22,6 +22,7 @@ gem 'jbuilder',     '2.2.3'
 gem 'sdoc',         '0.4.0', group: :doc
 gem 'therubyracer',  platforms: :ruby
 gem 'net-ssh'
+gem 'rack-cors'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

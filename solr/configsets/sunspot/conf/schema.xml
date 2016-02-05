@@ -96,6 +96,7 @@
     </fieldType>
     <!-- A specialized field for geospatial search. If indexed, this fieldType must not be multivalued. -->
     <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
+    
   </types>
   <fields>
     <!-- Valid attributes for fields:

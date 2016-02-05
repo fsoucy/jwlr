@@ -15,5 +15,5 @@ class ApplicationController < ActionController::Base
 	      flash[:danger] = "You must be logged in to do that"
 	      redirect_to login_url
       end
-    end
+    end    
 end

@@ -42,7 +42,7 @@ class SearchController < ApplicationController
       suggestions.append p.search_text
     end
 
-    render json: suggestions.to_json, status: 400
+    render json: suggestions.to_json, status: 200
   end
 
 end

@@ -3,14 +3,11 @@
   <div class="main_navbar_top">
     <div class="nav_header"><h1 class="logoicon"><%= link_to "iGold", root_path, class: 'logolink' %></h1></div>
       <%= form_tag "/search", method: "get", class: 'search_header' do %>
-      <%= text_field_tag "search_string", "", placeholder: "Search for a product or user", class: 'search_string', autocomplete: 'off'%>
+      <%= text_field_tag :search_string, 'Search', class: 'search_string', autocomplete: 'off'%>
       <%= submit_tag "Search", class: 'search_submitter' %>
-      <ul class="suggestions" id="sug_list">
+      <ul>
 	<li class="active">Sugg</li>
-	<li>Sugg</li>
-	<li>Hello</li>
-	<li>gold coins</li>
-	<li>Soup's ass</li>
+	<li class="inactive">Sugg</li>
       </ul>
       <% end %>
     <div class="dropdown_header">

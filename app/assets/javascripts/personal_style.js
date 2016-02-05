@@ -10,6 +10,34 @@ $(document).ready(function() {
 	$('.suggestions').css('display', 'none');
     });
 
+    $('.featured').click(function() {
+	$('h1').css('color', 'green');
+
+	$.ajax({
+	    type: "GET",// GET in place of POST
+	    contentType: "application/json; charset=utf-8",
+	    url: "http://162.213.199.215:3002/search_suggestions",
+	    data: {search_string: 'gold'},
+	    dataType: "json",
+	    success: function (result) {
+		//do somthing here
+		var str = "";
+		res = "" + result;
+		var parts = res.split(',');
+		//var parsed = $.parseJSON(result);
+		for (thing in parts)
+		{
+		    str += '<p>' + parts[thing] + '</p>';
+		}
+		$('.top').html(str);
+	    },
+	    error: function (e){
+		console.log(e);
+		window.alert("something wrong!");
+	    }
+	});
+    });
+
     
     $('.search_string').keydown(function(event) {
 	

@@ -3,6 +3,6 @@ class Search < ActiveRecord::Base
 
   searchable do
     text :search_text
-    time :created_at
+    time :updated_at
   end
 end

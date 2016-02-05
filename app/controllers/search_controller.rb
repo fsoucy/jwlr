@@ -28,4 +28,21 @@ class SearchController < ApplicationController
     @results = search.results
   end
 
+  def suggestions
+    search = Search.search do
+      fulltext params[:search_string]
+      order_by(:score, :desc)
+      order_by(:updated_at, :desc)
+      paginate :page => 1, :per_page => 5
+    end
+    
+    suggestions = Array.new
+
+    search.results.each do |p|
+      suggestions.append p.search_text
+    end
+
+    render json: suggestions.to_json, status: 400
+  end
+
 end

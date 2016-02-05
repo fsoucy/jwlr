@@ -2,84 +2,107 @@ $(document).ready(function() {
     //
     $('.search_string').focusin(function() {
 
-	$('.suggestions').css('display', 'block');
+	if (('#sug_list').val().length == 0)
+	{
+	}
+	else
+	{
+	    $('#sug_list').css('display', 'block');
+	    updateSearch();
+	}
+
     });
 
     $('.search_string').focusout(function() {
 
-	$('.suggestions').css('display', 'none');
+	$('#sug_list').css('display', 'none');
     });
 
-    $('.featured').click(function() {
-	$('h1').css('color', 'green');
-
-	$.ajax({
-	    type: "GET",// GET in place of POST
-	    contentType: "application/json; charset=utf-8",
-	    url: "http://162.213.199.215:3002/search_suggestions",
-	    data: {search_string: 'gold'},
-	    dataType: "json",
-	    success: function (result) {
-		//do somthing here
-		var str = "";
-		res = "" + result;
-		var parts = res.split(',');
-		//var parsed = $.parseJSON(result);
-		for (thing in parts)
-		{
-		    str += '<p>' + parts[thing] + '</p>';
-		}
-		$('.top').html(str);
-	    },
-	    error: function (e){
-		console.log(e);
-		window.alert("something wrong!");
-	    }
-	});
-    });
-
-    
     $('.search_string').keydown(function(event) {
 	
 	var key = event.which;
 	if (key == 38 || key == 40)
 	{
 	    event.preventDefault();
+	    if (key == 40)
+	    {
+		var done = false;
+		if ($('#sug_list > .active').is('#sug_list > :last-child') && !done)
+		{
+		    $('#sug_list > :last-child').removeClass('active');
+		    $('#sug_list > :first-child').addClass('active');
+		    done = true;
+		}
+		if (!done)
+		{
+		    $('#sug_list > .active').next().addClass('next');
+		    $('#sug_list > .active').removeClass('active');
+		    $('#sug_list > .next').addClass('active').removeClass('next');  
+		}
+	    }
+	    if (key == 38)
+	    {
+		var done = false;
+		if ($('#sug_list > .active').is('#sug_list > :first-child') && !done)
+		{
+		    $('#sug_list > :first-child').removeClass('active');
+		    $('#sug_list > :last-child').addClass('active');
+		    done = true;
+		}
+		if (!done)
+		{
+		    $('#sug_list > .active').prev().addClass('next');
+		    $('#sug_list > .active').removeClass('active');
+		    $('#sug_list > .next').addClass('active').removeClass('next');
+		}
+	    }
 	}
-	if (key == 40)
+	else
 	{
-	    var done = false;
-	    if ($('#sug_list > .active').is('#sug_list > :last-child'))
-	    {
-		$('#sug_list > :last-child').removeClass('active');
-		$('#sug_list > :first-child').addClass('active');
-		done = true;
-	    }
-	    if (!done)
-	    {
-		$('#sug_list > .active').next().addClass('next');
-		$('#sug_list > .active').removeClass('active');
-		$('#sug_list > .next').addClass('active').removeClass('next');  
-	    }
-	}
-	if (key == 38)
-	{
-	    var done = false;
-	    if ($('#sug_list > .active').is('#sug_list > :first-child'))
-	    {
-		$('#sug_list > :first-child').removeClass('active');
-		$('#sug_list > :last-child').addClass('active');
-		done = true;
-	    }
-	    if (!done)
-	    {
-		$('#sug_list > .active').prev().addClass('next');
-		$('#sug_list > .active').removeClass('active');
-		$('#sug_list > .next').addClass('active').removeClass('next');
-	    }
+	    updateSearch();
 	}
 	
     });
+
+    function updateSearch()
+    {
+	$.ajax({
+	    type: "GET",// GET in place of POST
+	    contentType: "application/json; charset=utf-8",
+	    url: "http://162.213.199.215:3002/search_suggestions",
+	    data: {search_string: $('.search_string').val()},
+	    dataType: "json",
+	    success: function (result) {
+		//do somthing here
+		var str = "";
+		res = "" + result;
+		var parts = res.split(',');
+		for (thing in parts)
+		{
+		    if (str.length == 0)
+		    {
+			var add = "<li class='active'>";
+		    }
+		    else
+		    {
+			var add = "<li>"
+		    }
+		    str += add + parts[thing] + '</li>';
+		}
+		$('#sug_list').html(str);
+		if (res.length == 0)
+		{
+		    $('#sug_list').css('display', 'none');
+		}
+		else
+		{
+		    $('#sug_list').css('display', 'block');
+		}
+	    },
+	    error: function (e){
+	    }
+	});
+    }
 
     //home header
     $('.dropdown_header').mouseenter(function() {

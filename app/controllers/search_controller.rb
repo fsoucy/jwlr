@@ -12,6 +12,9 @@ class SearchController < ApplicationController
         order_by_geodist :location, geocode[0].latitude, geocode[0].longitude 
       elsif logged_in?
         order_by_geodist :location, current_user.latitude, current_user.longitude        
+      else
+        geocode = request.location
+        order_by_geodist :location, geocode.latitude, geocode.longitude
       end
       order_by(:created_at, :desc) 
       with :sold, false

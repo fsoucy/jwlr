@@ -22,6 +22,12 @@ class Product < ActiveRecord::Base
   searchable do
     text :description
     text :commodity
+    text :title
+    
+    float :price
+    latlon(:location) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
+    boolean :sold
+    time :created_at    
   end
   
 end

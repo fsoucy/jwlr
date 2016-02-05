@@ -25,3 +25,5 @@
 
 /solr/development/data
 /solr/pids/*
+
+Gemfile.lock

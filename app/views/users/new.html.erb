@@ -18,6 +18,9 @@
       <%= f.label :password_confirmation, "Password Confirmation" %>
       <%= f.password_field :password_confirmation, class: 'form-control' %>
 
+      <%= f.label :full_street_address, "Full Street Address" %>
+      <%= f.text_field :full_street_address, class: 'form-control' %>
+
       <%= f.label :public, class: "checkbox inline" do %>
         <%= f.check_box :public %>
 	<span><b>Public user?</b></span>

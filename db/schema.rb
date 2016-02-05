@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202204653) do
+ActiveRecord::Schema.define(version: 20160205031027) do
 
   create_table "blogposts", force: :cascade do |t|
     t.text     "title"
@@ -90,14 +90,15 @@ ActiveRecord::Schema.define(version: 20160202204653) do
     t.float    "latitude"
     t.float    "longitude"
     t.integer  "user_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "picture"
     t.text     "description"
     t.string   "commodity"
     t.boolean  "hold"
-    t.boolean  "sold"
+    t.boolean  "sold",                default: false
     t.integer  "store_id"
+    t.string   "title"
   end
 
   add_index "products", ["user_id"], name: "index_products_on_user_id"
@@ -113,6 +114,16 @@ ActiveRecord::Schema.define(version: 20160202204653) do
   add_index "productviews", ["product_id"], name: "index_productviews_on_product_id"
   add_index "productviews", ["user_id", "product_id"], name: "index_productviews_on_user_id_and_product_id", unique: true
   add_index "productviews", ["user_id"], name: "index_productviews_on_user_id"
+
+  create_table "searches", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "search_text"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "searches", ["user_id", "search_text"], name: "index_searches_on_user_id_and_search_text", unique: true
+  add_index "searches", ["user_id"], name: "index_searches_on_user_id"
 
   create_table "statuses", force: :cascade do |t|
     t.integer  "user_id"
@@ -199,20 +210,23 @@ ActiveRecord::Schema.define(version: 20160202204653) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "password_digest"
     t.string   "remember_digest"
-    t.boolean  "admin",             default: false
+    t.boolean  "admin",               default: false
     t.string   "activation_digest"
-    t.boolean  "activated",         default: false
+    t.boolean  "activated",           default: false
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
-    t.boolean  "public",            default: false
+    t.boolean  "public",              default: false
     t.text     "description"
     t.string   "auth_token"
     t.datetime "auth_expiry"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "full_street_address"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

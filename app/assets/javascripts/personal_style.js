@@ -2,7 +2,7 @@ $(document).ready(function() {
     //
     $('.search_string').focusin(function() {
 
-	if (('#sug_list').val().length == 0)
+	if ($('.search_string').val().length == 0)
 	{
 	}
 	else
@@ -18,7 +18,7 @@ $(document).ready(function() {
 	$('#sug_list').css('display', 'none');
     });
 
-    $('.search_string').keydown(function(event) {
+    $('.search_string').keyup(function(event) {
 	
 	var key = event.which;
 	if (key == 38 || key == 40)
@@ -59,21 +59,23 @@ $(document).ready(function() {
 	}
 	else
 	{
-	    updateSearch();
+	    updateSearch($('.search_string').val());
 	}
 	
     });
 
-    function updateSearch()
+    function updateSearch(thing)
     {
 	$.ajax({
 	    type: "GET",// GET in place of POST
 	    contentType: "application/json; charset=utf-8",
 	    url: "http://162.213.199.215:3002/search_suggestions",
-	    data: {search_string: $('.search_string').val()},
+	    data: {search_string: thing},
 	    dataType: "json",
 	    success: function (result) {
 		//do somthing here
+		console.log($('.search_string').val());
+		console.log(result);
 		var str = "";
 		res = "" + result;
 		var parts = res.split(',');

@@ -20,7 +20,7 @@ class SearchController < ApplicationController
       with :sold, false
     end
 
-    if logged_in?
+    if logged_in? && !search.results.empty?
       saved_search = current_user.searches.find_or_initialize_by(search_text: params[:search_string])
       saved_search.update(updated_at: Time.now)
     end  

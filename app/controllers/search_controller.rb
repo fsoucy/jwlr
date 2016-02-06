@@ -21,9 +21,14 @@ class SearchController < ApplicationController
     end
 
     if logged_in? && !search.results.empty?
-      saved_search = current_user.searches.find_or_initialize_by(search_text: params[:search_string])
-      saved_search.update(updated_at: Time.now)
-    end  
+      saved_search = current_user.searches.find_by(search_text: params[:search_string])
+      if saved_search.nil?
+        current_user.searches.build(search_text: params[:search_string]).save
+      else
+        saved_search.frequency += 1
+        saved_search.save
+      end
+    end
   
     @results = search.results
   end

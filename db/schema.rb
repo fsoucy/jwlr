@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205031027) do
+ActiveRecord::Schema.define(version: 20160206014202) do
 
   create_table "blogposts", force: :cascade do |t|
     t.text     "title"
@@ -115,15 +115,25 @@ ActiveRecord::Schema.define(version: 20160205031027) do
   add_index "productviews", ["user_id", "product_id"], name: "index_productviews_on_user_id_and_product_id", unique: true
   add_index "productviews", ["user_id"], name: "index_productviews_on_user_id"
 
-  create_table "searches", force: :cascade do |t|
+  create_table "search_relationships", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "search_id"
+    t.integer  "frequency",  default: 1
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "search_relationships", ["search_id"], name: "index_search_relationships_on_search_id"
+  add_index "search_relationships", ["user_id", "search_id"], name: "index_search_relationships_on_user_id_and_search_id", unique: true
+  add_index "search_relationships", ["user_id"], name: "index_search_relationships_on_user_id"
+
+  create_table "searches", force: :cascade do |t|
     t.string   "search_text"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
-  add_index "searches", ["user_id", "search_text"], name: "index_searches_on_user_id_and_search_text", unique: true
-  add_index "searches", ["user_id"], name: "index_searches_on_user_id"
+  add_index "searches", ["search_text"], name: "index_searches_on_user_id_and_search_text", unique: true
 
   create_table "statuses", force: :cascade do |t|
     t.integer  "user_id"

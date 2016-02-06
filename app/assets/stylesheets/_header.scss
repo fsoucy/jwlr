@@ -95,15 +95,16 @@ h1, h2, h3, h4, h5, h6, p, a
       li
       {
         padding-left: 2px;
-	padding-top: 2px;
-	padding-bottom: 2px;
-        color: black;
+	      padding-top: 2px;
+	      padding-bottom: 2px;
+        color: #FFFFFF;
+        background-color: #5A8693;
         list-style-type: none;
       }
       li.active
       {
-        background-color: pink;
-	color: white;
+        background-color: #8DE8B4;
+	      color: #FFFFF;
       }
     }
     .search_string
@@ -169,7 +170,7 @@ h1, h2, h3, h4, h5, h6, p, a
     width: 100%;
     margin: 0;
     padding: 0;
-    background-color: pink;
+    background-color: #5A8693;
     color: black;
     height: auto;
     z-index: 2;
@@ -181,11 +182,12 @@ h1, h2, h3, h4, h5, h6, p, a
       a
       {
         text-decoration: none;
+        color: #FFFFFF;
       }
     }
     li:hover
     {
-      background-color: white;
+      background-color: #8DE8B4;
       cursor: pointer;
     }
   }

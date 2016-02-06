@@ -25,8 +25,9 @@ class SearchController < ApplicationController
       if saved_search.nil?
         current_user.search_relationships.build(search_text: params[:search_string]).save
       else
-        saved_search.frequency += 1
-        saved_search.save
+        usersearch = current_user.search_relationships.find_by(search: saved_search)
+        usersearch.frequency += 1
+        usersearch.save
       end
     end
   
@@ -34,7 +35,7 @@ class SearchController < ApplicationController
   end
 
   def suggestions
-    suggestions = Search.where('lower(search_text) LIKE lower(?)', "#{params[:search_string]}%").limit(5).pluck(:search_text)   
+    suggestions = Search.where('lower(search_text) LIKE lower(?)', "#{params[:search_string]}%").joins(:search_relationships).order('search_relationships.frequency DESC').limit(5).pluck(:search_text)   
 
     render json: suggestions.to_json, status: 200
   end

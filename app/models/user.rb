@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   has_many :passive_completed_deals, class_name: "CompletedDeal", foreign_key: "seller_id",
   	   			     		 dependent: :destroy
   has_many :productviews
-  has_many :search_relationships
+  has_many :search_relationships, dependent: :destroy
   has_many :searches, through: :search_relationships
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   geocoded_by :full_street_address

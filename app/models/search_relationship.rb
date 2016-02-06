@@ -8,9 +8,8 @@ class SearchRelationship < ActiveRecord::Base
   private
     
     def associate_with_search
-      search = Search.find_or_initialize_by(search_text: :search_text)
+      search = Search.find_or_initialize_by(search_text: search_text)
       search.save
       self.search_id = search.id
-      self.save
     end
 end

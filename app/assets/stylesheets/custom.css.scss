@@ -63,7 +63,6 @@ textarea
 
 h1, h2, h3, h4, h6
 {
-  line-height: 1;
 }
 
 p
@@ -195,7 +194,6 @@ aside
 input, textarea, select, .uneditable-input
 {
   border: 1px solid #bbb;
-  width: 100%;
   margin-bottom: 15px;
   @include box_sizing;
 }

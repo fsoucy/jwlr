@@ -1,4 +1,10 @@
 <% provide(:title, "Search Results") %>
+<div class="toggle_opt">
+  <p>Hi</p>
+  <!--<label for="green">Green</label>-->
+  <input type="checkbox" name="color" id="green" value="green"><span>Hi</span>
+</div>
+
 <div class="search_results">
   <% @results.each do |prod| %>
     <div class="product_home">
@@ -12,3 +18,5 @@
   <% end %>
   <%= will_paginate @results %>
 </div>
+
+<div class="test"></div>

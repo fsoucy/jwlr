@@ -20,7 +20,7 @@ class SearchController < ApplicationController
       with :sold, false
       with(:commodity).all_of(params[:commodity]) unless params[:commodity].blank?
       facet :commodity
-      facet :price
+      facet :price, :range => 0..100000, :range_interval => 100
     end
 
     if logged_in? && !search.results.empty?
@@ -34,6 +34,7 @@ class SearchController < ApplicationController
       end
     end
     
+    @prices = search.facet(:price)
     @commodities = search.facet(:commodity)
     @results = search.results
   end

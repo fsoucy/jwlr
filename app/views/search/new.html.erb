@@ -7,6 +7,13 @@
       <%= facet.value %> (<%= facet.count %>): <input type="checkbox" name="commodity" value="<%= facet.value %>"><br>
     <% end %>
     </p>
+    <h2>Price</h2>
+    <p>
+    <% @prices.rows.each do |facet| %>
+      <%= number_to_currency(facet.value.to_s.split('..')[0]) %> - <%= number_to_currency(facet.value.to_s.split('..')[1]) %> (<%= facet.count %>): <input type="checkbox" name="price" value="<%= facet.value %>">
+    <% end %>
+    </p>
+
   </div>
 </div>
 <div class="search_results">

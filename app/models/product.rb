@@ -1,6 +1,5 @@
-
-
 class Product < ActiveRecord::Base
+  validates :title, presence: true, length: { maximum: 255 }
   geocoded_by :full_street_address
   after_validation :geocode
   belongs_to :user

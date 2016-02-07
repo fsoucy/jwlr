@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@product,  html: { multipart: true}) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :picture, "Upload Product Picture" %>
+      <%= f.file_field :picture, class: 'file' %>
+
+
+
+      <%= f.label :commodity, "Commodity Type" %>
+      <%= f.select :commodity, options_for_select([['Select a commodity type', 0],
+    ['Gold Coins', 'Gold Coins'], ['Gold bricks', 'Gold Bricks'],
+          ['Jewelry', 'Jewelry'], ['Precious Stones', 'Precious Stones']], 0) %>
+
+      <%= f.label :title %>
+      <%= f.text_field :title, class: 'form-control' %>
+
+      <%= f.label :price, "Price" %>
+      <%= f.number_field :price, class: 'form-control' %>
+
+      <% if @has %>
+        <%= f.label :store_id, "Store of Product" %>
+        <%= f.select :store_id, options_for_select(@stos, @default) %>
+      <% else %>
+        <%= f.label :full_street_address, "Address of Product" %>
+        <%= f.text_field :full_street_address, class: 'form-control' %>
+      <% end %>
+
+      <%= f.label :description, "Description of Product + Keywords" %>
+      <%= f.text_area :description, class: 'form-control' %>
+
+      <%= f.submit "Upload product", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+

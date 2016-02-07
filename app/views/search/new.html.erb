@@ -1,22 +1,22 @@
 <% provide(:title, "Search Results") %>
-<div class="toggle_opt">
-  <p>Hi</p>
-  <!--<label for="green">Green</label>-->
-  <input type="checkbox" name="color" id="green" value="green"><span>Hi</span>
+<div class="toggle_options">
+  <div class="option">
+    <h2>Color</h2>
+    <p>Green: <input type="checkbox" name="color" id="green" value="green"></p>
+  </div>
 </div>
-
 <div class="search_results">
   <% @results.each do |prod| %>
-    <div class="product_home">
-      <div class="image_container_home">
-        <%= image_tag prod.picture_url(:thumb), class: "product_image_home" %>
-        <button class="quick_view_home">Quick View</button>
+    <div class="result">
+      <div class="image_container_search">
+        <%= image_tag prod.picture_url(:thumb), class: "product_image_search" %>
       </div>
-      <h3 class="product_name_home"><%= prod.commodity %></h3>
-      <h4 class="product_price_home"><%= prod.price %></h4>
+      <div class="info_container">
+        <%= link_to prod.title, prod, class: "title_link" %>          
+        <h3><%= number_to_currency(prod.price) %></h3>
+      </div>
     </div>
   <% end %>
   <%= will_paginate @results %>
 </div>
 
-<div class="test"></div>

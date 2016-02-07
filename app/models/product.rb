@@ -27,6 +27,7 @@ class Product < ActiveRecord::Base
     latlon(:location) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
     boolean :sold
     time :created_at    
+    string :commodity
   end
   
 end

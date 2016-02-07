@@ -18,6 +18,9 @@ class SearchController < ApplicationController
       end
       order_by(:created_at, :desc) 
       with :sold, false
+      with(:commodity).all_of(params[:commodity]) unless params[:commodity].blank?
+      facet :commodity
+      facet :price
     end
 
     if logged_in? && !search.results.empty?
@@ -30,7 +33,8 @@ class SearchController < ApplicationController
         usersearch.save
       end
     end
-  
+    
+    @commodities = search.facet(:commodity)
     @results = search.results
   end
 

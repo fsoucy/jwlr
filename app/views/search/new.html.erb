@@ -2,9 +2,11 @@
 <div class="toggle_options">
   <div class="option">
     <h2>Commodity</h2>
+    <p>
     <% @commodities.rows.each do |facet| %>
-      <p><%= facet.value %> (<%= facet.count %>): <input type="checkbox" name="commodity" value="<%= facet.value %>"></p>
+      <%= facet.value %> (<%= facet.count %>): <input type="checkbox" name="commodity" value="<%= facet.value %>"><br>
     <% end %>
+    </p>
   </div>
 </div>
 <div class="search_results">

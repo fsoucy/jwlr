@@ -6,22 +6,30 @@ class SearchController < ApplicationController
         boost_fields :title => 2.0
         boost_fields :description => 1.0
       end
-      paginate :page => params[:page]
-      if !params[:place].nil?
-        geocode = Geocoder.search(params[:place])
-        order_by_geodist :location, geocode[0].latitude, geocode[0].longitude 
-      elsif logged_in?
-        order_by_geodist :location, current_user.latitude, current_user.longitude        
+    paginate :page => params[:page]
+    case params[:sort_by]
+      when "low"
+        order_by(:price, :asc)
+      when "high"
+        order_by(:price, :desc)
       else
-        geocode = request.location
-        order_by_geodist :location, geocode.latitude, geocode.longitude
-      end
-      order_by(:created_at, :desc) 
-      with :sold, false
-      with(:commodity).all_of(params[:commodity]) unless params[:commodity].blank?
-      facet :commodity
-      facet :price, :range => 0..100000, :range_interval => 100
+        order_by(:score, :desc)
     end
+
+    if !params[:place].nil?
+      geocode = Geocoder.search(params[:place])
+      order_by_geodist :location, geocode[0].latitude, geocode[0].longitude 
+    elsif logged_in?
+      order_by_geodist :location, current_user.latitude, current_user.longitude        
+    else
+      geocode = request.location
+      order_by_geodist :location, geocode.latitude, geocode.longitude
+    end
+
+    with :sold, false
+    facet :commodity
+    facet :price, :range => 0..100000, :range_interval => 100     
+  end
 
     if logged_in? && !search.results.empty?
       saved_search = current_user.searches.find_by(search_text: params[:search_string])

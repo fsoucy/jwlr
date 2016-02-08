@@ -27,6 +27,9 @@
       <div class="image_container_search">
         <%= image_tag prod.picture_url(:thumb), class: "product_image_search" %>
       </div>
+      <div class="image_container_search">
+	<%= image_tag prod.picture_url(:thumb), class: "product_image_search" %>
+      </div>
       <div class="info_container">
         <%= link_to prod.title, prod, class: "title_link" %>          
         <h3><%= number_to_currency(prod.price) %></h3>

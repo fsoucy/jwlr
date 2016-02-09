@@ -1,5 +1,19 @@
 function setGetParameter(paramName, paramValue)
 {
+    $('input#price').each(function() {
+	var val = $(this).val();
+	if ($(this).is(':checked'))
+	{
+	    console.log(val);
+	}
+	else
+	{
+	    console.log('nope');
+	}
+	
+	
+    });
+    
     var url = window.location.href;
     var hash = location.hash;
     url = url.replace(hash, '');
@@ -18,6 +32,30 @@ function setGetParameter(paramName, paramValue)
     else
         url += "&" + paramName + "=" + paramValue;
     }
+    url += "&price=";
+    var first = false;
+    $('input#price').each(function() {
+	var val = $(this).val();
+	if ($(this).is(':checked'))
+	{
+	    console.log(val);
+	    if (first)
+	    {
+		url += "," + val;
+	    }
+	    else
+	    {
+		url += val;
+		first = true;
+	    }
+	}
+	else
+	{
+	    console.log('nope');
+	}
+
+
+    });
     window.location.href = url + hash;
 }
 

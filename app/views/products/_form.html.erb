@@ -6,12 +6,8 @@
       <%= f.label :picture, "Upload Product Picture" %>
       <%= f.file_field :picture, class: 'file' %>
 
-
-
-      <%= f.label :commodity, "Commodity Type" %>
-      <%= f.select :commodity, options_for_select([['Select a commodity type', 0],
-    ['Gold Coins', 'Gold Coins'], ['Gold bricks', 'Gold Bricks'],
-          ['Jewelry', 'Jewelry'], ['Precious Stones', 'Precious Stones']], 0) %>
+      <%= f.label :category, "Product Type" %>
+      <%= f.select :category, nested_dropdown(Category.where(:parent_id => nil)) %>
 
       <%= f.label :title %>
       <%= f.text_field :title, class: 'form-control' %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160206014202) do
+ActiveRecord::Schema.define(version: 20160209044954) do
 
   create_table "blogposts", force: :cascade do |t|
     t.text     "title"
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20160206014202) do
   end
 
   add_index "blogposts", ["store_id"], name: "index_blogposts_on_store_id"
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "parent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "categories", ["parent_id"], name: "index_categories_on_parent_id"
 
   create_table "completed_deals", force: :cascade do |t|
     t.float    "price"
@@ -94,13 +103,14 @@ ActiveRecord::Schema.define(version: 20160206014202) do
     t.datetime "updated_at",                          null: false
     t.string   "picture"
     t.text     "description"
-    t.string   "commodity"
     t.boolean  "hold"
     t.boolean  "sold",                default: false
     t.integer  "store_id"
     t.string   "title"
+    t.integer  "category_id"
   end
 
+  add_index "products", ["category_id"], name: "index_products_on_category_id"
   add_index "products", ["user_id"], name: "index_products_on_user_id"
 
   create_table "productviews", force: :cascade do |t|
@@ -146,10 +156,11 @@ ActiveRecord::Schema.define(version: 20160206014202) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.string   "full_street_address"
-    t.string   "commodity"
     t.text     "description"
+    t.integer  "category_id"
   end
 
+  add_index "statuses", ["category_id"], name: "index_statuses_on_category_id"
   add_index "statuses", ["user_id"], name: "index_statuses_on_user_id"
 
   create_table "stores", force: :cascade do |t|

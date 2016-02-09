@@ -1,0 +1,31 @@
+<% provide(:title, 'Categories') %>
+<%
+  def draw_tree(node)
+    node.children.each do |child|
+%>
+      <li><%= link_to child.name, child %>
+<%
+          if child.children.any?
+%>
+              <ol><% draw_tree(child) %></ol>
+<%
+          end
+%>
+      </li>
+<%
+    end; nil
+  end
+%>
+
+<ol>
+    <% @categories.each do |node| 
+       if node.parent.nil? %>
+        <li>
+            <%= link_to node.name, node %>
+            <% if node.children.any? %>
+                <ol><%= draw_tree(node) %></ol>
+            <% end %>
+        </li>
+      <% end %>
+    <% end %>
+</ol>

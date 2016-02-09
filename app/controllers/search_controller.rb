@@ -27,7 +27,7 @@ class SearchController < ApplicationController
     end
 
     with :sold, false
-    facet :commodity
+    facet :category
     facet :price, :range => 0..100000, :range_interval => 100     
   end
 
@@ -43,7 +43,7 @@ class SearchController < ApplicationController
     end
     
     @prices = search.facet(:price)
-    @commodities = search.facet(:commodity)
+    @categories = search.facet(:category)
     @results = search.results
   end
 

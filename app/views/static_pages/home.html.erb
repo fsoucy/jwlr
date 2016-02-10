@@ -34,17 +34,18 @@
       <button>Shop now</button>
     </div>
   </div>
-  <div class="sell_now">
+  <div class="sell_now sell_active">
     <p>Start your online business</p>
     <button class="sell">Let's get started</button>
   </div>
   <div class="home_gallery">
     <h1>For You</h1>
     <div class="gallery_container">
-      <div class="gallery_main"></div>
-      <% (1..4).each do |n| %>
-      <div class="gallery_other"></div>
-      <% end %>
+      <div class="gallery_main" id="gallery_main_first"></div>
+      <div class="gallery_other first"></div>
+      <div class="gallery_other second"></div>
+      <div class="gallery_other third"></div>
+      <div class="gallery_other fourth"></div>
     </div>
   </div>
   <div class="home_gallery">

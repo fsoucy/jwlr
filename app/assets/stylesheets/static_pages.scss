@@ -23,7 +23,7 @@
     margin-top: 3px;
     width: 1000px;
     height: 500px;
-    background-color: pink;
+    background-color: white;
     border: 1px solid #d8d0e0;
     .gallery_main
     {
@@ -40,13 +40,29 @@
       width: 248px;
       height: 248px;
       margin: 0;
+      background-color: white;
       border: 1px solid #d8d0e0;
       padding: 0;
-      background-image: url('watch.jpeg');
       background-size: cover;
       background-repeat: no-repeat;
       float: left;
       clear: none;
+    }
+    .first
+    {
+      background-image: url('ring.jpg');
+    }
+    .second
+    {
+      background-image: url('coins.jpg');
+    }
+    .third
+    {
+      background-image: url('jewelry.jpg');
+    }
+    .fourth
+    {
+      background-image: url('necklace.jpg');
     }
   }
 }
@@ -73,6 +89,20 @@
   border: 2px solid #d8d0e0;
   background-color: #5a8693;
   position: relative;
+  #ring:hover, #watch:hover, #jewelry:hover, #necklace:hover, #coins:hover, #bullion:hover
+  {
+    cursor: pointer;
+    border: 2px solid red;
+    button
+    {
+      background-color: #5a8693;
+      border: 2px solid #d8d0e0;
+    }
+    button:hover
+    {
+      cursor: pointer;
+    }
+  }
   #ring, #watch, #jewelry, #necklace, #coins, #bullion
   {
     position: relative;
@@ -144,9 +174,18 @@
 
 .sell_now
 {
+  background-image: url('analysis.jpg');
+}
+
+.sell_now_other
+{
+  background-image: url('elizabethigold.jpg');
+}
+
+.sell_now, .sell_now_other
+{
   text-align: center;
   border: 2px solid #d8d0e0;
-  background-image: url('analysis.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   display: block;
@@ -172,5 +211,10 @@
     color: white;
     border: 2px solid #8de8b4;
     border-radius: 3px;
+  }
+  button:hover
+  {
+    background-color: #5a8693;
+    cursor: pointer;
   }
 }

@@ -1,0 +1,66 @@
+id,name,parent_id
+1,Jewelry,
+2,Fine/Fashion,1
+3,Antique/Vintage,1
+4,Artisan/Handmade,1
+5,Male,1
+6,Female,1
+7,Rings,6
+8,Necklaces/Pendants,6
+9,Earrings,6
+10,Bracelets,6
+11,Wedding/Engagement Rings,6
+12,Charms,6
+13,Pins & Broaches,6
+14,Other,6
+15,Cuff-links,5
+16,Tie Tacks,5
+17,Money Clips,5
+18,Lapel Pins,5
+19,Other,5
+20,Watches,
+21,Wristwatches,20
+22,Pocket Watches,20
+23,Other,20
+24,Watch Parts,20
+25,Bands,24
+26,Chains/Fobs,24
+27,Dials,24
+28,Movements,24
+29,Other,24
+30,Coins,
+31,Region,30
+32,United States,31
+33,Europe,31
+34,Asia,31
+35,Australia & Oceania,31
+36,North America,31
+37,Central America,31
+38,South America,31
+39,Middle East,31
+40,Other,31
+41,Era,30
+42,Roman,41
+43,Greek,41
+44,Byzantine,41
+45,Great Britain,33
+46,France,33
+47,Poland,33
+48,Germany,33
+49,Italy,33
+50,Spain,33
+51,Austria,33
+52,Switzerland,33
+53,Turkey,33
+54,Netherlands,33
+55,Greece,33
+56,Hungary,33
+57,Belgium,33
+58,Denmark,33
+59,Bullion,
+60,Coins,59
+61,Bars,59
+62,Nuggets,59
+63,Scrap/Recovered,59
+64,Leaf/Flake,59
+65,Other,59

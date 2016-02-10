@@ -34,7 +34,7 @@ class StatusesController < ApplicationController
 
   private
     def status_params
-      params.require(:status).permit(:minPrice, :maxPrice, :toTravel, :full_street_address, :buying, :commodity, :description)
+      params.require(:status).permit(:minPrice, :maxPrice, :toTravel, :full_street_address, :buying, :category_id, :description)
     end
 
     def correct_user

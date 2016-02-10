@@ -8,6 +8,7 @@ class Product < ActiveRecord::Base
   attr_accessor :hits
   has_many :pending_deals, dependent: :destroy
   has_many :productviews, dependent: :destroy
+  belongs_to :category
 
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at]
@@ -27,7 +28,7 @@ class Product < ActiveRecord::Base
     latlon(:location) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
     boolean :sold
     time :created_at    
-    string :commodity
+    integer :category
   end
   
 end

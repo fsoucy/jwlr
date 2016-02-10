@@ -1,5 +1,6 @@
 class Product < ActiveRecord::Base
   validates :title, presence: true, length: { maximum: 255 }
+  validates :category, presence: true
   geocoded_by :full_street_address
   after_validation :geocode
   belongs_to :user
@@ -21,14 +22,13 @@ class Product < ActiveRecord::Base
 
   searchable do
     text :description
-    text :commodity
     text :title
     
     float :price
     latlon(:location) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
     boolean :sold
     time :created_at    
-    integer :category
+    integer :category_id
   end
   
 end

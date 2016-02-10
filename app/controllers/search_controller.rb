@@ -26,6 +26,13 @@ class SearchController < ApplicationController
       order_by_geodist :location, geocode.latitude, geocode.longitude
     end
 
+    if !params[:price].nil?
+      prices = params[:price].split(',')
+      prices.each do |price|
+        with :price, Range.new(price.split("..").first, price.split("..").last)
+      end
+    end
+
     with :sold, false
     facet :commodity
     facet :price, :range => 0..100000, :range_interval => 100     

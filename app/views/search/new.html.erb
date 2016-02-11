@@ -16,7 +16,7 @@
     <h2>Price</h2>
     <p>
     <% @prices.rows.each do |facet| %>
-      <%= number_to_currency(facet.value.to_s.split('..')[0]) %> - <%= number_to_currency(facet.value.to_s.split('..')[1]) %> (<%= facet.count %>): <input type="checkbox" name="price" value="<%= facet.value %>">
+      <%= number_to_currency(facet.value.to_s.split('..')[0]) %> - <%= number_to_currency(facet.value.to_s.split('..')[1]) %> (<%= facet.count %>): <input type="checkbox" id="price" name="price" value="<%= facet.value %>" onchange='setGetParameter("sort_by",document.getElementById("sort").value);'>
     <% end %>
     </p>
   </div>

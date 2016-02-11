@@ -1,5 +1,31 @@
 $(document).ready(function() {
-    //
+    //search results page toggle options
+/*  THIS IS ALL IRRELEVANT 
+    $('#sort').change(function() {
+	var val = $(this).val();
+	console.log(val);
+	console.log("success");
+	$.ajax({
+	    type: "GET",// GET in place of POST
+	    contentType: "application/json; charset=utf-8",
+	    url: "http://162.213.199.215:3000/search",
+	    data: {search_string: window.location.hash["search_string"], sort_by: val},
+	    dataType: "html",
+	    success: function (result) {
+		//do somthing here
+		console.log("yay");
+		console.log("RES: " + result);
+		$('body').html(result);
+	    },
+	    error: function(e){
+	    }
+	});
+	    
+    });
+
+*/
+    
+    //header stuff
     $('.search_string').focusin(function() {
 
 	if ($('.search_string').val().length == 0)
@@ -64,6 +90,8 @@ $(document).ready(function() {
 	
     });
 
+    
+
     function updateSearch(thing)
     {
 	$.ajax({
@@ -109,7 +137,7 @@ $(document).ready(function() {
     //home header
     $('.dropdown_header').mouseenter(function() {
 	$('.dropdown_menu_header').css('display', 'block');
-
+	console.log("Yup");
     });
 
     $('.dropdown_header').mouseleave(function() {

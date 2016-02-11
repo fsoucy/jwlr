@@ -2,57 +2,81 @@
 
 <% if logged_in? %>
 <div class="home_main">
-  <h1>Are you looking to...</h1>
-  
-  <div class="big_home">
-    <button class="thing buy">Buy</button>
-    <div class="or"><h2>or</h2></div>
-    <button class="thing sell">Sell</button>
-  </div>
-  <div class="slideshow_home">
-    <img class="next_home" src="http://calvarytherock.org/images/next2.png">
-    <img class="prev_home" src="http://www.hko.gov.hk/m/nowcast/images/previous.png">
-    <div class="toggles_home">
-      <div class="container_home">
-	<% for i in 1..3 %>
-	<div class="circle_home"></div>
-	<% end %>
-      </div>
+  <div class="buy_now">
+    <div id="coins">
+      <p>Gold Coins</p>
+      <p>$5 and up</p>
+      <button>Shop now</button>
+    </div>
+    <div id="bullion">
+      <p>Bullion</p>
+      <p>$100 and up</p>
+      <button>Shop now</button>
+    </div>
+    <div id="watch">
+      <p>Watches</p>
+      <p>$50 and up</p>
+      <button>Shop now</button>
+    </div>
+    <div id="necklace">
+      <p>Necklaces</p>
+      <p>$60 and up</p>
+      <button>Shop now</button>
+    </div>
+    <div id="ring">
+      <p>Rings</p>
+      <p>$30 and up</p>
+      <button>Shop now</button>
+    </div>
+    <div id="jewelry">
+      <p>Jewelry</p>
+      <p>$50 and up</p>
+      <button>Shop now</button>
     </div>
   </div>
-  <div class="featured">
-    <h1 class="featured_header">Featured Products</h1>
-    <div class="gallery_home">
-      <% @products.each do |prod| %>
-      <div class="product_home">
-	<div class="image_container_home">
-	  <%= image_tag prod.picture_url(:thumb), class: "product_image_home" %>
-	  <button class="quick_view_home">Quick View</button>
-	</div>
-	<h3 class="product_name_home"><%= prod.category.name %></h3>
-	<h4 class="product_price_home"><%= prod.price %></h4>
-      </div>
+  <div class="sell_now">
+    <p>Start your online business</p>
+    <button class="sell">Let's get started</button>
+  </div>
+  <div class="home_gallery">
+    <h1>For You</h1>
+    <div class="gallery_container">
+      <div class="gallery_main"></div>
+      <% (1..4).each do |n| %>
+      <div class="gallery_other"></div>
       <% end %>
     </div>
   </div>
-  <div class="top">
-    <h1 class="top_header">Top Products</h1>
-    <div class="gallery_home">
-      <% @top_products.each do |prod| %>
-      <div class="product_home">
-	<div class="image_container_home">
-	  <%= image_tag prod.picture_url(:thumb), class: "product_image_home" %>
-	  <button class="quick_view_home">Quick View</button>
-	</div>
-	<h3 class="product_name_home"><%= prod.category.name %></h3>
-	<h4 class="product_price_home"><%= prod.price %></h4>
-      </div>
+  <div class="home_gallery">
+    <h1>Today's Best Deals</h1>
+    <div class="gallery_container">
+      <div class="gallery_main"></div>
+      <% (1..4).each do |n| %>
+      <div class="gallery_other"></div>
+      <% end %>
+    </div>
+  </div>
+  <div class="home_gallery">
+    <h1>Featured Products</h1>
+    <div class="gallery_container">
+      <div class="gallery_main"></div>
+      <% (1..4).each do |n| %>
+      <div class="gallery_other"></div>
+      <% end %>
+    </div>
+  </div>
+  <div class="home_gallery">
+    <h1>Specific Categories</h1>
+    <div class="gallery_container">
+      <div class="gallery_main"></div>
+      <% (1..4).each do |n| %>
+      <div class="gallery_other"></div>
       <% end %>
     </div>
   </div>
 </div>
+
 <% else %>
-<div class="poop"></div>
 <div class="home_main">
   <h1>Are you looking to...</h1>
   <br>

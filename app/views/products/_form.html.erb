@@ -7,7 +7,7 @@
       <%= f.file_field :picture, class: 'file' %>
 
       <%= f.label :category, "Product Type" %>
-      <%= f.select :category, nested_dropdown(Category.where(:parent_id => nil)) %>
+      <%= f.select :category, nested_dropdown(Category.where(:parent_id => nil), true) %>
 
       <%= f.label :title %>
       <%= f.text_field :title, class: 'form-control' %>

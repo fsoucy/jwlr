@@ -5,8 +5,6 @@ class Category < ActiveRecord::Base
   has_many :category_options, dependent: :destroy
   attr_accessor :no_of_options  
 
-  accepts_nested_attributes_for :category_options
-
   def depth
     count = 0
     current_category = self

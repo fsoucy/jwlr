@@ -16,23 +16,11 @@ ActiveRecord::Schema.define(version: 20160211031623) do
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
     t.string   "value"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.boolean  "required",           default: false
-    t.boolean  "is_required",        default: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   add_index "attribute_options", ["category_option_id"], name: "index_attribute_options_on_category_option_id"
-
-  create_table "attributes", force: :cascade do |t|
-    t.integer  "category_id"
-    t.string   "name"
-    t.boolean  "freeform",    default: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-  end
-
-  add_index "attributes", ["category_id"], name: "index_attributes_on_category_id"
 
   create_table "blogposts", force: :cascade do |t|
     t.text     "title"

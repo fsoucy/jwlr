@@ -55,9 +55,13 @@ class ProductsController < ApplicationController
     redirect_to current_user
   end
 
+  def edit
+    @product = Product.find(params[:id])
+  end
+
   private
     def product_params
-      params.require(:product).permit(:price, :category, :full_street_address, :picture, :description, :store_id, :title)
+      params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title)
     end
 
     def correct_user

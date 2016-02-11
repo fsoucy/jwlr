@@ -6,8 +6,8 @@
       <%= f.label :picture, "Upload Product Picture" %>
       <%= f.file_field :picture, class: 'file' %>
 
-      <%= f.label :category, "Product Type" %>
-      <%= f.select :category, nested_dropdown(Category.where(:parent_id => nil), true) %>
+      <%= f.label :category_id, "Product Type" %>
+      <%= f.select :category_id, nested_dropdown(Category.where(:parent_id => nil), true) %>
 
       <%= f.label :title %>
       <%= f.text_field :title, class: 'form-control' %>
@@ -21,6 +21,13 @@
       <% else %>
         <%= f.label :full_street_address, "Address of Product" %>
         <%= f.text_field :full_street_address, class: 'form-control' %>
+      <% end %>
+
+      <% if !@product.category.nil? %>
+        <% @product.category.category_options.each do |option| %>
+          <%= f.label :toggle_options[option.id], option.name %>
+          <%= f.select :toggle_options[option.id], option.attribute_options.all %> 
+        <% end %>
       <% end %>
 
       <%= f.label :description, "Description of Product + Keywords" %>

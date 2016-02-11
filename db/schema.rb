@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160209044954) do
+ActiveRecord::Schema.define(version: 20160211031623) do
+
+  create_table "attribute_options", force: :cascade do |t|
+    t.integer  "category_option_id"
+    t.string   "value"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.boolean  "required",           default: false
+    t.boolean  "is_required",        default: false
+  end
+
+  add_index "attribute_options", ["category_option_id"], name: "index_attribute_options_on_category_option_id"
+
+  create_table "attributes", force: :cascade do |t|
+    t.integer  "category_id"
+    t.string   "name"
+    t.boolean  "freeform",    default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "attributes", ["category_id"], name: "index_attributes_on_category_id"
 
   create_table "blogposts", force: :cascade do |t|
     t.text     "title"
@@ -31,6 +52,16 @@ ActiveRecord::Schema.define(version: 20160209044954) do
   end
 
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id"
+
+  create_table "category_options", force: :cascade do |t|
+    t.integer  "category_id"
+    t.string   "name"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "required",    default: false
+  end
+
+  add_index "category_options", ["category_id"], name: "index_category_options_on_category_id"
 
   create_table "completed_deals", force: :cascade do |t|
     t.float    "price"
@@ -227,6 +258,16 @@ ActiveRecord::Schema.define(version: 20160209044954) do
   end
 
   add_index "stores", ["user_id"], name: "index_stores_on_user_id"
+
+  create_table "toggle_options", force: :cascade do |t|
+    t.integer  "product_id"
+    t.integer  "attribute_option_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "toggle_options", ["attribute_option_id"], name: "index_toggle_options_on_attribute_option_id"
+  add_index "toggle_options", ["product_id"], name: "index_toggle_options_on_product_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

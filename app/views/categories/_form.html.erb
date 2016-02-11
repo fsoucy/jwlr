@@ -4,10 +4,39 @@
       <%= render 'shared/error_messages', object: f.object %>
 
       <%= f.label :name, "Name" %>
-      <%= f.text_field :name, class: 'form-control' %>
+      <%= f.text_field :name, class: 'form-control' %><br>
 
       <%= f.label :parent_id, "Parent" %>
-      <%= f.select :parent_id, Category.all.pluck(:name, :id).push(''), class: 'form-control' %>
+      <%= f.select :parent_id, Category.all.pluck(:name, :id).push(''), class: 'form-control' %><br>
+  
+      <%= f.label :no_of_options, "Number of Attributes" %>
+      <%= f.number_field :no_of_options, class: 'form-control' %><br>
+            
+      <% @category.category_options.each do |option| %>
+        <p>
+        <%= fields_for "category_options[#{option.id}]", option do |opt| %>
+          <%= opt.label :name, "Attribute Name" %>
+          <%= opt.text_field :name, class: 'form-control' %>
+          <%= opt.label :required, "Required?" %> 
+          <%= opt.check_box :required, class: 'form-control' %>
+          <%= opt.label :_delete, "Delete?" %>
+          <%= opt.check_box :_delete, class: 'form-control' %>
+          <%= opt.label :no_of_options, "Number of Options" %>
+          <%= opt.number_field :no_of_options, class: 'form-control' %>
+          <br>
+        <% end %>
+        <% option.attribute_options.each do |attr| %>
+          <%= fields_for "attribute_options[#{attr.id}]", attr do |att| %>
+            <%= att.label :value, "Option Name" %>
+            <%= att.text_field :value, class: 'form-control' %>
+            <%= att.label :_delete, "Delete?" %>
+            <%= att.check_box :_delete, class: 'form-control' %>            
+            <br>
+           <% end %>
+        <% end %>
+        </p>
+      <% end %>
+
 
       <%= f.submit "Save Category", class: "btn btn-primary" %>
     <% end %>

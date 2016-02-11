@@ -9,6 +9,7 @@ class Product < ActiveRecord::Base
   has_many :pending_deals, dependent: :destroy
   has_many :productviews, dependent: :destroy
   belongs_to :category
+  has_many :toggle_options, dependent: :destroy
 
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at]

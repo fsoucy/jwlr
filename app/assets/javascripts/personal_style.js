@@ -58,9 +58,10 @@ $(document).ready(function() {
 
     });
 
-    $('.search_string').focusout(function() {
+    var strToSave = "";
 
-	$('#sug_list').css('display', 'none');
+    $('.search_string').focusout(function() {
+	hideSuggestions();
     });
 
     $('.search_string').keydown(function(event) {
@@ -78,11 +79,21 @@ $(document).ready(function() {
 	    if (key == 40)
 	    {
 		var done = false;
+		if (!($('#sug_list').hasClass('active')))
+		{
+		    $('#sug_list > :first-child').addClass('active');
+		    $('#sug_list').addClass("active");
+		    strToSave = $('.search_string').val();
+		    console.log(strToSave);
+		    done = true;
+		}
 		if ($('#sug_list > .active').is('#sug_list > :last-child') && !done)
 		{
 		    $('#sug_list > :last-child').removeClass('active');
-		    $('#sug_list > :first-child').addClass('active');
+		    $('#sug_list').removeClass('active');
 		    done = true;
+		    $('.search_string').val(strToSave);
+		    strToSave = "";
 		}
 		if (!done)
 		{
@@ -94,11 +105,21 @@ $(document).ready(function() {
 	    if (key == 38)
 	    {
 		var done = false;
+		if (!($('#sug_list').hasClass('active')))
+		{
+		    $('#sug_list > :last-child').addClass('active');
+		    done = true;
+		    strToSave = $('.search_string').val();
+		    $('#sug_list').addClass('active');
+		}
 		if ($('#sug_list > .active').is('#sug_list > :first-child') && !done)
 		{
 		    $('#sug_list > :first-child').removeClass('active');
-		    $('#sug_list > :last-child').addClass('active');
+		    $('#sug_list').removeClass('active');
 		    done = true;
+		    console.log(strToSave);
+		    $('.search_string').val(strToSave);
+		    strToSave = "";
 		}
 		if (!done)
 		{
@@ -106,6 +127,11 @@ $(document).ready(function() {
 		    $('#sug_list > .active').removeClass('active');
 		    $('#sug_list > .next').addClass('active').removeClass('next');
 		}
+	    }
+	    if ($('#sug_list').hasClass('active'))
+	    {
+		$('.search_string').val($('#sug_list > .active').text());
+
 	    }
 	}
 	else
@@ -115,7 +141,15 @@ $(document).ready(function() {
 	
     });
 
-    
+    $('#sug_list > li').mouseover(function() {
+    });
+
+    function hideSuggestions()
+    {
+	$('#sug_list').removeClass('active');
+	$('#sug_list').html("");
+	$('#sug_list').css('display', 'none');
+    }
 
     function updateSearch(thing)
     {
@@ -133,20 +167,15 @@ $(document).ready(function() {
 		var parts = res.split(',');
 		for (i in parts)
 		{
-		    if (str.length == 0)
-		    {
-			var add = "<li class='active'>";
-		    }
-		    else
-		    {
-			var add = "<li>"
-		    }
+		    var add = "<li>"
 		    str += add + parts[i] + '</li>';
 		}
 		console.log(thing);
 		console.log(res);
+		$('#sug_list').html("");
 		$('#sug_list').html(str);
 		console.log(str);
+		$('#sug_list').removeClass('active');
 		if (res.length == 0 || thing.length == 0)
 		{
 		    $('#sug_list').css('display', 'none');

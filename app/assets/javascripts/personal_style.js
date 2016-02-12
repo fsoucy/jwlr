@@ -53,7 +53,7 @@ $(document).ready(function() {
 	else
 	{
 	    $('#sug_list').css('display', 'block');
-	    updateSearch();
+	    updateSearch($('.search_string').val());
 	}
 
     });
@@ -61,6 +61,12 @@ $(document).ready(function() {
     $('.search_string').focusout(function() {
 
 	$('#sug_list').css('display', 'none');
+    });
+
+    $('.search_string').keydown(function(event) {
+	var key = event.which;
+	if (key == 38 || key == 40) event.preventDefault();
+
     });
 
     $('.search_string').keyup(function(event) {
@@ -113,20 +119,19 @@ $(document).ready(function() {
 
     function updateSearch(thing)
     {
+	
 	$.ajax({
 	    type: "GET",// GET in place of POST
 	    contentType: "application/json; charset=utf-8",
-	    url: "http://162.213.199.215:3002/search_suggestions",
+	    url: "http://162.213.199.215:3000/search_suggestions",
 	    data: {search_string: thing},
 	    dataType: "json",
 	    success: function (result) {
 		//do somthing here
-		console.log($('.search_string').val());
-		console.log(result);
 		var str = "";
 		res = "" + result;
 		var parts = res.split(',');
-		for (thing in parts)
+		for (i in parts)
 		{
 		    if (str.length == 0)
 		    {
@@ -136,10 +141,13 @@ $(document).ready(function() {
 		    {
 			var add = "<li>"
 		    }
-		    str += add + parts[thing] + '</li>';
+		    str += add + parts[i] + '</li>';
 		}
+		console.log(thing);
+		console.log(res);
 		$('#sug_list').html(str);
-		if (res.length == 0)
+		console.log(str);
+		if (res.length == 0 || thing.length == 0)
 		{
 		    $('#sug_list').css('display', 'none');
 		}
@@ -151,6 +159,15 @@ $(document).ready(function() {
 	    error: function (e){
 	    }
 	});
+	//update search
+	/*
+	if (!($('#sug_list > .active').is('#sug_list > :first-child')))
+	{
+	    $('.search_string').val(('#sug_list > .active').text());
+	    
+	}
+	*/
+
     }
 
     //home header

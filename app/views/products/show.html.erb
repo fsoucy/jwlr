@@ -29,5 +29,8 @@
     <h3>Owner: <%= @product.user.name %></h3>
     <h3>Description: <%= @product.description %></h3>
     <h3>Views: <%= @product.views %></h3>
+    <% @product.toggle_options.each do |opt| %>
+      <h3><%= opt.attribute_option.category_option.name %>: <%= opt.attribute_option.value %></h3>
+    <% end %>
   </div>
 </div>

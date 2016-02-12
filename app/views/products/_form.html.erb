@@ -22,11 +22,14 @@
         <%= f.label :full_street_address, "Address of Product" %>
         <%= f.text_field :full_street_address, class: 'form-control' %>
       <% end %>
-
+      
+      
       <% if !@product.category.nil? %>
         <% @product.category.category_options.each do |option| %>
-          <%= f.label :toggle_options[option.id], option.name %>
-          <%= f.select :toggle_options[option.id], option.attribute_options.all %> 
+          <%= fields_for "toggle_options[#{option.id}]", option do |opt| %>
+            <%= opt.label :name , option.name %>
+            <%= opt.select :name , option.attribute_options.all.pluck(:id, :value) %> 
+          <% end %>
         <% end %>
       <% end %>
 

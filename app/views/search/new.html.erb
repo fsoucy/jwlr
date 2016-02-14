@@ -2,7 +2,7 @@
 <div class="toggle_options">
   <div class="option">
     <h2>Sort By</h2>
-      <select id="sort" onchange='setGetParameter("sort_by", document.getElementById("sort").value);'>
+      <select id="sort" >
         <option value="relevance">Relevance</option>
         <option value="low">Price: Low to High</option>
         <option value="high">Price: High to Low</option>
@@ -10,13 +10,14 @@
     <h2>Commodity</h2>
     <p>
     <% @commodities.rows.each do |facet| %>
-      <%= facet.value %> (<%= facet.count %>): <input type="checkbox" name="commodity" value="<%= facet.value %>"><br>
+      <%= facet.value %> (<%= facet.count %>): <input class="toggle" type="checkbox" name="commodity" value="<%= facet.value %>"><br>
     <% end %>
+    Thingypoo <input class="toggle" type="checkbox" name="thing" value="thingypoo"><br>
     </p>
     <h2>Price</h2>
     <p>
     <% @prices.rows.each do |facet| %>
-      <%= number_to_currency(facet.value.to_s.split('..')[0]) %> - <%= number_to_currency(facet.value.to_s.split('..')[1]) %> (<%= facet.count %>): <input type="checkbox" id="price" name="price" value="<%= facet.value %>" onchange='setGetParameter("sort_by",document.getElementById("sort").value);'>
+      <%= number_to_currency(facet.value.to_s.split('..')[0]) %> - <%= number_to_currency(facet.value.to_s.split('..')[1]) %> (<%= facet.count %>): <input class="toggle" type="checkbox" id="price" name="price" value="<%= facet.value %>" >
     <% end %>
     </p>
   </div>

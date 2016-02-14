@@ -1,6 +1,7 @@
 class SearchController < ApplicationController
 
   def new
+    @params = params
     search = Product.search do
       fulltext params[:search_string] do
         boost_fields :title => 2.0
@@ -49,7 +50,6 @@ class SearchController < ApplicationController
 
   def suggestions
     suggestions = Search.where('lower(search_text) LIKE lower(?)', "#{params[:search_string]}%").joins(:search_relationships).order('search_relationships.frequency DESC').limit(5).pluck(:search_text)   
-
     render json: suggestions.to_json, status: 200
   end
 

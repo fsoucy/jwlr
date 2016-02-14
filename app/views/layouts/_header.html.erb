@@ -5,7 +5,8 @@
       <%= form_tag "/search", method: "get", class: 'search_header' do %>
       <%= text_field_tag "search_string", "", placeholder: "Search for a product or user", class: 'search_string', autocomplete: 'off'%>
       <%= submit_tag "Search", class: 'search_submitter' %>
-      <ul class="suggestions" id="sug_list"></ul>
+      <ul class="suggestions" id="sug_list">
+      </ul>
       <% end %>
     <div class="dropdown_header">
       <button class="dropdown_toggle_header">Account Actions</button>

@@ -1,30 +1,36 @@
 $(document).ready(function() {
-    //search results page toggle options
-/*  THIS IS ALL IRRELEVANT 
-    $('#sort').change(function() {
-	var val = $(this).val();
-	console.log(val);
-	console.log("success");
-	$.ajax({
-	    type: "GET",// GET in place of POST
-	    contentType: "application/json; charset=utf-8",
-	    url: "http://162.213.199.215:3000/search",
-	    data: {search_string: window.location.hash["search_string"], sort_by: val},
-	    dataType: "html",
-	    success: function (result) {
-		//do somthing here
-		console.log("yay");
-		console.log("RES: " + result);
-		$('body').html(result);
-	    },
-	    error: function(e){
-	    }
-	});
-	    
+
+
+    //really need to move this into smaller JS files
+    $('.dropdown_menu_header > li').click(function() {
+	var link = $(this).find('a').attr('href');
+	window.location.href = link;
+    });
+	
+    $('#sug_list').on('mouseenter', 'li', function() {
+	$('#sug_list').addClass('active');
+	$(this).addClass('active');
+	strToSave = $('.search_string').val();
+	$('.search_string').val($(this).text());
     });
 
-*/
+    $('#sug_list').on('mouseleave', 'li', function() {
+	$('#sug_list').removeClass('active');
+	$(this).removeClass('active');
+	$('.search_string').val(strToSave);
+	searchToSave = "";
+    });
+      
 
+    $('#sug_list').mousedown(function() {
+	if($(this).hasClass('active'))
+	{
+	    var go = window.location.href;
+	    go = go + "search?&search_string=" + $('.search_string').val();
+	    window.location.href = go;
+	}
+    });
+    
     //sell home
     window.setInterval(function(){
 	$('.sell_active').fadeOut(550,function() {
@@ -60,7 +66,8 @@ $(document).ready(function() {
 
     var strToSave = "";
 
-    $('.search_string').focusout(function() {
+    $('.search_string').focusout(function(e) {
+	
 	hideSuggestions();
     });
 
@@ -141,8 +148,7 @@ $(document).ready(function() {
 	
     });
 
-    $('#sug_list > li').mouseover(function() {
-    });
+    
 
     function hideSuggestions()
     {
@@ -167,7 +173,7 @@ $(document).ready(function() {
 		var parts = res.split(',');
 		for (i in parts)
 		{
-		    var add = "<li>"
+		    var add = "<li class='poop'>"
 		    str += add + parts[i] + '</li>';
 		}
 		console.log(thing);

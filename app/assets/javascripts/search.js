@@ -1,3 +1,5 @@
+
+
 function setGetParameter(paramName, paramValue)
 {
     $('input#price').each(function() {
@@ -32,13 +34,19 @@ function setGetParameter(paramName, paramValue)
     else
         url += "&" + paramName + "=" + paramValue;
     }
-    url += "&price=";
+
     var first = false;
-    $('input#price').each(function() {
+    $('input').each(function() {
 	var val = $(this).val();
-	if ($(this).is(':checked'))
+	if ($(this).is(':checked') && url.indexOf(val) == -1)
 	{
+	    
 	    console.log(val);
+	    if (url.indexOf($(this).attr('name') == -1))
+	    {
+		url += "&" + $(this).attr('name') + "=";
+	    }
+	    
 	    if (first)
 	    {
 		url += "," + val;
@@ -53,15 +61,25 @@ function setGetParameter(paramName, paramValue)
 	{
 	    console.log('nope');
 	}
+	first = false;
 
 
     });
     window.location.href = url + hash;
 }
 
-/*function GetParameter(paramName, objectName)
-{
-  document.getElementById(objectName).value = window.location.href.location.split("&")[paramName];
-
-  console.log(window.location.href.location.split("&")[paramName]);
-}*/
+$(document).ready(function() {
+    $('input.toggle').change(function() {
+	setGetParameter("sort_by", $('#sort').val());
+    });
+    var hash = window.location.href;
+    console.log(hash);
+    var arr = [];
+    $('input').each(function(index, data) {
+	var val = $(this).val();
+	if(!(hash.indexOf(val) == -1))
+	{
+	    $(this).prop('checked', true);
+	}
+    });
+});

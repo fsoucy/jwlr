@@ -1,29 +1,54 @@
 $(document).ready(function() {
-    //search results page toggle options
-/*  THIS IS ALL IRRELEVANT 
-    $('#sort').change(function() {
-	var val = $(this).val();
-	console.log(val);
-	console.log("success");
-	$.ajax({
-	    type: "GET",// GET in place of POST
-	    contentType: "application/json; charset=utf-8",
-	    url: "http://162.213.199.215:3000/search",
-	    data: {search_string: window.location.hash["search_string"], sort_by: val},
-	    dataType: "html",
-	    success: function (result) {
-		//do somthing here
-		console.log("yay");
-		console.log("RES: " + result);
-		$('body').html(result);
-	    },
-	    error: function(e){
-	    }
-	});
-	    
+
+
+    //really need to move this into smaller JS files
+    $('.dropdown_menu_header > li').click(function() {
+	var link = $(this).find('a').attr('href');
+	window.location.href = link;
+    });
+	
+    $('#sug_list').on('mouseenter', 'li', function() {
+	$('#sug_list').addClass('active');
+	$(this).addClass('active');
+	strToSave = $('.search_string').val();
+	$('.search_string').val($(this).text());
     });
 
-*/
+    $('#sug_list').on('mouseleave', 'li', function() {
+	$('#sug_list').removeClass('active');
+	$(this).removeClass('active');
+	$('.search_string').val(strToSave);
+	searchToSave = "";
+    });
+      
+
+    $('#sug_list').mousedown(function() {
+	if($(this).hasClass('active'))
+	{
+	    var go = window.location.href;
+	    go = go + "search?&search_string=" + $('.search_string').val();
+	    window.location.href = go;
+	}
+    });
+    
+    //sell home
+    window.setInterval(function(){
+	$('.sell_active').fadeOut(550,function() {
+	    $('.sell_active').toggleClass('sell_now').toggleClass('sell_now_other').fadeIn(550);
+	});
+    },4000);
+
+    $('.gallery_other').mouseover(function() {
+	var mainImg = $('#gallery_main_first').css('background-image');
+	var otherImg = $(this).css('background-image');
+	$(this).fadeOut(550, function() {
+	    $(this).css('background-image', mainImg).fadeIn(550);
+	});
+	$('.gallery_main').fadeOut(550, function() {
+	    $('.gallery_main').css('background-image', otherImg).fadeIn(550); 
+	});
+
+    });
     
     //header stuff
     $('.search_string').focusin(function() {
@@ -34,14 +59,22 @@ $(document).ready(function() {
 	else
 	{
 	    $('#sug_list').css('display', 'block');
-	    updateSearch();
+	    updateSearch($('.search_string').val());
 	}
 
     });
 
-    $('.search_string').focusout(function() {
+    var strToSave = "";
 
-	$('#sug_list').css('display', 'none');
+    $('.search_string').focusout(function(e) {
+	
+	hideSuggestions();
+    });
+
+    $('.search_string').keydown(function(event) {
+	var key = event.which;
+	if (key == 38 || key == 40) event.preventDefault();
+
     });
 
     $('.search_string').keyup(function(event) {
@@ -53,11 +86,21 @@ $(document).ready(function() {
 	    if (key == 40)
 	    {
 		var done = false;
+		if (!($('#sug_list').hasClass('active')))
+		{
+		    $('#sug_list > :first-child').addClass('active');
+		    $('#sug_list').addClass("active");
+		    strToSave = $('.search_string').val();
+		    console.log(strToSave);
+		    done = true;
+		}
 		if ($('#sug_list > .active').is('#sug_list > :last-child') && !done)
 		{
 		    $('#sug_list > :last-child').removeClass('active');
-		    $('#sug_list > :first-child').addClass('active');
+		    $('#sug_list').removeClass('active');
 		    done = true;
+		    $('.search_string').val(strToSave);
+		    strToSave = "";
 		}
 		if (!done)
 		{
@@ -69,11 +112,21 @@ $(document).ready(function() {
 	    if (key == 38)
 	    {
 		var done = false;
+		if (!($('#sug_list').hasClass('active')))
+		{
+		    $('#sug_list > :last-child').addClass('active');
+		    done = true;
+		    strToSave = $('.search_string').val();
+		    $('#sug_list').addClass('active');
+		}
 		if ($('#sug_list > .active').is('#sug_list > :first-child') && !done)
 		{
 		    $('#sug_list > :first-child').removeClass('active');
-		    $('#sug_list > :last-child').addClass('active');
+		    $('#sug_list').removeClass('active');
 		    done = true;
+		    console.log(strToSave);
+		    $('.search_string').val(strToSave);
+		    strToSave = "";
 		}
 		if (!done)
 		{
@@ -81,6 +134,11 @@ $(document).ready(function() {
 		    $('#sug_list > .active').removeClass('active');
 		    $('#sug_list > .next').addClass('active').removeClass('next');
 		}
+	    }
+	    if ($('#sug_list').hasClass('active'))
+	    {
+		$('.search_string').val($('#sug_list > .active').text());
+
 	    }
 	}
 	else
@@ -92,35 +150,39 @@ $(document).ready(function() {
 
     
 
+    function hideSuggestions()
+    {
+	$('#sug_list').removeClass('active');
+	$('#sug_list').html("");
+	$('#sug_list').css('display', 'none');
+    }
+
     function updateSearch(thing)
     {
+	
 	$.ajax({
 	    type: "GET",// GET in place of POST
 	    contentType: "application/json; charset=utf-8",
-	    url: "http://162.213.199.215:3002/search_suggestions",
+	    url: "http://162.213.199.215:3000/search_suggestions",
 	    data: {search_string: thing},
 	    dataType: "json",
 	    success: function (result) {
 		//do somthing here
-		console.log($('.search_string').val());
-		console.log(result);
 		var str = "";
 		res = "" + result;
 		var parts = res.split(',');
-		for (thing in parts)
+		for (i in parts)
 		{
-		    if (str.length == 0)
-		    {
-			var add = "<li class='active'>";
-		    }
-		    else
-		    {
-			var add = "<li>"
-		    }
-		    str += add + parts[thing] + '</li>';
+		    var add = "<li class='poop'>"
+		    str += add + parts[i] + '</li>';
 		}
+		console.log(thing);
+		console.log(res);
+		$('#sug_list').html("");
 		$('#sug_list').html(str);
-		if (res.length == 0)
+		console.log(str);
+		$('#sug_list').removeClass('active');
+		if (res.length == 0 || thing.length == 0)
 		{
 		    $('#sug_list').css('display', 'none');
 		}
@@ -132,6 +194,15 @@ $(document).ready(function() {
 	    error: function (e){
 	    }
 	});
+	//update search
+	/*
+	if (!($('#sug_list > .active').is('#sug_list > :first-child')))
+	{
+	    $('.search_string').val(('#sug_list > .active').text());
+	    
+	}
+	*/
+
     }
 
     //home header

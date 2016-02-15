@@ -1,6 +1,7 @@
 class SearchController < ApplicationController
 
   def new
+    @params = params
     search = Product.search do
       fulltext params[:search_string] do
         boost_fields :title => 2.0
@@ -33,9 +34,20 @@ class SearchController < ApplicationController
       end
     end
 
+    if !params[:category_id].nil?
+      ids = params[:category_id].split(',')
+      ids.each do |id|
+        with :category_id, id
+      end
+    end
+
     with :sold, false
     facet :category_id
-    facet :price, :range => 0..100000, :range_interval => 100     
+    facet :attribute_option_id
+    facet :price, :range => 0..100000, :range_interval => 100
+    #if !params[:category_id].nil?
+     # Category.find(params[:category_id]).category_options.each do |option|
+      #  @
   end
 
     if logged_in? && !search.results.empty?
@@ -48,7 +60,9 @@ class SearchController < ApplicationController
         usersearch.save
       end
     end
+
     
+    @attribute_options = search.facet(:attribute_option_id)
     @prices = search.facet(:price)
     @categories = search.facet(:category_id)
     @results = search.results
@@ -56,7 +70,6 @@ class SearchController < ApplicationController
 
   def suggestions
     suggestions = Search.where('lower(search_text) LIKE lower(?)', "#{params[:search_string]}%").joins(:search_relationships).order('search_relationships.frequency DESC').limit(5).pluck(:search_text)   
-
     render json: suggestions.to_json, status: 200
   end
 

@@ -3,7 +3,7 @@
   overflow: hidden;
   position: relative;
   height: 100%;
-  width: auto;
+  width: 700px;
   float: left;
   display: block;
   clear: none;
@@ -22,15 +22,17 @@
   display: block;	
   position: relative;
   float: left;
-  width: auto;
-  margin-right: 3%;
-  margin-left: 3%;
+  width: 300px;
+  clear: none;
+  margin-right: 10px;
+  margin-left: 10px;
   height: 100%;
 }
 
 .image_container_search
 {
-  display: inline-block;
+  float: left;
+  clear: none;
   position: relative;
   height: 200px;
   width: 200px;
@@ -42,10 +44,12 @@
 {
   vertical-align: top;
   top: 0px;
-  display: inline-block;
+  display: block;
   position: relative;
   height: 200px;
-  width: auto;
+  width: 300px;
+  float: left;
+  clear: none;
   padding-right: 2px;
   margin-right: 10px;
   border: 2px solid red;
@@ -53,7 +57,7 @@
 
 .result
 {
-  width: auto;
+  width: 600px;
   height: 210px;
   margin: 10px;
 }

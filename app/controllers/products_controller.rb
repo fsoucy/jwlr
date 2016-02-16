@@ -62,22 +62,20 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
     params[:toggle_options].each do |attr|
-        #toggle_option = ToggleOption.joins('INNER JOIN "attribute_options" ON "attribute_options"."id" = "toggle_options"."attribute_option_id"').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
-        #what is toggle options
-        #why do you inner join on attribute options -- wouldn't that return all the columns of attribute options and not just the id
-        #is attr[0] just the selected in the drop down 'select' list
-        #why are you doing joins
-        #where do attr[0] and attr[1][name] come from: view how the form sets up
-        #toggle_option.update(attribute_option_id: attr[1]["name"])
-      #toggle_option.save
       attribute_option = AttributeOption.where("category_option_id=? AND value=?", attr[0].to_i, attr[1]["name"])
       toggle = ToggleOption.new(attribute_option_id: attribute_option[0].id, product_id: @product.id)
-      #ToggleOption.where("attribute_option_id != ? AND product_id=?", attribute_option[0].id, product_id: @product.id).destroy_all
-      toggle.save unless !ToggleOption.find_by(attribute_option_id: attribute_option[0].id, product_id: @product.id).nil?
-        #plan for product search page
-        #facet by product toggle options
-        #when a toggle option is selected, facet on the has_many to make sure the product has a toggle option whose attribute_options_id corresponds to the value and whose category_option_id corresponds to the selector
-        #when they select a category, toggle options display
+      ToggleOption.where("product_id=?", @product.id).each do |toggle|
+        existingToggle = toggle.attribute_option.category_option_id if toggle.attribute_option.category_option_id = attr[0].to_i
+      end
+      if existingToggle && existingToggle.attribute_option == attribute_option[0]
+        # do nothing
+      else if existingToggle
+        existingToggle.attribute_option_id = attribute_option[0].id
+        existingToggle.save
+      else
+        toggle = ToggleOption.new(attribute_option_id: attribute_option[0].id, product_id: @product.id)
+        toggle.save
+      end
     end
     if @product.update_attributes(product_params)
       redirect_to @product

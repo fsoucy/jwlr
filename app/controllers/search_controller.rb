@@ -35,17 +35,12 @@ class SearchController < ApplicationController
     end
 
     if !params[:category_id].nil?
-      ids = params[:category_id].split(',')
-      ids.each do |id|
-        with :category_id, id
-      end
+      with :category_id, params[:category_id]
     end
 
     if !params[:attribute_option_id].nil?
       ids = params[:attribute_option_id].split(',')
-      ids.each do |id|
-        with :attribute_option_id, id
-      end
+      with :attribute_option_id, ids
     end
 
     with :sold, false

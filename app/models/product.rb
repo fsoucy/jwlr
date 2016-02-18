@@ -29,7 +29,7 @@ class Product < ActiveRecord::Base
     join(:attribute_option_id, :target => ToggleOption, :type => :integer, :join => { :from => :product_id, :to => :id })
     #integer :attribute_option_id, :references => AttributeOption
     #references :attribute_option_id, through: :toggle_options
-    #references :attribute_option_id
+    references :attribute_option_id
     #integer :attribute_option_id, through: :toggle_options
     #integer :attribute_options_id
     float :price

@@ -43,11 +43,12 @@ class SearchController < ApplicationController
 
     with :sold, false
     facet :category_id
-    facet :attribute_option_id
+    facet :attribute_option_id, :zeros => true
     facet :price, :range => 0..100000, :range_interval => 100
-    #if !params[:category_id].nil?
-     # Category.find(params[:category_id]).category_options.each do |option|
-      #  @
+  
+    adjust_solr_params do |params|
+      params[:"f.attribute_option_id_i.facet.domain.blockChildren"] = "type_s:ToggleOption"
+    end
   end
 
     if logged_in? && !search.results.empty?
@@ -61,11 +62,11 @@ class SearchController < ApplicationController
       end
     end
 
-    
     @attribute_options = search.facet(:attribute_option_id)
     @prices = search.facet(:price)
     @categories = search.facet(:category_id)
     @results = search.results
+    @search = search
   end
 
   def suggestions

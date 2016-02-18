@@ -22,9 +22,14 @@
       </p>
       <h2>Attribute Options</h2>
       <p>
-	  <% @attribute_options.rows.each do |facet| %>
-	  <%= AttributeOption.find(facet.value).value %> (<%= facet.count %>): <input type="checkbox" name="attribute_option_id" value="<%= facet.value %>" class="toggle"><br>
-	  <% end %>
+    <% if !@category.nil? %>
+	    <% Category.find(@category).category_options.each do |category_option| %>
+        <h3><%= category_option.name %></h3>
+        <% category_option.attribute_options.each do |attr| %>
+	        <%= attr.value %>: <input type="checkbox" name="attribute_option_id" value="<%= attr.id %>" class="toggle"><br>
+	      <% end %>
+      <% end %>
+    <% end %>
       </p>
     </div>
   </div>

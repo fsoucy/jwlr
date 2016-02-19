@@ -23,8 +23,8 @@ class SearchController < ApplicationController
     elsif logged_in?
       order_by_geodist :location, current_user.latitude, current_user.longitude        
     else
-      geocode = request.location
-      order_by_geodist :location, geocode.latitude, geocode.longitude
+      geocode = request.location 
+      order_by_geodist :location, geocode.latitude, geocode.longitude unless geocode.nil?
     end
 
     if !params[:price].nil?

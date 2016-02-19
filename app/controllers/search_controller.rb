@@ -29,13 +29,20 @@ class SearchController < ApplicationController
 
     if !params[:price].nil?
       prices = params[:price].split(',')
+      exclusions = Array.new
       prices.each do |price|
-        with :price, Range.new(price.split("..").first, price.split("..").last)
+        exclusions.append(with :price, Range.new(price.split("..").first, price.split("..").last))
       end
+      facet :price, :range => 0..100000, :range_interval => 100, :exclude => exclusions
+    else
+      facet :price, :range => 0..100000, :range_interval => 100
     end
 
     if !params[:category_id].nil?
-      with :category_id, params[:category_id]
+      exclusion = with :category_id, params[:category_id]
+      facet :category_id, :exclude => exclusion
+    else
+      facet :category_id
     end
 
     if !params[:attribute_option_id].nil?
@@ -44,8 +51,6 @@ class SearchController < ApplicationController
     end
 
     with :sold, false
-    facet :category_id
-    facet :price, :range => 0..100000, :range_interval => 100 
   end
 
     if logged_in? && !search.results.empty?

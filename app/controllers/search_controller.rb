@@ -4,7 +4,10 @@ class SearchController < ApplicationController
     @params = params
     search = Product.search do
       fulltext params[:search_string] do
+        query_phrase_slop 3
         boost_fields :title => 2.0
+        phrase_fields :title => 2.0
+        phrase_slop 1
         boost_fields :description => 1.0
       end
     paginate :page => params[:page]

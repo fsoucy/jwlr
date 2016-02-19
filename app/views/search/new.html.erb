@@ -20,17 +20,19 @@
 	<%= number_to_currency(facet.value.to_s.split('..')[0]) %> - <%= number_to_currency(facet.value.to_s.split('..')[1]) %> (<%= facet.count %>): <input class="toggle" type="checkbox" id="price" name="price" value="<%= facet.value %>" ><br>
 	<% end %>
       </p>
-      <h2>Attribute Options</h2>
-      <p>
     <% if !@category.nil? %>
+      <h2>Toggle Options</h2>
+      <p>
 	    <% Category.find(@category).category_options.each do |category_option| %>
         <h3><%= category_option.name %></h3>
         <% category_option.attribute_options.each do |attr| %>
 	        <%= attr.value %>: <input type="checkbox" name="attribute_option_id" value="<%= attr.id %>" class="toggle"><br>
 	      <% end %>
       <% end %>
-    <% end %>
       </p>
+    <% else %>
+      <h2>Select a category to sort</h2>
+    <% end %>
     </div>
   </div>
   <div class="search_results">

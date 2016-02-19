@@ -163,7 +163,7 @@ $(document).ready(function() {
 	$.ajax({
 	    type: "GET",// GET in place of POST
 	    contentType: "application/json; charset=utf-8",
-	    url: "http://162.213.199.215:3000/search_suggestions",
+	    url: "http://" + window.location.host + "/search_suggestions",
 	    data: {search_string: thing},
 	    dataType: "json",
 	    success: function (result) {
@@ -173,7 +173,7 @@ $(document).ready(function() {
 		var parts = res.split(',');
 		for (i in parts)
 		{
-		    var add = "<li class='poop'>"
+		    var add = "<li>"
 		    str += add + parts[i] + '</li>';
 		}
 		console.log(thing);

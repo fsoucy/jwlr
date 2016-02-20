@@ -37,6 +37,16 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find_by(id: params[:id])
+    @toggle_options = @product.toggle_options
+    if logged_in?
+      geocode = [current_user.latitude, current_user.longitude]
+    else
+      geocode = [request.location.latitude, request.location.longitude]
+    end
+    unless geocode.nil?
+      @distance_away = @product.distance_from(geocode)
+    end
+        
     if logged_in?
       productview = current_user.productviews.find_by(product: @product)
       if productview.nil?
@@ -83,5 +93,4 @@ class ProductsController < ApplicationController
     end
   end
 
-end
 end

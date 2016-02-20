@@ -1,3 +1,47 @@
 // Place all the styles related to the Products controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.product_show_container
+{
+  display: block;
+  max-width: 400px;
+  margin-left: 15px;
+  margin-right: 10px;
+  float: left;
+  clear: none;
+  margin-top: 15px;
+  h1
+  {
+    margin: 0px;
+    margin-bottom: 10px;
+  }
+  h2
+  {
+    margin: 0px;
+    margin-bottom: 10px;
+  }
+  input[type=submit]
+  {
+    width: 200px;
+    height: 100px;
+    background-color: #5a8693;
+    color: white;
+    border-radius: 3px;
+    padding: 3px;
+  }
+  h2
+  {
+    width: 300px;
+  }
+  textarea, button
+  {
+    width: 300px;
+    float: left;
+    clear: left;
+  }
+  textarea
+  {
+    height: 100px;
+  }
+}

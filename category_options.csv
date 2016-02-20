@@ -1,0 +1,22 @@
+id,name,category_id,required
+1,Purity,1,TRUE
+2,Color,1,TRUE
+3,Main Stone,1,FALSE
+4,Total Carat Weight of Stones,1,FALSE
+5,Brand,1,FALSE
+6,Ring Size,2,FALSE
+7,Style,2,FALSE
+8,Length,3,FALSE
+9,Style,3,FALSE
+10,Style,4,FALSE
+11,Style,5,FALSE
+12,Theme,6,FALSE
+13,Theme,13,FALSE
+14,Style,15,FALSE
+15,Gender,,FALSE
+16,Type,,FALSE
+17,Movement,,FALSE
+18,Band Material,,FALSE
+19,Style,,FALSE
+20,Face Color,,FALSE
+21,Year of Manufacture,,FALSE

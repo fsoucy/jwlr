@@ -1,0 +1,291 @@
+id,value,category_option_id
+1,10K,1
+2,14K,1
+3,18K,1
+4,19K,1
+5,22K,1
+6,24K,1
+7,Other,1
+8,Yellow Gold,2
+9,White Gold,2
+10,Rose Gold,2
+11,Other,2
+12,Aquamarine,3
+13,Amethyst,3
+14,Citrine,3
+15,Diamonds,3
+16,Emerald,3
+17,Garnet,3
+18,Jade,3
+19,Lapis,3
+20,Opal,3
+21,Onyx,3
+22,Pearl,3
+23,Peridot,3
+24,Ruby,3
+25,Sapphire,3
+26,Tanzanite,3
+27,Topaz,3
+28,Turquoise,3
+29,Abalone,3
+30,Agate,3
+31,Alexandrite,3
+32,Amber,3
+33,Ametrine,3
+34,Beryl,3
+35,Carnelian,3
+36,Chrome Diopside,3
+37,Coral,3
+38,Iolite,3
+39,Malachite,3
+40,Moonstone,3
+41,Morganite,3
+42,Mother of Pearl,3
+43,Quartz,3
+44,Tigers Eye,3
+45,Not Specified,3
+46,0.24 & Under,4
+47,0.25-0.49,4
+48,0.50-0.74,4
+49,0.75-0.99,4
+50,1.00-1.24,4
+51,1.25-1.49,4
+52,1.50-1.74,4
+53,1.75-1.99,4
+54,2.00-2.99,4
+55,3.00-3.99,4
+56,4.00-4.99,4
+57,5.00-5.99,4
+58,6.00-9.99,4
+59,10.00 & Over,4
+60,Unknown,4
+61,Not Specified,4
+62,Not Specified,5
+63,Handmade,5
+64,Unbranded,5
+65,Other,5
+66,Less than 3,6
+67,3.25,6
+68,3.5,6
+69,3.75,6
+70,4,6
+71,4.25,6
+72,4.5,6
+73,4.75,6
+74,5,6
+75,5.25,6
+76,5.5,6
+77,5.75,6
+78,6,6
+79,6.25,6
+80,6.5,6
+81,6.75,6
+82,7,6
+83,7.25,6
+84,7.5,6
+85,7.75,6
+86,8,6
+87,8.25,6
+88,8.5,6
+89,8.75,6
+90,9,6
+91,9.25,6
+92,9.5,6
+93,9.75,6
+94,10,6
+95,10.25,6
+96,10.5,6
+97,10.75,6
+98,11,6
+99,11.25,6
+100,11.5,6
+101,11.75,6
+102,12,6
+103,12.25,6
+104,12.5,6
+105,12.75,6
+106,13,6
+107,13.25,6
+108,13.5,6
+109,13.75,6
+110,Greater than 14,6
+111,Antique,7
+112,Band,7
+113,Class,7
+114,Claddagh,7
+115,Championship,7
+116,Cocktail,7
+117,Dome,7
+118,Designer,7
+119,Engagement,7
+120,Eternity,7
+121,Fashion,7
+122,Halo,7
+123,Solitaire,7
+124,Solitaire with Accents,7
+125,Stackable,7
+126,Three Stone,7
+127,Vintage,7
+128,Wedding,7
+129,Other,7
+130,Not Specified,7
+131,Less than 13”,8
+132,13-15.99”,8
+133,16-17.99”,8
+134,18-19.99”,8
+135,20-21.99”,8
+136,22-23.99”,8
+137,24-29.99”,8
+138,30-34.99”,8
+139,Over 35”,8
+140,Beaded,9
+141,Chain/Link,9
+142,Choker,9
+143,Collar,9
+144,Lariat,9
+145,Locket,9
+146,Pendant,9
+147,Religious,9
+148,Rope,9
+149,Strand/String,9
+150,Other,9
+151,Not Specified,9
+152,Cameo,10
+153,Chain/Link,10
+154,Chandelier,10
+155,Clip,10
+156,Cluster,10
+157,Dangle/Dtop,10
+158,Clamp,10
+159,Hoop,10
+160,Leverback,10
+161,Stud,10
+162,Other,10
+163,Not Specified,10
+164,Bangle,11
+165,Beaded,11
+166,Chain/Link,11
+167,Cuff,11
+168,Tennis,11
+169,Other,11
+170,Not Specified,11
+171,Animal,12
+172,Baby,12
+173,Beach and Nautical,12
+174,Buildings and Monuments,12
+175,"Cartoon, TV or Movie Characters",12
+176,Clothing and Accessories,12
+177,Coins and Money,12
+178,Family and Friends,12
+179,Flowers and Garden,12
+180,Food and Drink,12
+181,Letters,12
+182,Numbers,12
+183,Heart and Love,12
+184,Occupation,12
+185,Religious,12
+186,Symbols,12
+187,Sports,12
+188,Other,12
+189,Not Specified,12
+190,Animals Awareness,13
+191,Baby,13
+192,Beach & Nautical,13
+193,Beauty,13
+194,Buildings & Monuments,13
+195,"Cartoons, TV & Movie Characters",13
+196,Celestial & Horoscope,13
+197,"Clothing, Handbags & Shoes",13
+198,Coins & Money,13
+199,Colleges & Universities,13
+200,Computer & Office,13
+201,Cowboy & Western,13
+202,Fairytale & Fantasy,13
+203,Family & Friends,13
+204,Flags & Political,13
+205,Flowers & Garden,13
+206,Food & Drink,13
+207,Gadgets & Tools,13
+208,Gambling/Casino,13
+209,Hobbies & Crafts,13
+210,Holiday,13
+211,Home,13
+212,"Letters, Numbers & Words",13
+213,Love & Hearts,13
+214,Luck,13
+215,Military & Weaponry,13
+216,Music,13
+217,Occupational,13
+218,Religious,13
+219,Signs & Symbols,13
+220,Skeletons & Skulls,13
+221,Special Occasion ,13
+222,Sports ,13
+223,Toys & Games ,13
+224,Travel & Places,13
+225,Vehicles/Transportation,13
+226,Tie Bar/Tie Clip,14
+227,Tie Chain,14
+228,Tie Tack,14
+229,Other,14
+230,Not Specified ,14
+231,Men',15
+232,Women's,15
+233,Unisex,15
+234,Not Specified,15
+235,Wristwatch,16
+236,Pocket Watch,16
+237,Other,16
+238,Watch Parts,16
+239,Automatic Mechanical,17
+240,Hand-Winding Mechanical,17
+241,Quartz Automatic,17
+242,Quartz Battery,17
+243,Quartz Solar Powered,17
+244,Other,17
+245,Not Specified,17
+246,Solid Gold,18
+247,Stainless Steel,18
+248,Leather,18
+249,Other,18
+250,Not Specified,18
+251,Casual,19
+252,Dress,19
+253,Fashion,19
+254,Luxury,19
+255,Sport,19
+256,Skeleton,19
+257,Other,19
+258,Not Specified,19
+259,Pre-1920,21
+260,1920-1929,21
+261,1930-1939,21
+262,1940-1949,21
+263,1950-1959,21
+264,1960-1969,21
+265,1970-1979,21
+266,1980-1989,21
+267,1990-1999,21
+268,2000-2009,21
+269,2010-Present,21
+270,Not Specified,21
+271,Beige,20
+272,Black,20
+273,Blue,20
+274,Brown,20
+275,Clear,20
+276,Gray,20
+277,Green,20
+278,Ivory,20
+279,Orange,20
+280,Pink,20
+281,Purple,20
+282,Red,20
+283,Rose Gold,20
+284,Silver,20
+285,White,20
+286,White Gold,20
+287,Yellow,20
+288,Yellow Gold,20
+289,Other,20
+290,Not Specified,20

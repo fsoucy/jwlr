@@ -1,0 +1,9 @@
+id,method
+1,Paypal
+2,Credit Card
+3,Debit Card
+4,Bank Account
+5,Check
+6,Trade
+7,Person-to-Person conversation (put on hold)
+8,Cash

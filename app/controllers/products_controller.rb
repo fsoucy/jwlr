@@ -62,20 +62,9 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
     params[:toggle_options].each do |attr|
-      attribute_option = AttributeOption.where("category_option_id=? AND value=?", attr[0].to_i, attr[1]["name"])
-      toggle = ToggleOption.new(attribute_option_id: attribute_option[0].id, product_id: @product.id)
-      ToggleOption.where("product_id=?", @product.id).each do |toggle|
-        existingToggle = toggle.attribute_option.category_option_id if toggle.attribute_option.category_option_id = attr[0].to_i
-      end
-      if existingToggle && existingToggle.attribute_option == attribute_option[0]
-        # do nothing
-      else if existingToggle
-        existingToggle.attribute_option_id = attribute_option[0].id
-        existingToggle.save
-      else
-        toggle = ToggleOption.new(attribute_option_id: attribute_option[0].id, product_id: @product.id)
-        toggle.save
-      end
+      toggle_option = ToggleOption.joins('INNER JOIN "attribute_options" ON "attribute_options"."id" = "toggle_options"."attribute_option_id"').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
+      toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
+      toggle_option.save
     end
     if @product.update_attributes(product_params)
       redirect_to @product

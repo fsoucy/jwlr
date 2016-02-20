@@ -5,6 +5,23 @@ class Category < ActiveRecord::Base
   has_many :category_options, dependent: :destroy
   attr_accessor :no_of_options  
 
+  def category_options
+    opts = CategoryOption.where("category_id = ?", self.id)
+    if !self.parent.nil?
+      if opts.nil?
+        self.parent.category_options
+      else
+        cat_opts = opts + self.parent.category_options
+      end
+    else
+      if opts.nil?
+        Array.new
+      else
+        opts
+      end
+    end
+  end
+
   def depth
     count = 0
     current_category = self

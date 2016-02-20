@@ -48,7 +48,9 @@ class CategoriesController < ApplicationController
       end
       if @category.no_of_options.to_i < params[:category][:no_of_options].to_i
         for i in @category.no_of_options.to_i..params[:category][:no_of_options].to_i - 1
-          @category.category_options.new.save
+          cat = CategoryOption.new
+          cat.category_id = params[:id]
+          cat.save
         end
       end
       flash[:success] = "Category updated"

@@ -11,6 +11,9 @@ class Product < ActiveRecord::Base
   has_many :productviews, dependent: :destroy
   belongs_to :category
   has_many :toggle_options, dependent: :destroy
+  has_many :exchange_method_links
+  has_many :payment_method_links
+  has_many :selling_method_links
   #has_many :attribute_options, through: :toggle_options, foreign_key: :attribute_option_id
   
   def to_json(options = {})

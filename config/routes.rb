@@ -35,7 +35,12 @@ Rails.application.routes.draw do
   end
   resources :completed_deals, only: [:create, :destroy, :show, :update]
   resources :pending_deals, only: [:create, :destroy, :show, :update]
-  resources :products, only: [:new, :create, :show, :destroy, :edit, :update]
+  resources :products, only: [:new, :create, :show, :destroy, :edit, :update] do
+    member do
+      get :edit_toggle_options, :edit_exchange_method, :edit_pricing_method, :edit_selling_method
+    end
+  end
+    
   resources :statuses, only: [:new, :create, :destroy, :show] do
     member do
       get :matches

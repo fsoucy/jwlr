@@ -69,6 +69,22 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
   end
 
+  def edit_toggle_options
+    @product = Product.find(params[:id])
+  end
+
+  def edit_selling_method
+    @product = Product.find(params[:id])
+  end
+
+  def edit_payment_method
+    @product = Product.find(params[:id])
+  end
+
+  def edit_exchange_method
+    @product = Product.find(params[:id])
+  end
+
   def update
     @product = Product.find(params[:id])
     params[:toggle_options].each do |attr|
@@ -83,7 +99,27 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title, :toggle_option, :attribute_option_id, :color, :size)
+    params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title, :toggle_option, :attribute_option_id)
+  end
+
+  def new_product_params
+    params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title)
+  end
+
+  def toggle_options_params
+    params.require(:product).permit(:toggle_option, :attribute_option_id)
+  end
+
+  def selling_method_params
+    params.require(:product).permit(:selling_methods)
+  end
+
+  def payment_method_params
+    params.require(:product).permit(:payment_methods)
+  end
+
+  def exchange_method_params
+    params.require(:product).permit(:exchange_methods)
   end
   
   def correct_user

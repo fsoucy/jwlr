@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160211031623) do
+ActiveRecord::Schema.define(version: 20160220210431) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -70,6 +70,22 @@ ActiveRecord::Schema.define(version: 20160211031623) do
 
   add_index "completed_deals", ["pending_deal_id"], name: "index_completed_deals_on_pending_deal_id", unique: true
 
+  create_table "exchange_method_links", force: :cascade do |t|
+    t.integer  "product_id"
+    t.integer  "exchange_method_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "exchange_method_links", ["exchange_method_id"], name: "index_exchange_method_links_on_exchange_method_id"
+  add_index "exchange_method_links", ["product_id"], name: "index_exchange_method_links_on_product_id"
+
+  create_table "exchange_methods", force: :cascade do |t|
+    t.string   "method"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "faqs", force: :cascade do |t|
     t.text     "question"
     t.text     "answer"
@@ -84,6 +100,22 @@ ActiveRecord::Schema.define(version: 20160211031623) do
     t.integer  "user_id"
     t.string   "message"
     t.boolean  "read"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "payment_method_links", force: :cascade do |t|
+    t.integer  "product_id"
+    t.integer  "payment_method_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "payment_method_links", ["payment_method_id"], name: "index_payment_method_links_on_payment_method_id"
+  add_index "payment_method_links", ["product_id"], name: "index_payment_method_links_on_product_id"
+
+  create_table "payment_methods", force: :cascade do |t|
+    t.string   "method"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -163,6 +195,22 @@ ActiveRecord::Schema.define(version: 20160211031623) do
   end
 
   add_index "searches", ["search_text"], name: "index_searches_on_user_id_and_search_text", unique: true
+
+  create_table "selling_method_links", force: :cascade do |t|
+    t.integer  "product_id"
+    t.integer  "selling_method_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "selling_method_links", ["product_id"], name: "index_selling_method_links_on_product_id"
+  add_index "selling_method_links", ["selling_method_id"], name: "index_selling_method_links_on_selling_method_id"
+
+  create_table "selling_methods", force: :cascade do |t|
+    t.string   "method"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "statuses", force: :cascade do |t|
     t.integer  "user_id"

@@ -1,90 +1,24 @@
-
-/*
-function setGetParameter(paramName, paramValue)
-{
-    $('input#price').each(function() {
-	var val = $(this).val();
-	if ($(this).is(':checked'))
-	{
-	    console.log(val);
-	}
-	else
-	{
-	    console.log('nope');
-	}
-	
-	
-    });
-    
-    var url = window.location.href;
-    var hash = location.hash;
-    url = url.replace(hash, '');
-    if (url.indexOf(paramName + "=") >= 0)
-    {
-        var prefix = url.substring(0, url.indexOf(paramName));
-        var suffix = url.substring(url.indexOf(paramName));
-        suffix = suffix.substring(suffix.indexOf("=") + 1);
-        suffix = (suffix.indexOf("&") >= 0) ? suffix.substring(suffix.indexOf("&")) : "";
-        url = prefix + paramName + "=" + paramValue + suffix;
-    }
-    else
-    {
-    if (url.indexOf("?") < 0)
-        url += "?" + paramName + "=" + paramValue;
-    else
-        url += "&" + paramName + "=" + paramValue;
-    }
-
-    var first = false;
-    $('input').each(function() {
-	var val = $(this).val();
-	if ($(this).is(':checked') && url.indexOf(val) == -1)
-	{
-	    
-	    console.log(val);
-	    if (url.indexOf($(this).attr('name') == -1))
-	    {
-		url += "&" + $(this).attr('name') + "=";
-	    }
-	    
-	    if (first)
-	    {
-		url += "," + val;
-	    }
-	    else
-	    {
-		url += val;
-		first = true;
-	    }
-	}
-	else
-	{
-	    console.log('nope');
-	}
-	first = false;
-
-
-    });
-    window.location.href = url + hash;
-    }*/
-
 function leadToRefresh()
 {
     var url = window.location.href;
     var hash = location.hash;
     url = url.replace(hash, '');
-    console.log(url);
+    
     //here I'm going to clear the unnecessary hash in URL
     $('input.toggle').each(function(index, data) {
 	var str = "&" + $(this).attr('name');
+	//console.log(str);
 	if(url.indexOf(str) != -1)
 	{
+	    console.log(url);
 	    url = url.substring(0, url.indexOf(str));
+	    console.log(url);
 	}
     });
     $('input.toggle').each(function(index, data) {
-	if ($(this).is(':checked'))
+	if ($(this).prop('checked'))
 	{
+	    console.log($(this).val());
 	    if (url.indexOf($(this).attr('name')) == -1)
 	    {
 		url += "&" + $(this).attr('name') + '=' + $(this).val();
@@ -95,14 +29,14 @@ function leadToRefresh()
 	    }
 	}
     });
+    console.log(url);
     $('.attr_long').each(function(index, data) {
 	if ($(this).hasClass('attr_active'))
 	{
 	    url += "&" + "attr=" + $(this).siblings('h3').text();
 	}
     });
-    console.log(window.location.href);
-    
+    console.log(url);
     window.location.href = url;
 }
 
@@ -163,10 +97,10 @@ function uponRefresh()
 	    //var valMatch = dict[key]["value"].contains(val);
 	    if (valMatch && nameMatch)
 	    {
-		console.log(name);
-		console.log(val);
-		console.log(dict[key]["key"]);
-		console.log(dict[key]["value"]);
+		//console.log(name);
+		//console.log(val);
+		//console.log(dict[key]["key"]);
+		//console.log(dict[key]["value"]);
 		$(this).prop('checked', true);
 	    }
 	}
@@ -177,9 +111,9 @@ function uponRefresh()
     for (thing in loc)
     {
 	x = loc[thing].indexOf('attr=');
-	console.log(x + 5);
-	console.log(loc[thing]);
-	console.log(loc[thing].substring(x + 5));
+	//console.log(x + 5);
+	//console.log(loc[thing]);
+	//console.log(loc[thing].substring(x + 5));
 	if (x != -1)
 	{
 	    var attribute = '.' + loc[thing].substring(x + 5);

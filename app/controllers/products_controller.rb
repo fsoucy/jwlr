@@ -71,15 +71,17 @@ class ProductsController < ApplicationController
     end
   end
 
-  private
-    def product_params
-      params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title, :toggle_option, :attribute_option_id, :color, :size)
+  #private
+  def product_params
+    params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title, :toggle_option, :attribute_option_id, :color, :size)
+  end
+  
+  def correct_user
+    @product  = Product.find_by(id: params[:id])
+    if !current_user.products.include?(@product)
+      redirect_to root_url
     end
+  end
 
-    def correct_user
-      @product  = Product.find_by(id: params[:id])
-      if !current_user.products.include?(@product)
-        redirect_to root_url
-      end
-    end
+end
 end

@@ -95,6 +95,8 @@ function leadToRefresh()
 	    }
 	}
     });
+    console.log(window.location.href);
+    
     window.location.href = url;
 }
 
@@ -184,4 +186,15 @@ $(document).ready(function() {
     var arr = [];
 */
     uponRefresh();
+    $('.result').click(function() {
+	$('.search_actions').fadeIn(500);
+	$('.result').removeClass('active');
+	$(this).addClass('active_search_result');
+    });
+
+    $('.category').click(function() {
+	console.log("ok");
+	$(this).children('.attr_short').css('display', 'none');
+	$(this).children('.attr_long').css('display', 'block');
+    });
 });

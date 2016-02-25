@@ -1,0 +1,13 @@
+<%= form_for(@product, html: {multipart: true}) do |f| %>
+<%= f.hidden_field :description, value: @product.description %>
+<h1>Selling Methods</h1>
+<% @selling_methods.each do |selling_method| %>
+<%= fields_for "selling_method_links[#{selling_method.id}]", selling_method do |link| %>
+<% boo = !SellingMethodLink.where("product_id=? AND selling_method_id=?", @product.id, selling_method.id).first.nil? %>
+<%= link.label :id, selling_method.method %>
+<%= link.check_box :id, checked: boo  %>
+<br>
+<% end %>
+<% end %>
+<%= f.submit "Save changes" %>
+<% end %>

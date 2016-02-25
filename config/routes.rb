@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   resources :pending_deals, only: [:create, :destroy, :show, :update]
   resources :products, only: [:new, :create, :show, :destroy, :edit, :update] do
     member do
-      get :edit_toggle_options, :edit_exchange_method, :edit_pricing_method, :edit_selling_method
+      get :edit_toggle_options, :edit_exchange_methods, :edit_payment_methods, :edit_selling_methods
     end
   end
     

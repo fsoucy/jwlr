@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.product_show_container
+.product_show_container, .options
 {
   display: block;
   max-width: 400px;
@@ -10,7 +10,7 @@
   margin-right: 10px;
   float: left;
   clear: none;
-  margin-top: 15px;
+  margin-top: 40px;
   h1
   {
     margin: 0px;
@@ -29,6 +29,7 @@
     color: white;
     border-radius: 3px;
     padding: 3px;
+    margin-bottom: 10px;
   }
   h2
   {
@@ -44,4 +45,16 @@
   {
     height: 100px;
   }
+  hr
+  {
+    margin-top: 10px;
+  }
 }
+
+.product_show_container
+{
+  height: 250px;
+}
+
+
+

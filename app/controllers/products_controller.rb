@@ -35,7 +35,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  def show
+  def show    
     @product = Product.find_by(id: params[:id])
     @toggle_options = @product.toggle_options
     if logged_in?
@@ -73,53 +73,72 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
   end
 
-  def edit_selling_method
+  def edit_selling_methods
     @product = Product.find(params[:id])
+    @selling_methods = SellingMethod.all
   end
 
-  def edit_payment_method
+  def edit_payment_methods
     @product = Product.find(params[:id])
+    @payment_methods = PaymentMethod.all
   end
 
-  def edit_exchange_method
+  def edit_exchange_methods
     @product = Product.find(params[:id])
+    @exchange_methods = ExchangeMethod.all
   end
 
   def update
     @product = Product.find(params[:id])
-    params[:toggle_options].each do |attr|
-      toggle_option = ToggleOption.joins('INNER JOIN "attribute_options" ON "attribute_options"."id" = "toggle_options"."attribute_option_id"').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
-      toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
-      toggle_option.save
+    toggle_options = params[:toggle_options]
+    selling_methods = params[:selling_method_links]
+    exchange_methods = params[:exchange_method_links]
+    payment_methods = params[:payment_method_links]
+    unless toggle_options.nil?
+      toggle_options.each do |attr|
+        toggle_option = ToggleOption.joins('INNER JOIN "attribute_options" ON "attribute_options"."id" = "toggle_options"."attribute_option_id"').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
+        toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
+        toggle_option.save
+      end
     end
-    if @product.update_attributes(product_params)
-      redirect_to @product
+
+    unless selling_methods.nil?
+      @product.selling_method_links.each do |l|
+        l.destroy
+      end
+      selling_methods.each do |id, selected|
+        @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
+      end
+    end
+
+    unless exchange_methods.nil?
+      @product.exchange_method_links.each do |l|
+        l.destroy
+      end
+      exchange_methods.each do |id, selected|
+        @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
+      end
+    end
+
+    unless payment_methods.nil?
+      @product.payment_method_links.each do |l|
+        l.destroy
+      end
+      payment_methods.each do |id, selected|
+        @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
+      end
+    end
+
+    unless product_params.nil?
+      if @product.update_attributes(product_params)
+        redirect_to @product
+      end
     end
   end
 
   private
   def product_params
-    params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title, :toggle_option, :attribute_option_id)
-  end
-
-  def new_product_params
     params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title)
-  end
-
-  def toggle_options_params
-    params.require(:product).permit(:toggle_option, :attribute_option_id)
-  end
-
-  def selling_method_params
-    params.require(:product).permit(:selling_methods)
-  end
-
-  def payment_method_params
-    params.require(:product).permit(:payment_methods)
-  end
-
-  def exchange_method_params
-    params.require(:product).permit(:exchange_methods)
   end
   
   def correct_user

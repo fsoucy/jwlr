@@ -41,3 +41,17 @@
   <textarea class="review"></textarea>
   <button class="submit">Submit Review</button>
 </div>
+<div class="options">
+  <h2>Selling Methods</h2>
+  <% @product.selling_method_links.each do |s| %>
+  <p><%= s.selling_method.method %></p>
+  <% end %>
+  <h2>Exchange Methods</h2>
+  <% @product.exchange_method_links.each do |s| %>
+  <p><%= s.exchange_method.method %></p>
+  <% end %>
+  <h2>Payment Methods</h2>
+  <% @product.payment_method_links.each do |s| %>
+  <p><%= s.payment_method.method %></p>
+  <% end %>
+</div>

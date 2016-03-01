@@ -70,6 +70,11 @@ class CategoriesController < ApplicationController
 
   def show
     @category = Category.find(params[:id])
+    @parents = @category.all_parents
+    @children = @category.children
+    @category_options = @category.category_options
+    @option = CategoryOption.new
+    @attr = AttributeOption.new
   end
 
   def destroy
@@ -81,5 +86,13 @@ class CategoriesController < ApplicationController
   private
     def category_params
       params.require(:category).permit(:name, :parent_id, :no_of_options)
+    end
+
+    def attr_params
+      params.require(:attribute_option).permit(:value, :category_option_id)
+    end
+
+    def option_params
+      params.require(:category_option).permit(:name, :category_id)
     end
 end

@@ -28,7 +28,7 @@ class ProductsController < ApplicationController
     end
     if @product.save
       flash[:success] = "You have successfully uploaded a new product!"
-      redirect_to @product
+      redirect_to edit_toggle_options_product_path(@product.id)
     else
       flash.now[:warning] = "Product upload failed."
       render 'new'
@@ -100,6 +100,8 @@ class ProductsController < ApplicationController
         toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
         toggle_option.save
       end
+      redirect_to edit_selling_methods_product_path(@product.id)
+      return
     end
 
     unless selling_methods.nil?
@@ -109,6 +111,9 @@ class ProductsController < ApplicationController
       selling_methods.each do |id, selected|
         @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
       end
+      redirect_to edit_exchange_methods_product_path(@product.id)
+      return
+      #redirect_to controller: 'ProductsController', action: 'edit_exchange_methods', id: @product.id
     end
 
     unless exchange_methods.nil?
@@ -118,6 +123,8 @@ class ProductsController < ApplicationController
       exchange_methods.each do |id, selected|
         @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
       end
+      redirect_to edit_payment_methods_product_path(@product.id)
+      return
     end
 
     unless payment_methods.nil?
@@ -127,11 +134,13 @@ class ProductsController < ApplicationController
       payment_methods.each do |id, selected|
         @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
       end
+      redirect_to @product
+      return
     end
 
     unless product_params.nil?
       if @product.update_attributes(product_params)
-        redirect_to @product
+        redirect_to edit_toggle_options_product_path(@product.id)
       end
     end
   end

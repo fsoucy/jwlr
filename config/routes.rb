@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'category_options/create'
+
+  get 'attribute_options/create'
+
   get 'api/get_status'
 
   root 'static_pages#home'
@@ -18,7 +22,9 @@ Rails.application.routes.draw do
   #get 'localusers' => 'api#localusers'
   #post 'newstatus' => 'api#newstatus'  
   #get 'users' => 'api#users'
-    
+
+  resources :attribute_options, only: [:create, :destroy]
+  resources :category_options, only: [:create, :destroy]
 
   resources :users do
     member do

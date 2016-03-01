@@ -1,3 +1,18 @@
+function sortBy(url)
+{
+    afterURL = url
+    $('option').each(function(index, data) {
+	if ($(this).is(":selected"))
+	{
+	    var optionString = "&sort_by=" + $(this).attr("value");
+
+	    afterURL += optionString;
+	    
+	}
+    });
+    return afterURL;
+}
+
 function leadToRefresh()
 {
     var url = window.location.href;
@@ -10,15 +25,20 @@ function leadToRefresh()
 	//console.log(str);
 	if(url.indexOf(str) != -1)
 	{
-	    console.log(url);
 	    url = url.substring(0, url.indexOf(str));
-	    console.log(url);
 	}
     });
+
+    if(url.indexOf("&sort_by") != -1)
+    {
+	url = url.substring(0, url.indexOf("&sort_by"));
+    }
+
+    url = sortBy(url);
+    
     $('input.toggle').each(function(index, data) {
 	if ($(this).prop('checked'))
 	{
-	    console.log($(this).val());
 	    if (url.indexOf($(this).attr('name')) == -1)
 	    {
 		url += "&" + $(this).attr('name') + '=' + $(this).val();
@@ -33,7 +53,12 @@ function leadToRefresh()
     $('.attr_long').each(function(index, data) {
 	if ($(this).hasClass('attr_active'))
 	{
-	    url += "&" + "attr=" + $(this).siblings('h3').text();
+	    
+	    var attrString = "&" + "attr=" + $(this).siblings('h3').text();
+	    if (url.indexOf(attrString) == -1)
+	    {
+		url += attrString;
+	    }
 	}
     });
     console.log(url);
@@ -75,11 +100,6 @@ function uponRefresh()
 	    value: thingString
 	});
     }
-    for (key in dict)
-    {
-	//console.log(dict[key]["key"]);
-	//console.log(dict[key]["value"]);
-    }
     
     $('input').each(function(index, data) {
 	var name = $(this).attr('name');
@@ -105,6 +125,14 @@ function uponRefresh()
 	    }
 	}
     });
+
+    for(key in dict)
+    {
+	if (dict[key]["key"] == "sort_by")
+	{
+	    $('select').val(dict[key]["value"][0]);
+	}
+    }
     var loc = window.location.href;
     loc = loc.split("&");
     var arr = [];
@@ -123,8 +151,12 @@ function uponRefresh()
     }
 }
 
+
 $(document).ready(function() {
     $('input.toggle').change(function() {
+	leadToRefresh();
+    });
+    $('select').change(function() {
 	leadToRefresh();
     });
     /*
@@ -143,9 +175,31 @@ $(document).ready(function() {
 */
     uponRefresh();
     $('.result').click(function() {
-	$('.search_actions').fadeIn(500);
-	$('.result').removeClass('active');
-	$(this).addClass('active_search_result');
+	//$(this).append('<div class="buy_container"><p>Hello</p></div>');
+	//$('.search_actions').fadeIn(500);
+	if (!($(this).hasClass('active_search_result')))
+	{
+	    $('.result').removeClass('active_search_result')
+	    var previousElements = parseInt($(this).index('.result'));
+	    var resHeight = parseInt($(this).css('height') + 2 * $(this).css('margin') + 2 * $(this).css('padding'));
+	    //console.log(previousElements);
+	    //console.log(resHeight);
+	    $('.search_actions').css('height', $(this).css('height'));
+	    $('.search_actions').css('margin-bottom', $(this).css('margin-bottom'));
+	    var top = 10 + resHeight * previousElements;
+				 //console.log(top);
+	    
+	    $('.search_actions').css('margin-top', top + "px");
+	    $('.result').removeClass('active');
+	    $(this).addClass('active_search_result');
+	    $('.search_actions').fadeIn(500);
+	}
+	else
+	{
+	    $('.search_actions').fadeOut(500);
+	    $(this).removeClass('active_search_result');
+	}
+	
     });
 
     $('.category_name').click(function() {
@@ -154,4 +208,5 @@ $(document).ready(function() {
 	$(this).siblings('.attr_long').css('display', 'block').addClass('attr_active');
 	
     });
+
 });

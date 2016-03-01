@@ -22,6 +22,19 @@ class Category < ActiveRecord::Base
     end
   end
 
+  def all_parents
+    parents = []
+    if !self.parent.nil?
+      parents.push(self.parent)
+    end
+    par = self.parent
+    while !par.nil?
+      par = par.parent
+      parents.push(par) unless par.nil?
+    end
+    return parents
+  end
+
   def depth
     count = 0
     current_category = self

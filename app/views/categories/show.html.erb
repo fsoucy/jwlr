@@ -1,0 +1,45 @@
+<h1><%= @category.name %> | <%= link_to "Delete", @category, method: :delete, data: { confirm: 'Are you sure?' } %></h3>
+<br>
+<h2>Parents</h2>
+<% @parents.each do |parent| %>
+<h3><%= parent.name %></h3>
+<% end %>
+<br>
+<h2>Children</h2>
+<% @children.each do |child| %>
+<h3><%= child.name %></h3>
+<% end %>
+<%= form_for(Category.new) do |f| %>
+<%= f.label "New Child Category" %>
+<%= f.text_field :name %>
+<%= f.hidden_field :parent_id, value: @category.id %>
+<%= f.submit "Add" %>
+<% end %>
+<br>
+<h2>Category Options</h2>
+<% @category_options.each do |opt| %>
+<% if opt.required %>
+<h3><%= opt.name %> (required) | <%= link_to "Delete", opt, method: :delete, data: { confirm: 'Are you sure?' } %></h3>
+<% else %>
+<h3><%= opt.name %> | <%= link_to "Delete", opt, method: :delete, data: { confirm: 'Are you sure?' } %></h3>
+<% end %>
+<h4>Available Attribute Options</h4>
+<% opt.attribute_options.each do |attr| %>
+<h5><%= attr.value %> | <%= link_to "Delete", attr, method: :delete, data: { confirm: 'Are you sure?' } %></h5>
+<% end %>
+<%= form_for(@attr) do |f| %>
+<%= f.label "New Attribute Option" %>
+<%= f.hidden_field :category_option_id, value: opt.id %>
+<%= f.text_field :value %>
+<%= f.submit "Add" %>
+<% end %>
+<br>
+<% end %>
+<%= form_for(@option) do |f| %>
+<%= f.label "New Category Option" %>
+<%= f.text_field :name %>
+<%= f.hidden_field :category_id, value: @category.id %>
+<%= f.label "Required" %>
+<%= f.check_box :required %>
+<%= f.submit "Add" %>
+<% end %>

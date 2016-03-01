@@ -1,0 +1,2 @@
+module CategoryOptionsHelper
+end

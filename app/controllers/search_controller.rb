@@ -29,23 +29,19 @@ class SearchController < ApplicationController
       geocode = request.location 
       order_by_geodist :location, geocode.latitude, geocode.longitude unless geocode.nil?
     end
-
+    
     if !params[:price].nil?
       prices = params[:price].split(',')
-      exclusions = Array.new
+      ranges = Array.new
       prices.each do |price|
-        exclusions.append(with :price, Range.new(price.split("..").first, price.split("..").last))
+        with :price, Range.new(price.split("..").first.to_f, price.split("..").last.to_f)
       end
-      facet :price, :range => 0..100000, :range_interval => 100, :exclude => exclusions
-    else
-      facet :price, :range => 0..100000, :range_interval => 100
     end
+    facet :price, :range => 0..100000, :range_interval => 100
 
     if !params[:category_id].nil?
-      exclusion = with :category_id, params[:category_id]
-      facet :category_id, :exclude => exclusion
-    else
-      facet :category_id
+      categories = params[:category_id].split(',')
+      category = with :category_id, categories
     end
 
     if !params[:attribute_option_id].nil?
@@ -53,8 +49,10 @@ class SearchController < ApplicationController
       with :attribute_option_id, ids
     end
 
+    facet :category_id, :exclude => category
+
     with :sold, false
-  end
+    end
 
     if logged_in? && !search.results.empty?
       saved_search = current_user.searches.find_by(search_text: params[:search_string])
@@ -70,7 +68,15 @@ class SearchController < ApplicationController
     @prices = search.facet(:price)
     @categories = search.facet(:category_id)
     @results = search.results
-    @category = params[:category_id]
+    if !params[:category_id].nil?
+      category_options = Array.new
+      params[:category_id].split(',').each do |cat|
+        Category.find(cat).category_options.each do |category_option|
+          category_options.append(category_option)
+        end
+      end
+      @category_options = category_options.uniq
+    end
   end
 
   def suggestions

@@ -26,13 +26,14 @@
 	<% @category_options.each do |category_option| %>
 	<div class="category">
           <h3 class="category_name <%= category_option.name %>"><%= category_option.name %></h3>
-	  <div class="attr_short attr_active">
+	  <div class="attr_short">
             <% category_option.attribute_options[0...1].each do |attr| %>
 	    <%= attr.value %>: <input type="checkbox" name="attribute_option_id" value="<%= attr.id %>" class="toggle"><br>
 	    <% end %>
 	  </div>
 	  <div class="attr_long">
-	    <% category_option.attribute_options.each do |attr| %>
+	    <% len = category_option.attribute_options.length %>
+	    <% category_option.attribute_options[1...(len)].each do |attr| %>
 	    <%= attr.value %>: <input type="checkbox" name="attribute_option_id" value="<%= attr.id %>" class="toggle"><br>
 	    <% end %>
 	  </div>

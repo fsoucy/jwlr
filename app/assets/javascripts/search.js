@@ -20,6 +20,7 @@ This function is called to update the URL when actions are taken with the toggle
 or sorting or ordering preferences updated */
 function leadToRefresh()
 {
+    debugger;
     var url = window.location.href;
     
     //here I'm going to clear the unnecessary hash in URL
@@ -30,7 +31,6 @@ function leadToRefresh()
 	    url = url.substring(0, url.indexOf(str));
 	}
     });
-
     //clear the current sort by hash in URL
     if(url.indexOf("&sort_by") != -1)
     {
@@ -69,11 +69,26 @@ function leadToRefresh()
     });
 
     //update URL
+    //debugger;
     window.location.href = url;
 }
 
 function uponRefresh()
 {
+    var loc = window.location.href;
+    loc = loc.split("&");
+    for (thing in loc)
+    {
+	x = loc[thing].indexOf('attr=');
+	if (x != -1)
+	{
+	    var attribute = '.' + loc[thing].substring(x + 5);
+	    //$(attribute).siblings('.attr_short').css('display', 'none').removeClass('attr_active');
+	    $(attribute).siblings('.attr_long').css('display', 'block').addClass('attr_active');
+	}
+    }
+
+    
     var hash = window.location.href;
     //if the hash is empty, return an empty hash. if not, only get relevant part of hash (after first &)
     if (hash.indexOf('&') == -1 || hash.indexOf("=") == -1)
@@ -107,8 +122,9 @@ function uponRefresh()
     $('input').each(function(index, data) {
 	var name = $(this).attr('name');
 	var val = $(this).val();
-	if (dict[name] != null && dict[name].indexOf(val) != -1)    
+	if (dict[name] != null && dict[name].indexOf(val) != -1)// && $(this).parent().hasClass('attr_active'))    
 	{
+	    //var todo = $(this).parent().attr('name') == 
 	    $(this).prop('checked', true);
 	}
     });
@@ -118,23 +134,12 @@ function uponRefresh()
 	$('select').val(dict["sort_by"][0]);
     }
     
-    var loc = window.location.href;
-    loc = loc.split("&");
-    for (thing in loc)
-    {
-	x = loc[thing].indexOf('attr=');
-	if (x != -1)
-	{
-	    var attribute = '.' + loc[thing].substring(x + 5);
-	    $(attribute).siblings('.attr_short').css('display', 'none').removeClass('attr_active');
-	    $(attribute).siblings('.attr_long').css('display', 'block').addClass('attr_active');
-	}
-    }
 }
 
 
 $(document).ready(function() {
     $('input.toggle').change(function() {
+	debugger;
 	leadToRefresh();
     });
     $('select').change(function() {
@@ -171,8 +176,8 @@ $(document).ready(function() {
     });
 
     $('.category_name').click(function() {
-	console.log("ok");
-	$(this).siblings('.attr_short').css('display', 'none').removeClass('attr_active');
+	//console.log("ok");
+	//$(this).siblings('.attr_short').css('display', 'none').removeClass('attr_active');
 	$(this).siblings('.attr_long').css('display', 'block').addClass('attr_active');
 	
     });

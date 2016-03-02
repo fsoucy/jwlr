@@ -146,7 +146,7 @@ $(document).ready(function() {
     $('input.toggle').change(function() {
 	leadToRefresh();
     });
-    $('select').change(function() {
+    $('select.searchpage').change(function() {
 	leadToRefresh();
     });
     
@@ -179,7 +179,7 @@ $(document).ready(function() {
 	
     });
 
-    $('.category_name').click(function() {
+    $('.options_dropdown_name').click(function() {
 	//console.log("ok");
 	//$(this).siblings('.attr_short').css('display', 'none').removeClass('attr_active');
 	$(this).siblings('.attr_long').css('display', 'block').addClass('attr_active');

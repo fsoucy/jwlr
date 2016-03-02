@@ -49,6 +49,21 @@ class SearchController < ApplicationController
       with :attribute_option_id, ids
     end
 
+    if !params[:selling_method_id].nil?
+      methods = params[:selling_method_id].split(',')
+      with :selling_method_id, methods
+    end
+
+    if !params[:exchange_method_id].nil?
+      methods = params[:exchange_method_id].split(',')
+      with :exchange_method_id, methods
+    end
+
+    if !params[:payment_method_id].nil?
+      methods = params[:payment_method_id].split(',')
+      with :payment_method_id, methods
+    end
+
     facet :category_id, :exclude => category
 
     with :sold, false
@@ -68,6 +83,9 @@ class SearchController < ApplicationController
     @prices = search.facet(:price)
     @categories = search.facet(:category_id)
     @results = search.results
+    @selling_methods = SellingMethod.all
+    @payment_methods = PaymentMethod.all
+    @exchange_methods = ExchangeMethod.all
     if !params[:category_id].nil?
       category_options = Array.new
       params[:category_id].split(',').each do |cat|

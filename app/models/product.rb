@@ -30,8 +30,12 @@ class Product < ActiveRecord::Base
     text :title
     integer :id
     join(:attribute_option_id, :target => ToggleOption, :type => :integer, :join => { :from => :product_id, :to => :id })
-    #integer :attribute_option_id, :references => AttributeOption
-    #references :attribute_option_id, through: :toggle_options
+    join(:selling_method_id, :target => SellingMethodLink, :type => :integer, :join => { :from => :product_id, :to => :id })
+    join(:payment_method_id, :target => PaymentMethodLink, :type => :integer, :join => { :from => :product_id, :to => :id })
+    join(:exchange_method_id, :target => ExchangeMethodLink, :type => :integer, :join => { :from => :product_id, :to => :id })
+    references :selling_method_id
+    references :payment_method_id
+    references :exchange_method_id
     references :attribute_option_id
     #integer :attribute_option_id, through: :toggle_options
     #integer :attribute_options_id

@@ -33,8 +33,10 @@ class SearchController < ApplicationController
     if !params[:price].nil?
       prices = params[:price].split(',')
       exclusions = Array.new
-      prices.each do |price|
-        exclusions.append(with :price, Range.new(price.split("..").first, price.split("..").last))
+      any_of do
+        prices.each do |price|
+          exclusions.append(with :price, Range.new(price.split("..").first, price.split("..").last))
+        end
       end
       facet :price, :range => 0..100000, :range_interval => 100, :exclude => exclusions
     else

@@ -1,3 +1,5 @@
+/* this function iterates through each option in the sort_by
+select dropdown, and appends the selected to the URL */
 function sortBy(url)
 {
     afterURL = url
@@ -13,29 +15,32 @@ function sortBy(url)
     return afterURL;
 }
 
+/*
+This function is called to update the URL when actions are taken with the toggle options
+or sorting or ordering preferences updated */
 function leadToRefresh()
 {
     var url = window.location.href;
-    var hash = location.hash;
-    url = url.replace(hash, '');
     
     //here I'm going to clear the unnecessary hash in URL
     $('input.toggle').each(function(index, data) {
 	var str = "&" + $(this).attr('name');
-	//console.log(str);
 	if(url.indexOf(str) != -1)
 	{
 	    url = url.substring(0, url.indexOf(str));
 	}
     });
 
+    //clear the current sort by hash in URL
     if(url.indexOf("&sort_by") != -1)
     {
 	url = url.substring(0, url.indexOf("&sort_by"));
     }
 
+    //update sort by hash in the URL
     url = sortBy(url);
-    
+
+    //iterates through all checkboxes. if selected, add it to hash
     $('input.toggle').each(function(index, data) {
 	if ($(this).prop('checked'))
 	{
@@ -49,7 +54,8 @@ function leadToRefresh()
 	    }
 	}
     });
-    console.log(url);
+
+    //if an attribute option is expanded, let hash know so it can stay expanded upon reload
     $('.attr_long').each(function(index, data) {
 	if ($(this).hasClass('attr_active'))
 	{
@@ -61,13 +67,15 @@ function leadToRefresh()
 	    }
 	}
     });
-    console.log(url);
+
+    //update URL
     window.location.href = url;
 }
 
 function uponRefresh()
 {
     var hash = window.location.href;
+    //if the hash is empty, return an empty hash. if not, only get relevant part of hash (after first &)
     if (hash.indexOf('&') == -1 || hash.indexOf("=") == -1)
     {
 	hash = "";
@@ -77,71 +85,44 @@ function uponRefresh()
     {
 	hash = hash.slice(hash.indexOf("&"), hash.length);
     }
-    //console.log(hash);
 
+
+    //delimits 
     var hashSplit = hash.split("&");
-    hashSplit = hashSplit.slice(1,hashSplit.length);
-    var dict = [];
+    hashSplit = hashSplit.slice(1,hashSplit.length); // don't want first value
+    var dict = {}; // var dict = [];
     //console.log(hashSplit.toString());
     for (j in hashSplit)
     {
 	var s = hashSplit[j];
 	var thingString = s.slice(s.indexOf("=") + 1, s.length);
 	thingString = thingString.split(",");
-	/*
-	var thing = [];
-	for(var k = 0; k < thingString.length; k++)
-	{
-	    thing.push(parseInt(thingString[k]));
-	}
-	*/
-	dict.push({
+	dict[s.slice(s.indexOf("&") + 1, s.indexOf("="))] = thingString;
+	/*dict.push({
 	    key: s.slice(s.indexOf("&") + 1, s.indexOf("=")),
 	    value: thingString
-	});
+	});*/
     }
-    
+    //we now have a hash. keys are the names of the params. values are an array of appropriate values for the param
     $('input').each(function(index, data) {
 	var name = $(this).attr('name');
 	var val = $(this).val();
-	//console.log(name);
-	//console.log(val);
-	for (key in dict)
+	if (dict[name] != null && dict[name].indexOf(val) != -1)    
 	{
-	    var nameMatch = dict[key]["key"] == name;
-	    var valMatch = false;
-	    for(var n = 0; n < dict[key]["value"].length; n++)
-	    {
-		if (dict[key]["value"][n] == val) valMatch = true;
-	    }
-	    //var valMatch = dict[key]["value"].contains(val);
-	    if (valMatch && nameMatch)
-	    {
-		//console.log(name);
-		//console.log(val);
-		//console.log(dict[key]["key"]);
-		//console.log(dict[key]["value"]);
-		$(this).prop('checked', true);
-	    }
+	    $(this).prop('checked', true);
 	}
     });
 
-    for(key in dict)
+    if(dict["sort_by"] != null)
     {
-	if (dict[key]["key"] == "sort_by")
-	{
-	    $('select').val(dict[key]["value"][0]);
-	}
+	$('select').val(dict["sort_by"][0]);
     }
+    
     var loc = window.location.href;
     loc = loc.split("&");
-    var arr = [];
     for (thing in loc)
     {
 	x = loc[thing].indexOf('attr=');
-	//console.log(x + 5);
-	//console.log(loc[thing]);
-	//console.log(loc[thing].substring(x + 5));
 	if (x != -1)
 	{
 	    var attribute = '.' + loc[thing].substring(x + 5);
@@ -159,20 +140,7 @@ $(document).ready(function() {
     $('select').change(function() {
 	leadToRefresh();
     });
-    /*
-    var toStr = window.location.href;
-    var hash = "" + toStr;
-    if (hash.indexOf('&') != -1)
-    {
-	hash = hash.slice(hash.indexOf("&"), hash.length);
-	console.log(hash);
-    }
-    else
-    {
-	hash = "";
-    }
-    var arr = [];
-*/
+    
     uponRefresh();
     $('.result').click(function() {
 	//$(this).append('<div class="buy_container"><p>Hello</p></div>');
@@ -186,7 +154,7 @@ $(document).ready(function() {
 	    //console.log(resHeight);
 	    $('.search_actions').css('height', $(this).css('height'));
 	    $('.search_actions').css('margin-bottom', $(this).css('margin-bottom'));
-	    var top = 10 + resHeight * previousElements;
+	    var top = 10 + 216 * previousElements;
 				 //console.log(top);
 	    
 	    $('.search_actions').css('margin-top', top + "px");

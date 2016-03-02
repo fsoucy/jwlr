@@ -42,8 +42,9 @@
 	<% end %>
       </p>
     <% else %>
-      <h2>Select a category to sort</h2>
-      <% end %>
+
+      <h2>Selling Methods</h2>
+      <h2>Paymen
     </div>
   </div>
   <div class="search_results">

@@ -64,7 +64,7 @@ function leadToRefresh()
 	    var attrString = "&" + "attr=" + $(this).siblings('h3').text();
 	    if (url.indexOf(attrString) == -1)
 	    {
-		attrString = attrString.replace(" ", "_");
+		attrString = attrString.replace(" ", "space");
 		url += attrString;
 	    }
 	}
@@ -85,6 +85,7 @@ function uponRefresh()
 	if (x != -1)
 	{
 	    var attribute = '.' + loc[thing].substring(x + 5);
+	    attribute = attribute.replace("space", " ");
 	    console.log(attribute);
 	    //$(attribute).siblings('.attr_short').css('display', 'none').removeClass('attr_active');
 	    $(attribute).siblings('.attr_long').css('display', 'block').addClass('attr_active');

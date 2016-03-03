@@ -1,6 +1,7 @@
 <% provide(:title, "Home") %>
 
 <% if logged_in? %>
+<% end %>
 <div class="home_main">
   <div class="buy_now">
     <div id="coins">
@@ -77,87 +78,4 @@
   </div>
 </div>
 
-<% else %>
-<div class="home_main">
-  <div class="home_container">
-    <div class="igoldhome"></div>
-    <p class="intro">Welcome to iGold, where the world trades gold... and so much more. Whether you want to get rid of those coins and antiques lying around in your attic, make a virtual presence for your established pawn shop, or hunt for a wedding ring that fits your desires, you're come to the right place. Feel free to explore the site, check out beautiful storefronts, and look for products all without having to make an account -- but we think you'll want to stay for good. Enjoy.</p>
-  </div>
-  <div class="buy_now">
-    <div id="coins">
-      <p>Gold Coins</p>
-      <p>$5 and up</p>
-      <button>Shop now</button>
-    </div>
-  </div>
-  <div class="featured">
-    <h1 class="featured_header">Featured Products</h1>
-    <div class="gallery_home">
-      <% @products.each do |prod| %>
-      <div class="product_home">
-	<div class="image_container_home">
-	  <%= image_tag prod.picture_url(:thumb), class: "product_image_home" %>
-	  <button class="quick_view_home">Quick View</button>
-	</div>
-	<h3 class="product_name_home"><%= prod.category.name %></h3>
-	<h4 class="product_price_home"><%= prod.price %></h4>
-      </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="top">
-    <h1 class="top_header">Top Products</h1>
-    <div class="gallery_home">
-      <% @top_products.each do |prod| %>
-      <div class="product_home">
-	<div class="image_container_home">
-	  <%= image_tag prod.picture_url(:thumb), class: "product_image_home" %>
-	  <button class="quick_view_home">Quick View</button>
-	</div>
-	<h3 class="product_name_home"><%= prod.category.name %></h3>
-	<h4 class="product_price_home"><%= prod.price %></h4>
-      </div>
-      <% end %>
-  <div id="bullion">
-      <p>Bullion</p>
-      <p>$100 and up</p>
-      <button>Shop now</button>
-    </div>
-    <div id="watch">
-      <p>Watches</p>
-      <p>$50 and up</p>
-      <button>Shop now</button>
-    </div>
-    <div id="necklace">
-      <p>Necklaces</p>
-      <p>$60 and up</p>
-      <button>Shop now</button>
-    </div>
-    <div id="ring">
-      <p>Rings</p>
-      <p>$30 and up</p>
-      <button>Shop now</button>
-    </div>
-    <div id="jewelry">
-      <p>Jewelry</p>
-      <p>$50 and up</p>
-      <button>Shop now</button>
-    </div>
-  </div>
-  <div class="sell_now sell_active">
-    <p>Start your online business</p>
-    <button class="sell">Let's get started</button>
-  </div>
-  <div class="home_gallery">
-    <h1>For You</h1>
-    <div class="gallery_container">
-      <div class="gallery_main" id="gallery_main_first"></div>
-      <div class="gallery_other first"></div>
-      <div class="gallery_other second"></div>
-      <div class="gallery_other third"></div>
-      <div class="gallery_other fourth"></div>
-    </div>
-  </div>
-</div>
-<% end %>
   

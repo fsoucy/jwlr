@@ -26,8 +26,8 @@ class Product < ActiveRecord::Base
   end
 
   searchable do
-    text :description
-    text :title
+    text :description, :more_like_this => true
+    text :title, :more_like_this => true
     integer :id
     join(:attribute_option_id, :target => ToggleOption, :type => :integer, :join => { :from => :product_id, :to => :id })
     join(:selling_method_id, :target => SellingMethodLink, :type => :integer, :join => { :from => :product_id, :to => :id })
@@ -43,7 +43,7 @@ class Product < ActiveRecord::Base
     latlon(:location) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
     boolean :sold
     time :created_at    
-    integer :category_id
+    integer :category_id, :more_like_this => true
   end
   
 end

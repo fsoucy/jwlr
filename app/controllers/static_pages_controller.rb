@@ -21,9 +21,8 @@ class StaticPagesController < ApplicationController
       if results.count < 5
         product = current_user.productviews.all.sort_by(&:views).take(1).map(&:product_id)
         unless product.empty?
-          debugger
           search = Sunspot.more_like_this(Product.find(product)) do
-            fields [:description, :title, :category_id]
+            fields :description, :title
             boost_by_relevance true
             paginate :page => 1, :per_page => (5 - results.count)  
           end

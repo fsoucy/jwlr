@@ -55,3 +55,9 @@
   <p><%= s.payment_method.method %></p>
   <% end %>
 </div>
+<div class="more_like_this">
+<% unless @more_like_this.nil?
+@more_like_this.each do |prod| %>
+<% end
+end %>
+</div>

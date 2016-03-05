@@ -5,16 +5,16 @@ class Product < ActiveRecord::Base
   after_validation :geocode
   belongs_to :user
   belongs_to :store
-  mount_uploader :picture, PictureUploader
   attr_accessor :hits
   has_many :pending_deals, dependent: :destroy
   has_many :productviews, dependent: :destroy
   belongs_to :category
   has_many :toggle_options, dependent: :destroy
-  has_many :exchange_method_links
-  has_many :payment_method_links
-  has_many :selling_method_links
-  
+  has_many :exchange_method_links, dependent: :destroy
+  has_many :payment_method_links, dependent: :destroy
+  has_many :selling_method_links, dependent: :destroy
+  has_many :pictures, dependent: :destroy  
+
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at]
     super(options)

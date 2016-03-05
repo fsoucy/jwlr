@@ -1,10 +1,6 @@
 <%= form_for(@product,  html: { multipart: true}) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
 
-<%= f.label :picture, "Upload Product Picture" %>
-<%= f.file_field :picture, class: 'file' %>
-<br>
-
 <%= f.label :category_id, "Product Type" %>
 <%= f.select :category_id, nested_dropdown(Category.where(:parent_id => nil), true) %>
 <br>

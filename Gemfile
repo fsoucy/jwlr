@@ -22,6 +22,7 @@ gem 'net-ssh'
 gem 'rack-cors'
 gem 'progress_bar'
 gem 'dropzonejs-rails'
+gem 'paperclip'
 
 group :development, :test do
   gem 'sqlite3'

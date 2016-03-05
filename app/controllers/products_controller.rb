@@ -15,7 +15,7 @@ class ProductsController < ApplicationController
     else
       @product = current_user.products.build
       @has = false
-    end	
+    end
   end
   
   def create
@@ -139,7 +139,7 @@ class ProductsController < ApplicationController
       payment_methods.each do |id, selected|
         @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
       end
-      redirect_to @product
+      redirect_to new_picture_url
       return
     end
 

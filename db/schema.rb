@@ -146,6 +146,12 @@ ActiveRecord::Schema.define(version: 20160305081548) do
   add_index "pending_deals", ["product_id"], name: "index_pending_deals_on_product_id"
   add_index "pending_deals", ["seller_id"], name: "index_pending_deals_on_seller_id"
 
+  create_table "pictures", force: :cascade do |t|
+    t.string   "photo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "products", force: :cascade do |t|
     t.float    "price"
     t.string   "full_street_address"

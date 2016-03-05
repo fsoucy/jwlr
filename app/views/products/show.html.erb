@@ -56,8 +56,15 @@
   <% end %>
 </div>
 <div class="more_like_this">
+<h1>Related Products</h1>
 <% unless @more_like_this.nil?
 @more_like_this.each do |prod| %>
+<a href="<%= product_url(prod) %>">
+<div class="product_box">
+<%= image_tag prod.picture_url(:thumb) %>
+<p><%= prod.title %><br> <%= number_to_currency(prod.price) %></p>
+</div>
+</a>
 <% end
 end %>
 </div>

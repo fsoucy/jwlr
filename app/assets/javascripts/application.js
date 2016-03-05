@@ -15,4 +15,5 @@
 //= require jquery_ujs
 //= require personal_style.js
 //= require turbolinks
+//= require dropzone
 //= require_tree .

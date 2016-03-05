@@ -24,6 +24,7 @@ gem 'therubyracer',  platforms: :ruby
 gem 'net-ssh'
 gem 'rack-cors'
 gem 'progress-bar'
+gem 'dropzonejs-rails'
 
 group :development, :test do
   gem 'sqlite3'

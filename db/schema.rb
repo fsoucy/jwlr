@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160220210431) do
+ActiveRecord::Schema.define(version: 20160305081548) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -28,9 +28,11 @@ ActiveRecord::Schema.define(version: 20160220210431) do
     t.integer  "store_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
 
   add_index "blogposts", ["store_id"], name: "index_blogposts_on_store_id"
+  add_index "blogposts", ["user_id"], name: "index_blogposts_on_user_id"
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -143,6 +145,12 @@ ActiveRecord::Schema.define(version: 20160220210431) do
   add_index "pending_deals", ["product_id", "seller_id", "buyer_id"], name: "index_pending_deals_on_product_id_and_seller_id_and_buyer_id", unique: true
   add_index "pending_deals", ["product_id"], name: "index_pending_deals_on_product_id"
   add_index "pending_deals", ["seller_id"], name: "index_pending_deals_on_seller_id"
+
+  create_table "pictures", force: :cascade do |t|
+    t.string   "photo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "products", force: :cascade do |t|
     t.float    "price"

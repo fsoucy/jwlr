@@ -1,16 +1,13 @@
 source 'https://rubygems.org'
 
 gem 'rails'
+gem 'carrierwave'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
-gem 'bootstrap_form'
-gem 'carrierwave'
 gem 'mini_magick'
-gem 'fog'
 gem 'figaro'
 gem 'geocoder'
 gem 'will_paginate'
-gem 'faker'
 gem 'bcrypt'
 gem 'sass-rails'
 gem 'uglifier'
@@ -23,7 +20,7 @@ gem 'sdoc', group: :doc
 gem 'therubyracer',  platforms: :ruby
 gem 'net-ssh'
 gem 'rack-cors'
-gem 'progress-bar'
+gem 'progress_bar'
 gem 'dropzonejs-rails'
 
 group :development, :test do

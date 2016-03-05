@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   geocoded_by :full_street_address
   after_validation :geocode
-   
+  mount_uploader :profile_picture, PictureUploader
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
     	   					  BCrypt::Engine.cost

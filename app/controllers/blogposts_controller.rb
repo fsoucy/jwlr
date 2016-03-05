@@ -5,13 +5,29 @@ class BlogpostsController < ApplicationController
 
   def new
     @blogpost = Blogpost.new
+    @has = false
+    if current_user.stores.length > 0
+      @has = true
+      @stos = Array.new
+      current_user.stores.each do |store|
+        @stos.push([store.name, store.id])
+      end
+      @stos.push(["Post as a user", -1])
+      @default = -1
+    end
   end
   
   def create
-    @blogpost = current_user.stores.find(params[:id]).blogposts.build(blogpost_params)
+    if params[:store_id].to_i == -1 or params[:store_id].nil?
+      @blogpost = current_user.blogposts.build(blogpost_params)
+    else
+      @blogpost = current_user.stores.find_by(id: params[:store_id]).blogposts.build(blogpost_params)
+      @blogpost.user_id = current_user.id
+    end
     if @blogpost.save
       flash[:success] = "Blogpost created!"
-      redirect_to @blogpost.store
+      redirect_to @blogpost.store if !@blogpost.store.nil?
+      redirect_to @blogpost.user unless !@blogpost.store.nil?
     else
       render 'new'
     end
@@ -45,8 +61,8 @@ class BlogpostsController < ApplicationController
     end
 
     def correct_user_store
-      @store = current_user.stores.find(params[:id])
-      redirect_to root_url if @store.nil?
+      #@store = current_user.stores.find(params[:id])
+      #redirect_to root_url if @store.nil?
     end
 
     def correct_user_blogpost

@@ -23,6 +23,8 @@ class UsersController < ApplicationController
   
   def create
     @user = User.new(user_params)
+    @user.products_sold = 0
+    @user.products_bought = 0
     if @user.save
       @user.send_activation_email
       flash[:info] = "Please check your email to activate your account."
@@ -90,7 +92,7 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
-      					  :password_confirmation, :public, :description, :full_street_address)
+      					  :password_confirmation, :public, :description, :full_street_address, :identifies_as, :interests, :profile_picture)
     end
 
     def correct_user

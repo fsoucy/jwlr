@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160305081548) do
+ActiveRecord::Schema.define(version: 20160305224554) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -333,6 +333,11 @@ ActiveRecord::Schema.define(version: 20160305081548) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "full_street_address"
+    t.text     "interests"
+    t.integer  "products_bought"
+    t.integer  "products_sold"
+    t.text     "identifies_as"
+    t.string   "profile_picture"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

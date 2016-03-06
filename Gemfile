@@ -23,6 +23,7 @@ gem 'sdoc', group: :doc
 gem 'therubyracer',  platforms: :ruby
 gem 'net-ssh'
 gem 'rack-cors'
+gem 'progress-bar'
 
 group :development, :test do
   gem 'sqlite3'

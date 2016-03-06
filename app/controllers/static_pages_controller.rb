@@ -1,7 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
     @top_products = Product.joins(:productviews).order('productviews.views DESC').limit(8)
-    @products = Product.all
     if logged_in?
       searches = current_user.searches.all.sort_by(&:frequency).take(5).map(&:search_text)
       results = Array.new
@@ -19,6 +18,18 @@ class StaticPagesController < ApplicationController
         end
         results += search.results
       end
+      if results.count < 5
+        product = current_user.productviews.all.sort_by(&:views).take(1).map(&:product_id)
+        unless product.empty?
+          search = Sunspot.more_like_this(Product.find(product.first)) do
+            fields :description, :title
+            boost_by_relevance true
+            paginate :page => 1, :per_page => (5 - results.count)  
+          end
+          results += search.results
+         end
+      end
+
       @for_you = results
     end
   end

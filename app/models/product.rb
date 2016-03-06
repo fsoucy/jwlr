@@ -14,7 +14,6 @@ class Product < ActiveRecord::Base
   has_many :exchange_method_links
   has_many :payment_method_links
   has_many :selling_method_links
-  #has_many :attribute_options, through: :toggle_options, foreign_key: :attribute_option_id
   
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at]
@@ -26,8 +25,8 @@ class Product < ActiveRecord::Base
   end
 
   searchable do
-    text :description
-    text :title
+    text :description, :more_like_this => true
+    text :title, :more_like_this => true
     integer :id
     join(:attribute_option_id, :target => ToggleOption, :type => :integer, :join => { :from => :product_id, :to => :id })
     join(:selling_method_id, :target => SellingMethodLink, :type => :integer, :join => { :from => :product_id, :to => :id })
@@ -37,8 +36,6 @@ class Product < ActiveRecord::Base
     references :payment_method_id
     references :exchange_method_id
     references :attribute_option_id
-    #integer :attribute_option_id, through: :toggle_options
-    #integer :attribute_options_id
     float :price
     latlon(:location) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
     boolean :sold

@@ -428,6 +428,13 @@
     </arr>
   </requestHandler>
 
+  <requestHandler class="solr.MoreLikeThisHandler" name="/mlt">
+    <lst name="defaults">
+      <str name="mlt.mintf">1</str>
+      <str name="mlt.mindf">2</str>
+    </lst>
+  </requestHandler>
+
   <!-- A request handler that returns indented JSON by default -->
   <requestHandler name="/query" class="solr.SearchHandler">
      <lst name="defaults">

@@ -8,15 +8,16 @@ class PicturesController < ApplicationController
   end
 
   def create
+    if current_user.products.find(params[:id]).pictures.count < 8
     @picture = current_user.products.find(params[:id]).pictures.build(picture_params)
-    if @picture.save
-      # send success header
-      render json: { message: "success", fileID: @picture.id }, :status => 200
+      if @picture.save
+        render json: { message: "success", fileID: @picture.id }, :status => 200
+      else
+        render json: { error: @picture.errors.full_messages.join(',')}, :status => 400
+      end
     else
-      #  you need to send an error header, otherwise Dropzone
-      #  will not interpret the response as an error:
-      render json: { error: @picture.errors.full_messages.join(',')}, :status => 400
-    end     
+      render json: { error: "Maxiumum picture count of 8 reached" }, :status => 400
+    end
   end
 
   def destroy

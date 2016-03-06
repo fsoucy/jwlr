@@ -1,0 +1,9 @@
+<% @pictures.each do |picture| %>
+  <div class="picture">
+    <%= image_tag picture.photo.url(:thumb) %>
+    <%= link_to "Delete", picture, method: :delete,
+                                       data: { confirm: "Are you sure?" } %>
+    <%= link_to "Edit", edit_picture_url(picture) %>
+  </div>
+<% end %>
+

@@ -1,6 +1,6 @@
 class PicturesController < ApplicationController
   before_action :logged_in_user
-  before_action :correct_user_product, only: [:new, :create]
+  before_action :correct_user_product, only: [:new, :create, :index]
   before_action :correct_user_picture, only: [:edit, :update, :destroy]
   
   def new
@@ -33,6 +33,10 @@ class PicturesController < ApplicationController
   end
 
   def update
+  end
+
+  def index
+    @pictures = Product.find(params[:id]).pictures.all 
   end
 
   private

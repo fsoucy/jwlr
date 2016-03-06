@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160305211330) do
+ActiveRecord::Schema.define(version: 20160306001918) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -166,7 +166,6 @@ ActiveRecord::Schema.define(version: 20160305211330) do
     t.integer  "user_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "picture"
     t.text     "description"
     t.boolean  "hold"
     t.boolean  "sold",                default: false

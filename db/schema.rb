@@ -338,6 +338,11 @@ ActiveRecord::Schema.define(version: 20160306001918) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "full_street_address"
+    t.text     "interests"
+    t.integer  "products_bought"
+    t.integer  "products_sold"
+    t.text     "identifies_as"
+    t.string   "profile_picture"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

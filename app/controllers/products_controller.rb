@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  def show    
+  def show
     @product = Product.find_by(id: params[:id])
     @toggle_options = @product.toggle_options
     search = Sunspot.more_like_this(@product) do

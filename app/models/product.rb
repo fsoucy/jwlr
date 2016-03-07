@@ -1,6 +1,9 @@
 class Product < ActiveRecord::Base
   validates :title, presence: true, length: { maximum: 255 }
   validates :category, presence: true
+  validates :full_street_address, presence: true
+  validates :price, presence: true, :format => { :with => /\A\d+(?:\.\d{0,2})?\z/ }, :numericality => { :greater_than => 0 }
+  validates :description, presence: true 
   geocoded_by :full_street_address
   after_validation :geocode
   belongs_to :user

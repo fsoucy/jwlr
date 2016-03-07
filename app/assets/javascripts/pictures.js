@@ -1,3 +1,22 @@
+$(document).ready(function() {
+
+    var $image = $('.image');
+    var cropBoxData;
+    var canvasData;
+
+    $image.cropper({
+	autoCropArea: 0.5,
+	built: function () {
+	    $image.cropper('setCanvasData', canvasData);
+	    $image.cropper('setCropBoxData', cropBoxData);
+	}
+    });
+}).on('hidden.bs.modal', function () {
+    cropBoxData = $image.cropper('getCropBoxData');
+    canvasData = $image.cropper('getCanvasData');
+    $image.cropper('destroy');
+
+});
 $(document).ready(function(){
   // disable auto discover
   Dropzone.autoDiscover = false;

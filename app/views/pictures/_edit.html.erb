@@ -1,5 +1,8 @@
 <% @pictures.each do |picture| %>
-  <div class="picture">
+<div class="picture">
+  <div class="modal-body">
+    <img id="image" src="/assets/igoldhome.png" alt="Picture">
+   </div>
     <%= image_tag picture.photo.url(:thumb) %>
     <%= link_to "Delete", picture, method: :delete,
                                        data: { confirm: "Are you sure?" } %>

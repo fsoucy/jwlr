@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails'
 gem 'carrierwave'
+gem 'bootstrap-sass'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem 'mini_magick'

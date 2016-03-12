@@ -39,21 +39,29 @@ $(document).ready(function(){
   });
 
     var $image = $('#image');
-    var cropBoxData;
+    var cropBoxData = { width: 200, height: 200};
     var canvasData;
 
     $image.cropper({
+	zoomable: false,
+	cropBoxResizable: false,
 	autoCropArea: 0.5,
 	built: function () {
 	    $image.cropper('setCanvasData', canvasData);
 	    $image.cropper('setCropBoxData', cropBoxData);
 	}
     });
-}).on('hidden.bs.modal', function () {
-    cropBoxData = $image.cropper('getCropBoxData');
-    canvasData = $image.cropper('getCanvasData');
-    $image.cropper('destroy');
-});
+
+    $('.modal-body').mouseup(function () {
+	console.log('action');
+	cropBoxData = $image.cropper('getCropBoxData');
+	canvasData = $image.cropper('getCanvasData');
+	var x = cropBoxData.left;
+	var y = cropBoxData.top;
+	console.log(x);
+	$('#x').val("" + x);
+	$('#y').val(y);
+    });
 
 
 

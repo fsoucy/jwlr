@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160306001918) do
+ActiveRecord::Schema.define(version: 20160312213944) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -28,11 +28,9 @@ ActiveRecord::Schema.define(version: 20160306001918) do
     t.integer  "store_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "user_id"
   end
 
   add_index "blogposts", ["store_id"], name: "index_blogposts_on_store_id"
-  add_index "blogposts", ["user_id"], name: "index_blogposts_on_user_id"
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -146,17 +144,8 @@ ActiveRecord::Schema.define(version: 20160306001918) do
   add_index "pending_deals", ["product_id"], name: "index_pending_deals_on_product_id"
   add_index "pending_deals", ["seller_id"], name: "index_pending_deals_on_seller_id"
 
-  create_table "pictures", force: :cascade do |t|
-    t.integer  "product_id"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "pictures", ["product_id"], name: "index_pictures_on_product_id"
+# Could not dump table "pictures" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "products", force: :cascade do |t|
     t.float    "price"
@@ -338,11 +327,6 @@ ActiveRecord::Schema.define(version: 20160306001918) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "full_street_address"
-    t.text     "interests"
-    t.integer  "products_bought"
-    t.integer  "products_sold"
-    t.text     "identifies_as"
-    t.string   "profile_picture"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

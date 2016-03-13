@@ -329,10 +329,6 @@ $(document).ready(function() {
         $('.precious_stones_div').show();
     });
     
-    $('.product_image').mouseover(function() {
-	$(this).hide();
-	$('.big_product_image').show();
-    });
     
     $('.big_product_image').mouseout(function() {
 	$(this).hide();

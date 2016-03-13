@@ -59,9 +59,11 @@ $(document).ready(function(){
 	var x = cropBoxData.left;
 	var y = cropBoxData.top;
 	console.log(x);
-	$('#x').val("" + x);
-	$('#y').val(y);
+	var offsetX = (300.0 - $('.cropper-canvas').width()) / 2.0;
+	var offsetY =  (300.0 - $('.cropper-canvas').height()) / 2.0;
+	$('#x').val(x - offsetX);
+	$('#y').val(y - offsetY);
     });
 
 
-
+});

@@ -9,7 +9,7 @@
 <% end %>
 <div class="product_show_container">
   <h1><%= @product.title %> (<%= @product.category.name %>)</h1>
-  <%= image_tag @product.pictures.first.photo.url(:thumb), class: "product_image" %>
+  <%= image_tag @product.pictures.first.photo.url, class: "product_image" %>
   <% @toggle_options.each do |opt| %>
   <h3><%= opt.attribute_option.category_option.name %>: <%= opt.attribute_option.value %></h3>
   <% end %>

@@ -40,6 +40,21 @@ class PicturesController < ApplicationController
     @pictures = Product.find(params[:id]).pictures.all 
   end
 
+  def add_cropped
+    @picture = Picture.find(params[:id])
+    img = MiniMagick::Image.open(@picture.photo.path)
+    maxDim = img.height
+    maxDim = img.width unless img.height > img.width
+    scale = maxDim / 300.0
+    toCropX = params[:x].to_f * scale + 100
+    toCropY = params[:y].to_f * scale + 100
+    cropString = "200x200+" + toCropX.to_s + "+" + toCropY.to_s
+    debugger
+    img.crop(cropString)
+    img.write(@picture.photo.path)
+    redirect_to @picture.product
+  end
+
   private
 
     def picture_params

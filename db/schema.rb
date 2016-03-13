@@ -144,8 +144,21 @@ ActiveRecord::Schema.define(version: 20160312213944) do
   add_index "pending_deals", ["product_id"], name: "index_pending_deals_on_product_id"
   add_index "pending_deals", ["seller_id"], name: "index_pending_deals_on_seller_id"
 
-# Could not dump table "pictures" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "pictures", force: :cascade do |t|
+    t.integer  "product_id"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "photo_cropped_file_name"
+    t.string   "photo_cropped_content_type"
+    t.integer  "photo_cropped_file_size"
+    t.datetime "photo_cropped_updated_at"
+  end
+
+  add_index "pictures", ["product_id"], name: "index_pictures_on_product_id"
 
   create_table "products", force: :cascade do |t|
     t.float    "price"

@@ -1,5 +1,5 @@
 class AddPhotoCroppedToPictures < ActiveRecord::Migration
   def change
-    add_column :pictures, :photo_cropped, :attachment
+    add_attachment :pictures, :photo_cropped
   end
 end

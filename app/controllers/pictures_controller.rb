@@ -30,7 +30,12 @@ class PicturesController < ApplicationController
   end
 
   def edit
+    
     @picture = Picture.find(params[:id])
+    img = MiniMagick::Image.open(@picture.photo.path)
+    maxDim = img.height
+    maxDim = img.width unless img.height > img.width
+    @factor = 300.0 / maxDim
   end
 
   def update
@@ -46,10 +51,9 @@ class PicturesController < ApplicationController
     maxDim = img.height
     maxDim = img.width unless img.height > img.width
     scale = maxDim / 300.0
-    toCropX = params[:x].to_f * scale + 100
-    toCropY = params[:y].to_f * scale + 100
-    cropString = "200x200+" + toCropX.to_s + "+" + toCropY.to_s
-    debugger
+    toCropX = params[:x].to_f * scale
+    toCropY = params[:y].to_f * scale
+    cropString = "800x800+" + toCropX.to_s + "+" + toCropY.to_s
     img.crop(cropString)
     img.write(@picture.photo.path)
     redirect_to @picture.product

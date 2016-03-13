@@ -2,7 +2,6 @@
 $(document).ready(function(){
   // disable auto discover
   Dropzone.autoDiscover = false;
-
   // grap our upload form by its id
   $("#new_picture").dropzone({
     // restrict image size to a maximum 1MB
@@ -39,17 +38,20 @@ $(document).ready(function(){
   });
 
     var $image = $('#image');
-    var cropBoxData = { width: 200, height: 200};
+    var factor = parseFloat($('#factor').val());
+    var cropBoxData = { width: 800 * factor, height: 800 * factor};
     var canvasData;
 
+    
     $image.cropper({
 	zoomable: false,
+	toggleDragModeOnDblClick: false,
 	cropBoxResizable: false,
-	autoCropArea: 0.5,
 	built: function () {
 	    $image.cropper('setCanvasData', canvasData);
 	    $image.cropper('setCropBoxData', cropBoxData);
 	}
+
     });
 
     $('.modal-body').mouseup(function () {

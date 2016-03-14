@@ -1,6 +1,6 @@
 id,method
-1,Negotiation
-2,Highest Price by Date
-3,Auction
-4,Static Price
-5,Negotiation with option to buy immediately
+1,Highest Price by Date
+2,Static Price
+3,Negotiation
+4,Negotiation with option to buy immediately
+5,Trade

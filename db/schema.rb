@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160305224554) do
+ActiveRecord::Schema.define(version: 20160312213944) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -147,10 +147,20 @@ ActiveRecord::Schema.define(version: 20160305224554) do
   add_index "pending_deals", ["seller_id"], name: "index_pending_deals_on_seller_id"
 
   create_table "pictures", force: :cascade do |t|
-    t.string   "photo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "product_id"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "photo_cropped_file_name"
+    t.string   "photo_cropped_content_type"
+    t.integer  "photo_cropped_file_size"
+    t.datetime "photo_cropped_updated_at"
   end
+
+  add_index "pictures", ["product_id"], name: "index_pictures_on_product_id"
 
   create_table "products", force: :cascade do |t|
     t.float    "price"
@@ -160,7 +170,6 @@ ActiveRecord::Schema.define(version: 20160305224554) do
     t.integer  "user_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "picture"
     t.text     "description"
     t.boolean  "hold"
     t.boolean  "sold",                default: false

@@ -15,7 +15,7 @@ class ProductsController < ApplicationController
     else
       @product = current_user.products.build
       @has = false
-    end	
+    end
   end
   
   def create
@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  def show    
+  def show
     @product = Product.find_by(id: params[:id])
     @toggle_options = @product.toggle_options
     search = Sunspot.more_like_this(@product) do
@@ -139,7 +139,7 @@ class ProductsController < ApplicationController
       payment_methods.each do |id, selected|
         @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
       end
-      redirect_to @product
+      redirect_to new_picture_url
       return
     end
 

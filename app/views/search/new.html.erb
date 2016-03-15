@@ -100,7 +100,7 @@
     <% @results.each do |prod| %>
     <div class="result">
       <div class="image_container_search">
-        <%= image_tag prod.pictures.first.photo.url(:thumb), class: "product_image_search" %>
+        <%= image_tag prod.pictures.first.photo, class: "product_image_search" %>
       </div>
       <div class="info_container">
         <%= link_to prod.title, prod, class: "title_link" %>          

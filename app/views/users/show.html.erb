@@ -32,7 +32,7 @@
 <% @user.products.each do |prod| %>
 <div class="store_prod">
   <div class="image_container">
-    <%= image_tag prod.picture_url(:thumb), class: "store_prod_image" %>
+    <%= image_tag prod.pictures.first.photo, class: "store_prod_image" %>
     <button class="quick_view">Quick View</button>
   </div>
   <h3 class="store_prod_name"><%= prod.category.name %></h3>

@@ -9,7 +9,6 @@ class Product < ActiveRecord::Base
   belongs_to :user
   belongs_to :store
   attr_accessor :hits
-  has_many :pending_deals, dependent: :destroy
   has_many :productviews, dependent: :destroy
   belongs_to :category
   has_many :toggle_options, dependent: :destroy
@@ -17,7 +16,8 @@ class Product < ActiveRecord::Base
   has_many :payment_method_links, dependent: :destroy
   has_many :selling_method_links, dependent: :destroy
   has_many :pictures, dependent: :destroy  
-
+  has_many :deals
+  
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at]
     super(options)

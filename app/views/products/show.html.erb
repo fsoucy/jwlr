@@ -1,12 +1,5 @@
 <% title = "Product by " + @product.user.name %>
 <% provide(:title, "Product") %>
-<% normal = !@product.hold && !@product.sold %>
-<% has_deal = logged_in? && current_user.active_deals.find_by(product_id: @product.id) != nil %>
-<% if !normal %>
-  <% if !has_deal %>
-    <h1>Sorry, this product is currently unavailable.</h1>
-  <% end %>
-<% end %>
 <div class="product_show_container">
   <h1><%= @product.title %> (<%= @product.category.name %>)</h1>
   <%= image_tag @product.pictures.first.photo.url, class: "product_image" %>
@@ -28,12 +21,6 @@
 <div class="product_show_container">
   <% if @product.user == current_user %><%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
 					    data: { confirm: "Are you sure you wish to delete this?" } %>
-  <% end %>
-  <% if normal && !has_deal %>
-  <%= render 'deal_form' %>
-  <% end %>
-  <% if has_deal %>
-  <%= link_to "Current Deal", current_user.active_deals.find_by(product_id: @product.id) %>
   <% end %>
 </div>
 <div class="product_show_container">

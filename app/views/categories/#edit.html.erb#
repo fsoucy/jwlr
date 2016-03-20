@@ -1,0 +1,4 @@
+x
+<h1>Edit category</h1>
+
+<%= render 'form' %>

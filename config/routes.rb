@@ -51,6 +51,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :deals
     
   resources :statuses, only: [:new, :create, :destroy, :show] do
     member do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317060723) do
+ActiveRecord::Schema.define(version: 20160320020633) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(version: 20160317060723) do
   add_index "category_options", ["category_id"], name: "index_category_options_on_category_id"
 
   create_table "deals", force: :cascade do |t|
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "selling_method_id"
     t.integer  "exchange_method_id"
     t.integer  "payment_method_id"
@@ -63,11 +63,21 @@ ActiveRecord::Schema.define(version: 20160317060723) do
     t.integer  "product_id"
     t.integer  "seller_id"
     t.integer  "buyer_id"
+    t.string   "buyer_location_meetup"
+    t.string   "seller_location_meetup"
+    t.string   "pickup_location"
+    t.string   "dropoff"
+    t.boolean  "location_approved"
+    t.decimal  "user_proposed_price"
+    t.boolean  "agreement_achieved"
+    t.boolean  "proposed_price_accepted"
   end
 
+  add_index "deals", ["buyer_id"], name: "index_deals_on_buyer_id"
   add_index "deals", ["exchange_method_id"], name: "index_deals_on_exchange_method_id"
   add_index "deals", ["payment_method_id"], name: "index_deals_on_payment_method_id"
   add_index "deals", ["product_id"], name: "index_deals_on_product_id"
+  add_index "deals", ["seller_id"], name: "index_deals_on_seller_id"
   add_index "deals", ["selling_method_id"], name: "index_deals_on_selling_method_id"
 
   create_table "exchange_method_links", force: :cascade do |t|
@@ -120,8 +130,21 @@ ActiveRecord::Schema.define(version: 20160317060723) do
     t.datetime "updated_at", null: false
   end
 
-# Could not dump table "pictures" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "pictures", force: :cascade do |t|
+    t.integer  "product_id"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "photo_cropped_file_name"
+    t.string   "photo_cropped_content_type"
+    t.integer  "photo_cropped_file_size"
+    t.datetime "photo_cropped_updated_at"
+  end
+
+  add_index "pictures", ["product_id"], name: "index_pictures_on_product_id"
 
   create_table "products", force: :cascade do |t|
     t.float    "price"
@@ -138,6 +161,8 @@ ActiveRecord::Schema.define(version: 20160317060723) do
     t.string   "title"
     t.integer  "category_id"
     t.boolean  "request"
+    t.decimal  "min_accepted_price"
+    t.boolean  "fully_updated"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id"

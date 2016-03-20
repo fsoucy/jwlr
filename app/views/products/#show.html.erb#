@@ -10,6 +10,8 @@
 <div class="product_show_container">
   <h1>Product Details</h1>
   <h3>Price: <%= number_to_currency(@product.price) %></h3>
+  <% if current_user.id == @product.user.id and !SellingMethodLink.where("product_id=? AND selling_method_id IN (?, ?)", @product.id, 3, 4).nil? %>
+
   <h3>Address: <%= @product.full_street_address %></h3>
   <% unless @distance_away.nil? %>
   <h3>Distance from you: <%= @distance_away.round(1) %> miles</h3>

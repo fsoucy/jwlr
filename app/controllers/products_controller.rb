@@ -36,6 +36,8 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find_by(id: params[:id])
+    @deal = current_user.buying_deals.build(seller_id: @product.user.id, product_id: @product.id)
+    @current_user = current_user
     @toggle_options = @product.toggle_options
     search = Sunspot.more_like_this(@product) do
       fields :description, :title
@@ -99,6 +101,14 @@ class ProductsController < ApplicationController
     selling_methods = params[:selling_method_links]
     exchange_methods = params[:exchange_method_links]
     payment_methods = params[:payment_method_links]
+    picture = params[:picture]
+
+    if @product.fully_updated = true
+      @product.update_attributes(product_params)
+      redirect_to @product
+      return
+    end
+    
     unless toggle_options.nil?
       toggle_options.each do |attr|
         toggle_option = ToggleOption.joins('INNER JOIN "attribute_options" ON "attribute_options"."id" = "toggle_options"."attribute_option_id"').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
@@ -143,6 +153,14 @@ class ProductsController < ApplicationController
       return
     end
 
+    if !picture.nil?
+      @product.fully_updated = true
+      if @product.min_accepted_price.nil?
+        @product.min_accepted_price = 0.0
+      end
+      @product.save
+    end
+
     unless product_params.nil?
       if @product.update_attributes(product_params)
         redirect_to edit_toggle_options_product_path(@product.id)
@@ -152,7 +170,7 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title)
+    params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title, :min_accepted_price)
   end
   
   def correct_user

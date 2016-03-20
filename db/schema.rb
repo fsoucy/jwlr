@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160320020633) do
+ActiveRecord::Schema.define(version: 20160320195159) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -152,17 +152,19 @@ ActiveRecord::Schema.define(version: 20160320020633) do
     t.float    "latitude"
     t.float    "longitude"
     t.integer  "user_id"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.text     "description"
     t.boolean  "hold"
-    t.boolean  "sold",                default: false
+    t.boolean  "sold",                          default: false
     t.integer  "store_id"
     t.string   "title"
     t.integer  "category_id"
     t.boolean  "request"
     t.decimal  "min_accepted_price"
     t.boolean  "fully_updated"
+    t.decimal  "delivery_charge"
+    t.integer  "maximum_delivery_radius_miles"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id"

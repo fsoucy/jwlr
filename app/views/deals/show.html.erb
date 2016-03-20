@@ -65,3 +65,26 @@
     <h3>This product has a set price: <%= @deal.product.price %></h3>
   <% end %>
 <% end %>
+<% exchange_method = ExchangeMethod.find(@deal.exchange_method_id) unless @deal.exchange_method_id.nil? %>
+<% if !exchange_method.nil? %>
+<h2>Exchange Method: <%= exchange_method.method %></h2>
+<% if current_user.id == @deal.buyer_id %>
+<h3>Maximum delivery distance in miles: <%= @deal.product.maximum_delivery_radius_miles unless @deal.product.maximum_delivery_radius_miles.nil? %></h3>
+<h3>Delivery cost: <%= @deal.product.delivery_charge %></h3>
+<%= form_for(@deal) do |f| %>
+<h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save" %></h3>
+<% end %>
+<% end %>
+<% if current_user.id == @deal.seller_id %>
+<%= form_for(@deal.product) do |f| %>
+<h3>Maximum delivery distance in miles: <%= f.number_field :maximum_delivery_radius_miles %></h3>
+<h3>Delivery cost: <%= f.number_field :delivery_charge %></h3>
+<%= f.submit "Save changes on delivery exchange" %>
+<% end %>
+<h3>Delivery location: <%= @deal.dropoff %></h3>
+<% end %>
+<% end %>
+<% payment_method = PaymentMethod.find(@deal.payment_method_id) unless @deal.payment_method_id.nil? %>
+<% if !payment_method.nil? %>
+<h2>Payment Method: <%= payment_method.method %></h2>
+<% end %>

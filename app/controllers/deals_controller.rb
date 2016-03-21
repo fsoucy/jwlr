@@ -21,6 +21,9 @@ class DealsController < ApplicationController
     if @deal.selling_method.id == 2 or ((@deal.selling_method.id == 3 or @deal.selling_method.id == 4) and @deal.proposed_price_accepted)
       selling_agreement = true
     end
+    if @deal.selling_method.id == 2
+      @deal.user_proposed_price = @deal.product.price
+    end 
     exchange_agreement = false
     if @deal.exchange_agreement_buyer and @deal.exchange_agreement_seller
       exchange_agreement = true

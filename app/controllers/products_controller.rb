@@ -103,7 +103,7 @@ class ProductsController < ApplicationController
     payment_methods = params[:payment_method_links]
     picture = params[:picture]
 
-    if @product.fully_updated = true
+    if @product.fully_updated == true
       @product.update_attributes(product_params)
       redirect_to @product
       return

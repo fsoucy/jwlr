@@ -10,7 +10,6 @@ class PaymentsController < ApplicationController
         if !deal.nil?
           if !deal.payment_complete? && deal.agreement_achieved?
             if deal.seller.email == params[:receiver_email]
-              debugger
               if (deal.user_proposed_price + deal.product.delivery_charge) == params[:payment_gross].to_f  
                 deal.payment_complete = true
                 deal.save            

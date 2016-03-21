@@ -8,6 +8,7 @@
 <%= image_tag @deal.product.pictures.first.photo %>
 <h2>Listed price: <%= @deal.product.price %></h2>
 <% if @deal.buyer.id == current_user.id %>
+  <% if @deal.product.selling_method_links.length > 1 or @deal.product.exchange_method_links > 1 or @deal.product.payment_method_links > 1 %>
   <%= form_for(@deal) do |f| %>
   <p>Selling Methods (choose one)</p>
   <% @deal.product.selling_method_links.each do |s| %>
@@ -26,6 +27,11 @@
   <% end %>
   <br>
   <%= f.submit "Save new method preferences" %>
+  <% end %>
+  <% else %>
+  <p>Selling method: <%= @deal.selling_method %></p>
+  <p>Exchange method: <%= @deal.exchange_method %></p>
+  <p>Payment method: <%= @deal.payment_method %></p>
   <% end %>
 <% else %>
   <% if !SellingMethodLink.where("selling_method_id IN (?,?) AND product_id=?", 3, 4, @deal.product.id) %>

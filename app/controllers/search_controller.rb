@@ -18,55 +18,55 @@ class SearchController < ApplicationController
         order_by(:price, :desc)
       else
         order_by(:score, :desc)
-    end
-
-    if !params[:place].nil?
-      geocode = Geocoder.search(params[:place])
-      order_by_geodist :location, geocode[0].latitude, geocode[0].longitude 
-    elsif logged_in?
-      order_by_geodist :location, current_user.latitude, current_user.longitude        
-    else
-      geocode = request.location 
-      order_by_geodist :location, geocode.latitude, geocode.longitude unless geocode.nil?
-    end
-    
-    if !params[:price].nil?
-      prices = params[:price].split(',')
-      ranges = Array.new
-      prices.each do |price|
-        with :price, Range.new(price.split("..").first.to_f, price.split("..").last.to_f)
       end
-    end
-    facet :price, :range => 0..100000, :range_interval => 100
 
-    if !params[:category_id].nil?
-      categories = params[:category_id].split(',')
-      category = with :category_id, categories
-    end
+      if !params[:place].nil?
+        geocode = Geocoder.search(params[:place])
+        order_by_geodist :location, geocode[0].latitude, geocode[0].longitude 
+      elsif logged_in?
+        order_by_geodist :location, current_user.latitude, current_user.longitude        
+      else
+        geocode = request.location 
+        order_by_geodist :location, geocode.latitude, geocode.longitude unless geocode.nil?
+      end
+    
+      if !params[:price].nil?
+        prices = params[:price].split(',')
+        ranges = Array.new
+        prices.each do |price|
+          with :price, Range.new(price.split("..").first.to_f, price.split("..").last.to_f)
+        end
+      end
+      facet :price, :range => 0..100000, :range_interval => 100
 
-    if !params[:attribute_option_id].nil?
-      ids = params[:attribute_option_id].split(',')
-      with :attribute_option_id, ids
-    end
+      if !params[:category_id].nil?
+        categories = params[:category_id].split(',')
+        category = with :category_id, categories
+      end
 
-    if !params[:selling_method_id].nil?
-      methods = params[:selling_method_id].split(',')
-      with :selling_method_id, methods
-    end
+      if !params[:attribute_option_id].nil?
+        ids = params[:attribute_option_id].split(',')
+        with :attribute_option_id, ids
+      end
 
-    if !params[:exchange_method_id].nil?
-      methods = params[:exchange_method_id].split(',')
-      with :exchange_method_id, methods
-    end
+      if !params[:selling_method_id].nil?
+        methods = params[:selling_method_id].split(',')
+        with :selling_method_id, methods
+      end
 
-    if !params[:payment_method_id].nil?
-      methods = params[:payment_method_id].split(',')
-      with :payment_method_id, methods
-    end
+      if !params[:exchange_method_id].nil?
+        methods = params[:exchange_method_id].split(',')
+        with :exchange_method_id, methods
+      end
 
-    facet :category_id, :exclude => category
+      if !params[:payment_method_id].nil?
+        methods = params[:payment_method_id].split(',')
+        with :payment_method_id, methods
+      end
 
-    with :sold, false
+      facet :category_id, :exclude => category
+
+      with :sold, false
     end
 
     if logged_in? && !search.results.empty?

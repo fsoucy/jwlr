@@ -1,15 +1,8 @@
 <% title = "Product by " + @product.user.name %>
 <% provide(:title, "Product") %>
-<% normal = !@product.hold && !@product.sold %>
-<% has_deal = logged_in? && current_user.active_deals.find_by(product_id: @product.id) != nil %>
-<% if !normal %>
-  <% if !has_deal %>
-    <h1>Sorry, this product is currently unavailable.</h1>
-  <% end %>
-<% end %>
 <div class="product_show_container">
   <h1><%= @product.title %> (<%= @product.category.name %>)</h1>
-  <%= image_tag @product.picture_url(:thumb), class: "product_image" %>
+  <%= image_tag @product.pictures.first.photo.url, class: "product_image" %>
   <% @toggle_options.each do |opt| %>
   <h3><%= opt.attribute_option.category_option.name %>: <%= opt.attribute_option.value %></h3>
   <% end %>
@@ -19,7 +12,7 @@
   <h3>Price: <%= number_to_currency(@product.price) %></h3>
   <h3>Address: <%= @product.full_street_address %></h3>
   <% unless @distance_away.nil? %>
-  <h3>Distance from you: <%= @distance_away %> miles</h3>
+  <h3>Distance from you: <%= @distance_away.round(1) %> miles</h3>
   <% end %>
   <h3>Owner: <%= @product.user.name %></h3>
   <h3>Description: <%= @product.description %></h3>
@@ -29,11 +22,12 @@
   <% if @product.user == current_user %><%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
 					    data: { confirm: "Are you sure you wish to delete this?" } %>
   <% end %>
-  <% if normal && !has_deal %>
-  <%= render 'deal_form' %>
-  <% end %>
-  <% if has_deal %>
-  <%= link_to "Current Deal", current_user.active_deals.find_by(product_id: @product.id) %>
+  <% else %>
+  <%= form_for(@deal) do |f| %>
+  <%= f.hidden_field :seller_id, value: @deal.seller_id %>
+  <%= f.hidden_field :buyer_id, value: @deal.buyer_id %>
+  <%= f.hidden_field :product_id, value: @deal.product_id %>
+  <%= f.submit "Buy this product" %>
   <% end %>
 </div>
 <div class="product_show_container">
@@ -54,4 +48,17 @@
   <% @product.payment_method_links.each do |s| %>
   <p><%= s.payment_method.method %></p>
   <% end %>
+</div>
+<div class="more_like_this">
+<% unless @more_like_this.nil? %>
+<h1>Related Products</h1>
+<% @more_like_this.each do |prod| %>
+<a href="<%= product_url(prod) %>">
+<div class="product_box">
+<%= image_tag prod.pictures.first.photo.url unless prod.pictures.first.nil? %>
+<p><%= prod.title %><br> <%= number_to_currency(prod.price) %></p>
+</div>
+</a>
+<% end
+end %>
 </div>

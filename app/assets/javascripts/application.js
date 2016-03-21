@@ -11,8 +11,11 @@
 // about supported directives.
 //
 //= require jquery
+//= require bootstrap-sprockets
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require personal_style.js
 //= require turbolinks
+//= require dropzone
+//= require cropper.js
 //= require_tree .

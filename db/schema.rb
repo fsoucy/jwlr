@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160220210431) do
+ActiveRecord::Schema.define(version: 20160320195159) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -51,24 +51,34 @@ ActiveRecord::Schema.define(version: 20160220210431) do
 
   add_index "category_options", ["category_id"], name: "index_category_options_on_category_id"
 
-  create_table "completed_deals", force: :cascade do |t|
-    t.float    "price"
-    t.string   "exchange"
-    t.string   "location"
-    t.string   "commodity"
+  create_table "deals", force: :cascade do |t|
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "selling_method_id"
+    t.integer  "exchange_method_id"
+    t.integer  "payment_method_id"
+    t.boolean  "deal_complete"
+    t.boolean  "payment_complete"
+    t.boolean  "product_received"
+    t.integer  "product_id"
     t.integer  "seller_id"
     t.integer  "buyer_id"
-    t.boolean  "fulfilled"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.integer  "pending_deal_id"
-    t.boolean  "fulfilled_buyer"
-    t.boolean  "fulfilled_seller"
-    t.boolean  "complaint_buyer"
-    t.boolean  "complaint_seller"
+    t.string   "buyer_location_meetup"
+    t.string   "seller_location_meetup"
+    t.string   "pickup_location"
+    t.string   "dropoff"
+    t.boolean  "location_approved"
+    t.decimal  "user_proposed_price"
+    t.boolean  "agreement_achieved"
+    t.boolean  "proposed_price_accepted"
   end
 
-  add_index "completed_deals", ["pending_deal_id"], name: "index_completed_deals_on_pending_deal_id", unique: true
+  add_index "deals", ["buyer_id"], name: "index_deals_on_buyer_id"
+  add_index "deals", ["exchange_method_id"], name: "index_deals_on_exchange_method_id"
+  add_index "deals", ["payment_method_id"], name: "index_deals_on_payment_method_id"
+  add_index "deals", ["product_id"], name: "index_deals_on_product_id"
+  add_index "deals", ["seller_id"], name: "index_deals_on_seller_id"
+  add_index "deals", ["selling_method_id"], name: "index_deals_on_selling_method_id"
 
   create_table "exchange_method_links", force: :cascade do |t|
     t.integer  "product_id"
@@ -120,29 +130,21 @@ ActiveRecord::Schema.define(version: 20160220210431) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "pending_deals", force: :cascade do |t|
-    t.integer  "buyer_id"
-    t.integer  "seller_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "pictures", force: :cascade do |t|
     t.integer  "product_id"
-    t.float    "buyer_price"
-    t.float    "seller_price"
-    t.boolean  "completed"
-    t.integer  "completed_deal_id"
-    t.boolean  "active"
-    t.boolean  "exchange_public_seller"
-    t.boolean  "exchange_public_buyer"
-    t.datetime "buyer_datetime"
-    t.datetime "seller_datetime"
-    t.string   "buyer_exchange"
-    t.string   "seller_exchange"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "photo_cropped_file_name"
+    t.string   "photo_cropped_content_type"
+    t.integer  "photo_cropped_file_size"
+    t.datetime "photo_cropped_updated_at"
   end
 
-  add_index "pending_deals", ["buyer_id"], name: "index_pending_deals_on_buyer_id"
-  add_index "pending_deals", ["product_id", "seller_id", "buyer_id"], name: "index_pending_deals_on_product_id_and_seller_id_and_buyer_id", unique: true
-  add_index "pending_deals", ["product_id"], name: "index_pending_deals_on_product_id"
-  add_index "pending_deals", ["seller_id"], name: "index_pending_deals_on_seller_id"
+  add_index "pictures", ["product_id"], name: "index_pictures_on_product_id"
 
   create_table "products", force: :cascade do |t|
     t.float    "price"
@@ -150,15 +152,19 @@ ActiveRecord::Schema.define(version: 20160220210431) do
     t.float    "latitude"
     t.float    "longitude"
     t.integer  "user_id"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "picture"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.text     "description"
     t.boolean  "hold"
-    t.boolean  "sold",                default: false
+    t.boolean  "sold",                          default: false
     t.integer  "store_id"
     t.string   "title"
     t.integer  "category_id"
+    t.boolean  "request"
+    t.decimal  "min_accepted_price"
+    t.boolean  "fully_updated"
+    t.decimal  "delivery_charge"
+    t.integer  "maximum_delivery_radius_miles"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id"

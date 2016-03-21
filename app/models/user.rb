@@ -21,12 +21,14 @@ class User < ActiveRecord::Base
   	   			    		dependent: :destroy
   has_many :passive_completed_deals, class_name: "CompletedDeal", foreign_key: "seller_id",
   	   			     		 dependent: :destroy
-  has_many :productviews
+  has_many :productviews, dependent: :destroy
   has_many :search_relationships, dependent: :destroy
   has_many :searches, through: :search_relationships
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   geocoded_by :full_street_address
   after_validation :geocode
+  has_many :buying_deals, class_name: "Deal", foreign_key: "buyer_id", dependent: :destroy
+  has_many :selling_deals, class_name: "Deal", foreign_key: "seller_id", dependent: :destroy
    
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :

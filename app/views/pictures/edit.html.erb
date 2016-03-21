@@ -1,0 +1,14 @@
+<%= hidden_field_tag :factor, @factor %>
+<div class="picture">
+  <div class="modal-body">
+    <%= image_tag @picture.photo.url, :id => "image" %>
+  </div>
+  
+  <%= form_tag add_cropped_picture_path(@picture.id), :method => "Post" %>
+  <%= hidden_field_tag :x, 0 %>
+  <%= hidden_field_tag :y, 0 %>
+  <%= submit_tag "Done cropping" %>
+  <%= link_to "Delete", @picture, method: :delete,
+                                       data: { confirm: "Are you sure?" } %>
+</div>
+

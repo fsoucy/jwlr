@@ -47,5 +47,11 @@ namespace :import_categories do
       PaymentMethod.create!(row.to_hash) unless !PaymentMethod.find_by(id: row.to_hash["id"]).nil?
     end
   end
-
 end 
+
+task :import_all => :environment do
+  Rake.application.tasks.each do |task|
+    task.invoke if task.name.starts_with?("import_categories:")
+  end
+end
+

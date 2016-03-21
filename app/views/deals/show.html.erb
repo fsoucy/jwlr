@@ -99,6 +99,8 @@
       <% end %>
       <% if current_user.id == @deal.seller_id %>
         <%= form_for(@deal.product) do |f| %>
+          <%= f.hidden_field :on_deals, value: true %>
+	  <%= f.hidden_field, :deal_id, value: @deal.id %>
           <h3>Delivery cost: <%= f.number_field :delivery_cost %></h3>
           <%= f.submit "Save changes on delivery exchange" %>
         <% end %>

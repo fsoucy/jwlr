@@ -160,6 +160,10 @@ class ProductsController < ApplicationController
     unless product_params.nil?
       if @product.update_attributes(product_params)
         @product.save
+        if params[:on_deals]
+          redirect_to Deal.find(params[:deal_id])
+          return
+        end
         redirect_to edit_toggle_options_product_path(@product.id)
       end
     end

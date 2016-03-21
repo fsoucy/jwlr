@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160320195159) do
+ActiveRecord::Schema.define(version: 20160321032254) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(version: 20160320195159) do
   add_index "category_options", ["category_id"], name: "index_category_options_on_category_id"
 
   create_table "deals", force: :cascade do |t|
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "selling_method_id"
     t.integer  "exchange_method_id"
     t.integer  "payment_method_id"
@@ -73,6 +73,8 @@ ActiveRecord::Schema.define(version: 20160320195159) do
     t.decimal  "user_proposed_price"
     t.boolean  "agreement_achieved"
     t.boolean  "proposed_price_accepted"
+    t.boolean  "exchange_agreement_buyer"
+    t.boolean  "exchange_agreement_seller"
   end
 
   add_index "deals", ["buyer_id"], name: "index_deals_on_buyer_id"

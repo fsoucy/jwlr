@@ -157,7 +157,7 @@ class ProductsController < ApplicationController
       @product.fully_updated = true
       if @product.min_accepted_price.nil?
         @product.min_accepted_price = 0.0
-      end
+x      end
       @product.save
     end
 

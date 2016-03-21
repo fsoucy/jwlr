@@ -31,9 +31,9 @@
 <% end %>
 <% end %>
 <h3>The user has selected these transaction methods:</h3>
-<h4>Selling Methods: <%= @deal.selling_method.method %></h4>
-<h4>Exchange Methods: <%= @deal.exchange_method.method %></h4>
-<h4>Payment Methods: <%= @deal.payment_method.method %></h4>
+<h4>Selling Methods: <%= SellingMethod.find(@deal.selling_method_id).method unless @deal.selling_method_id.nil?  %></h4>
+<h4>Exchange Methods: <%= ExchangeMethod.find(@deal.exchange_method_id).method unless @deal.exchange_method_id.nil?  %></h4>
+<h4>Payment Methods: <%= PaymentMethod.find(@deal.payment_method_id).method unless @deal.payment_method_id.nil?  %></h4>
 <% end %>
 <br>
 <% selling_method = SellingMethod.find(@deal.selling_method_id) unless @deal.selling_method_id.nil? %>
@@ -84,6 +84,8 @@
 <h3>Delivery location: <%= @deal.dropoff %></h3>
 <% end %>
 <% end %>
+<%= form_for @deal do |f| %>
+
 <% payment_method = PaymentMethod.find(@deal.payment_method_id) unless @deal.payment_method_id.nil? %>
 <% if !payment_method.nil? %>
 <h2>Payment Method: <%= payment_method.method %></h2>

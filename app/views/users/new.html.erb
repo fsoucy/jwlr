@@ -21,8 +21,8 @@
       <%= f.label :full_street_address, "Full Street Address" %>
       <%= f.text_field :full_street_address, class: 'form-control' %>
 
-      <%= f.label :business_days_pickup, "How many days will you give buyers to pick up a product" %>
-      <%= f.number_field :business_days_pikcup, class: 'form-control' %>
+      <%= f.label :default_delivery_cost, "Planning on delivering products to your customers? Add a default delivery cost." %>
+      <%= f.number_field :default_delivery_cost, class: 'form-control' %>
 
       <%= f.label :public, class: "checkbox inline" do %>
         <%= f.check_box :public %>

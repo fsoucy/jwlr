@@ -78,11 +78,10 @@
 <h3>The exchange methods have been completely agreed upon.</h3>
 <h4>The seller will deliver the product to the buyer</h4>
 <h4>Dropoff location: <%= @deal.dropoff %></h4>
-<h4>Delivery cost: <%= @deal.product.delivery_charge %></h4>
+<h4>Delivery cost: <%= @deal.product.delivery_cost %></h4>
 <% else %>
 <% if current_user.id == @deal.buyer_id %>
-<h3>Maximum delivery distance in miles: <%= @deal.product.maximum_delivery_radius_miles unless @deal.product.maximum_delivery_radius_miles.nil? %></h3>
-<h3>Delivery cost: <%= @deal.product.delivery_charge %></h3>
+<h3>Delivery cost: <%= @deal.product.delivery_cost %></h3>
 <%= form_for(@deal) do |f| %>
 <h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save" %></h3>
 <% end %>
@@ -93,8 +92,7 @@
 <% end %>
 <% if current_user.id == @deal.seller_id %>
 <%= form_for(@deal.product) do |f| %>
-<h3>Maximum delivery distance in miles: <%= f.number_field :maximum_delivery_radius_miles %></h3>
-<h3>Delivery cost: <%= f.number_field :delivery_charge %></h3>
+<h3>Delivery cost: <%= f.number_field :delivery_cost %></h3>
 <%= f.submit "Save changes on delivery exchange" %>
 <% end %>
 <h3>Delivery location: <%= @deal.dropoff %></h3>

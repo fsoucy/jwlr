@@ -195,7 +195,7 @@
   <% end %>
 <% end %>
 
-<% (if current_user.id  == @deal.seller_id and @deal.agreement_achieved) %>
+<% if ((current_user.id  == @deal.seller_id) and @deal.agreement_achieved) %>
   <%= form_for @deal do |f| %>
     <%= f.hidden_field :product_dispatched, value: true %>
     <%= f.submit "Product dispatched?" %>
@@ -213,7 +213,7 @@
     <%= f.submit "Satisfied with completed deal?" %>
   <% end %>
 <% end %>
-<% (if current_user.id == @deal.buyer_id and @deal.agreement_achieved) %>
+<% if ((current_user.id == @deal.buyer_id) and @deal.agreement_achieved) %>
   <%= form_for @deal do |f| %>
     <%= f.hidden_field :product_received, value: true %>
     <%= f.submit "Product received?" %>

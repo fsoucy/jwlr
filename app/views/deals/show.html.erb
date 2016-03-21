@@ -1,4 +1,7 @@
 <h1>Welcome to the deal between <%= @deal.seller.name %> (seller) and <%= @deal.buyer.name %> (buyer)</h1>
+<% if @deal.product.dispatched and current_user.id == @deal.buyer_id %>
+<h2>The product is on its way to you!</h2>
+<% end %>
 <h2>Payment complete: <%= @deal.payment_complete %></h2>
 <h2>Product received: <%= @deal.product_received %></h2>
 <h2>Deal complete: <%= @deal.deal_complete %></h2>
@@ -103,15 +106,39 @@
 <% end %>
 <% end %>
 <% if exchange_method.id == 2 %>
-<h4>Buyer and seller will need to decide upon a location and datetime</h4>
-<h4>After they decide on these, they will agree upon them</h4>
-<h4>And then the exchange method parameters will be fixed</h4>
+<h4>Buyer and seller will need to decide upon a location and datetime in messaging</h4>
+<% if current_user.id == @deal.seller_id %>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :exchange_agreement_seller, value: true %>
+<%= f.submit "Agreed exchange" %>
+<% end %>
+<% end %>
+<% if current_user.id == @deal.buyer_id %>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :exchange_agreement_buyer, value: true %>
+<%= f.submit "Agreed exchange" %>
+<% end %>
 <% end %>
 <% if exchange_method.id == 3 %>
+<% if !@deal.product.store.nil? %>
 <h4>The buyer needs to go to the user's store and pick up the product.</h4>
-<h5>Location of pickup: <%= @deal.product.full_street_address %></h5>
-<h5>Business days to pickup: <%= @deal.product.business_days_pickup %></h5>
-<h5>The pickup will have to correspond to the seller's hours of operation</h5>
+<h5>Location of pickup: <%= @deal.product.store.full_street_address %></h5>
+<h5>Business days to pickup: <%= @deal.product.store.business_days_pickup %></h5>
+<h5>The pickup will have to correspond to the <%= link_to "store's hours of operation.", @store %></h5>
+<% else %>
+<h4>Buyer and seller should agreement on a pickup time and location in messaging</h4>
+<% if current_user.id == @deal.seller_id %>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :exchange_agreement_seller, value: true %>
+<%= f.submit "Agreed exchange" %>
+<% end %>
+<% end %>
+<% if current_user.id == @deal.buyer_id %>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :exchange_agreement_buyer, value: true %>
+<%= f.submit "Agreed exchange" %>
+<% end %>
+<% end %>
 <% end %>
 <% end %>
 
@@ -140,4 +167,36 @@
 <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 </form>
+<% end %>
+
+<% if current_user.id  == @deal.seller_id %>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :product_dispatched, value: true %>
+<%= f.submit "Product dispatched?" %>
+<% end %>
+
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :payment_complete, value: true %>
+<%= f.submit "Payment received?" %>
+<% end %>
+
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :seller_satisfied, value: true %>
+<%= f.submit "Satisfied with completed deal?" %>
+<% end %>
+
+<% end %>
+
+<% if current_user.id == @deal.buyer_id %>
+
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :product_received, value: true %>
+<%= f.submit "Product received?" %>
+<% end %>
+
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :buyer_satisfied, value: true %>
+<%= f.submit "Satisfied with completed deal?" %>
+<% end %>
+
 <% end %>

@@ -106,11 +106,6 @@ class ProductsController < ApplicationController
     payment_methods = params[:payment_method_links]
     picture = params[:picture]
 
-    if @product.fully_updated = true
-      @product.update_attributes(product_params)
-      redirect_to @product
-      return
-    end
     
     unless toggle_options.nil?
       toggle_options.each do |attr|
@@ -157,7 +152,6 @@ class ProductsController < ApplicationController
     end
 
     if !picture.nil?
-      @product.fully_updated = true
       if @product.min_accepted_price.nil?
         @product.min_accepted_price = 0.0
       end

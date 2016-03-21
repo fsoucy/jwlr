@@ -5,6 +5,20 @@ class PaymentsController < ApplicationController
     response = validate_IPN_notification(request.raw_post)
     case response
     when "VERIFIED"
+      if request.payment_status == "Completed"
+        deal = Deal.find(request.item_number)
+        if !deal.nil?
+          if !deal.payment_complete? && deal.agreement_achieved
+            if deal.seller.email == request.receiver_email
+              if deal.user_proposed_price == request.payment_gross && deal.product.delivery_charge == request.shipping  
+                deal.payment_complete = true
+                deal.save            
+              end
+            end
+          end
+        end
+      end
+
       # check that paymentStatus=Completed
       # check that txnId has not been previously processed
       # check that receiverEmail is your Primary PayPal email
@@ -20,7 +34,7 @@ class PaymentsController < ApplicationController
  
   protected 
     def validate_IPN_notification(raw)
-      uri = URI.parse('https://www.paypal.com/cgi-bin/webscr?cmd=_notify-validate')
+      uri = URI.parse('https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_notify-validate')
       http = Net::HTTP.new(uri.host, uri.port)
       http.open_timeout = 60
       http.read_timeout = 60
@@ -28,12 +42,7 @@ class PaymentsController < ApplicationController
       http.use_ssl = true
       response = http.post(uri.request_uri, raw,
                          'Content-Length' => "#{raw.size}",
-                         'User-Agent' => "My custom user agent"
+                         'User-Agent' => "iGold payment processor"
                        ).body
   end
-
-  def new
-
-  end
-
 end

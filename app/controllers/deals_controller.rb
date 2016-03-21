@@ -17,6 +17,16 @@ class DealsController < ApplicationController
   def update
     @deal = Deal.find(params[:id])
     @deal.update(deals_params)
+    selling_agreement = false
+    if @deal.selling_method.id == 2 or ((@deal.selling_method.id == 3 or @deal.selling_method.id == 4) and @deal.proposed_price_accepted)
+      selling_agreement = true
+    end
+    exchange_agreement = false
+    if @deal.exchange_agrement_buyer and @deal.exchange_agreement_seller
+      exchange_agreement = true
+    end
+    @deal.agreement_achieved = selling_agreement and exchange_agreement
+    @deal.save
     redirect_to @deal
   end
   

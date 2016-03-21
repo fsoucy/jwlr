@@ -60,7 +60,6 @@
 <% end %>
 <% end %>
 <% end %>
-<% end %>
 <% if selling_method.id == 2 %>
 <h3>This product has a set price: <%= @deal.product.price %></h3>
 <% end %>
@@ -102,11 +101,20 @@
 <% end %>
 <% end %>
 <% end %>
+<% end %>
+<% if exchange_method.id == 2 %>
+<h4>Buyer and seller will need to decide upon a location and datetime</h4>
+<h4>After they decide on these, they will agree upon them</h4>
+<h4>And then the exchange method parameters will be fixed</h4>
+<% end %>
 <% if exchange_method.id == 3 %>
 <h4>The buyer needs to go to the user's store and pick up the product.</h4>
-
+<h5>Location of pickup: <%= @deal.product.full_street_address %></h5>
+<h5>Business days to pickup: <%= @deal.product.business_days_pickup %></h5>
+<h5>The pickup will have to correspond to the seller's hours of operation</h5>
 <% end %>
 <% end %>
+<h3><%= exchange_method.id %></h3>
 
 <br>
 

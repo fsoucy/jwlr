@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160321032254) do
+ActiveRecord::Schema.define(version: 20160321044711) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -28,11 +28,9 @@ ActiveRecord::Schema.define(version: 20160321032254) do
     t.integer  "store_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "user_id"
   end
 
   add_index "blogposts", ["store_id"], name: "index_blogposts_on_store_id"
-  add_index "blogposts", ["user_id"], name: "index_blogposts_on_user_id"
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -169,6 +167,7 @@ ActiveRecord::Schema.define(version: 20160321032254) do
     t.boolean  "fully_updated"
     t.decimal  "delivery_charge"
     t.integer  "maximum_delivery_radius_miles"
+    t.integer  "business_days_pickup"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id"
@@ -318,28 +317,24 @@ ActiveRecord::Schema.define(version: 20160321032254) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "password_digest"
     t.string   "remember_digest"
-    t.boolean  "admin",               default: false
+    t.boolean  "admin",                default: false
     t.string   "activation_digest"
-    t.boolean  "activated",           default: false
+    t.boolean  "activated",            default: false
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
-    t.boolean  "public",              default: false
+    t.boolean  "public",               default: false
     t.text     "description"
     t.string   "auth_token"
     t.datetime "auth_expiry"
     t.float    "latitude"
     t.float    "longitude"
     t.string   "full_street_address"
-    t.text     "interests"
-    t.integer  "products_bought"
-    t.integer  "products_sold"
-    t.text     "identifies_as"
-    t.string   "profile_picture"
+    t.integer  "business_days_pickup"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

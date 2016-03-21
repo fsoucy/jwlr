@@ -90,7 +90,7 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
-      					  :password_confirmation, :public, :description, :full_street_address)
+      					  :password_confirmation, :public, :description, :full_street_address, :business_days_pickup)
     end
 
     def correct_user

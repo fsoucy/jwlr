@@ -22,8 +22,11 @@ class ProductsController < ApplicationController
     if params[:store_id] != nil && store = Store.find_by(params[:store_id])
       @product = store.products.build(product_params)
       @product.full_street_address = store.full_street_address
+      @product.business_days_pickup = current_user.business_days_pickup
     else
       @product = current_user.products.build(product_params)
+      @product.full_street_address = current_user.full_street_address
+      @product.business_days_pickup = current_user.business_days_pickup
     end
     if @product.save
       flash[:success] = "You have successfully uploaded a new product!"

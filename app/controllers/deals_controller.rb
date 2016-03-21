@@ -26,6 +26,6 @@ class DealsController < ApplicationController
 
   private
   def deals_params
-    params.require(:deal).permit(:seller_id, :buyer_id, :product_id, :selling_method_id, :exchange_method_id, :payment_method_id, :user_proposed_price, :proposed_price_accepted, :dropoff) 
+    params.require(:deal).permit(:seller_id, :buyer_id, :product_id, :selling_method_id, :exchange_method_id, :payment_method_id, :user_proposed_price, :proposed_price_accepted, :dropoff, :exchange_agreement_seller, :exchange_agreement_buyer) 
   end
 end

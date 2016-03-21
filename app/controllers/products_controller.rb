@@ -77,6 +77,9 @@ class ProductsController < ApplicationController
 
   def edit
     @product = Product.find(params[:id])
+    if @product.hold
+      redirect_to @product.deal
+    end
   end
 
   def edit_toggle_options

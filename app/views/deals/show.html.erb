@@ -90,46 +90,48 @@
       <% if current_user.id == @deal.buyer_id %>
         <h3>Delivery cost: <%= @deal.product.delivery_cost %></h3>
         <% if !@deal.exchange_agreement_buyer %>
-        <%= form_for(@deal) do |f| %>
-          <h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save" %></h3>
-        <% end %>
+          <%= form_for(@deal) do |f| %>
+            <h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save" %></h3>
+          <% end %>
 	<% else %>
-	<h3>Your location for delivery: <%= @deal.dropoff %></h3>
+	  <h3>Your location for delivery: <%= @deal.dropoff %></h3>
 	<% end %>
 	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil?) %>
-	<% if !@deal.exchange_agreement_buyer %>
-        <%= form_for @deal do |f| %>
-          <%= f.hidden_field :exchange_agreement_buyer, value: true %>
-          <%= f.submit "Accept exchange" %>
-        <% end %>
-	<% else %>
-	<h4>Already accepted exchange! Waiting on seller to agree.</h4>
-	<% end %>
+	  <% if !@deal.exchange_agreement_buyer %>
+            <%= form_for @deal do |f| %>
+              <%= f.hidden_field :exchange_agreement_buyer, value: true %>
+              <%= f.submit "Accept exchange" %>
+            <% end %>
+	  <% else %>
+	    <h4>Already accepted exchange! Waiting on seller to agree.</h4>
+	  <% end %>
 	<% end %>  
       <% end %>
       <% if current_user.id == @deal.seller_id %>
         <% if !@deal.product.hold %>
-        <%= form_for(@deal.product) do |f| %>
-          <%= f.hidden_field :on_deals, value: true %>
-	  <%= f.hidden_field :deal_id, value: @deal.id %>
-          <h3>Delivery cost: <%= f.number_field :delivery_cost %></h3>
-          <%= f.submit "Save changes on delivery exchange" %>
-        <% end %>
+          <%= form_for(@deal.product) do |f| %>
+            <%= f.hidden_field :on_deals, value: true %>
+	    <%= f.hidden_field :deal_id, value: @deal.id %>
+            <h3>Delivery cost: <%= f.number_field :delivery_cost %></h3>
+            <%= f.submit "Save changes on delivery exchange" %>
+          <% end %>
 	<% else %>
-	<h3>Delivery cost: <%= @deal.product.delivery_cost %></h3>
+	  <h3>Delivery cost: <%= @deal.product.delivery_cost %></h3>
 	<% end %>
         <h3>Delivery location: <%= @deal.dropoff %></h3>
 	<% if ((!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil?) %>
-	<% if @deal.exchange_agreement_buyer %>
-        <%= form_for @deal do |f| %>
-          <%= f.hidden_field :exchange_agreement_seller, value: true %>
-          <%= f.submit "Accept exchange" %>
-        <% end %>
-	<% else %>
-	<h3>Waiting for buyer to accept exchange</h3>
+	  <% if @deal.exchange_agreement_buyer %>
+            <%= form_for @deal do |f| %>
+              <%= f.hidden_field :exchange_agreement_seller, value: true %>
+              <%= f.submit "Accept exchange" %>
+            <% end %>
+	  <% else %>
+	    <h3>Waiting for buyer to accept exchange</h3>
+	  <% end %>
 	<% end %>
-	<% end %>  
-  <% end %>
+      <% end %>
+    <% end %>
+  <% end %>    
   <% if exchange_method.id == 2 %>
     <h4>Buyer and seller will need to decide upon a location and datetime in messaging</h4>
     <% if current_user.id == @deal.seller_id %>

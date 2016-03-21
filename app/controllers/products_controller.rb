@@ -36,8 +36,10 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find_by(id: params[:id])
-    @deal = current_user.buying_deals.build(seller_id: @product.user.id, product_id: @product.id)
-    @current_user = current_user
+    if logged_in?
+      @deal = current_user.buying_deals.build(seller_id: @product.user.id, product_id: @product.id)
+      @current_user = current_user
+    end
     @toggle_options = @product.toggle_options
     search = Sunspot.more_like_this(@product) do
       fields :description, :title

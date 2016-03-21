@@ -2,7 +2,10 @@
 <% provide(:title, "Product") %>
 <div class="product_show_container">
   <h1><%= @product.title %> (<%= @product.category.name %>)</h1>
-  <%= image_tag @product.pictures.first.photo.url, class: "product_image" %>
+  <%= if !@product.pictures.first.nil?
+    image_tag @product.pictures.first.photo.url, class: "product_image" 
+  end
+  %>
   <% @toggle_options.each do |opt| %>
   <h3><%= opt.attribute_option.category_option.name %>: <%= opt.attribute_option.value %></h3>
   <% end %>
@@ -21,13 +24,20 @@
 <div class="product_show_container">
   <% if @product.user == current_user %><%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
 					    data: { confirm: "Are you sure you wish to delete this?" } %>
-  <% end %>
   <% else %>
+  <% if logged_in? %>
   <%= form_for(@deal) do |f| %>
   <%= f.hidden_field :seller_id, value: @deal.seller_id %>
   <%= f.hidden_field :buyer_id, value: @deal.buyer_id %>
   <%= f.hidden_field :product_id, value: @deal.product_id %>
   <%= f.submit "Buy this product" %>
+  <% end %>
+  <% else %>
+  <% store_location %>
+  <%= form_tag "/login", method: "get" do %>
+  <%= submit_tag "Buy this product" %>
+  <% end %>
+  <% end %>
   <% end %>
 </div>
 <div class="product_show_container">

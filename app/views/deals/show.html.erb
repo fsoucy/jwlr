@@ -38,41 +38,55 @@
 <br>
 <% selling_method = @deal.selling_method unless @deal.selling_method_id.nil? %>
 <% if !selling_method.nil? %>
-  <h2>Selling Method: <%= selling_method.method %></h2>
-    <% if selling_method.id == 3 or selling_method.id == 4 %>
-      <% if @deal.proposed_price_accepted %>
-        <h3>The deal is going through for <%= @deal.user_proposed_price %></h3>
-      <% else %>
-      <% if current_user.id == @deal.buyer_id %>
-        <h3>Listed price: <%= @deal.product.price %></h3>
-	<!--<h3>iGold's suggested value for premium users</h3>-->
-	<%= form_for(@deal) do |f| %>
-	  <h3 id="price_warning">Price is too low! Not accepted.</h3>
-	  <%= f.hidden_field :min_price, value: @deal.product.min_accepted_price, id: "minimum_price" %>
-	  <h3>Your price: <%= f.number_field :user_proposed_price, value: @deal.user_proposed_price, id: "price_proposal" %>  <%= f.submit "Change offer", class: "propose_price" %></h3>
-	<% end %>
-      <% end %>
-      <% if current_user.id == @deal.seller_id %>
-        <h3>Listed price: <%= @deal.product.price %></h3>
-	<%= form_for @deal do |f| %>
-	  <%= f.hidden_field :proposed_price_accepted, value: true %>
-	  <h3>Offered price: <%= @deal.user_proposed_price %>  <%= f.submit "Accept offer" %></h3>
-	<% end %>
-      <% end %>
-    <% end %>
-  <% end %>
-  <% if selling_method.id == 2 %>
-    <h3>This product has a set price: <%= @deal.product.price %></h3>
-  <% end %>
+<h2>Selling Method: <%= selling_method.method %></h2>
+<% if selling_method.id == 3 or selling_method.id == 4 %>
+<% if @deal.proposed_price_accepted %>
+<h3>The deal is going through for <%= @deal.user_proposed_price %></h3>
+<% else %>
+<% if current_user.id == @deal.buyer_id %>
+<h3>Listed price: <%= @deal.product.price %></h3>
+<!--<h3>iGold's suggested value for premium users</h3>-->
+<%= form_for(@deal) do |f| %>
+<h3 id="price_warning">Price is too low! Not accepted.</h3>
+<%= f.hidden_field :min_price, value: @deal.product.min_accepted_price, id: "minimum_price" %>
+<h3>Your price: <%= f.number_field :user_proposed_price, value: @deal.user_proposed_price, id: "price_proposal" %>  <%= f.submit "Change offer", class: "propose_price" %></h3>
 <% end %>
+<% end %>
+<% if current_user.id == @deal.seller_id %>
+<h3>Listed price: <%= @deal.product.price %></h3>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :proposed_price_accepted, value: true %>
+<h3>Offered price: <%= @deal.user_proposed_price %>  <%= f.submit "Accept offer" %></h3>
+<% end %>
+<% end %>
+<% end %>
+<% end %>
+<% if selling_method.id == 2 %>
+<h3>This product has a set price: <%= @deal.product.price %></h3>
+<% end %>
+<% end %>
+
+<br>
+
 <% exchange_method = @deal.exchange_method unless @deal.exchange_method_id.nil? %>
 <% if !exchange_method.nil? %>
+<% if exchange_method.id == 1 %>
+<% if @deal.exchange_agreement_seller and @deal.exchange_agreement_buyer %>
+<h3>The exchange methods have been completely agreed upon.</h3>
+<h4>The seller will deliver the product to the buyer</h4>
+<h4>Dropoff location: <%= @deal.dropoff %></h4>
+<h4>Delivery cost: <%= @deal.product.delivery_charge %></h4>
+<% else %>
 <h2>Exchange Method: <%= exchange_method.method %></h2>
 <% if current_user.id == @deal.buyer_id %>
 <h3>Maximum delivery distance in miles: <%= @deal.product.maximum_delivery_radius_miles unless @deal.product.maximum_delivery_radius_miles.nil? %></h3>
 <h3>Delivery cost: <%= @deal.product.delivery_charge %></h3>
 <%= form_for(@deal) do |f| %>
 <h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save" %></h3>
+<% end %>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :exchange_agreement_buyer, value: true %>
+<%= f.submit "Accept exchange" %>
 <% end %>
 <% end %>
 <% if current_user.id == @deal.seller_id %>
@@ -82,9 +96,15 @@
 <%= f.submit "Save changes on delivery exchange" %>
 <% end %>
 <h3>Delivery location: <%= @deal.dropoff %></h3>
-<% end %>
-<% end %>
 <%= form_for @deal do |f| %>
+<%= f.hidden_field :exchange_agreement_seller, value: true %>
+<%= f.submit "Accept exchange" %>
+<% end %>
+<% end %>
+<% end %>
+<% end %>
+
+<br>
 
 <% payment_method = @deal.payment_method unless @deal.payment_method_id.nil? %>
 <% if !payment_method.nil? %>

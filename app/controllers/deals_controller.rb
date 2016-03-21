@@ -29,19 +29,19 @@ class DealsController < ApplicationController
     @deal = Deal.find(params[:id])
     @deal.update(deals_params)
     selling_agreement = false
-    if @deal.selling_method.id == 2 or ((@deal.selling_method.id == 3 or @deal.selling_method.id == 4) and @deal.proposed_price_accepted)
+    if (@deal.selling_method.id == 2 or ((@deal.selling_method.id == 3 or @deal.selling_method.id == 4) and @deal.proposed_price_accepted))
       selling_agreement = true
     end
     if @deal.selling_method.id == 2
       @deal.user_proposed_price = @deal.product.price
     end 
     exchange_agreement = false
-    if @deal.exchange_agreement_buyer and @deal.exchange_agreement_seller
+    if (@deal.exchange_agreement_buyer and @deal.exchange_agreement_seller)
       exchange_agreement = true
     end
-    exchange_agreement = (@deal.exchange_agreement_buyer && @deal.exchange_agreement_seller) #or (!@deal.product.store.nil? and pickup)
-    @deal.agreement_achieved = selling_agreement and exchange_agreement
-    @deal.deal_complete = @deal.buyer_satisfied and @deal.seller_satisfied and @deal.payment_complete and @deal.product_received and @deal.agreement_achieved
+    exchange_agreement = ((@deal.exchange_agreement_buyer and @deal.exchange_agreement_seller) or (!@deal.product.store.nil? and pickup))
+    @deal.agreement_achieved = (selling_agreement and exchange_agreement)
+    @deal.deal_complete = (@deal.buyer_satisfied and @deal.seller_satisfied and @deal.payment_complete and @deal.product_received and @deal.agreement_achieved)
     @deal.save
     redirect_to @deal
   end

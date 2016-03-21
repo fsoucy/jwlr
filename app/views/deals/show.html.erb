@@ -1,5 +1,5 @@
 <h1>Welcome to the deal between <%= @deal.seller.name %> (seller) and <%= @deal.buyer.name %> (buyer)</h1>
-<% if @deal.product_dispatched and current_user.id == @deal.buyer_id %>
+<% if (@deal.product_dispatched and current_user.id == @deal.buyer_id) %>
   <h2>The product is on its way to you!</h2>
 <% end %>
 <h2>Payment complete: <%= @deal.payment_complete %></h2>
@@ -81,7 +81,7 @@
 <% if !exchange_method.nil? %>
   <h2>Exchange Method: <%= exchange_method.method %></h2>
   <% if exchange_method.id == 1 %>
-    <% if @deal.exchange_agreement_seller and @deal.exchange_agreement_buyer %>
+    <% if (@deal.exchange_agreement_seller and @deal.exchange_agreement_buyer) %>
       <h3>The exchange methods have been completely agreed upon.</h3>
       <h4>The seller will deliver the product to the buyer</h4>
       <h4>Dropoff location: <%= @deal.dropoff %></h4>
@@ -92,7 +92,7 @@
         <%= form_for(@deal) do |f| %>
           <h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save" %></h3>
         <% end %>
-	<% if !@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? %>  
+	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil?) %>  
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_buyer, value: true %>
           <%= f.submit "Accept exchange" %>
@@ -107,7 +107,7 @@
           <%= f.submit "Save changes on delivery exchange" %>
         <% end %>
         <h3>Delivery location: <%= @deal.dropoff %></h3>
-	<% if !@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? %>
+	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil?) %>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_seller, value: true %>
           <%= f.submit "Accept exchange" %>
@@ -195,7 +195,7 @@
   <% end %>
 <% end %>
 
-<% if current_user.id  == @deal.seller_id and @deal.agreement_achieved %>
+<% (if current_user.id  == @deal.seller_id and @deal.agreement_achieved) %>
   <%= form_for @deal do |f| %>
     <%= f.hidden_field :product_dispatched, value: true %>
     <%= f.submit "Product dispatched?" %>
@@ -213,7 +213,7 @@
     <%= f.submit "Satisfied with completed deal?" %>
   <% end %>
 <% end %>
-<% if current_user.id == @deal.buyer_id and @deal.agreement_achieved %>
+<% (if current_user.id == @deal.buyer_id and @deal.agreement_achieved) %>
   <%= form_for @deal do |f| %>
     <%= f.hidden_field :product_received, value: true %>
     <%= f.submit "Product received?" %>

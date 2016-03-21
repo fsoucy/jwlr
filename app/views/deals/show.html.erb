@@ -92,11 +92,15 @@
         <%= form_for(@deal) do |f| %>
           <h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save" %></h3>
         <% end %>
-	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil?) %>  
+	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil?) %>
+	<% if !@deal.exchange_agreement_buyer %>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_buyer, value: true %>
           <%= f.submit "Accept exchange" %>
         <% end %>
+	<% else %>
+	<h4>Already accepted exchange! Waiting on seller to agree.</h4>
+	<% end %>
 	<% end %>  
       <% end %>
       <% if current_user.id == @deal.seller_id %>
@@ -146,14 +150,10 @@
         <% end %>
       <% end %>
       <% if current_user.id == @deal.buyer_id %>
-        <% if !@deal.exchange_agreement_buyer %>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_buyer, value: true %>
           <%= f.submit "Agreed exchange" %>
         <% end %>
-	<% else %>
-	<h4>Waiting on the seller to accept the exchange.</h4>
-	<% end %>
       <% end %>
     <% end %>
   <% end %>

@@ -31,12 +31,12 @@
 <% end %>
 <% end %>
 <h3>The user has selected these transaction methods:</h3>
-<h4>Selling Methods: <%= SellingMethod.find(@deal.selling_method_id).method unless @deal.selling_method_id.nil?  %></h4>
-<h4>Exchange Methods: <%= ExchangeMethod.find(@deal.exchange_method_id).method unless @deal.exchange_method_id.nil?  %></h4>
-<h4>Payment Methods: <%= PaymentMethod.find(@deal.payment_method_id).method unless @deal.payment_method_id.nil?  %></h4>
+<h4>Selling Methods: <%= @deal.selling_method.method unless @deal.selling_method_id.nil?  %></h4>
+<h4>Exchange Methods: <%= @deal.exchange_method.method unless @deal.exchange_method_id.nil?  %></h4>
+<h4>Payment Methods: <%= @deal.payment_method.method unless @deal.payment_method_id.nil?  %></h4>
 <% end %>
 <br>
-<% selling_method = SellingMethod.find(@deal.selling_method_id) unless @deal.selling_method_id.nil? %>
+<% selling_method = @deal.selling_method unless @deal.selling_method_id.nil? %>
 <% if !selling_method.nil? %>
   <h2>Selling Method: <%= selling_method.method %></h2>
     <% if selling_method.id == 3 or selling_method.id == 4 %>
@@ -65,7 +65,7 @@
     <h3>This product has a set price: <%= @deal.product.price %></h3>
   <% end %>
 <% end %>
-<% exchange_method = ExchangeMethod.find(@deal.exchange_method_id) unless @deal.exchange_method_id.nil? %>
+<% exchange_method = @deal.exchange_method unless @deal.exchange_method_id.nil? %>
 <% if !exchange_method.nil? %>
 <h2>Exchange Method: <%= exchange_method.method %></h2>
 <% if current_user.id == @deal.buyer_id %>
@@ -86,11 +86,13 @@
 <% end %>
 <%= form_for @deal do |f| %>
 
-<% payment_method = PaymentMethod.find(@deal.payment_method_id) unless @deal.payment_method_id.nil? %>
+<% payment_method = @deal.payment_method unless @deal.payment_method_id.nil? %>
 <% if !payment_method.nil? %>
 <h2>Payment Method: <%= payment_method.method %></h2>
-<% if payment_method.method == "Paypal" %>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<% end %>
+<% end %>
+<% if @deal.payment_method.method == "Paypal" && @deal.seller_id != current_user.id && @deal.agreement_achieved? %>
+<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_xclick">
 <input type="hidden" name="business" value="<%= @deal.seller.email %>">
 <input type="hidden" name="lc" value="US">
@@ -107,5 +109,4 @@
 <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 </form>
-<% end %>
 <% end %>

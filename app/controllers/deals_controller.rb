@@ -3,6 +3,7 @@ class DealsController < ApplicationController
     @deal = current_user.buying_deals.build(deals_params)
     if @deal.save
       @deal.deal_complete = false
+      @deal.dropoff = @deal.buyer.full_street_address
       @deal.product_received = false
       @deal.payment_complete = false
       @deal.proposed_price_accepted = false

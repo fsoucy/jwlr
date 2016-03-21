@@ -189,23 +189,25 @@
   <% end %>
 <% end %>
 
-<% if current_user.id  == @deal.seller_id %>
+<% if current_user.id  == @deal.seller_id and @deal.agreement_achieved %>
   <%= form_for @deal do |f| %>
     <%= f.hidden_field :product_dispatched, value: true %>
     <%= f.submit "Product dispatched?" %>
   <% end %>
 
+  <% if @deal.payment_method.method != "Paypal" %>
   <%= form_for @deal do |f| %>
     <%= f.hidden_field :payment_complete, value: true %>
     <%= f.submit "Payment received?" %>
   <% end %>
+  <% end %>  
 
   <%= form_for @deal do |f| %>
     <%= f.hidden_field :seller_satisfied, value: true %>
     <%= f.submit "Satisfied with completed deal?" %>
   <% end %>
 <% end %>
-<% if current_user.id == @deal.buyer_id %>
+<% if current_user.id == @deal.buyer_id and @deal.agreement_achieved %>
   <%= form_for @deal do |f| %>
     <%= f.hidden_field :product_received, value: true %>
     <%= f.submit "Product received?" %>

@@ -70,6 +70,7 @@
 
 <% exchange_method = @deal.exchange_method unless @deal.exchange_method_id.nil? %>
 <% if !exchange_method.nil? %>
+<h2>Exchange Method: <%= exchange_method.method %></h2>
 <% if exchange_method.id == 1 %>
 <% if @deal.exchange_agreement_seller and @deal.exchange_agreement_buyer %>
 <h3>The exchange methods have been completely agreed upon.</h3>
@@ -77,7 +78,6 @@
 <h4>Dropoff location: <%= @deal.dropoff %></h4>
 <h4>Delivery cost: <%= @deal.product.delivery_charge %></h4>
 <% else %>
-<h2>Exchange Method: <%= exchange_method.method %></h2>
 <% if current_user.id == @deal.buyer_id %>
 <h3>Maximum delivery distance in miles: <%= @deal.product.maximum_delivery_radius_miles unless @deal.product.maximum_delivery_radius_miles.nil? %></h3>
 <h3>Delivery cost: <%= @deal.product.delivery_charge %></h3>
@@ -101,6 +101,10 @@
 <%= f.submit "Accept exchange" %>
 <% end %>
 <% end %>
+<% end %>
+<% if exchange_method.id == 3 %>
+<h4>The buyer needs to go to the user's store and pick up the product.</h4>
+
 <% end %>
 <% end %>
 

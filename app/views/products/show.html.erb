@@ -1,7 +1,7 @@
 <% title = "Product by " + @product.user.name %>
 <% provide(:title, "Product") %>
 <% if current_user.id == @product.user.id %>
-<%= link_to "Edit product", edit_products_path(@product.id) %>
+<%= link_to "Edit product", edit_product_path(@product.id) %>
 <% end %>
 <div class="product_show_container">
   <h1><%= @product.title %> (<%= @product.category.name %>)</h1>

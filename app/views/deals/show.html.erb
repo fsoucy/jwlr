@@ -119,11 +119,15 @@
 	<h3>Delivery cost: <%= @deal.product.delivery_cost %></h3>
 	<% end %>
         <h3>Delivery location: <%= @deal.dropoff %></h3>
-	<% if ((!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil?) and @deal.exchange_agreement_buyer) %>
+	<% if ((!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil?) %>
+	<% if @deal.exchange_agreement_buyer %>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_seller, value: true %>
           <%= f.submit "Accept exchange" %>
         <% end %>
+	<% else %>
+	<h3>Waiting for buyer to accept exchange</h3>
+	<% end %>
 	<% end %>  
       <% end %>
     <% end %>
@@ -208,10 +212,12 @@
 <% end %>
 
 <% if ((current_user.id  == @deal.seller_id) and @deal.agreement_achieved) %>
+  <% if @deal.exchange_method.method == "Delivery" %>
   <%= form_for @deal do |f| %>
     <%= f.hidden_field :product_dispatched, value: true %>
     <%= f.submit "Product dispatched?" %>
   <% end %>
+  <% end %> 
 
   <% if @deal.payment_method.method != "Paypal" %>
   <%= form_for @deal do |f| %>
@@ -220,10 +226,13 @@
   <% end %>
   <% end %>  
 
+  <% if (@deal.payment_complete and @deal.product_received) %>
   <%= form_for @deal do |f| %>
     <%= f.hidden_field :seller_satisfied, value: true %>
     <%= f.submit "Satisfied with completed deal?" %>
   <% end %>
+  <% end %>
+  
 <% end %>
 <% if ((current_user.id == @deal.buyer_id) and @deal.agreement_achieved) %>
   <%= form_for @deal do |f| %>
@@ -231,9 +240,11 @@
     <%= f.submit "Product received?" %>
   <% end %>
 
+  <% if (@deal.product_received and @deal.payment_complete) %>
   <%= form_for @deal do |f| %>
     <%= f.hidden_field :buyer_satisfied, value: true %>
     <%= f.submit "Satisfied with completed deal?" %>
   <% end %>
+  <% end %>  
 
 <% end %>

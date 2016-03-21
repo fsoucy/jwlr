@@ -19,7 +19,7 @@
           <%= image_tag prod.picture_url(:thumb), class: "store_prod_image" %>
 	  <button class="quick_view">Quick View</button>
 	</div>
-        <h3 class="store_prod_name"><%= prod.commodity %></h3>
+        <h3 class="store_prod_name"><%= prod.category.name %></h3>
         <h4 class="store_prod_price"><%= prod.price %></h4>
       </div>
     <% end %>

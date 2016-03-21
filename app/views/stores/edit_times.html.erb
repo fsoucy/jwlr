@@ -1,63 +1,37 @@
 <% provide(:title, "Edit hours of operation") %>
 <h1>Edit this store's hours of operation</h1>
 
-    <%= form_for(@store) do |f| %>
+    <%= form_for(@store, :html => { class: 'edit_times_inline'}) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
       <% if @store.mondayopen %>
         <p><b>Monday Start Time:</b></p>
-	<div class = "row">
-	  <div class="col-md-3">
-	    <%= f.select :mondaystarthour, options_for_select(@hours, -1) %>
-	  </div>
-	  <div class="col-md-3">
-	    <%= f.select :mondaystartminute, options_for_select(@minutes, -1) %>
-	  </div>
-	  <div class="col-md-3">
-	    <%= f.select :mondaystartampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-	  </div>
-	</div>
-	<p><b>Monday End Time:</b></p>
-        <div class = "row">
-          <div class="col-md-3">
-            <%= f.select :mondayendhour, options_for_select(@hours, -1) %>
-          </div>
-          <div class="col-md-3">
-            <%= f.select :mondayendminute, options_for_select(@minutes, -1) %>
-          </div>
-          <div class="col-md-3">
-            <%= f.select :mondayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-          </div>
-        </div>
+	<%= f.select :mondaystarthour, options_for_select(@hours, -1) %>
+	<%= f.select :mondaystartminute, options_for_select(@minutes, -1) %>
+	<%= f.select :mondaystartampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
+        <p><b>Monday End Time:</b></p>
+
+	<%= f.select :mondayendhour, options_for_select(@hours, -1) %>
+	    
+	<%= f.select :mondayendminute, options_for_select(@minutes, -1) %>
+        <%= f.select :mondayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
+	<br>
       <% end %>
       
       <% if @store.tuesdayopen %>
         <p><b>Tuesday Start Time:</b></p>
-        <div class = "row">
-          <div class="col-md-3">
-            <%= f.select :tuesdaystarthour, options_for_select(@hours, -1) %>
-          </div>
-          <div class="col-md-3">
-            <%= f.select :tuesdaystartminute, options_for_select(@minutes, -1) %>
-          </div>
-          <div class="col-md-3">
-            <%= f.select :tuesdaystartampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-          </div>
-        </div>
-	<p><b>Tuesday End Time:</b></p>
-        <div class = "row">
-          <div class="col-md-3">
-            <%= f.select :tuesdayendhour, options_for_select(@hours, -1) %>
-          </div>
-          <div class="col-md-3">
-            <%= f.select :tuesdayendminute, options_for_select(@minutes, -1) %>
-          </div>
-          <div class="col-md-3">
-            <%= f.select :tuesdayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-          </div>
-        </div>
+        <%= f.select :tuesdaystarthour, options_for_select(@hours, -1) %>
+	
+        <%= f.select :tuesdaystartminute, options_for_select(@minutes, -1) %>
+	
+        <%= f.select :tuesdaystartampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
+        <p><b>Tuesday End Time:</b></p>
+        <%= f.select :tuesdayendhour, options_for_select(@hours, -1) %>
+        <%= f.select :tuesdayendminute, options_for_select(@minutes, -1) %>
+        <%= f.select :tuesdayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
+	<br>
       <% end %>
-
+  
       <% if @store.wednesdayopen %>
         <p><b>Wednesday Start Time:</b></p>
         <div class = "row">

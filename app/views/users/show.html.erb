@@ -1,27 +1,53 @@
 <% provide(:title, @user.name) %>
-<div class="row">
-  <aside class="col-md-4">
-    <section class="user_info">
-      <h1>
-	<%= gravatar_for @user %>
-	<%= @user.name %>
-      </h1>
-    </section>
-    <div id="description">
-      <p><%= @user.description %><p>
-      <% if @user == current_user %>
-        <%= link_to "Edit your description", edit_description_user_path(@user.id) %>
-      <% end %>
-      <p>Products sold: 100</p>
-      <p>Identifies as: Public Seller</p>
-      <p>Location: Boston, MA</p>
-    </div>
-  </aside>
-  <div class="container">
-    <div class="col-md-8">
-      <h1>Product Gallery</h1>
-
-    </div>
-  </div>
+<% unless @user.profile_picture.nil? %>
+<%= image_tag @user.profile_picture_url(:thumb), class: "pro_pic" %><br>
+<% end %>
+<h1><%= @user.name %></h1>
+<h3><%= link_to "Edit Page", edit_user_path(@user.id) if current_user?(@user) %></h3>
+<br>
+<div id="description">
+  <p><%= @user.description %><p>
+    <% if @user == current_user %>
+    <%= link_to "Edit your description", edit_description_user_path(@user.id) %>
+    <% end %>
 </div>
-	
+<p>Products sold: <%= @user.products_sold %></p>
+<p>Products bought: <%= @user.products_bought %></p>
+<p>Identifies as: <%= @user.identifies_as %></p>
+<p>Location: <%= @user.full_street_address %></p>
+<p>Interests: <%= @user.interests %></p>
+<h1>Stores</h1>
+<% if current_user.id == @user.id %>
+<%= link_to "Add Store", new_store_path %>
+<% end %>
+<% if @user.stores.length > 0 %>
+<% @user.stores.each do |store| %>
+<%= link_to store.name, store %>
+<% end %>
+<% else %>
+<p>This user has no stores</p>
+<% end %>
+<div class="user_gallery">
+<h1>Product Gallery <%= link_to "New Product", new_product_url if current_user?(@user) %></h1>
+<% @user.products.each do |prod| %>
+<div class="store_prod">
+  <div class="image_container">
+    <%= image_tag prod.pictures.first.photo, class: "store_prod_image" %>
+    <button class="quick_view">Quick View</button>
+  </div>
+  <h3 class="store_prod_name"><%= prod.category.name %></h3>
+  <h4 class="store_prod_price"><%= prod.price %></h4>
+</div>
+<% end %>
+</div>
+<h1>Blog <%= link_to "New", new_blogpost_url if current_user?(@user) %></h1>
+<% @user.blogposts.each do |post| %>
+<div class="post">
+  <h4><%= post.title %>
+    <% if current_user?(post.user) %>
+    <%= link_to "Delete", post, method: :delete, data: { confirm: "Are you sure?" } %> | <%= link_to "Edit", edit_blogpost_path(post) %>
+    <% end %>
+  </h4>
+  <p><%= post.content %></p>
+</div>
+<% end %>

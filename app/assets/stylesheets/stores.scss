@@ -1,3 +1,11 @@
+.edit_times_inline
+{
+  p, h1, h2, h3, h4, h5, h6, select
+  {
+    display: inline-block;
+  }
+}
+
 .table
 {
   margin-top: 50px;
@@ -398,6 +406,7 @@ td
   width: 200px;
   height: 200px;
   position: relative;
+  border: 2px solid #5a8693;
 }
 
 .store_prod_image

@@ -1,16 +1,17 @@
 class PaymentsController < ApplicationController
   protect_from_forgery :except => [:update] #Otherwise the request from PayPal wouldn't make it to the controller
   
-  def update
+  def create
     response = validate_IPN_notification(request.raw_post)
     case response
     when "VERIFIED"
-      if request.payment_status == "Completed"
-        deal = Deal.find(request.item_number)
+      if params[:payment_status] == "Completed"
+        deal = Deal.find(params[:item_number])
         if !deal.nil?
-          if !deal.payment_complete? && deal.agreement_achieved
-            if deal.seller.email == request.receiver_email
-              if deal.user_proposed_price == request.payment_gross && deal.product.delivery_charge == request.shipping  
+          if !deal.payment_complete? && deal.agreement_achieved?
+            if deal.seller.email == params[:receiver_email]
+              debugger
+              if (deal.user_proposed_price + deal.product.delivery_charge) == params[:payment_gross].to_f  
                 deal.payment_complete = true
                 deal.save            
               end

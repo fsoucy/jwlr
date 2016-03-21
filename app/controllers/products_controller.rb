@@ -111,7 +111,7 @@ class ProductsController < ApplicationController
     
     unless toggle_options.nil?
       toggle_options.each do |attr|
-        toggle_option = ToggleOption.joins('INNER JOIN "attribute_options" ON "attribute_options"."id" = "toggle_options"."attribute_option_id"').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
+        toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
         toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
         toggle_option.save
       end

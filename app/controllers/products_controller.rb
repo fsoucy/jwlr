@@ -22,8 +22,11 @@ class ProductsController < ApplicationController
     if params[:store_id] != nil && store = Store.find_by(params[:store_id])
       @product = store.products.build(product_params)
       @product.full_street_address = store.full_street_address
+      @product.business_days_pickup = current_user.business_days_pickup
     else
       @product = current_user.products.build(product_params)
+      @product.full_street_address = current_user.full_street_address
+      @product.business_days_pickup = current_user.business_days_pickup
     end
     if @product.save
       flash[:success] = "You have successfully uploaded a new product!"
@@ -105,12 +108,6 @@ class ProductsController < ApplicationController
     payment_methods = params[:payment_method_links]
     picture = params[:picture]
 
-    if @product.fully_updated == true
-      @product.update_attributes(product_params)
-      redirect_to @product
-      return
-    end
-    
     unless toggle_options.nil?
       toggle_options.each do |attr|
         toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
@@ -156,7 +153,6 @@ class ProductsController < ApplicationController
     end
 
     if !picture.nil?
-      @product.fully_updated = true
       if @product.min_accepted_price.nil?
         @product.min_accepted_price = 0.0
       end

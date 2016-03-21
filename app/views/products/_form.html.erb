@@ -27,6 +27,9 @@
 <%= f.text_area :description, class: 'form-control' %>
 <br>
 
+<%= f.label :delivery_cost, "Planning on adding a delivery cost? Specify that here. If not, just leave this unchanged." %>
+<%= f.number_field :delivery_cost, value: current_user.default_delivery_cost, class: 'form-control' %>
+
 <% if !@product.category.nil? %>
 <% @product.category.category_options.each do |option| %>
 <%= fields_for "toggle_options[#{option.id}]", option do |opt| %>

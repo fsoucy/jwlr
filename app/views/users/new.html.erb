@@ -31,6 +31,9 @@
       <%= f.label :identifies_as, "Identify as" %>
       <%= f.text_field :identifies_as, class: 'form-control' %>
 
+      <%= f.label :default_delivery_cost, "Planning on delivering products to your customers? Add a default delivery cost." %>
+      <%= f.number_field :default_delivery_cost, class: 'form-control' %>
+
       <%= f.label :public, class: "checkbox inline" do %>
         <%= f.check_box :public %>
 	<span><b>Public user?</b></span>

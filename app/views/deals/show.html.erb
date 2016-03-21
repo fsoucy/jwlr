@@ -1,154 +1,213 @@
 <h1>Welcome to the deal between <%= @deal.seller.name %> (seller) and <%= @deal.buyer.name %> (buyer)</h1>
+<% if @deal.product_dispatched and current_user.id == @deal.buyer_id %>
+  <h2>The product is on its way to you!</h2>
+<% end %>
 <h2>Payment complete: <%= @deal.payment_complete %></h2>
 <h2>Product received: <%= @deal.product_received %></h2>
 <h2>Deal complete: <%= @deal.deal_complete %></h2>
 <%= image_tag @deal.product.pictures.first.photo %>
 <h2>Listed price: <%= @deal.product.price %></h2>
 <% if @deal.buyer.id == current_user.id %>
-<%= form_for(@deal) do |f| %>
-<p>Selling Methods (choose one)</p>
-<% @deal.product.selling_method_links.each do |s| %>
-<%= f.label :selling_method, "#{s.selling_method.method}" %>
-<%= f.radio_button :selling_method_id, s.selling_method.id %>
-<% end %>
-<p>Exchange Methods (choose one) </p>
-<% @deal.product.exchange_method_links.each do |e| %>
-<%= f.label :exchange_method, "#{e.exchange_method.method}" %>
-<%= f.radio_button :exchange_method_id, e.exchange_method.id %>
-<% end %>
-<p>Payment Methods (choose one)</p>
-<% @deal.product.payment_method_links.each do |p| %>
-<%= f.label :payment_method, "#{p.payment_method.method}" %>
-<%= f.radio_button :payment_method_id, p.payment_method.id %>
-<% end %>
-<br>
-<%= f.submit "Save new method preferences" %>
-<% end %>
+  <%= form_for(@deal) do |f| %>
+  <p>Selling Methods (choose one)</p>
+  <% @deal.product.selling_method_links.each do |s| %>
+    <%= f.label :selling_method, "#{s.selling_method.method}" %>
+    <%= f.radio_button :selling_method_id, s.selling_method.id %>
+  <% end %>
+  <p>Exchange Methods (choose one) </p>
+  <% @deal.product.exchange_method_links.each do |e| %>
+    <%= f.label :exchange_method, "#{e.exchange_method.method}" %>
+    <%= f.radio_button :exchange_method_id, e.exchange_method.id %>
+  <% end %>
+  <p>Payment Methods (choose one)</p>
+  <% @deal.product.payment_method_links.each do |p| %>
+    <%= f.label :payment_method, "#{p.payment_method.method}" %>
+    <%= f.radio_button :payment_method_id, p.payment_method.id %>
+  <% end %>
+  <br>
+  <%= f.submit "Save new method preferences" %>
+  <% end %>
 <% else %>
-<% if !SellingMethodLink.where("selling_method_id IN (?,?) AND product_id=?", 3, 4, @deal.product.id) %>
-<%= form_for @deal.product do |f| %>
-<h3>Minimum Accepted Price: <%= f.number_field :min_accepted_price %><%= f.submit "Change" %></h3>
-<% end %>
-<% end %>
-<h3>The user has selected these transaction methods:</h3>
-<h4>Selling Methods: <%= @deal.selling_method.method unless @deal.selling_method_id.nil?  %></h4>
-<h4>Exchange Methods: <%= @deal.exchange_method.method unless @deal.exchange_method_id.nil?  %></h4>
-<h4>Payment Methods: <%= @deal.payment_method.method unless @deal.payment_method_id.nil?  %></h4>
+  <% if !SellingMethodLink.where("selling_method_id IN (?,?) AND product_id=?", 3, 4, @deal.product.id) %>
+    <%= form_for @deal.product do |f| %>
+      <h3>Minimum Accepted Price: <%= f.number_field :min_accepted_price %><%= f.submit "Change" %></h3>
+    <% end %>
+  <% end %>
+  <h3>The user has selected these transaction methods:</h3>
+  <h4>Selling Methods: <%= @deal.selling_method.method unless @deal.selling_method_id.nil?  %></h4>
+  <h4>Exchange Methods: <%= @deal.exchange_method.method unless @deal.exchange_method_id.nil?  %></h4>
+  <h4>Payment Methods: <%= @deal.payment_method.method unless @deal.payment_method_id.nil?  %></h4>
 <% end %>
 <br>
 <% selling_method = @deal.selling_method unless @deal.selling_method_id.nil? %>
 <% if !selling_method.nil? %>
-<h2>Selling Method: <%= selling_method.method %></h2>
-<% if selling_method.id == 3 or selling_method.id == 4 %>
-<% if @deal.proposed_price_accepted %>
-<h3>The deal is going through for <%= @deal.user_proposed_price %></h3>
-<% else %>
-<% if current_user.id == @deal.buyer_id %>
-<h3>Listed price: <%= @deal.product.price %></h3>
-<!--<h3>iGold's suggested value for premium users</h3>-->
-<%= form_for(@deal) do |f| %>
-<h3 id="price_warning">Price is too low! Not accepted.</h3>
-<%= f.hidden_field :min_price, value: @deal.product.min_accepted_price, id: "minimum_price" %>
-<h3>Your price: <%= f.number_field :user_proposed_price, value: @deal.user_proposed_price, id: "price_proposal" %>  <%= f.submit "Change offer", class: "propose_price" %></h3>
-<% end %>
-<% end %>
-<% if current_user.id == @deal.seller_id %>
-<h3>Listed price: <%= @deal.product.price %></h3>
-<%= form_for @deal do |f| %>
-<%= f.hidden_field :proposed_price_accepted, value: true %>
-<h3>Offered price: <%= @deal.user_proposed_price %>  <%= f.submit "Accept offer" %></h3>
-<% end %>
-<% end %>
-<% end %>
-<% end %>
-<% if selling_method.id == 2 %>
-<h3>This product has a set price: <%= @deal.product.price %></h3>
-<% end %>
+  <h2>Selling Method: <%= selling_method.method %></h2>
+  <% if selling_method.id == 3 or selling_method.id == 4 %>
+    <% if @deal.proposed_price_accepted %>
+      <h3>The deal is going through for <%= @deal.user_proposed_price %></h3>
+    <% else %>
+      <% if current_user.id == @deal.buyer_id %>
+        <h3>Listed price: <%= @deal.product.price %></h3>
+        <!--<h3>iGold's suggested value for premium users</h3>-->
+        <%= form_for(@deal) do |f| %>
+          <h3 id="price_warning">Price is too low! Not accepted.</h3>
+          <%= f.hidden_field :min_price, value: @deal.product.min_accepted_price, id: "minimum_price" %>
+          <h3>Your price: <%= f.number_field :user_proposed_price, value: @deal.user_proposed_price, id: "price_proposal" %>  <%= f.submit "Change offer", class: "propose_price" %></h3>
+        <% end %>
+      <% end %>
+      <% if current_user.id == @deal.seller_id %>
+        <h3>Listed price: <%= @deal.product.price %></h3>
+        <%= form_for @deal do |f| %>
+          <%= f.hidden_field :proposed_price_accepted, value: true %>
+          <h3>Offered price: <%= @deal.user_proposed_price %>  <%= f.submit "Accept offer" %></h3>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% if selling_method.id == 2 %>
+    <h3>This product has a set price: <%= @deal.product.price %></h3>
+  <% end %>
 <% end %>
 
 <br>
 
 <% exchange_method = @deal.exchange_method unless @deal.exchange_method_id.nil? %>
 <% if !exchange_method.nil? %>
-<h2>Exchange Method: <%= exchange_method.method %></h2>
-<% if exchange_method.id == 1 %>
-<% if @deal.exchange_agreement_seller and @deal.exchange_agreement_buyer %>
-<h3>The exchange methods have been completely agreed upon.</h3>
-<h4>The seller will deliver the product to the buyer</h4>
-<h4>Dropoff location: <%= @deal.dropoff %></h4>
-<h4>Delivery cost: <%= @deal.product.delivery_charge %></h4>
-<% else %>
-<% if current_user.id == @deal.buyer_id %>
-<h3>Maximum delivery distance in miles: <%= @deal.product.maximum_delivery_radius_miles unless @deal.product.maximum_delivery_radius_miles.nil? %></h3>
-<h3>Delivery cost: <%= @deal.product.delivery_charge %></h3>
-<%= form_for(@deal) do |f| %>
-<h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save" %></h3>
+  <h2>Exchange Method: <%= exchange_method.method %></h2>
+  <% if exchange_method.id == 1 %>
+    <% if @deal.exchange_agreement_seller and @deal.exchange_agreement_buyer %>
+      <h3>The exchange methods have been completely agreed upon.</h3>
+      <h4>The seller will deliver the product to the buyer</h4>
+      <h4>Dropoff location: <%= @deal.dropoff %></h4>
+      <h4>Delivery cost: <%= @deal.product.delivery_cost %></h4>
+    <% else %>
+      <% if current_user.id == @deal.buyer_id %>
+        <h3>Delivery cost: <%= @deal.product.delivery_cost %></h3>
+        <%= form_for(@deal) do |f| %>
+          <h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save" %></h3>
+        <% end %>
+        <%= form_for @deal do |f| %>
+          <%= f.hidden_field :exchange_agreement_buyer, value: true %>
+          <%= f.submit "Accept exchange" %>
+        <% end %>
+      <% end %>
+      <% if current_user.id == @deal.seller_id %>
+        <%= form_for(@deal.product) do |f| %>
+          <h3>Delivery cost: <%= f.number_field :delivery_cost %></h3>
+          <%= f.submit "Save changes on delivery exchange" %>
+        <% end %>
+        <h3>Delivery location: <%= @deal.dropoff %></h3>
+        <%= form_for @deal do |f| %>
+          <%= f.hidden_field :exchange_agreement_seller, value: true %>
+          <%= f.submit "Accept exchange" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% if exchange_method.id == 2 %>
+    <h4>Buyer and seller will need to decide upon a location and datetime in messaging</h4>
+    <% if current_user.id == @deal.seller_id %>
+      <%= form_for @deal do |f| %>
+        <%= f.hidden_field :exchange_agreement_seller, value: true %>
+        <%= f.submit "Agreed exchange" %>
+      <% end %>
+    <% end %>
+    <% if current_user.id == @deal.buyer_id %>
+      <%= form_for @deal do |f| %>
+        <%= f.hidden_field :exchange_agreement_buyer, value: true %>
+        <%= f.submit "Agreed exchange" %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% if exchange_method.id == 3 %>
+    <% if !@deal.product.store.nil? %>
+      <h4>The buyer needs to go to the user's store and pick up the product.</h4>
+      <h5>Location of pickup: <%= @deal.product.store.full_street_address %></h5>
+      <h5>Business days to pickup: <%= @deal.product.store.business_days_pickup %></h5>
+      <h5>The pickup will have to correspond to the <%= link_to "store's hours of operation.", @store %></h5>
+    <% else %>
+      <h4>Buyer and seller should agreement on a pickup time and location in messaging</h4>
+      <% if current_user.id == @deal.seller_id %>
+        <%= form_for @deal do |f| %>
+          <%= f.hidden_field :exchange_agreement_seller, value: true %>
+          <%= f.submit "Agreed exchange" %>
+        <% end %>
+      <% end %>
+      <% if current_user.id == @deal.buyer_id %>
+        <%= form_for @deal do |f| %>
+          <%= f.hidden_field :exchange_agreement_buyer, value: true %>
+          <%= f.submit "Agreed exchange" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>
-<%= form_for @deal do |f| %>
-<%= f.hidden_field :exchange_agreement_buyer, value: true %>
-<%= f.submit "Accept exchange" %>
-<% end %>
-<% end %>
-<% if current_user.id == @deal.seller_id %>
-<%= form_for(@deal.product) do |f| %>
-<h3>Maximum delivery distance in miles: <%= f.number_field :maximum_delivery_radius_miles %></h3>
-<h3>Delivery cost: <%= f.number_field :delivery_charge %></h3>
-<%= f.submit "Save changes on delivery exchange" %>
-<% end %>
-<h3>Delivery location: <%= @deal.dropoff %></h3>
-<%= form_for @deal do |f| %>
-<%= f.hidden_field :exchange_agreement_seller, value: true %>
-<%= f.submit "Accept exchange" %>
-<% end %>
-<% end %>
-<% end %>
-<% if exchange_method.id == 3 %>
-<h4>The buyer needs to go to the user's store and pick up the product.</h4>
-
-<% end %>
-<% end %>
-
 <br>
 
 <% payment_method = @deal.payment_method unless @deal.payment_method_id.nil? %>
 <% if !payment_method.nil? %>
-<h2>Payment Method: <%= payment_method.method %></h2>
-<% end %>
+  <h2>Payment Method: <%= payment_method.method %></h2>
 <% end %>
 <% if !@deal.payment_method.nil? %>
-<% if @deal.payment_method.method == "Paypal" && @deal.seller_id != current_user.id && @deal.agreement_achieved? && !@deal.payment_complete? %>
-<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_xclick">
-<input type="hidden" name="business" value="<%= @deal.seller.email %>">
-<input type="hidden" name="lc" value="US">
-<input type="hidden" name="item_name" value="<%= @deal.product.title %>">
-<input type="hidden" name="item_number" value="<%= @deal.id %>">
-<input type="hidden" name="amount" value="<%= @deal.user_proposed_price %>">
-<input type="hidden" name="currency_code" value="USD">
-<input type="hidden" name="button_subtype" value="services">
-<input type="hidden" name="no_note" value="0">
-<input type="hidden" name="tax_rate" value="0.000">
-<input type="hidden" name="return" value="<%= request.original_url %>">
-<input type="hidden" name="rm" value="1">
-<% if !@deal.dropoff.nil? %>
-<% location = Geocoder.search @deal.dropoff %>
-<input type="hidden" name="address_override" value="1">
-<input type="hidden" name="address1" value="<%= location[0].street_address %>">
-<input type="hidden" name="country" value="<%= location[0].country %>">
-<input type="hidden" name="city" value="<%= location[0].city %>">
-<input type="hidden" name="zip" value="<%= location[0].postal_code %>">
-<input type="hidden" name="state" value="<%= location[0].state_code %>">
-<% else %>
-<input type="hidden" name="no_shipping" value="1">
+  <% if @deal.payment_method.method == "Paypal" && @deal.seller_id != current_user.id && @deal.agreement_achieved? && !@deal.payment_complete? %>
+    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+    <input type="hidden" name="cmd" value="_xclick">
+    <input type="hidden" name="business" value="<%= @deal.seller.email %>">
+    <input type="hidden" name="lc" value="US">
+    <input type="hidden" name="item_name" value="<%= @deal.product.title %>">
+    <input type="hidden" name="item_number" value="<%= @deal.id %>">
+    <input type="hidden" name="amount" value="<%= @deal.user_proposed_price %>">
+    <input type="hidden" name="currency_code" value="USD">
+    <input type="hidden" name="button_subtype" value="services">
+    <input type="hidden" name="no_note" value="0">
+    <input type="hidden" name="tax_rate" value="0.000">
+    <input type="hidden" name="return" value="<%= request.original_url %>">
+    <input type="hidden" name="rm" value="1">
+    <% if !@deal.dropoff.nil? %>
+      <% location = Geocoder.search @deal.dropoff %>
+      <input type="hidden" name="address_override" value="1">
+      <input type="hidden" name="address1" value="<%= location[0].street_address %>">
+      <input type="hidden" name="country" value="<%= location[0].country %>">
+      <input type="hidden" name="city" value="<%= location[0].city %>">
+      <input type="hidden" name="zip" value="<%= location[0].postal_code %>">
+      <input type="hidden" name="state" value="<%= location[0].state_code %>">
+    <% else %>
+      <input type="hidden" name="no_shipping" value="1">
+    <% end %>
+    <input type="hidden" name="notify_url" value="http://www.igold.ws:3002/payments">
+    <input type="hidden" name="shipping" value="<%= @deal.product.delivery_cost %>">
+    <input type="hidden" name="bn" value="PP-BuyNowBF:btn_paynowCC_LG.gif:NonHostedGuest">
+    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+    </form>
+  <% end %>
 <% end %>
-<input type="hidden" name="notify_url" value="http://www.igold.ws:3002/payments">
-<input type="hidden" name="shipping" value="<%= @deal.product.delivery_charge %>">
-<input type="hidden" name="bn" value="PP-BuyNowBF:btn_paynowCC_LG.gif:NonHostedGuest">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
+
+<% if current_user.id  == @deal.seller_id %>
+  <%= form_for @deal do |f| %>
+    <%= f.hidden_field :product_dispatched, value: true %>
+    <%= f.submit "Product dispatched?" %>
+  <% end %>
+
+  <%= form_for @deal do |f| %>
+    <%= f.hidden_field :payment_complete, value: true %>
+    <%= f.submit "Payment received?" %>
+  <% end %>
+
+  <%= form_for @deal do |f| %>
+    <%= f.hidden_field :seller_satisfied, value: true %>
+    <%= f.submit "Satisfied with completed deal?" %>
+  <% end %>
 <% end %>
-<% if @deal.payment_complete? %>
-<h4>Payment received</h4>
-<% end %>
+<% if current_user.id == @deal.buyer_id %>
+  <%= form_for @deal do |f| %>
+    <%= f.hidden_field :product_received, value: true %>
+    <%= f.submit "Product received?" %>
+  <% end %>
+
+  <%= form_for @deal do |f| %>
+    <%= f.hidden_field :buyer_satisfied, value: true %>
+    <%= f.submit "Satisfied with completed deal?" %>
+  <% end %>
+
 <% end %>

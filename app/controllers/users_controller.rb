@@ -25,6 +25,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.products_sold = 0
     @user.products_bought = 0
+    @user.default_delivery_cost = 0 if @user.default_delivery_cost.nil?
     if @user.save
       @user.send_activation_email
       flash[:info] = "Please check your email to activate your account."
@@ -92,7 +93,11 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
+<<<<<<< HEAD
       					  :password_confirmation, :public, :description, :full_street_address, :identifies_as, :interests, :profile_picture)
+=======
+      					  :password_confirmation, :public, :description, :full_street_address, :default_delivery_cost)
+>>>>>>> 2471e4ccd897c5e0daf0bf119ff5a440e9466496
     end
 
     def correct_user

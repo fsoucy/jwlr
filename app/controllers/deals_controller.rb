@@ -6,6 +6,8 @@ class DealsController < ApplicationController
       @deal.product_received = false
       @deal.payment_complete = false
       @deal.proposed_price_accepted = false
+      @deal.exchange_agreement_seller = false
+      @deal.exchange_agreement_buyer = false
       @deal.save
       redirect_to @deal
     else
@@ -28,7 +30,9 @@ class DealsController < ApplicationController
     if @deal.exchange_agreement_buyer and @deal.exchange_agreement_seller
       exchange_agreement = true
     end
+    exchange_agreement = exchange_agreement or !@deal.product.store.nil?
     @deal.agreement_achieved = selling_agreement and exchange_agreement
+    @deal.deal_complete = @deal.buyer_satisfied and @deal.seller_satisfied and @deal.payment_complete and @deal.product_received and @deal.agreement_achieved
     @deal.save
     redirect_to @deal
   end

@@ -10,10 +10,10 @@ class PaymentsController < ApplicationController
         if !deal.nil?
           if !deal.payment_complete? && deal.agreement_achieved?
             if deal.seller.email == params[:receiver_email]
-              if deal.product.delivery_charge.nil?
-                 deal.product.delivery_charge = 0
+              if deal.product.delivery_cost.nil?
+                 deal.product.delivery_cost = 0
               end
-              if (deal.user_proposed_price + deal.product.delivery_charge) == params[:payment_gross].to_f  
+              if (deal.user_proposed_price + deal.product.delivery_cost) == params[:payment_gross].to_f  
                 deal.payment_complete = true
                 deal.save            
               end

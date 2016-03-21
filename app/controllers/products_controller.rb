@@ -159,6 +159,7 @@ class ProductsController < ApplicationController
 
     unless product_params.nil?
       if @product.update_attributes(product_params)
+        @product.save
         redirect_to edit_toggle_options_product_path(@product.id)
       end
     end

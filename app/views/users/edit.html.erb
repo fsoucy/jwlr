@@ -30,6 +30,9 @@
 
       <%= f.label :identifies_as, "Identify as" %>
       <%= f.text_field :identifies_as, class: 'form-control' %>
+
+      <%= f.label :default_delivery_cost, "Default delivery cost" %>
+      <%= f.number_field :default_delivery_cost, class: 'form-control' %>
       
       <%= f.submit "Save changes", class: "btn btn-primary" %>
     <% end %>

@@ -8,6 +8,11 @@ class DealsController < ApplicationController
       @deal.proposed_price_accepted = false
       @deal.exchange_agreement_seller = false
       @deal.exchange_agreement_buyer = false
+      if @deal.product.selling_methods.length == 1
+        @deal.selling_method = @deal.product.selling_methods.first
+      end
+      @deal.exchange_method = @deal.product.exchange_methods.first if @deal.product.exchange_methods.length == 1
+      @deal.payment_method = @deal.product.payment_methods.first if @deal.product.payment_methods.length == 1
       @deal.save
       redirect_to @deal
     else

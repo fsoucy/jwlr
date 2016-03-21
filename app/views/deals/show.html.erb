@@ -107,7 +107,7 @@
           <%= f.submit "Save changes on delivery exchange" %>
         <% end %>
         <h3>Delivery location: <%= @deal.dropoff %></h3>
-	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil?) %>
+	<% if ((!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil?) and @deal.exchange_agreement_buyer) %>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_seller, value: true %>
           <%= f.submit "Accept exchange" %>
@@ -139,7 +139,7 @@
       <h5>The pickup will have to correspond to the <%= link_to "store's hours of operation.", @store %></h5>
     <% else %>
       <h4>Buyer and seller should agreement on a pickup time and location in messaging</h4>
-      <% if ((current_user.id == @deal.seller_id) and @deal.exchange_agreement_buyer) %>
+      <% if current_user.id == @deal.seller_id %>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_seller, value: true %>
           <%= f.submit "Agreed exchange" %>

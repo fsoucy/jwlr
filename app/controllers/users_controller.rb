@@ -93,11 +93,7 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
-<<<<<<< HEAD
-      					  :password_confirmation, :public, :description, :full_street_address, :identifies_as, :interests, :profile_picture)
-=======
-      					  :password_confirmation, :public, :description, :full_street_address, :default_delivery_cost)
->>>>>>> 2471e4ccd897c5e0daf0bf119ff5a440e9466496
+      					  :password_confirmation, :public, :description, :full_street_address, :identifies_as, :interests, :profile_picture, :default_delivery_cost)
     end
 
     def correct_user

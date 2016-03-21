@@ -167,7 +167,7 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title, :min_accepted_price, :delivery_charge, :maximum_delivery_radius_miles)
+    params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title, :min_accepted_price, :delivery_cost)
   end
   
   def correct_user

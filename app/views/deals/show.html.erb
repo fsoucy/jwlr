@@ -29,9 +29,9 @@
   <%= f.submit "Save new method preferences" %>
   <% end %>
   <% else %>
-  <p>Selling method: <%= @deal.selling_method %></p>
-  <p>Exchange method: <%= @deal.exchange_method %></p>
-  <p>Payment method: <%= @deal.payment_method %></p>
+  <p>Selling method: <%= @deal.selling_method.method %></p>
+  <p>Exchange method: <%= @deal.exchange_method.method %></p>
+  <p>Payment method: <%= @deal.payment_method.method %></p>
   <% end %>
 <% else %>
   <% if !SellingMethodLink.where("selling_method_id IN (?,?) AND product_id=?", 3, 4, @deal.product.id) %>

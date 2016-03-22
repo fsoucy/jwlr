@@ -63,18 +63,7 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
-  def selling
-    @deals = User.find(params[:id]).selling_feed
-  end
 
-  def buying
-    @deals = User.find(params[:id]).buying_feed
-  end
-
-  def completed
-    user = User.find(params[:id])
-    @deals = user.active_completed_deals + user.passive_completed_deals
-  end
 
   def user_stores
     user = User.find(params[:id])

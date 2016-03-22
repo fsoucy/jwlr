@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160321173608) do
+ActiveRecord::Schema.define(version: 20160322171826) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -220,24 +220,6 @@ ActiveRecord::Schema.define(version: 20160321173608) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "statuses", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "minPrice"
-    t.integer  "maxPrice"
-    t.boolean  "buying"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.integer  "toTravel"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.string   "full_street_address"
-    t.text     "description"
-    t.integer  "category_id"
-  end
-
-  add_index "statuses", ["category_id"], name: "index_statuses_on_category_id"
-  add_index "statuses", ["user_id"], name: "index_statuses_on_user_id"
-
   create_table "stores", force: :cascade do |t|
     t.string   "full_street_address"
     t.string   "name"
@@ -333,13 +315,13 @@ ActiveRecord::Schema.define(version: 20160321173608) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "full_street_address"
+    t.integer  "business_days_pickup"
+    t.decimal  "default_delivery_cost"
     t.text     "interests"
     t.integer  "products_bought"
     t.integer  "products_sold"
     t.text     "identifies_as"
     t.string   "profile_picture"
-    t.integer  "business_days_pickup"
-    t.decimal  "default_delivery_cost"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

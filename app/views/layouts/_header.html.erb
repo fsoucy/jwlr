@@ -13,11 +13,7 @@
       <ul class="dropdown_menu_header">
 	<% if logged_in? %>
 	<li><%= link_to "Public Users", users_path %></li>
-	<li><%= link_to "Status", new_status_path %></li>
 	<li><%= link_to "Product", new_product_path %></li>
-	<li><%= link_to "Selling", selling_user_path(current_user.id) %></li>
-	<li><%= link_to "Buying", buying_user_path(current_user.id) %></li>
-	<li><%= link_to "Completed", completed_user_path(current_user.id) %></li>
 	<li><%= link_to "Notifications", noties_user_path(current_user.id) %></li>
 	<li><%= link_to "Profile", current_user %></li>
 	<li><%= link_to "Settings", edit_user_path(current_user) %></li>

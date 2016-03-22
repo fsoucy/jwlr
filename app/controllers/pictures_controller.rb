@@ -48,6 +48,8 @@ class PicturesController < ApplicationController
   def add_cropped
     @picture = Picture.find(params[:id])
     img = MiniMagick::Image.open(@picture.photo.path)
+    @picture.photo_cropped = @picture.photo
+    @picture.save
     maxDim = img.height
     maxDim = img.width unless img.height > img.width
     scale = maxDim / 300.0

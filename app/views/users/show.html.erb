@@ -33,7 +33,7 @@
 <div class="store_prod">
   <div class="image_container">
     <%= if !prod.pictures.first.nil?
-      image_tag prod.pictures.first.photo, class: "store_prod_image" 
+      image_tag prod.pictures.first.photo_cropped(:thumb), class: "store_prod_image" 
     end
     %>
     <button class="quick_view">Quick View</button>

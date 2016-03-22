@@ -44,6 +44,13 @@ class DealsController < ApplicationController
     exchange_agreement = ((@deal.exchange_agreement_buyer and @deal.exchange_agreement_seller) or (!@deal.product.store.nil? and pickup))
     @deal.agreement_achieved = (selling_agreement and exchange_agreement)
     @deal.deal_complete = (@deal.buyer_satisfied and @deal.seller_satisfied and @deal.payment_complete and @deal.product_received and @deal.agreement_achieved)
+    if @deal.selling_method.id == 2
+      @deal.user_proposed_price = nil
+      @deal.proposed_price_accepted = false
+    end
+    if @deal.exchange_method.id != 1
+      @deal.dropoff = nil
+    end
     @deal.save
     redirect_to @deal
   end

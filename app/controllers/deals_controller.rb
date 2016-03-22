@@ -87,7 +87,7 @@ class DealsController < ApplicationController
 
   private
   def deals_params
-    params.require(:deal).permit(:seller_id, :buyer_id, :product_id, :selling_method_id, :exchange_method_id, :payment_method_id) 
+    params.require(:deal).permit(:seller_id, :buyer_id, :product_id) 
   end
 
   def seller_params_unaccepted
@@ -95,7 +95,7 @@ class DealsController < ApplicationController
   end
 
   def buyer_params_unaccepted
-    params.require(:deal).permit(:exchange_agreement_buyer, :user_proposed_price, :dropoff)
+    params.require(:deal).permit(:exchange_agreement_buyer, :user_proposed_price, :dropoff, :selling_method_id, :exchange_method_id, :payment_method_id)
   end
 
   def seller_params_accepted

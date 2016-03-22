@@ -7,7 +7,7 @@
 <h2>Deal complete: <%= @deal.deal_complete %></h2>
 <%= image_tag @deal.product.pictures.first.photo_cropped(:medium) %>
 <h2>Listed price: <%= @deal.product.price %></h2>
-<% if @deal.buyer.id == current_user.id %>
+<% if @deal.buyer.id == current_user.id && !@deal.agreement_achieved %>
   <% if @deal.product.selling_method_links.count > 1 or @deal.product.exchange_method_links.count > 1 or @deal.product.payment_method_links.count > 1 %>
   <%= form_for(@deal) do |f| %>
   <p>Selling Methods (choose one)</p>

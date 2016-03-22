@@ -44,6 +44,8 @@ class ProductsController < ApplicationController
     @toggle_options = @product.toggle_options
     search = Sunspot.more_like_this(@product) do
       fields :description, :title
+      with(:sold, false)
+      with(:hold, false)
       boost_by_relevance true
       paginate :page => 1, :per_page => 5
     end

@@ -47,6 +47,7 @@ $(document).ready(function(){
 	zoomable: false,
 	toggleDragModeOnDblClick: false,
 	cropBoxResizable: false,
+	aspectRatio: 1.00,
 	built: function () {
 	    $image.cropper('setCanvasData', canvasData);
 	    $image.cropper('setCropBoxData', cropBoxData);

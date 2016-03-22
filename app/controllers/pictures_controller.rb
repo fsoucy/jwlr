@@ -35,7 +35,7 @@ class PicturesController < ApplicationController
     img = MiniMagick::Image.open(@picture.photo.path)
     maxDim = img.height
     maxDim = img.width unless img.height > img.width
-    @factor = 300.0 / maxDim
+    @factor = 600.0 / maxDim
   end
 
   def update

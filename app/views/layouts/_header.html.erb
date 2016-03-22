@@ -13,7 +13,7 @@
       <ul class="dropdown_menu_header">
 	<% if logged_in? %>
 	<li><%= link_to "Public Users", users_path %></li>
-	<li><%= link_to "Product", new_product_path %></li>
+	<li><%= link_to "Upload Product", new_product_path %></li>
 	<li><%= link_to "Notifications", noties_user_path(current_user.id) %></li>
 	<li><%= link_to "Profile", current_user %></li>
 	<li><%= link_to "Settings", edit_user_path(current_user) %></li>

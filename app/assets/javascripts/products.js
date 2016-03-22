@@ -5,8 +5,8 @@ $(document).ready(function() {
 	smallLink = $(this).next().attr('href');
 	largeImage = $('.product_image').attr('src');
 	largeLink = $('.product_image').next().attr('href');
-	$(this).attr('src', largeImage.replace('medium', 'thumb'));
-	$('.product_image').attr('src', smallImage.replace('thumb', 'medium'));
+	$(this).attr('src', largeImage.replace('medium', 'thumbnail'));
+	$('.product_image').attr('src', smallImage.replace('thumbnail', 'medium'));
 	$('.product_image').next().attr('href', smallLink);
 	$(this).next().attr('href', largeLink);
     });

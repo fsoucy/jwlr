@@ -9,7 +9,7 @@
       <% end %>
   <% end %>
   <% @product.pictures.each do |picture| %>
-  <%= image_tag picture.photo_cropped(:thumb), class: "cropped_show" unless picture == @product.pictures.first %>
+  <%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show" unless picture == @product.pictures.first %>
   <% if @product.user.id == current_user.id %>
   <%= link_to "Edit", edit_picture_path(picture) %>
   <% end %>

@@ -12,28 +12,28 @@
       
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>
-
+      <br>
       <%= f.label :email %>
       <%= f.email_field :email, class: 'form-control' %>
-      
+      <br>
       <%= f.label :password %>
       <%= f.password_field :password, class: 'form-control' %>
-
+      <br>
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation, class: 'form-control' %>
-      
+      <br>
       <%= f.label :full_street_address, "Full Street Address" %>
       <%= f.text_field :full_street_address, class: 'form-control' %>
-
+      <br>
       <%= f.label :interests, "Interests" %>
       <%= f.text_field :interests, class: 'form-control' %>
-
+      <br?
       <%= f.label :identifies_as, "Identify as" %>
       <%= f.text_field :identifies_as, class: 'form-control' %>
-
+      <br>
       <%= f.label :default_delivery_cost, "Default delivery cost" %>
       <%= f.number_field :default_delivery_cost, class: 'form-control' %>
-      
+      <br>
       <%= f.submit "Save changes", class: "btn btn-primary" %>
     <% end %>
     

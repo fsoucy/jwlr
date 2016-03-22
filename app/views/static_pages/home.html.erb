@@ -39,10 +39,11 @@
     <p>Start your online business</p>
     <button class="sell">Let's get started</button>
   </div>
+</div>
   <div class="home_gallery">
     <h1>For You</h1>
     <div class="gallery_container">
-      <div class="gallery_main" id="gallery_main_first"></div>
+      <div class="gallery_main" id="gallery_main_first"><%= image_tag @for_you[1].picture.photo_cropped.url(:medium) %></div>
       <div class="gallery_other first"></div>
       <div class="gallery_other second"></div>
       <div class="gallery_other third"></div>
@@ -76,6 +77,5 @@
       <% end %>
     </div>
   </div>
-</div>
 
   

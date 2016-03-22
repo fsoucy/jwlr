@@ -71,8 +71,8 @@ class PicturesController < ApplicationController
     end
 
     def correct_user_product
-      product = current_user.products.find(params[:id])
-      redirect_to root_url if product.nil?
+      product = current_user.products.exists?(params[:id])
+      redirect_to root_url if !product
     end
 
     def correct_user_picture

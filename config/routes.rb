@@ -54,11 +54,6 @@ Rails.application.routes.draw do
   resources :deals
   resources :payments, only: [:create]  
     
-  resources :statuses, only: [:new, :create, :destroy, :show] do
-    member do
-      get :matches
-    end
-  end
   resources :account_activations, only: [:edit]
   resources :categories
   

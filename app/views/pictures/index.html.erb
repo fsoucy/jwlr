@@ -1,7 +1,11 @@
 <% @pictures.each do |picture| %>
 <div class="picture">
   <%= image_tag picture.photo.url %>
+  <% if picture.photo_cropped != nil %>
+  <%= image_tag picture.photo_cropped.url %>
+  <% else %>
   <h2>Cropped image will go here</h2>
+  <% end %>
   <%= link_to "Delete", picture, method: :delete,
       data: { confirm: "Are you sure?" } %>
   <%= link_to "Edit", edit_picture_url(picture) %>

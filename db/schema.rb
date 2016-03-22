@@ -167,6 +167,7 @@ ActiveRecord::Schema.define(version: 20160322222815) do
     t.decimal  "min_accepted_price"
     t.boolean  "fully_updated"
     t.decimal  "delivery_cost"
+    t.boolean  "featured"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id"

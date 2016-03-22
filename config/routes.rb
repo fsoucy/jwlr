@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      get :edit_description, :user_stores, :noties
+      get :edit_description, :user_stores, :noties, :selling, :buying
     end
   end  
 

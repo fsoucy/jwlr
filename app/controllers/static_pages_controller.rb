@@ -32,9 +32,30 @@ class StaticPagesController < ApplicationController
           results += search.results
          end
       end
-
       @for_you = results
     end
+    @for_you = [] if @for_you.nil?
+    @featured = [] if @featured.nil?
+    index = 0
+    while (@for_you.count < 5 and Product.count > @for_you.count)
+      product = nil
+      while product.nil?
+        product = Product.find_by(id: index)
+        index += 1
+      end
+      @for_you.append(product)
+    end
+    
+    index = 0
+    while (@featured.count < 5 and Product.count > @featured.count)
+      product = nil
+      while product.nil?
+        product = Product.find_by(id: index)
+        index += 1
+      end
+      @featured.append(product)
+    end
+    
   end
 
   def help

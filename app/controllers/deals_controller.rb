@@ -31,7 +31,7 @@ class DealsController < ApplicationController
 
   def update
     @deal = Deal.find(params[:id])
-    if !@deal.sold
+    if !@deal.product.sold
     @deal.assign_attributes(deals_params)
     if @deal.agreement_achieved && !@deal.deal_complete
       if current_user == @deal.seller

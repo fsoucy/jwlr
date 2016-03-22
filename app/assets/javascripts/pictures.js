@@ -39,7 +39,7 @@ $(document).ready(function(){
 
     var $image = $('#image');
     var factor = parseFloat($('#factor').val());
-    var cropBoxData = { width: 300 * factor, height: 300 * factor};
+    var cropBoxData = { width: 800 * factor, height: 800 * factor};
     var canvasData;
 
     
@@ -63,8 +63,8 @@ $(document).ready(function(){
 	var y = cropBoxData.top;
 	var factor = 1 / parseFloat($('#factor').val());
 	console.log(x);
-	var offsetX = (300.0 - $('.cropper-canvas').width()) / 2.0;
-	var offsetY =  (300.0 - $('.cropper-canvas').height()) / 2.0;
+	var offsetX = (600.0 - $('.cropper-canvas').width()) / 2.0;
+	var offsetY =  (600.0 - $('.cropper-canvas').height()) / 2.0;
 	$('#x').val(x - offsetX);
 	$('#y').val(y - offsetY);
 	$('#width').val(cropBoxData.width * factor);

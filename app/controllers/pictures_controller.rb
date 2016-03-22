@@ -52,7 +52,7 @@ class PicturesController < ApplicationController
     @picture.save
     maxDim = img.height
     maxDim = img.width unless img.height > img.width
-    scale = maxDim / 300.0
+    scale = maxDim / 600.0
     toCropX = params[:x].to_f * scale
     toCropY = params[:y].to_f * scale
     size = "" + params[:width] + "x" + params[:height] + "+"

@@ -17,6 +17,8 @@
 	<li><%= link_to "Notifications", noties_user_path(current_user.id) %></li>
 	<li><%= link_to "Profile", current_user %></li>
 	<li><%= link_to "Settings", edit_user_path(current_user) %></li>
+	<li><%= link_to "My Selling Deals", selling_user_path(current_user) %></li>
+	<li><%= link_to "My Buying Deals", buying_user_path(current_user) %></li>
 	<li class="divider"></li>
 	<li><%= link_to "Log out", logout_path, method: "delete", class: 'bottom' %></li>
 	<% else %>

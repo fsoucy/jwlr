@@ -77,6 +77,14 @@ class UsersController < ApplicationController
   def noties
     @notes = User.find(params[:id]).notifications
   end
+
+  def selling
+    @selling = Deal.where("seller_id=?", params[:id])
+  end
+
+  def buying
+    @buying = Deal.where("buyer_id=?", params[:id])
+  end
   
   private
 

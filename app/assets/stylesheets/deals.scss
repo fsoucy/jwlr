@@ -1,3 +1,29 @@
 // Place all the styles related to the Deals controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.deal
+{
+  display: block;
+  float: left;
+  clear: none;
+  padding: 3px;
+}
+
+.finished_true
+{
+  h3
+  {
+    color: green;
+  }
+  border: 1px solid green;
+}
+
+.finished_false
+{
+  h3
+  {
+    color: red;
+  }
+  border: 1px solid red;
+}

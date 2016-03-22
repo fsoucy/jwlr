@@ -2,10 +2,18 @@
 <% provide(:title, "Product") %>
 <div class="product_show_container">
   <h1><%= @product.title %> (<%= @product.category.name %>)</h1>
-  <%= if !@product.pictures.first.nil?
-    image_tag @product.pictures.first.photo_cropped(:medium), class: "product_image" 
-  end
-  %>
+  <% if !@product.pictures.first.nil? %>
+      <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "product_image" %>
+      <% if @product.user.id == current_user.id %>
+      <% link_to("Edit", edit_picture_path(@product.pictures.first)) %>
+      <% end %>
+  <% end %>
+  <% @product.pictures.each do |picture| %>
+  <%= image_tag picture.photo_cropped(:thumb), class: "cropped_show" unless picture == @product.pictures.first %>
+  <% if @product.user.id == current_user.id %>
+  <%= link_to "Edit", edit_picture_path(picture) %>
+  <% end %>
+  <% end %>
   <% @toggle_options.each do |opt| %>
   <h3><%= opt.attribute_option.category_option.name %>: <%= opt.attribute_option.value %></h3>
   <% end %>

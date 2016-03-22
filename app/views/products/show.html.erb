@@ -1,8 +1,5 @@
 <% title = "Product by " + @product.user.name %>
 <% provide(:title, "Product") %>
-<% if current_user.id == @product.user.id %>
-<%= link_to "Edit product", edit_product_path(@product.id) %>
-<% end %>
 <div class="product_show_container">
   <h1><%= @product.title %> (<%= @product.category.name %>)</h1>
   <%= if !@product.pictures.first.nil?
@@ -27,6 +24,7 @@
 <div class="product_show_container">
   <% if @product.user == current_user %><%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
 					    data: { confirm: "Are you sure you wish to delete this?" } %>
+  <%= link_to "Edit product", edit_product_path(@product.id) %>
   <% else %>
   <% if logged_in? %>
   <%= form_for(@deal) do |f| %>
@@ -57,7 +55,7 @@
   <% @product.exchange_method_links.each do |s| %>
   <p><%= s.exchange_method.method %></p>
   <% if s.exchange_method.method == "Delivery" %>
-  <p>Delivery cost: <%= @product.delivery_cost %></p>
+  <p>Delivery cost: <%= number_to_currency(@product.delivery_cost) %></p>
   <% end %>
   <% end %>
   <h2>Payment Methods</h2>

@@ -3,7 +3,7 @@
   <div class="main_navbar_top">
     <div class="nav_header"><h1 class="logoicon"><%= link_to "iGold", root_path, class: 'logolink' %></h1></div>
       <%= form_tag "/search", method: "get", class: 'search_header' do %>
-      <%= text_field_tag "search_string", "", placeholder: "Search for a product or user", class: 'search_string', autocomplete: 'off'%>
+      <%= text_field_tag "search_string", "", placeholder: "Search for a product", class: 'search_string', autocomplete: 'off'%>
       <%= submit_tag "Search", class: 'search_submitter' %>
       <ul class="suggestions" id="sug_list">
       </ul>
@@ -14,7 +14,6 @@
 	<% if logged_in? %>
 	<li><%= link_to "Public Users", users_path %></li>
 	<li><%= link_to "Upload Product", new_product_path %></li>
-	<li><%= link_to "Notifications", noties_user_path(current_user.id) %></li>
 	<li><%= link_to "Profile", current_user %></li>
 	<li><%= link_to "Settings", edit_user_path(current_user) %></li>
 	<li><%= link_to "My Selling Deals", selling_user_path(current_user) %></li>

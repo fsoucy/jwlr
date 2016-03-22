@@ -1,4 +1,4 @@
-// Place all the styles related to the StaticPages controller here.
+// Place all the stylyes related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
@@ -24,8 +24,10 @@
     width: 1110px;
     height: 302px;
     background-color: white;
+    overflow: none;
     .gallery_main, .featured_main
     {
+      overflow: none;
       width: 300px;
       height: 300px;
       border: 1px solid #d8d0e0;
@@ -35,6 +37,7 @@
     }
     .gallery_other, .featured_other
     {
+      overflow: none;
       width: 200px;
       height: 200px;
       margin: 0;

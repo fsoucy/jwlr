@@ -39,7 +39,7 @@ $(document).ready(function(){
 
     var $image = $('#image');
     var factor = parseFloat($('#factor').val());
-    var cropBoxData = { width: 800 * factor, height: 800 * factor};
+    var cropBoxData = { width: 300 * factor, height: 300 * factor};
     var canvasData;
 
     

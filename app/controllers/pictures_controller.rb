@@ -55,9 +55,11 @@ class PicturesController < ApplicationController
     scale = maxDim / 300.0
     toCropX = params[:x].to_f * scale
     toCropY = params[:y].to_f * scale
-    cropString = "800x800+" + toCropX.to_s + "+" + toCropY.to_s
+    cropString = "300x300+" + toCropX.to_s + "+" + toCropY.to_s
     img.crop(cropString)
     img.write(@picture.photo_cropped.path)
+    @picture.photo_cropped.reprocess!
+    @picture.save
     redirect_to @picture.product
   end
 

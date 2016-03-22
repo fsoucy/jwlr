@@ -1,8 +1,9 @@
 <% @pictures.each do |picture| %>
 <div class="picture">
-  <%= image_tag picture.photo.url %>
+  <%= image_tag picture.photo.url, id: "regular_photo"  %>
   <% if picture.photo_cropped != nil %>
-  <%= image_tag picture.photo_cropped.url %>
+  <%= image_tag picture.photo_cropped.url, id: "photo_cropped" %>
+  <%= image_tag picture.photo_cropped.url(:thumb), id: "cropped_medium" %>
   <% else %>
   <h2>Cropped image will go here</h2>
   <% end %>

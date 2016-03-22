@@ -24,10 +24,21 @@ class PicturesController < ApplicationController
 
   def destroy
     @picture = Picture.find(params[:id])
-    if @picture.destroy    
-      render json: { message: "File deleted from server" }
+    product = @picture.product
+    if request.xhr?
+      if @picture.destroy    
+        render json: { message: "File deleted from server" }
+      else
+        render json: { message: @picture.errors.full_messages.join(',') }
+      end
     else
-      render json: { message: @picture.errors.full_messages.join(',') }
+      if @picture.destroy
+        flash[:success] = "Image deleted"
+        redirect_to product
+      else
+        flash[:error] = @picture.errors.full_messages.join(',')
+        redirect_to product
+      end
     end
   end
 

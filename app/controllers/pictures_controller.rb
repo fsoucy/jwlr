@@ -12,6 +12,8 @@ class PicturesController < ApplicationController
     @picture = current_user.products.find(params[:id]).pictures.build(picture_params)
       if @picture.save
         render json: { message: "success", fileID: @picture.id }, :status => 200
+        @picture.photo_cropped = @picture.photo
+        @picture.save
       else
         render json: { error: @picture.errors.full_messages.join(',')}, :status => 400
       end
@@ -30,7 +32,6 @@ class PicturesController < ApplicationController
   end
 
   def edit
-    
     @picture = Picture.find(params[:id])
     img = MiniMagick::Image.open(@picture.photo.path)
     maxDim = img.height

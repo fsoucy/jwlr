@@ -37,7 +37,7 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find_by(id: params[:id])
-    if (@product.toggle_options.count < 1 and @product.id == current_user.id)
+    if (@product.toggle_options.count < 1 and @product.user.id == current_user.id)
       flash[:warning] = "You need toggle options"
       redirect_to edit_toggle_options_product_path(@product)
       return

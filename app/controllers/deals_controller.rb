@@ -86,6 +86,13 @@ class DealsController < ApplicationController
     if @deal.selling_method.id == 2
       @deal.proposed_price_accepted = true
     end
+    if @deal.dropoff_changed?
+      location = Geocoder.search @deal.dropoff
+      if location[0].street_address.nil? || location[0].street_address == ""
+        @deal.dropoff = nil
+        flash[:error] = "You need to use a full street address"
+      end
+    end
     if @deal.exchange_method.id != 1
       @deal.dropoff = nil
     end

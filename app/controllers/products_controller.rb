@@ -134,18 +134,13 @@ class ProductsController < ApplicationController
     end
 
     unless selling_methods.nil?
-      if @product.selling_method_links.count < 1
-        flash[:warning] = "You need at least one accepted selling method!"
-        redirect_to edit_selling_methods_product_path(@product)
-        return
-      end
       @product.selling_method_links.each do |l|
         l.destroy
       end
       selling_methods.each do |id, selected|
         @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
       end
-      if @product.selling_methods.count < 1
+      if @product.selling_method_links.count < 1
         flash[:warning] = "You need at least one accepted selling method!"
         redirect_to edit_selling_methods_product_path(@product)
         return
@@ -153,15 +148,9 @@ class ProductsController < ApplicationController
         redirect_to edit_exchange_methods_product_path(@product.id)
         return
       end
-      #redirect_to controller: 'ProductsController', action: 'edit_exchange_methods', id: @product.id
     end
 
     unless exchange_methods.nil?
-      if @product.exchange_method_links.count < 1
-        flash[:warning] = "You need at least one accepted exchange method!"
-        redirect_to edit_exchange_methods_product_path(@product)
-        return
-      end
       @product.exchange_method_links.each do |l|
         l.destroy
       end
@@ -169,7 +158,7 @@ class ProductsController < ApplicationController
         @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
       end
       
-      if @product.exchange_methods.count < 1
+      if @product.exchange_method_links.count < 1
         flash[:warning] = "You need at least one accepted exchange method!"
         redirect_to edit_exchange_methods_product_path(@product)
         return
@@ -180,18 +169,13 @@ class ProductsController < ApplicationController
     end
 
     unless payment_methods.nil?
-      if @product.payment_method_links.count < 1
-        flash[:warning] = "You need at least one accepted payment method!"
-        redirect_to edit_payment_methods_product_path(@product)
-        return
-      end
       @product.payment_method_links.each do |l|
         l.destroy
       end
       payment_methods.each do |id, selected|
         @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
       end
-      if @product.payment_methods.count < 1
+      if @product.payment_method_links.count < 1
         flash[:warning] = "You need at least one accepted payment method!"
         redirect_to edit_payment_methods_product_path(@product)
         return
@@ -211,12 +195,6 @@ class ProductsController < ApplicationController
         @product.min_accepted_price = 0.0
       end
       @product.save
-    end
-
-    if @product.toggle_options.count > 0 and @product.selling_method_links.count > 0 and @product.exchange_method_links.count > 0 and @product.payment_method_links.count > 0 and @product.pictures.count > 0
-      @product.activated = true
-    else
-      @product.activated = false
     end
 
     unless product_params.nil?

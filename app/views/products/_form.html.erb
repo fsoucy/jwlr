@@ -1,3 +1,4 @@
+<div class="form_fields">
 <%= form_for(@product,  html: { multipart: true}) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
 
@@ -5,34 +6,31 @@
 <%= f.select :category_id, nested_dropdown(Category.where(:parent_id => nil), true) %>
 <br>
 
-<%= f.label :title %>
-<%= f.text_field :title, class: 'form-control' %>
+<%= f.text_field :title, class: 'form_input', placeholder: 'Title' %>
 <br>
 
-<%= f.label :price, "Price" %>
-<%= f.number_field :price, class: 'form-control' %>
+<%= f.number_field :price, class: 'form_input', placeholder: 'Price' %>
 <br>
 
 <% if @has %>
 <%= f.label :store_id, "Store of Product" %>
 <%= f.select :store_id, options_for_select(@stos, @default) %>
 <% else %>
-<%= f.label :full_street_address, "Address of Product" %>
-<%= f.text_field :full_street_address, class: 'form-control' %>
+<%= f.text_field :full_street_address, class: 'form_input', placeholder: 'Full street address of product' %>
 <% end %>      
 <br>
 
-<%= f.label :description, "Description of Product + Keywords" %>
-<br>
-<%= f.text_area :description, class: 'form-control' %>
+
+<%= f.text_area :description, class: 'form_input', placeholder: 'Description of product' %>
 <br>
 
 <%= f.label :delivery_cost, "Planning on adding a delivery cost? Specify that here. If not, just leave this unchanged." %>
 <% if @product.delivery_cost.nil? %>
-<%= f.number_field :delivery_cost, value: current_user.default_delivery_cost, class: 'form-control' %>
+<%= f.number_field :delivery_cost, value: current_user.default_delivery_cost, class: 'form_input' %>
 <% else %>
-<%= f.number_field :delivery_cost, class: 'form-control' %>
+<%= f.number_field :delivery_cost, class: 'form_input' %>
 <% end %>
-<%= f.submit "Upload product", class: "btn btn-primary" %>
+<br>
+<%= f.submit "Upload product", class: "form_submit" %>
 <% end %>
-
+</div>

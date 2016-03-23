@@ -1,8 +1,7 @@
 <% provide(:title, "Edit user") %>
+<div class="form_fields">
 <h1>Update your profile</h1>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
     <%= form_for(@user) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
@@ -10,36 +9,24 @@
       <%= f.file_field :profile_picture, class: 'file' %>
       <br>
       
-      <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control' %>
+      <%= f.text_field :name, class: 'form_input', placeholder: 'Name' %>
       <br>
-      <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control' %>
+      <%= f.email_field :email, class: 'form_input', placeholder: 'Email' %>
       <br>
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
+      <%= f.password_field :password, class: 'form_input', placeholder: 'Password' %>
       <br>
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
+      <%= f.password_field :password_confirmation, class: 'form_input', placeholder: 'Password confirmation' %>
       <br>
-      <%= f.label :full_street_address, "Full Street Address" %>
-      <%= f.text_field :full_street_address, class: 'form-control' %>
+      <%= f.text_field :full_street_address, class: 'form_input', placeholder: 'Full street address' %>
       <br>
-      <%= f.label :interests, "Interests" %>
-      <%= f.text_field :interests, class: 'form-control' %>
-      <br?
-      <%= f.label :identifies_as, "Identify as" %>
-      <%= f.text_field :identifies_as, class: 'form-control' %>
+      <%= f.text_field :interests, class: 'form_input', placeholder: 'What are your interests in the industry?' %>
       <br>
-      <%= f.label :default_delivery_cost, "Default delivery cost" %>
-      <%= f.number_field :default_delivery_cost, class: 'form-control' %>
+      <%= f.text_field :identifies_as, class: 'form_input', placeholder: 'How do you identify as a user?' %>
       <br>
-      <%= f.submit "Save changes", class: "btn btn-primary" %>
+      <%= f.label :default_delivery_cost, "Default delivery cost if you plan on delivering products" %>
+      <%= f.number_field :default_delivery_cost, class: 'form_input', placeholder: 'Default delivery cost' %>
+      <br>
+      <%= f.submit "Save changes", class: "form_submit" %>
     <% end %>
     
-    <div class="gravatar_edit">
-      <%= gravatar_for @user %>
-      <a href="http://gravatar.com/emails" target="_blank">change</a>
-    </div>
-  </div>
 </div>

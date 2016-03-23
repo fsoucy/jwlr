@@ -1,4 +1,36 @@
 @import "bootstrap-sprockets";
+
+//forms
+.form_input
+{
+  border: 1px solid #5a8393;
+  width: 300px;
+  height: 30px;
+  margin-top: 5px;
+  color: green;
+  outline: none;
+}
+
+.form_fields
+{
+  margin-left: 4px;
+  color: green;
+  a, h1, h2, h3, h4, h5, h6
+  {
+    color: green;
+  }
+}
+
+.form_submit
+{
+  color: white;
+  background-color: #5a8693;
+  height: 35px;
+  width: 200;
+}
+
+
+
 .container
 {
   width: 2000px;
@@ -10,6 +42,7 @@
 {
   margin-top: 70px;
 }
+
 
 button, input
 {
@@ -375,3 +408,5 @@ input
     display: inline-block;
   }
 }
+
+

@@ -1,68 +1,58 @@
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
+<div class="form_fields">
     <%= form_for(@store,  html: { multipart: true}) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       
 
-      <%= f.label :name, "Store Name" %>
-      <%= f.text_field :name, class: 'form-control' %>
-
+      <%= f.text_field :name, class: 'form_input', placeholder: 'Store name' %>
+      <br>
 
       <%= f.label :profile_photo, "Store Profile Picture" %>
       <%= f.file_field :profile_photo, class: 'file' %>
-
-      <%= f.label :full_street_address, "Store Location", style: 'inline'%>
-      <%= f.text_field :full_street_address, class: 'form-control', style:'inline' %>
-    
-    <%= f.label :phone, "Phone number", style: 'inline'%>
-      <%= f.telephone_field :phone, class: 'form-control', style:'inline' %>
+      <br>
       
-      <%= f.label :business_days_pickup, "How many business days will a user have to pick up a purchased product?", style: 'inline' %>
-      <%= f.number_field :business_days_pickup, class: 'form-control', style: 'inline' %>
-
-      <%= f.label :description, "Give a description for your store" %>
-      <%= f.text_area :description, class: 'form-control' %>
-
+      <%= f.text_field :full_street_address, class: 'form_input', placeholder: 'Store location' %>
+      <br>
+      
+      <%= f.telephone_field :phone, class: 'form_input', placeholder: 'Business phone number' %>
+      <br>
+      
+      <%= f.text_area :description, class: 'form_input', placeholder: 'Give a description for your store' %>
+      <br>
+      
       <h1>What are the hours of operation for your store?</h1>
-
-      <%= f.label :mondayopen, class: "checkbox inline" do %>
-        <%= f.check_box :mondayopen %>
-        <span><b>Select if you're open on Mondays</b></span>
-      <% end %>
-
-      <%= f.label :tuesdayopen, class: "checkbox inline" do %>
-      <%= f.check_box :tuesdayopen %>
-        <span><b>Select if you're open on Tuesdays</b></span>
-      <% end %>
-
-      <%= f.label :wednesdayopen, class: "checkbox inline" do %>
-      <%= f.check_box :wednesdayopen %>
-        <span><b>Select if you're open on Wednesdays</b></span>
-      <% end %>
+      <br>
       
-      <%= f.label :thursdayopen, class: "checkbox inline" do %>
+      <%= f.check_box :mondayopen %>
+      <span><b>Select if you're open on Mondays</b></span>
+      <br>
+      
+      <%= f.check_box :tuesdayopen %>
+      <span><b>Select if you're open on Tuesdays</b></span>
+      <br>
+      
+      <%= f.check_box :wednesdayopen %>
+      <span><b>Select if you're open on Wednesdays</b></span>
+      <br>
+      
       <%= f.check_box :thursdayopen %>
-        <span><b>Select if you're open on Thursdays</b></span>
-      <% end %>
-
-      <%= f.label :fridayopen, class: "checkbox inline" do %>
+      <span><b>Select if you're open on Thursdays</b></span>
+      <br>
+      
       <%= f.check_box :fridayopen %>
-        <span><b>Select if you're open on Fridays</b></span>
-      <% end %>
-
-      <%= f.label :saturdayopen, class: "checkbox inline" do %>
+      <span><b>Select if you're open on Fridays</b></span>
+      <br>
+      
       <%= f.check_box :saturdayopen %>
-        <span><b>Select if you're open on Saturdays</b></span>
-      <% end %>
-
-      <%= f.label :sundayopen, class: "checkbox inline" do %>
+      <span><b>Select if you're open on Saturdays</b></span>
+      <br>
+      
       <%= f.check_box :sundayopen %>
-        <span><b>Select if you're open on Sundays</b></span>
-      <% end %>
-
-      <%= f.submit "Save store", class: "btn btn-primary" %>
+      <span><b>Select if you're open on Sundays</b></span>
+      <br>
+      
+      <%= f.submit "Save store", class: "form_submit" %>
 
     <% end %>
-  </div>
+
 </div>
 

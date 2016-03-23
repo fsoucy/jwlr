@@ -2,6 +2,8 @@
 <% if (@deal.product_dispatched and current_user.id == @deal.buyer_id) %>
   <h2>The product is on its way to you!</h2>
 <% end %>
+<%= link_to "Cancel this deal", @deal, method: :delete, class: "btn btn-primary down",
+              data: { confirm: "Are you sure you wish to cancel this deal?" } unless @deal.agreement_achieved %>
 <h2>Payment complete: <%= @deal.payment_complete %></h2>
 <h2>Product received: <%= @deal.product_received %></h2>
 <h2>Deal complete: <%= @deal.deal_complete %></h2>
@@ -49,11 +51,11 @@
 <% if !selling_method.nil? %>
   <h2>Selling Method: <%= selling_method.method %></h2>
   <% if selling_method.id == 3 or selling_method.id == 4 %>
-    <% if @deal.proposed_price_accepted %>
+    <% if @deal.exchange_agreement_seller %>
       <h3>The deal is going through for <%= number_to_currency(@deal.user_proposed_price) %></h3>
     <% else %>
       <% if current_user.id == @deal.buyer_id %>
-        <h3>Listed price: <%= @deal.product.price %></h3>
+        <h3>Listed price: <%= number_to_currency(@deal.product.price) %></h3>
         <!--<h3>iGold's suggested value for premium users</h3>-->
         <%= form_for(@deal) do |f| %>
           <h3 id="price_warning">Price is too low! Not accepted.</h3>
@@ -62,7 +64,7 @@
         <% end %>
       <% end %>
       <% if current_user.id == @deal.seller_id %>
-        <h3>Listed price: <%= @deal.product.price %></h3>
+        <h3>Listed price: <%= number_to_currency(@deal.product.price) %></h3>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :proposed_price_accepted, value: true %>
           <h3>Offered price: <%= number_to_currency(@deal.user_proposed_price) %>  <%= f.submit "Accept offer" %></h3>
@@ -96,7 +98,7 @@
 	<% else %>
 	  <h3>Your location for delivery: <%= @deal.dropoff %></h3>
 	<% end %>
-	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "") %>
+	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "" and @deal.proposed_price_accepted) %>
 	  <% if !@deal.exchange_agreement_buyer %>
             <%= form_for @deal do |f| %>
               <%= f.hidden_field :exchange_agreement_buyer, value: true %>
@@ -119,7 +121,7 @@
 	  <h3>Delivery cost: <%= @deal.product.delivery_cost %></h3>
 	<% end %>
         <h3>Delivery location: <%= @deal.dropoff %></h3>
-	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "" and @deal.proposed_price_accepted) %>
+	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "" and @deal.proposed_price_accepted and @deal.exchange_agreement_buyer) %>
             <%= form_for @deal do |f| %>
               <%= f.hidden_field :exchange_agreement_seller, value: true %>
               <%= f.submit "Accept exchange" %>
@@ -131,14 +133,18 @@
     <% end %>
   <% end %>    
   <% if exchange_method.id == 2 %>
+    <% if !@deal.agreement_achieved %>
     <h4>Buyer and seller will need to decide upon a location and datetime in messaging</h4>
-    <% if current_user.id == @deal.seller_id %>
+    <% else %>
+    <h4>Agreement achieved</h4>
+    <% end %>
+    <% if current_user.id == @deal.seller_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_seller %>
       <%= form_for @deal do |f| %>
         <%= f.hidden_field :exchange_agreement_seller, value: true %>
         <%= f.submit "Agreed exchange" %>
       <% end %>
     <% end %>
-    <% if current_user.id == @deal.buyer_id %>
+    <% if current_user.id == @deal.buyer_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_buyer %>
       <%= form_for @deal do |f| %>
         <%= f.hidden_field :exchange_agreement_buyer, value: true %>
         <%= f.submit "Agreed exchange" %>
@@ -152,14 +158,18 @@
       <h5>Business days to pickup: <%= @deal.product.store.business_days_pickup %></h5>
       <h5>The pickup will have to correspond to the <%= link_to "store's hours of operation.", @store %></h5>
     <% else %>
+      <% if !@deal.agreement_acheived %>
       <h4>Buyer and seller should agreement on a pickup time and location in messaging</h4>
-      <% if current_user.id == @deal.seller_id %>
+      <% else %>
+      <h4>Agreement achieved</h4>
+      <% end %>
+      <% if current_user.id == @deal.seller_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_seller %>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_seller, value: true %>
           <%= f.submit "Agreed exchange" %>
         <% end %>
       <% end %>
-      <% if current_user.id == @deal.buyer_id %>
+      <% if current_user.id == @deal.buyer_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_buyer %>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_buyer, value: true %>
           <%= f.submit "Agreed exchange" %>
@@ -209,7 +219,7 @@
   <% end %>
 <% end %>
 
-<% if ((current_user.id  == @deal.seller_id) and @deal.agreement_achieved and !@deal.deal_complete) %>
+<% if ((current_user.id  == @deal.seller_id) and @deal.agreement_achieved and !@deal.deal_complete and !@deal.seller_satisfied) %>
   <% if @deal.exchange_method.method == "Delivery" %>
   <%= form_for @deal do |f| %>
     <%= f.hidden_field :product_dispatched, value: !@deal.product_dispatched %>

@@ -134,7 +134,7 @@ class ProductsController < ApplicationController
     end
 
     unless selling_methods.nil?
-      if @product.selling_methods.count < 1
+      if @product.selling_method_links.count < 1
         flash[:warning] = "You need at least one accepted selling method!"
         redirect_to edit_selling_methods_product_path(@product)
         return
@@ -151,7 +151,7 @@ class ProductsController < ApplicationController
     end
 
     unless exchange_methods.nil?
-      if @product.exchange_methods.count < 1
+      if @product.exchange_method_links.count < 1
         flash[:warning] = "You need at least one accepted exchange method!"
         redirect_to edit_exchange_methods_product_path(@product)
         return
@@ -167,7 +167,7 @@ class ProductsController < ApplicationController
     end
 
     unless payment_methods.nil?
-      if @product.payment_methods.count < 1
+      if @product.payment_method_links.count < 1
         flash[:warning] = "You need at least one accepted payment method!"
         redirect_to edit_payment_methods_product_path(@product)
         return
@@ -194,7 +194,7 @@ class ProductsController < ApplicationController
       @product.save
     end
 
-    if @product.toggle_options.count > 0 and @product.selling_methods.count > 0 and @product.exchange_methods.count > 0 and @product.payment_methods.count > 0 and @product.pictures.count > 0
+    if @product.toggle_options.count > 0 and @product.selling_method_links.count > 0 and @product.exchange_method_links.count > 0 and @product.payment_method_links.count > 0 and @product.pictures.count > 0
       @product.activated = true
     else
       @product.activated = false

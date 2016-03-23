@@ -1,4 +1,7 @@
 class DealsController < ApplicationController
+  before_action :logged_in_user
+  before_action :correct_user, only: [:update, :show, :destroy]
+
   def create
     @deal = current_user.buying_deals.build(deals_params)
     if !@deal.product.sold && !@deal.product.hold
@@ -50,7 +53,10 @@ class DealsController < ApplicationController
     if @deal.changed? && !@deal.exchange_agreement_buyer_changed? && !@deal.exchange_agreement_seller_changed? && !@deal.agreement_achieved
       @deal.exchange_agreement_buyer = false
       @deal.exchange_agreement_seller = false
-    end 
+    end
+    if @deal.user_proposed_price_changed?
+      @deal.proposed_price_accepted = false
+    end
     selling_agreement = false
     if (@deal.selling_method.id == 2 or ((@deal.selling_method.id == 3 or @deal.selling_method.id == 4) and @deal.proposed_price_accepted))
       selling_agreement = true
@@ -85,6 +91,13 @@ class DealsController < ApplicationController
     @deal = Deal.find_by(id: params[:id])
   end
 
+  def destroy
+    deal = Deal.find(params[:id])
+    deal.product.hold = false
+    deal.destroy
+    redirect_to current_user
+  end
+
   private
   def deals_params
     params.require(:deal).permit(:seller_id, :buyer_id, :product_id) 
@@ -99,10 +112,15 @@ class DealsController < ApplicationController
   end
 
   def seller_params_accepted
-    params.require(:deal).permit(:product_dispatched, :seller_satisfied, :payment_received)
+    params.require(:deal).permit(:product_dispatched, :seller_satisfied, :payment_complete)
   end
 
   def buyer_params_accepted
     params.require(:deal).permit(:product_received, :buyer_satisfied)
+  end
+
+  def correct_user
+    deal = Deal.find(params[:id])
+    redirect_to root_url unless (deal.seller == current_user || deal.buyer == current_user)    
   end
 end

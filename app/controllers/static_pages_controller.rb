@@ -15,6 +15,7 @@ class StaticPagesController < ApplicationController
           end
           paginate :page => 1, :per_page => 1
           with :sold, false
+          with :hold, false
         end
         results += search.results
       end
@@ -25,6 +26,8 @@ class StaticPagesController < ApplicationController
             fields :description, :title
             boost_by_relevance true
             paginate :page => 1, :per_page => (5 - results.count)  
+            with :sold, false
+            with :hold, false
           end
           results += search.results
          end

@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323024553) do
+
+ActiveRecord::Schema.define(version: 20160322222815) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -158,7 +159,7 @@ ActiveRecord::Schema.define(version: 20160323024553) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.text     "description"
-    t.boolean  "hold"
+    t.boolean  "hold",                default: false
     t.boolean  "sold",                default: false
     t.integer  "store_id"
     t.string   "title"

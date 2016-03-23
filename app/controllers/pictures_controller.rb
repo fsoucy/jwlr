@@ -12,6 +12,8 @@ class PicturesController < ApplicationController
     @picture = current_user.products.find(params[:id]).pictures.build(picture_params)
       if @picture.save
         render json: { message: "success", fileID: @picture.id }, :status => 200
+        @picture.photo_cropped = @picture.photo
+        @picture.save
       else
         render json: { error: @picture.errors.full_messages.join(',')}, :status => 400
       end
@@ -22,15 +24,25 @@ class PicturesController < ApplicationController
 
   def destroy
     @picture = Picture.find(params[:id])
-    if @picture.destroy    
-      render json: { message: "File deleted from server" }
+    product = @picture.product
+    if request.xhr?
+      if @picture.destroy    
+        render json: { message: "File deleted from server" }
+      else
+        render json: { message: @picture.errors.full_messages.join(',') }
+      end
     else
-      render json: { message: @picture.errors.full_messages.join(',') }
+      if @picture.destroy
+        flash[:success] = "Image deleted"
+        redirect_to product
+      else
+        flash[:error] = @picture.errors.full_messages.join(',')
+        redirect_to product
+      end
     end
   end
 
   def edit
-    
     @picture = Picture.find(params[:id])
     img = MiniMagick::Image.open(@picture.photo.path)
     maxDim = img.height
@@ -71,8 +83,8 @@ class PicturesController < ApplicationController
     end
 
     def correct_user_product
-      product = current_user.products.find(params[:id])
-      redirect_to root_url if product.nil?
+      product = current_user.products.exists?(params[:id])
+      redirect_to root_url if !product
     end
 
     def correct_user_picture

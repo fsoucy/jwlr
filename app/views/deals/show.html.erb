@@ -6,8 +6,8 @@
 <h2>Product received: <%= @deal.product_received %></h2>
 <h2>Deal complete: <%= @deal.deal_complete %></h2>
 <%= image_tag @deal.product.pictures.first.photo_cropped(:medium) %>
-<h2>Listed price: <%= @deal.product.price %></h2>
-<% if @deal.buyer.id == current_user.id %>
+<h2>Listed price: <%= number_to_currency(@deal.product.price) %></h2>
+<% if @deal.buyer.id == current_user.id && !@deal.agreement_achieved %>
   <% if @deal.product.selling_method_links.count > 1 or @deal.product.exchange_method_links.count > 1 or @deal.product.payment_method_links.count > 1 %>
   <%= form_for(@deal) do |f| %>
   <p>Selling Methods (choose one)</p>
@@ -96,7 +96,7 @@
 	<% else %>
 	  <h3>Your location for delivery: <%= @deal.dropoff %></h3>
 	<% end %>
-	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil?) %>
+	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "") %>
 	  <% if !@deal.exchange_agreement_buyer %>
             <%= form_for @deal do |f| %>
               <%= f.hidden_field :exchange_agreement_buyer, value: true %>
@@ -108,7 +108,7 @@
 	<% end %>  
       <% end %>
       <% if current_user.id == @deal.seller_id %>
-        <% if !@deal.product.hold %>
+        <% if !@deal.agreement_achieved %>
           <%= form_for(@deal.product) do |f| %>
             <%= f.hidden_field :on_deals, value: true %>
 	    <%= f.hidden_field :deal_id, value: @deal.id %>
@@ -119,16 +119,14 @@
 	  <h3>Delivery cost: <%= @deal.product.delivery_cost %></h3>
 	<% end %>
         <h3>Delivery location: <%= @deal.dropoff %></h3>
-	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil?) %>
-	  <% if @deal.exchange_agreement_buyer %>
+	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "" and @deal.proposed_price_accepted) %>
             <%= form_for @deal do |f| %>
               <%= f.hidden_field :exchange_agreement_seller, value: true %>
               <%= f.submit "Accept exchange" %>
-            <% end %>
-	  <% else %>
+            <% end %>	  
+<% else %>
 	    <h3>Waiting for buyer to accept exchange</h3>
 	  <% end %>
-    <% end %>
     <% end %>
     <% end %>
   <% end %>    
@@ -211,39 +209,41 @@
   <% end %>
 <% end %>
 
-<% if ((current_user.id  == @deal.seller_id) and @deal.agreement_achieved) %>
+<% if ((current_user.id  == @deal.seller_id) and @deal.agreement_achieved and !@deal.deal_complete) %>
   <% if @deal.exchange_method.method == "Delivery" %>
   <%= form_for @deal do |f| %>
-    <%= f.hidden_field :product_dispatched, value: true %>
-    <%= f.submit "Product dispatched?" %>
+    <%= f.hidden_field :product_dispatched, value: !@deal.product_dispatched %>
+    <%= f.submit "Set product dispatched to #{!@deal.product_dispatched}" %>
   <% end %>
   <% end %> 
 
-  <% if @deal.payment_method.method != "Paypal" %>
+  <% if @deal.payment_method.method != "Paypal" and !@deal.seller_satisfied %>
   <%= form_for @deal do |f| %>
-    <%= f.hidden_field :payment_complete, value: true %>
-    <%= f.submit "Payment received?" %>
+    <%= f.hidden_field :payment_complete, value: !@deal.payment_complete %>
+    <%= f.submit "Set payment received to #{!@deal.payment_complete}" %>
   <% end %>
   <% end %>  
 
-  <% if (@deal.payment_complete and @deal.product_received) %>
+  <% if (@deal.payment_complete and @deal.product_received and !@deal.deal_complete) %>
   <%= form_for @deal do |f| %>
-    <%= f.hidden_field :seller_satisfied, value: true %>
-    <%= f.submit "Satisfied with completed deal?" %>
+    <%= f.hidden_field :seller_satisfied, value: !@deal.seller_satisfied %>
+    <%= f.submit "Set satisfied with completed deal to #{!@deal.seller_satisfied}" %>
   <% end %>
   <% end %>
   
 <% end %>
-<% if ((current_user.id == @deal.buyer_id) and @deal.agreement_achieved) %>
+<% if ((current_user.id == @deal.buyer_id) and @deal.agreement_achieved and !@deal.deal_complete) %>
+  <% if !@deal.buyer_satisfied %>
   <%= form_for @deal do |f| %>
-    <%= f.hidden_field :product_received, value: true %>
-    <%= f.submit "Product received?" %>
+    <%= f.hidden_field :product_received, value: !@deal.product_received %>
+    <%= f.submit "Set product received to #{!@deal.product_received}" %>
+  <% end %>
   <% end %>
 
-  <% if (@deal.product_received and @deal.payment_complete) %>
+  <% if (@deal.product_received and @deal.payment_complete and !@deal.deal_complete) %>
   <%= form_for @deal do |f| %>
-    <%= f.hidden_field :buyer_satisfied, value: true %>
-    <%= f.submit "Satisfied with completed deal?" %>
+    <%= f.hidden_field :buyer_satisfied, value: !@deal.buyer_satisfied %>
+    <%= f.submit "Set satisfied with completed deal to #{!@deal.buyer_satisfied}" %>
   <% end %>
   <% end %>  
 

@@ -44,6 +44,8 @@ class ProductsController < ApplicationController
     @toggle_options = @product.toggle_options
     search = Sunspot.more_like_this(@product) do
       fields :description, :title
+      with(:sold, false)
+      with(:hold, false)
       boost_by_relevance true
       paginate :page => 1, :per_page => 5
     end
@@ -70,9 +72,13 @@ class ProductsController < ApplicationController
 
   def destroy
     @product = Product.find_by(id: params[:id])
-    @product.destroy
-    flash[:success] = "Product successfully destroyed."
-    redirect_to current_user
+    if !@product.sold
+      @product.destroy
+      flash[:success] = "Product successfully destroyed."
+      redirect_to current_user
+    else
+      redirect_to @product
+    end
   end
 
   def edit
@@ -103,6 +109,7 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
+    if !@product.sold && !@product.hold
     toggle_options = params[:toggle_options]
     selling_methods = params[:selling_method_links]
     exchange_methods = params[:exchange_method_links]
@@ -161,14 +168,23 @@ class ProductsController < ApplicationController
     end
 
     unless product_params.nil?
-      if @product.update_attributes(product_params)
-        @product.save
-        if params[:product][:on_deals]
-          redirect_to Deal.find(params[:product][:deal_id])
-          return
+      @product.assign_attributes(product_params)
+      if params[:product][:on_deals]
+        deal = Deal.find(params[:product][:deal_id])
+        if @product.changed?
+          deal.exchange_agreement_buyer = false
+          deal.exchange_agreement_seller = false
+          deal.save
         end
-        redirect_to edit_toggle_options_product_path(@product.id)
+        @product.save
+        redirect_to deal
+        return
       end
+      @product.save
+      redirect_to edit_toggle_options_product_path(@product.id)
+    end
+    else
+      redirect_to @product
     end
   end
 

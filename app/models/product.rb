@@ -57,6 +57,6 @@ class Product < ActiveRecord::Base
       else
         self.activated = false
       end
+      return true
     end
-  
 end

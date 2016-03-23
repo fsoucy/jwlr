@@ -158,7 +158,7 @@
       <h5>Business days to pickup: <%= @deal.product.store.business_days_pickup %></h5>
       <h5>The pickup will have to correspond to the <%= link_to "store's hours of operation.", @store %></h5>
     <% else %>
-      <% if !@deal.agreement_acheived %>
+      <% if !@deal.agreement_achieved %>
       <h4>Buyer and seller should agreement on a pickup time and location in messaging</h4>
       <% else %>
       <h4>Agreement achieved</h4>

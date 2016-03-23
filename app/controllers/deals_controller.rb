@@ -4,6 +4,8 @@ class DealsController < ApplicationController
 
   def create
     @deal = current_user.buying_deals.build(deals_params)
+    active_deal = Deal.where("product_id = ? and buyer_id = ?", @deal.product.id, current_user.id).first
+    if !active_deal.nil?
     if !@deal.product.sold && !@deal.product.hold && @deal.product.activated
     if @deal.save
       @deal.deal_complete = false
@@ -29,6 +31,9 @@ class DealsController < ApplicationController
     end
     else
       redirect_to @deal.product
+    end
+    else
+      redirect_to active_deal
     end
   end
 
@@ -95,7 +100,7 @@ class DealsController < ApplicationController
     deal = Deal.find(params[:id])
     deal.product.hold = false
     deal.destroy
-    redirect_to current_user
+    redirect_to deal.product
   end
 
   private

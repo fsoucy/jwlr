@@ -39,23 +39,27 @@ class StaticPagesController < ApplicationController
     @for_you = [] if @for_you.nil?
     @featured = [] if @featured.nil?
     index = 0
-    while (@for_you.count < 5 and Product.count > @for_you.count)
+    while (@for_you.count < 5 and Product.count > @for_you.count and index < 20)
       product = nil
-      while product.nil?
+      while product.nil? and index < 20
         product = Product.find_by(id: index)
         index += 1
       end
-      @for_you.append(product)
+      if !product.nil?
+        @for_you.append(product) unless !product.activated || product.sold || product.hold
+      end
     end
     
     index = 0
-    while (@featured.count < 5 and Product.count > @featured.count)
+    while (@featured.count < 5 and Product.count > @featured.count and index < 20)
       product = nil
-      while product.nil?
+      while product.nil? and index < 20
         product = Product.find_by(id: index)
         index += 1
       end
-      @featured.append(product)
+      if !product.nil?
+        @featured.append(product) unless !product.activated || product.sold || product.hold
+      end
     end
     
   end

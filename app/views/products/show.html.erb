@@ -38,11 +38,16 @@
   <%= link_to "Edit product", edit_product_path(@product.id) %>
   <% else %>
   <% if logged_in? && @product.activated %>
+  <% active_deal = Deal.where("product_id = ? and buyer_id = ?", @product.id, current_user.id).first %>
+  <% if active_deal.nil? %>
   <%= form_for(@deal) do |f| %>
   <%= f.hidden_field :seller_id, value: @deal.seller_id %>
   <%= f.hidden_field :buyer_id, value: @deal.buyer_id %>
   <%= f.hidden_field :product_id, value: @deal.product_id %>
   <%= f.submit "Buy this product" %>
+  <% end %>
+  <% else %>
+  <%= link_to "Go to active deal", deal_path(active_deal.id) %>
   <% end %>
   <% elsif @product.activated %>
   <% store_location %>

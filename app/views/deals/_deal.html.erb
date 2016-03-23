@@ -19,7 +19,11 @@
 <h3>The buyer has not received his purchased product.</h3>
 <% end %>
 <% if (deal.payment_complete and deal.product_received) %>
+<% if deal.deal_complete %>
+<h3>Boo yah! Deal complete and successful.</h3>
+<% else %>
 <h3>The product and payment have been received by respective parties but parties aren't completely satisfied.</h3>
+<% end %>
 <% end %>
 </div>
 </a>

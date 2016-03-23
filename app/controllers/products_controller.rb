@@ -145,8 +145,14 @@ class ProductsController < ApplicationController
       selling_methods.each do |id, selected|
         @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
       end
-      redirect_to edit_exchange_methods_product_path(@product.id)
-      return
+      if @product.selling_methods.count < 1
+        flash[:warning] = "You need at least one accepted selling method!"
+        redirect_to edit_selling_methods_product_path(@product)
+        return
+      else
+        redirect_to edit_exchange_methods_product_path(@product.id)
+        return
+      end
       #redirect_to controller: 'ProductsController', action: 'edit_exchange_methods', id: @product.id
     end
 
@@ -162,8 +168,15 @@ class ProductsController < ApplicationController
       exchange_methods.each do |id, selected|
         @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
       end
-      redirect_to edit_payment_methods_product_path(@product.id)
-      return
+      
+      if @product.exchange_methods.count < 1
+        flash[:warning] = "You need at least one accepted exchange method!"
+        redirect_to edit_exchange_methods_product_path(@product)
+        return
+      else
+        redirect_to edit_payment_methods_product_path(@product.id)
+        return
+      end
     end
 
     unless payment_methods.nil?
@@ -178,14 +191,20 @@ class ProductsController < ApplicationController
       payment_methods.each do |id, selected|
         @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
       end
-      redirect_to new_picture_url
-      return
+      if @product.payment_methods.count < 1
+        flash[:warning] = "You need at least one accepted payment method!"
+        redirect_to edit_payment_methods_product_path(@product)
+        return
+      else
+        redirect_to new_picture_url
+        return
+      end
     end
 
     if !picture.nil?
       if @product.pictures.count < 1
         flash[:warning] = "Your product must have at least one picture!"
-        redirect_to new_pictures_path(@product)
+        redirect_to new_picture_url
         return
       end
       if @product.min_accepted_price.nil?

@@ -42,8 +42,9 @@
             <%= f.select :wednesdayendhour, options_for_select(@hours, -1) %>
             <%= f.select :wednesdayendminute, options_for_select(@minutes, -1) %>
             <%= f.select :wednesdayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
+	    <br>
       <% end %>
-
+      
       <% if @store.thursdayopen %>
         <p><b>Thursday Start Time:</b></p>
             <%= f.select :thursdaystarthour, options_for_select(@hours, -1) %>
@@ -53,8 +54,9 @@
             <%= f.select :thursdayendhour, options_for_select(@hours, -1) %>
             <%= f.select :thursdayendminute, options_for_select(@minutes, -1) %>
             <%= f.select :thursdayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
+	    <br>
       <% end %>
-
+      
       <% if @store.fridayopen %>
         <p><b>Friday Start Time:</b></p>
             <%= f.select :fridaystarthour, options_for_select(@hours, -1) %>
@@ -64,8 +66,9 @@
             <%= f.select :fridayendhour, options_for_select(@hours, -1) %>
             <%= f.select :fridayendminute, options_for_select(@minutes, -1) %>
             <%= f.select :fridayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-      <% end %>
-
+	    <br>
+	    <% end %>
+      
       <% if @store.saturdayopen %>
         <p><b>Saturday Start Time:</b></p>
             <%= f.select :saturdaystarthour, options_for_select(@hours, -1) %>
@@ -75,8 +78,9 @@
             <%= f.select :saturdayendhour, options_for_select(@hours, -1) %>
             <%= f.select :saturdayendminute, options_for_select(@minutes, -1) %>
             <%= f.select :saturdayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-      <% end %>
-
+	    <br>
+	    <% end %>
+      
       <% if @store.sundayopen %>
         <p><b>Sunday Start Time:</b></p>
             <%= f.select :sundaystarthour, options_for_select(@hours, -1) %>
@@ -86,7 +90,8 @@
             <%= f.select :sundayendhour, options_for_select(@hours, -1) %>
             <%= f.select :sundayendminute, options_for_select(@minutes, -1) %>
             <%= f.select :sundayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-      <% end %>
+	    <br>
+	    <% end %>
 
 
 

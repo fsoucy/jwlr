@@ -49,6 +49,8 @@
       <%= f.check_box :sundayopen %>
       <span><b>Select if you're open on Sundays</b></span>
       <br>
+
+      <%= f.hidden_field :redirect_times, value: true %>
       
       <%= f.submit "Save store", class: "form_submit" %>
 

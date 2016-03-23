@@ -557,7 +557,7 @@ td
   width: 520px;
 }
 
-.faq_header, .about_left h5, .about_left p
+.about_left h5, .about_left p
 {
   float: left;
   clear: left;
@@ -602,4 +602,12 @@ td
   top: 100px;
   top: 100px;
   background-color: #eaeaea;
+}
+
+.store_index
+{
+  float: left;
+  border: 1px solid #5a8693;
+  padding: 2px;
+  margin: 3px;
 }

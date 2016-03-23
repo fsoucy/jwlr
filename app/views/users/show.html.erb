@@ -11,8 +11,9 @@
     <%= link_to "Edit your description", edit_description_user_path(@user.id) %>
     <% end %>
 </div>
-<p>Products sold: <%= @user.products_sold %></p>
-<p>Products bought: <%= @user.products_bought %></p>
+<p>Reputation: <%= @user.score %>% positive reviews</p>
+<p>Products sold: <%= Deal.where("deal_complete = ? and seller_id = ?", true, @user.id).count %></p>
+<p>Products bought: <%= Deal.where("deal_complete = ? and buyer_id = ?", true, @user.id).count %></p>
 <p>Identifies as: <%= @user.identifies_as %></p>
 <p>Location: <%= @user.full_street_address %></p>
 <p>Interests: <%= @user.interests %></p>

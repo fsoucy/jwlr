@@ -31,6 +31,16 @@ class User < ActiveRecord::Base
   has_many :buying_deals, class_name: "Deal", foreign_key: "buyer_id", dependent: :destroy
   has_many :selling_deals, class_name: "Deal", foreign_key: "seller_id", dependent: :destroy
   mount_uploader :profile_picture, PictureUploader
+  has_many :reviews
+
+  def score
+    reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("user_id != ? and deals.seller_id = ? or deals.buyer_id = ?", self.id, self.id, self.id)
+    if reviews.count > 0
+      (reviews.select{|a| a.verdict == "Positive"}.count / reviews.count) * 100
+    else
+      return 0
+    end
+  end
 
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :

@@ -272,5 +272,8 @@
     <%= f.submit "Set satisfied with completed deal to #{!@deal.buyer_satisfied}" %>
   <% end %>
   <% end %>  
-
+<% end %>
+<% review = @deal.reviews.where("user_id = ?", current_user.id).first %>
+<% if review.nil? && @deal.deal_complete %>
+  <%= link_to "Leave a review of this deal", new_review_url(@deal) %>
 <% end %>

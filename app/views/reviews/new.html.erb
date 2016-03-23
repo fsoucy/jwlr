@@ -1,0 +1,11 @@
+<%= form_for(@review) do |f| %>
+<%= f.label :verdict %>
+<%= f.select :verdict, options_for_select([['Positive', 'Positive'], ['Neutral', 'Neutral'], ['Negative', 'Negative']]) %>
+<br>
+<%= f.label :message, "Review" %>
+<br>
+<%= f.text_area :message %>
+<br>
+<%= f.submit "Submit Review (Cannot be changed)" %>
+<% end %>
+

@@ -60,6 +60,8 @@ class DealsController < ApplicationController
       @deal.exchange_agreement_seller = false
     end
     if @deal.user_proposed_price_changed?
+      @deal.exchange_agreement_buyer = false
+      @deal.exchange_agreement_seller = false
       @deal.proposed_price_accepted = false
     end
     selling_agreement = false

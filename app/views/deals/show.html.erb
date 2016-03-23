@@ -126,7 +126,7 @@
               <%= f.hidden_field :exchange_agreement_seller, value: true %>
               <%= f.submit "Accept exchange" %>
             <% end %>	  
-<% else %>
+<% elsif @deal.proposed_price_accepted %>
 	    <h3>Waiting for buyer to accept exchange</h3>
 	  <% end %>
     <% end %>
@@ -143,7 +143,7 @@
         <%= f.hidden_field :exchange_agreement_seller, value: true %>
         <%= f.submit "Agreed exchange" %>
       <% end %>
-    <% elsif (current_user.id == @deal.seller_id && !@deal.agreement_achieved) %>
+    <% elsif (current_user.id == @deal.seller_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
       <h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
     <% end %>
     <% if current_user.id == @deal.buyer_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_buyer %>
@@ -151,7 +151,7 @@
         <%= f.hidden_field :exchange_agreement_buyer, value: true %>
         <%= f.submit "Agreed exchange" %>
       <% end %>
-    <% elsif (current_user.id == @deal.buyer_id && !@deal.agreement_achieved) %>
+    <% elsif (current_user.id == @deal.buyer_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
       <h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
     <% end %>
   <% end %>
@@ -172,7 +172,7 @@
           <%= f.hidden_field :exchange_agreement_seller, value: true %>
           <%= f.submit "Agreed exchange" %>
         <% end %>
-      <% elsif (current_user.id == @deal.seller_id && !@deal.agreement_achieved) %>
+      <% elsif (current_user.id == @deal.seller_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
         <h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
       <% end %>
       <% if current_user.id == @deal.buyer_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_buyer %>
@@ -180,7 +180,7 @@
           <%= f.hidden_field :exchange_agreement_buyer, value: true %>
           <%= f.submit "Agreed exchange" %>
         <% end %>
-      <% elsif (current_user.id == @deal.buyer_id && !@deal.agreement_achieved) %>
+      <% elsif (current_user.id == @deal.buyer_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
         <h4>Exchange agreed, waiting for seller to accept exchange.</h4>
       <% end %>
     <% end %>

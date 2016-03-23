@@ -128,6 +128,7 @@ class ProductsController < ApplicationController
         toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
         toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
         toggle_option.save
+        @product.save
       end
       redirect_to edit_selling_methods_product_path(@product.id)
       return
@@ -140,6 +141,7 @@ class ProductsController < ApplicationController
       selling_methods.each do |id, selected|
         @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
       end
+      @product.save
       if @product.selling_method_links.count < 1
         flash[:warning] = "You need at least one accepted selling method!"
         redirect_to edit_selling_methods_product_path(@product)
@@ -157,7 +159,7 @@ class ProductsController < ApplicationController
       exchange_methods.each do |id, selected|
         @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
       end
-      
+      @product.save
       if @product.exchange_method_links.count < 1
         flash[:warning] = "You need at least one accepted exchange method!"
         redirect_to edit_exchange_methods_product_path(@product)
@@ -175,6 +177,7 @@ class ProductsController < ApplicationController
       payment_methods.each do |id, selected|
         @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
       end
+      @product.save
       if @product.payment_method_links.count < 1
         flash[:warning] = "You need at least one accepted payment method!"
         redirect_to edit_payment_methods_product_path(@product)

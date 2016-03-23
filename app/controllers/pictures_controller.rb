@@ -14,6 +14,7 @@ class PicturesController < ApplicationController
         render json: { message: "success", fileID: @picture.id }, :status => 200
         @picture.photo_cropped = @picture.photo
         @picture.save
+        @picture.product.save
       else
         render json: { error: @picture.errors.full_messages.join(',')}, :status => 400
       end

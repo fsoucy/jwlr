@@ -25,6 +25,7 @@
 
 /solr/development/data
 /solr/pids/*
+/solr/default/data
 
 Gemfile.lock
 .*

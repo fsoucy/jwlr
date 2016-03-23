@@ -85,13 +85,7 @@ class User < ActiveRecord::Base
     BCrypt::Password.new(digest).is_password?(token)
   end
 
-  def selling_feed
-    PendingDeal.where("seller_id = ? AND active = ?", id, true)
-  end
 
-  def buying_feed
-    PendingDeal.where("buyer_id = ? AND active = ?", id, true)
-  end
   
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at, :password_digest, :remember_digest, :activation_digest, :activated_at, :reset_digest, :reset_sent_at]

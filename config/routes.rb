@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
   resources :attribute_options, only: [:create, :destroy]
   resources :category_options, only: [:create, :destroy]
+  resources :bugs, only: [:new, :create, :destroy, :update, :index]
 
   resources :users do
     member do

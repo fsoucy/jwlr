@@ -1,0 +1,19 @@
+<% if bug.fixed %>
+<div class="bug_fixed" %>
+<h2><%= bug.title %></h2>
+<h3><%= bug.url unless bug.url.nil? %></h3>
+<h3><%= bug.content %></h3>
+</div>
+<% else %>
+<div class="bug" %>
+<h2><%= bug.title %></h2>
+<h3><%= bug.url unless bug.url.nil? %></h3>
+<h3><%= bug.content %></h3>
+<% if current_user.admin %>
+<%= form_for bug do |f| %>
+<%= f.hidden_field :fixed, value: true %>
+<%= f.submit "Bug resolved" %>
+<% end %>
+<% end %>
+</div>
+<% end %>

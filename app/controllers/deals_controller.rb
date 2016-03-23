@@ -4,7 +4,7 @@ class DealsController < ApplicationController
 
   def create
     @deal = current_user.buying_deals.build(deals_params)
-    if !@deal.product.sold && !@deal.product.hold
+    if !@deal.product.sold && !@deal.product.hold && @deal.product.activated
     if @deal.save
       @deal.deal_complete = false
       @deal.dropoff = @deal.buyer.full_street_address
@@ -123,4 +123,5 @@ class DealsController < ApplicationController
     deal = Deal.find(params[:id])
     redirect_to root_url unless (deal.seller == current_user || deal.buyer == current_user)    
   end
+
 end

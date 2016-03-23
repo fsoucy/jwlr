@@ -37,6 +37,12 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find_by(id: params[:id])
+    if (@product.toggle_options.count < 1 and @product.id == current_user.id)
+      flash[:warning] = "You need toggle options"
+      redirect_to edit_toggle_options_product_path(@product)
+      return
+    end
+    
     if logged_in?
       @deal = current_user.buying_deals.build(seller_id: @product.user.id, product_id: @product.id)
       @current_user = current_user
@@ -46,6 +52,7 @@ class ProductsController < ApplicationController
       fields :description, :title
       with(:sold, false)
       with(:hold, false)
+      with :activated, true
       boost_by_relevance true
       paginate :page => 1, :per_page => 5
     end
@@ -127,6 +134,11 @@ class ProductsController < ApplicationController
     end
 
     unless selling_methods.nil?
+      if @product.selling_methods.count < 1
+        flash[:warning] = "You need at least one accepted selling method!"
+        redirect_to edit_selling_methods_product_path(@product)
+        return
+      end
       @product.selling_method_links.each do |l|
         l.destroy
       end
@@ -139,6 +151,11 @@ class ProductsController < ApplicationController
     end
 
     unless exchange_methods.nil?
+      if @product.exchange_methods.count < 1
+        flash[:warning] = "You need at least one accepted exchange method!"
+        redirect_to edit_exchange_methods_product_path(@product)
+        return
+      end
       @product.exchange_method_links.each do |l|
         l.destroy
       end
@@ -150,6 +167,11 @@ class ProductsController < ApplicationController
     end
 
     unless payment_methods.nil?
+      if @product.payment_methods.count < 1
+        flash[:warning] = "You need at least one accepted payment method!"
+        redirect_to edit_payment_methods_product_path(@product)
+        return
+      end
       @product.payment_method_links.each do |l|
         l.destroy
       end
@@ -161,10 +183,21 @@ class ProductsController < ApplicationController
     end
 
     if !picture.nil?
+      if @product.pictures.count < 1
+        flash[:warning] = "Your product must have at least one picture!"
+        redirect_to new_pictures_path(@product)
+        return
+      end
       if @product.min_accepted_price.nil?
         @product.min_accepted_price = 0.0
       end
       @product.save
+    end
+
+    if @product.toggle_options.count > 0 and @product.selling_methods.count > 0 and @product.exchange_methods.count > 0 and @product.payment_methods.count > 0 and @product.pictures.count > 0
+      @product.activated = true
+    else
+      @product.activated = false
     end
 
     unless product_params.nil?

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160322171826) do
+ActiveRecord::Schema.define(version: 20160323163115) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 20160322171826) do
 
   add_index "blogposts", ["store_id"], name: "index_blogposts_on_store_id"
   add_index "blogposts", ["user_id"], name: "index_blogposts_on_user_id"
+
+  create_table "bugs", force: :cascade do |t|
+    t.text     "title"
+    t.text     "content"
+    t.string   "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean  "fixed"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -158,7 +167,7 @@ ActiveRecord::Schema.define(version: 20160322171826) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.text     "description"
-    t.boolean  "hold"
+    t.boolean  "hold",                default: false
     t.boolean  "sold",                default: false
     t.integer  "store_id"
     t.string   "title"
@@ -167,6 +176,8 @@ ActiveRecord::Schema.define(version: 20160322171826) do
     t.decimal  "min_accepted_price"
     t.boolean  "fully_updated"
     t.decimal  "delivery_cost"
+    t.boolean  "featured"
+    t.boolean  "activated",           default: false
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id"
@@ -315,13 +326,13 @@ ActiveRecord::Schema.define(version: 20160322171826) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "full_street_address"
+    t.integer  "business_days_pickup"
+    t.decimal  "default_delivery_cost"
     t.text     "interests"
     t.integer  "products_bought"
     t.integer  "products_sold"
     t.text     "identifies_as"
     t.string   "profile_picture"
-    t.integer  "business_days_pickup"
-    t.decimal  "default_delivery_cost"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

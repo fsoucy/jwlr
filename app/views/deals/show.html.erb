@@ -143,12 +143,16 @@
         <%= f.hidden_field :exchange_agreement_seller, value: true %>
         <%= f.submit "Agreed exchange" %>
       <% end %>
+    <% elsif (current_user.id == @deal.seller_id && !@deal.agreement_achieved) %>
+      <h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
     <% end %>
     <% if current_user.id == @deal.buyer_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_buyer %>
       <%= form_for @deal do |f| %>
         <%= f.hidden_field :exchange_agreement_buyer, value: true %>
         <%= f.submit "Agreed exchange" %>
       <% end %>
+    <% elsif (current_user.id == @deal.buyer_id && !@deal.agreement_achieved) %>
+      <h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
     <% end %>
   <% end %>
   <% if exchange_method.id == 3 %>
@@ -168,12 +172,16 @@
           <%= f.hidden_field :exchange_agreement_seller, value: true %>
           <%= f.submit "Agreed exchange" %>
         <% end %>
+      <% elsif (current_user.id == @deal.seller_id && !@deal.agreement_achieved) %>
+        <h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
       <% end %>
       <% if current_user.id == @deal.buyer_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_buyer %>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_buyer, value: true %>
           <%= f.submit "Agreed exchange" %>
         <% end %>
+      <% elsif (current_user.id == @deal.buyer_id && !@deal.agreement_achieved) %>
+        <h4>Exchange agreed, waiting for seller to accept exchange.</h4>
       <% end %>
     <% end %>
   <% end %>

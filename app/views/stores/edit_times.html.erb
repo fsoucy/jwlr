@@ -1,4 +1,5 @@
 <% provide(:title, "Edit hours of operation") %>
+<div class="form_fields">
 <h1>Edit this store's hours of operation</h1>
 
     <%= form_for(@store, :html => { class: 'edit_times_inline'}) do |f| %>
@@ -34,142 +35,63 @@
   
       <% if @store.wednesdayopen %>
         <p><b>Wednesday Start Time:</b></p>
-        <div class = "row">
-          <div class="col-md-3">
             <%= f.select :wednesdaystarthour, options_for_select(@hours, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :wednesdaystartminute, options_for_select(@minutes, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :wednesdaystartampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-          </div>
-        </div>
 	<p><b>Wednesday End Time:</b></p>
-        <div class = "row">
-          <div class="col-md-3">
             <%= f.select :wednesdayendhour, options_for_select(@hours, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :wednesdayendminute, options_for_select(@minutes, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :wednesdayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-          </div>
-        </div>
       <% end %>
 
       <% if @store.thursdayopen %>
         <p><b>Thursday Start Time:</b></p>
-        <div class = "row">
-          <div class="col-md-3">
             <%= f.select :thursdaystarthour, options_for_select(@hours, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :thursdaystartminute, options_for_select(@minutes, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :thursdaystartampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-          </div>
-        </div>
 	<p><b>Thursday End Time:</b></p>
-        <div class = "row">
-          <div class="col-md-3">
             <%= f.select :thursdayendhour, options_for_select(@hours, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :thursdayendminute, options_for_select(@minutes, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :thursdayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-          </div>
-        </div>
       <% end %>
 
       <% if @store.fridayopen %>
         <p><b>Friday Start Time:</b></p>
-        <div class = "row">
-          <div class="col-md-3">
             <%= f.select :fridaystarthour, options_for_select(@hours, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :fridaystartminute, options_for_select(@minutes, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :fridaystartampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-          </div>
-        </div>
 	<p><b>Friday End Time:</b></p>
-        <div class = "row">
-          <div class="col-md-3">
             <%= f.select :fridayendhour, options_for_select(@hours, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :fridayendminute, options_for_select(@minutes, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :fridayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-          </div>
-        </div>
       <% end %>
 
       <% if @store.saturdayopen %>
         <p><b>Saturday Start Time:</b></p>
-        <div class = "row">
-          <div class="col-md-3">
             <%= f.select :saturdaystarthour, options_for_select(@hours, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :saturdaystartminute, options_for_select(@minutes, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :saturdaystartampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-          </div>
-        </div>
 	<p><b>Saturday End Time:</b></p>
-        <div class = "row">
-          <div class="col-md-3">
             <%= f.select :saturdayendhour, options_for_select(@hours, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :saturdayendminute, options_for_select(@minutes, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :saturdayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-          </div>
-        </div>
       <% end %>
 
       <% if @store.sundayopen %>
         <p><b>Sunday Start Time:</b></p>
-        <div class = "row">
-          <div class="col-md-3">
             <%= f.select :sundaystarthour, options_for_select(@hours, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :sundaystartminute, options_for_select(@minutes, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :sundaystartampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-          </div>
-        </div>
 	<p><b>Sunday End Time:</b></p>
-        <div class = "row">
-          <div class="col-md-3">
             <%= f.select :sundayendhour, options_for_select(@hours, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :sundayendminute, options_for_select(@minutes, -1) %>
-          </div>
-          <div class="col-md-3">
             <%= f.select :sundayendampm, options_for_select([["AM", "AM"], ["PM", "PM"]], "AM") %>
-          </div>
-        </div>
       <% end %>
 
 
 
-      
-      <%= f.submit "Save changes", class: "btn btn-primary" %>
+      <br>
+      <%= f.submit "Save changes", class: "form_submit" %>
     <% end %>
 
+</div>

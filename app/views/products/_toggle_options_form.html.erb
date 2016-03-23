@@ -1,3 +1,4 @@
+<div class="form_fields">
 <h1>Edit Toggle Options</h1>
 <%= form_for(@product,  html: { multipart: true}) do |f| %>
 <%= f.label :category_id, "Product Type" %>
@@ -16,5 +17,6 @@
 <% end %>
 <% end %>
 <% end %>
-<%= f.submit "Submit Toggle Options" %>
+<%= f.submit "Submit Toggle Options", class: "form_submit" %>
 <% end %>  
+</div>

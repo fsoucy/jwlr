@@ -1,23 +1,19 @@
+<div class="form_fields">
 <h1>Report a bug</h1>
 <br> 
 <%= form_for @bug do |f| %>
 
-<%= f.label :title, "Provide a title for your bug report" %>
-<br>
-<%= f.text_field :title, placeholder: "Title" %>
+<%= f.text_field :title, class: "form_input", placeholder: "Provide a title for your bug report" %>
 <br>
 <br>
 
-<%= f.label :url, "Provide a link for your bug report (optional)" %>
-<br>
-<%= f.text_field :url, placeholder: "URL" %>
+<%= f.text_field :url, class: "form_input", placeholder: "URL for your bug report (optional)" %>
 <br>
 <br>
 
-<%= f.label :content, "Write a message describing your issue" %>
-<br>
-<%= f.text_area :content, placeholder: "say anything..." %>
+<%= f.text_area :content, class: 'form_input', placeholder: "Write a message describing your issue" %>
 <br>
 
 <%= f.submit "Report bug" %>
 <% end %>
+</div>

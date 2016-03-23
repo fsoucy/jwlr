@@ -116,13 +116,14 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-    if !@product.sold && !@product.hold
+    if !@product.sold
     toggle_options = params[:toggle_options]
     selling_methods = params[:selling_method_links]
     exchange_methods = params[:exchange_method_links]
     payment_methods = params[:payment_method_links]
     picture = params[:picture]
-
+    
+    if !@product.hold
     unless toggle_options.nil?
       toggle_options.each do |attr|
         toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
@@ -199,7 +200,7 @@ class ProductsController < ApplicationController
       end
       @product.save
     end
-
+    end
     unless product_params.nil?
       @product.assign_attributes(product_params)
       if params[:product][:on_deals]
@@ -207,6 +208,7 @@ class ProductsController < ApplicationController
         if @product.changed?
           deal.exchange_agreement_buyer = false
           deal.exchange_agreement_seller = false
+          deal.agreement_achieved = false
           deal.save
         end
         @product.save

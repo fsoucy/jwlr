@@ -5,13 +5,13 @@
   
   <% if !@product.pictures.first.nil? %>
       <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "product_image" %>
-      <% if @product.user.id == current_user.id %>
+      <% if @product.user == current_user %>
       <% link_to("Edit", edit_picture_path(@product.pictures.first)) %>
       <% end %>
   <% end %>
   <% @product.pictures.each do |picture| %>
   <%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show" unless picture == @product.pictures.first %>
-  <% if @product.user.id == current_user.id %>
+  <% if @product.user == current_user %>
   <%= link_to "Edit", edit_picture_path(picture) %>
   <% end %>
   <% end %>
@@ -37,8 +37,8 @@
   <br>
   <%= link_to "Edit product", edit_product_path(@product.id) %>
   <% else %>
-  <% if logged_in? && @product.activated %>
-  <% active_deal = Deal.where("product_id = ? and buyer_id = ?", @product.id, current_user.id).first %>
+  <% if @product.activated && logged_in? %>
+  <% active_deal = Deal.where("product_id = ? and buyer_id = ?", @product.id, current_user).first %>
   <% if active_deal.nil? %>
   <%= form_for(@deal) do |f| %>
   <%= f.hidden_field :seller_id, value: @deal.seller_id %>
@@ -59,7 +59,7 @@
   <% end %>
 </div>
 <div class="options">
-  <% if @product.selling_method_links.count < 1 && @product.user.id == current_user.id %>
+  <% if @product.selling_method_links.count < 1 && @product.user == current_user %>
   <a href="<%= edit_selling_methods_product_path(@product) %>"><h2 class = "method_alert">Selling Methods</h2></a>
   <% else %>
   <h2>Selling Methods</h2>
@@ -68,7 +68,7 @@
   <% end %>
   <% end %>
   
-  <% if @product.exchange_method_links.count < 1 && @product.user.id == current_user.id %>
+  <% if @product.exchange_method_links.count < 1 && @product.user == current_user %>
   <a href="<%= edit_exchange_methods_product_path(@product) %>"><h2 class = "method_alert">Exchange Methods</h2></a>
   <% else %>
      
@@ -81,7 +81,7 @@
   <% end %>
   <% end %>
 
-  <% if @product.payment_method_links.count < 1 && @product.user.id == current_user.id %>
+  <% if @product.payment_method_links.count < 1 && @product.user == current_user %>
   <a href="<%= edit_selling_methods_product_path(@product) %>"><h2 class = "method_alert">Payment Methods</h2></a>
   <% else %>
   

@@ -71,7 +71,7 @@ class DealsController < ApplicationController
     end
     @deal.product.save
     if @deal.selling_method.id == 2
-      @deal.proposed_price_accepted = false
+      @deal.proposed_price_accepted = true
     end
     if @deal.exchange_method.id != 1
       @deal.dropoff = nil

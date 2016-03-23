@@ -96,7 +96,7 @@
 	<% else %>
 	  <h3>Your location for delivery: <%= @deal.dropoff %></h3>
 	<% end %>
-	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "" and @deal.proposed_price_accepted) %>
+	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "") %>
 	  <% if !@deal.exchange_agreement_buyer %>
             <%= form_for @deal do |f| %>
               <%= f.hidden_field :exchange_agreement_buyer, value: true %>
@@ -120,15 +120,13 @@
 	<% end %>
         <h3>Delivery location: <%= @deal.dropoff %></h3>
 	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "" and @deal.proposed_price_accepted) %>
-	  <% if @deal.exchange_agreement_buyer %>
             <%= form_for @deal do |f| %>
               <%= f.hidden_field :exchange_agreement_seller, value: true %>
               <%= f.submit "Accept exchange" %>
-            <% end %>
-	  <% else %>
+            <% end %>	  
+<% else %>
 	    <h3>Waiting for buyer to accept exchange</h3>
 	  <% end %>
-    <% end %>
     <% end %>
     <% end %>
   <% end %>    

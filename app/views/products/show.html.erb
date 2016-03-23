@@ -57,6 +57,7 @@
   <% if @product.selling_method_links.count < 1 && @product.user.id == current_user.id %>
   <a href="<%= edit_selling_methods_product_path(@product) %>"><h2 class = "method_alert">Selling Methods</h2></a>
   <% else %>
+  <h2>Selling Methods</h2>
   <% @product.selling_method_links.each do |s| %>
   <p><%= s.selling_method.method %></p>
   <% end %>

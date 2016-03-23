@@ -6,7 +6,7 @@
 <h2>Product received: <%= @deal.product_received %></h2>
 <h2>Deal complete: <%= @deal.deal_complete %></h2>
 <%= image_tag @deal.product.pictures.first.photo_cropped(:medium) %>
-<h2>Listed price: <%= @deal.product.price %></h2>
+<h2>Listed price: <%= number_to_currency(@deal.product.price) %></h2>
 <% if @deal.buyer.id == current_user.id && !@deal.agreement_achieved %>
   <% if @deal.product.selling_method_links.count > 1 or @deal.product.exchange_method_links.count > 1 or @deal.product.payment_method_links.count > 1 %>
   <%= form_for(@deal) do |f| %>
@@ -50,7 +50,7 @@
   <h2>Selling Method: <%= selling_method.method %></h2>
   <% if selling_method.id == 3 or selling_method.id == 4 %>
     <% if @deal.proposed_price_accepted %>
-      <h3>The deal is going through for <%= @deal.user_proposed_price %></h3>
+      <h3>The deal is going through for <%= number_to_currency(@deal.user_proposed_price) %></h3>
     <% else %>
       <% if current_user.id == @deal.buyer_id %>
         <h3>Listed price: <%= @deal.product.price %></h3>
@@ -65,13 +65,13 @@
         <h3>Listed price: <%= @deal.product.price %></h3>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :proposed_price_accepted, value: true %>
-          <h3>Offered price: <%= @deal.user_proposed_price %>  <%= f.submit "Accept offer" %></h3>
+          <h3>Offered price: <%= number_to_currency(@deal.user_proposed_price) %>  <%= f.submit "Accept offer" %></h3>
         <% end %>
       <% end %>
     <% end %>
   <% end %>
   <% if selling_method.id == 2 %>
-    <h3>This product has a set price: <%= @deal.product.price %></h3>
+    <h3>This product has a set price: <%= number_to_currency(@deal.product.price) %></h3>
   <% end %>
 <% end %>
 
@@ -85,11 +85,11 @@
       <h3>The exchange methods have been completely agreed upon.</h3>
       <h4>The seller will deliver the product to the buyer</h4>
       <h4>Dropoff location: <%= @deal.dropoff %></h4>
-      <h4>Delivery cost: <%= @deal.product.delivery_cost %></h4>
+      <h4>Delivery cost: <%= number_to_currency(@deal.product.delivery_cost) %></h4>
     <% else %>
       <% if current_user.id == @deal.buyer_id %>
-        <h3>Delivery cost: <%= @deal.product.delivery_cost %></h3>
-        <% if !@deal.agreement_achieved  %>
+        <h3>Delivery cost: <%= number_to_currency(@deal.product.delivery_cost) %></h3>
+        <% if !@deal.exchange_agreement_buyer %>
           <%= form_for(@deal) do |f| %>
             <h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save" %></h3>
           <% end %>

@@ -3,13 +3,13 @@
 <%= image_tag deal.product.pictures.first.photo_cropped.url(:thumb) %>
 <h3>Seller: <%= deal.seller.name %></h3>
 <h3>Buyer: <%= deal.buyer.name %></h3>
-<h3>Selling Method: <%= deal.selling_method.method %></h3>
-<h3>Exchange Method: <%= deal.exchange_method.method %></h3>
-<h3>Payment Method: <%= deal.payment_method.method %></h3>
-<% if (deal.selling_method.id == 3 and !deal.proposed_price_accepted) %>
+<h3>Selling Method: <%= deal.selling_method.method unless deal.selling_method.nil? %></h3>
+<h3>Exchange Method: <%= deal.exchange_method.method unless deal.exchange_method.nil? %></h3>
+<h3>Payment Method: <%= deal.payment_method.method unless deal.payment_method.nil? %></h3>
+<% if (!deal.selling_method.nil? and deal.selling_method.id == 3 and !deal.proposed_price_accepted) %>
 <h3>You need to agree on a price.</h3>
 <% end %>
-<% if !deal.exchange_agreement_buyer or !deal.exchange_agreement_seller %>
+<% if (!deal.exchange_agreement_buyer or !deal.exchange_agreement_seller) %>
 <h3>You need to agree on an exchange method.</h3>
 <% end %>
 <% if (deal.agreement_achieved and !deal.payment_complete) %>
@@ -19,7 +19,11 @@
 <h3>The buyer has not received his purchased product.</h3>
 <% end %>
 <% if (deal.payment_complete and deal.product_received) %>
+<% if deal.deal_complete %>
+<h3>Boo yah! Deal complete and successful.</h3>
+<% else %>
 <h3>The product and payment have been received by respective parties but parties aren't completely satisfied.</h3>
+<% end %>
 <% end %>
 </div>
 </a>

@@ -11,6 +11,9 @@ class SearchController < ApplicationController
         boost_fields :description => 1.0
       end
     paginate :page => params[:page]
+    with :sold, false
+    with :hold, false
+    with :activated, true
     case params[:sort_by]
       when "low"
         order_by(:price, :asc)
@@ -65,8 +68,6 @@ class SearchController < ApplicationController
       end
 
       facet :category_id, :exclude => category
-
-      with :sold, false
     end
 
     if logged_in? && !search.results.empty?

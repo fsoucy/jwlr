@@ -37,6 +37,12 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find_by(id: params[:id])
+    if (@product.toggle_options.count < 1 and @product.user.id == current_user.id)
+      flash[:warning] = "You need toggle options"
+      redirect_to edit_toggle_options_product_path(@product)
+      return
+    end
+    
     if logged_in?
       @deal = current_user.buying_deals.build(seller_id: @product.user.id, product_id: @product.id)
       @current_user = current_user
@@ -44,6 +50,9 @@ class ProductsController < ApplicationController
     @toggle_options = @product.toggle_options
     search = Sunspot.more_like_this(@product) do
       fields :description, :title
+      with(:sold, false)
+      with(:hold, false)
+      with :activated, true
       boost_by_relevance true
       paginate :page => 1, :per_page => 5
     end
@@ -70,9 +79,13 @@ class ProductsController < ApplicationController
 
   def destroy
     @product = Product.find_by(id: params[:id])
-    @product.destroy
-    flash[:success] = "Product successfully destroyed."
-    redirect_to current_user
+    if !@product.sold
+      @product.destroy
+      flash[:success] = "Product successfully destroyed."
+      redirect_to current_user
+    else
+      redirect_to @product
+    end
   end
 
   def edit
@@ -103,6 +116,7 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
+    if !@product.sold && !@product.hold
     toggle_options = params[:toggle_options]
     selling_methods = params[:selling_method_links]
     exchange_methods = params[:exchange_method_links]
@@ -114,6 +128,7 @@ class ProductsController < ApplicationController
         toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
         toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
         toggle_option.save
+        @product.save
       end
       redirect_to edit_selling_methods_product_path(@product.id)
       return
@@ -126,9 +141,15 @@ class ProductsController < ApplicationController
       selling_methods.each do |id, selected|
         @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
       end
-      redirect_to edit_exchange_methods_product_path(@product.id)
-      return
-      #redirect_to controller: 'ProductsController', action: 'edit_exchange_methods', id: @product.id
+      @product.save
+      if @product.selling_method_links.count < 1
+        flash[:warning] = "You need at least one accepted selling method!"
+        redirect_to edit_selling_methods_product_path(@product)
+        return
+      else
+        redirect_to edit_exchange_methods_product_path(@product.id)
+        return
+      end
     end
 
     unless exchange_methods.nil?
@@ -138,8 +159,15 @@ class ProductsController < ApplicationController
       exchange_methods.each do |id, selected|
         @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
       end
-      redirect_to edit_payment_methods_product_path(@product.id)
-      return
+      @product.save
+      if @product.exchange_method_links.count < 1
+        flash[:warning] = "You need at least one accepted exchange method!"
+        redirect_to edit_exchange_methods_product_path(@product)
+        return
+      else
+        redirect_to edit_payment_methods_product_path(@product.id)
+        return
+      end
     end
 
     unless payment_methods.nil?
@@ -149,11 +177,23 @@ class ProductsController < ApplicationController
       payment_methods.each do |id, selected|
         @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
       end
-      redirect_to new_picture_url
-      return
+      @product.save
+      if @product.payment_method_links.count < 1
+        flash[:warning] = "You need at least one accepted payment method!"
+        redirect_to edit_payment_methods_product_path(@product)
+        return
+      else
+        redirect_to new_picture_url
+        return
+      end
     end
 
     if !picture.nil?
+      if @product.pictures.count < 1
+        flash[:warning] = "Your product must have at least one picture!"
+        redirect_to new_picture_url
+        return
+      end
       if @product.min_accepted_price.nil?
         @product.min_accepted_price = 0.0
       end
@@ -161,14 +201,23 @@ class ProductsController < ApplicationController
     end
 
     unless product_params.nil?
-      if @product.update_attributes(product_params)
-        @product.save
-        if params[:product][:on_deals]
-          redirect_to Deal.find(params[:product][:deal_id])
-          return
+      @product.assign_attributes(product_params)
+      if params[:product][:on_deals]
+        deal = Deal.find(params[:product][:deal_id])
+        if @product.changed?
+          deal.exchange_agreement_buyer = false
+          deal.exchange_agreement_seller = false
+          deal.save
         end
-        redirect_to edit_toggle_options_product_path(@product.id)
+        @product.save
+        redirect_to deal
+        return
       end
+      @product.save
+      redirect_to edit_toggle_options_product_path(@product.id)
+    end
+    else
+      redirect_to @product
     end
   end
 

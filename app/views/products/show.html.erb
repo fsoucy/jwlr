@@ -2,10 +2,19 @@
 <% provide(:title, "Product") %>
 <div class="product_show_container">
   <h1><%= @product.title %> (<%= @product.category.name %>)</h1>
-  <%= if !@product.pictures.first.nil?
-    image_tag @product.pictures.first.photo_cropped(:medium), class: "product_image" 
-  end
-  %>
+  
+  <% if !@product.pictures.first.nil? %>
+      <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "product_image" %>
+      <% if @product.user == current_user %>
+      <% link_to("Edit", edit_picture_path(@product.pictures.first)) %>
+      <% end %>
+  <% end %>
+  <% @product.pictures.each do |picture| %>
+  <%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show" unless picture == @product.pictures.first %>
+  <% if @product.user == current_user %>
+  <%= link_to "Edit", edit_picture_path(picture) %>
+  <% end %>
+  <% end %>
   <% @toggle_options.each do |opt| %>
   <h3><%= opt.attribute_option.category_option.name %>: <%= opt.attribute_option.value %></h3>
   <% end %>
@@ -22,12 +31,15 @@
   <h3>Views: <%= @product.views %></h3>
 </div>
 <div class="product_show_container">
+  <% if !@product.sold && !@product.hold %>
   <% if @product.user == current_user %><%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
 					    data: { confirm: "Are you sure you wish to delete this?" } %>
   <br>
   <%= link_to "Edit product", edit_product_path(@product.id) %>
   <% else %>
-  <% if logged_in? %>
+  <% if @product.activated && logged_in? %>
+  <% active_deal = Deal.where("product_id = ? and buyer_id = ?", @product.id, current_user).first %>
+  <% if active_deal.nil? %>
   <%= form_for(@deal) do |f| %>
   <%= f.hidden_field :seller_id, value: @deal.seller_id %>
   <%= f.hidden_field :buyer_id, value: @deal.buyer_id %>
@@ -35,23 +47,31 @@
   <%= f.submit "Buy this product" %>
   <% end %>
   <% else %>
+  <%= link_to "Go to active deal", deal_path(active_deal.id) %>
+  <% end %>
+  <% elsif @product.activated %>
   <% store_location %>
   <%= form_tag "/login", method: "get" do %>
   <%= submit_tag "Buy this product" %>
   <% end %>
   <% end %>
   <% end %>
-</div>
-<div class="product_show_container">
-  <h2>Want to submit a review for this product?</h2>
-  <textarea class="review"></textarea>
-  <button class="submit">Submit Review</button>
+  <% end %>
 </div>
 <div class="options">
+  <% if @product.selling_method_links.count < 1 && @product.user == current_user %>
+  <a href="<%= edit_selling_methods_product_path(@product) %>"><h2 class = "method_alert">Selling Methods</h2></a>
+  <% else %>
   <h2>Selling Methods</h2>
   <% @product.selling_method_links.each do |s| %>
   <p><%= s.selling_method.method %></p>
   <% end %>
+  <% end %>
+  
+  <% if @product.exchange_method_links.count < 1 && @product.user == current_user %>
+  <a href="<%= edit_exchange_methods_product_path(@product) %>"><h2 class = "method_alert">Exchange Methods</h2></a>
+  <% else %>
+     
   <h2>Exchange Methods</h2>
   <% @product.exchange_method_links.each do |s| %>
   <p><%= s.exchange_method.method %></p>
@@ -59,9 +79,16 @@
   <p>Delivery cost: <%= number_to_currency(@product.delivery_cost) %></p>
   <% end %>
   <% end %>
+  <% end %>
+
+  <% if @product.payment_method_links.count < 1 && @product.user == current_user %>
+  <a href="<%= edit_selling_methods_product_path(@product) %>"><h2 class = "method_alert">Payment Methods</h2></a>
+  <% else %>
+  
   <h2>Payment Methods</h2>
   <% @product.payment_method_links.each do |s| %>
   <p><%= s.payment_method.method %></p>
+  <% end %>
   <% end %>
 </div>
 <div class="more_like_this">

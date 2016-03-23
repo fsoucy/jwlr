@@ -15,6 +15,8 @@ class StaticPagesController < ApplicationController
           end
           paginate :page => 1, :per_page => 1
           with :sold, false
+          with :hold, false
+          with :activated, true
         end
         results += search.results
       end
@@ -25,13 +27,41 @@ class StaticPagesController < ApplicationController
             fields :description, :title
             boost_by_relevance true
             paginate :page => 1, :per_page => (5 - results.count)  
+            with :sold, false
+            with :hold, false
+            with :activated, true
           end
           results += search.results
          end
       end
-
       @for_you = results
     end
+    @for_you = [] if @for_you.nil?
+    @featured = [] if @featured.nil?
+    index = 0
+    while (@for_you.count < 5 and Product.count > @for_you.count and index < 20)
+      product = nil
+      while product.nil? and index < 20
+        product = Product.find_by(id: index)
+        index += 1
+      end
+      if !product.nil?
+        @for_you.append(product) unless !product.activated || product.sold || product.hold
+      end
+    end
+    
+    index = 0
+    while (@featured.count < 5 and Product.count > @featured.count and index < 20)
+      product = nil
+      while product.nil? and index < 20
+        product = Product.find_by(id: index)
+        index += 1
+      end
+      if !product.nil?
+        @featured.append(product) unless !product.activated || product.sold || product.hold
+      end
+    end
+    
   end
 
   def help

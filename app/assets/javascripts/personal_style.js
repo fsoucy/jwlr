@@ -31,24 +31,7 @@ $(document).ready(function() {
 	}
     });
     
-    //sell home
-    window.setInterval(function(){
-	$('.sell_active').fadeOut(550,function() {
-	    $('.sell_active').toggleClass('sell_now').toggleClass('sell_now_other').fadeIn(550);
-	});
-    },4000);
 
-    $('.gallery_other').mouseover(function() {
-	var mainImg = $('#gallery_main_first').css('background-image');
-	var otherImg = $(this).css('background-image');
-	$(this).fadeOut(550, function() {
-	    $(this).css('background-image', mainImg).fadeIn(550);
-	});
-	$('.gallery_main').fadeOut(550, function() {
-	    $('.gallery_main').css('background-image', otherImg).fadeIn(550); 
-	});
-
-    });
     
     //header stuff
     $('.search_string').focusin(function() {

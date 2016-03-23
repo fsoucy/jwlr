@@ -1,3 +1,6 @@
 <% provide(:title, "Buying") %>
-<h1>Pending Deals | Buying</h1>
-<%= render @deals %>
+<h1>My Buying Deals</h1>
+<% if @buying.count == 0 %>
+<%= link_to "You have no buying deals. Click here to see some products.", "/search?" %>
+<% end %>
+<%= render @buying %>

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
+  get 'logout' => 'sessions#destroy'
   get 'search' => 'search#new'
   get 'search_suggestions' => 'search#suggestions'
   # option 'search_suggestions' => 'search#suggestions'
@@ -29,7 +30,7 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      get :edit_description, :user_stores, :noties
+      get :edit_description, :user_stores, :noties, :selling, :buying
     end
   end  
 

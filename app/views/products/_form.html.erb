@@ -28,8 +28,11 @@
 <br>
 
 <%= f.label :delivery_cost, "Planning on adding a delivery cost? Specify that here. If not, just leave this unchanged." %>
+<% if @product.delivery_cost.nil? %>
 <%= f.number_field :delivery_cost, value: current_user.default_delivery_cost, class: 'form-control' %>
-
+<% else %>
+<%= f.number_field :delivery_cost, class: 'form-control' %>
+<% end %>
 <%= f.submit "Upload product", class: "btn btn-primary" %>
 <% end %>
 

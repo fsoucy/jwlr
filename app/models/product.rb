@@ -17,7 +17,8 @@ class Product < ActiveRecord::Base
   has_many :selling_method_links, dependent: :destroy
   has_many :pictures, dependent: :destroy  
   has_many :deals
-  
+  before_save :activate 
+ 
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at]
     super(options)
@@ -42,8 +43,20 @@ class Product < ActiveRecord::Base
     float :price
     latlon(:location) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
     boolean :sold
+    boolean :hold
+    boolean :activated
     time :created_at    
     integer :category_id
   end
+
+  private
   
+    def activate
+      if self.toggle_options.count > 0 and self.selling_method_links.count > 0 and self.exchange_method_links.count > 0 and self.payment_method_links.count > 0 and self.pictures.count > 0
+        self.activated = true
+      else
+        self.activated = false
+      end
+      return true
+    end
 end

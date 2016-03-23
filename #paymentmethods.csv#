@@ -4,3 +4,5 @@ id,method
 3,Debit Card upon transaction
 4,Check upon transction
 5,Cash upon transaction
+6,Trade
+7,Person-to-Person conversation (put on hold)

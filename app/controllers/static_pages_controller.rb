@@ -16,6 +16,7 @@ class StaticPagesController < ApplicationController
           paginate :page => 1, :per_page => 1
           with :sold, false
           with :hold, false
+          with :activated, true
         end
         results += search.results
       end
@@ -28,6 +29,7 @@ class StaticPagesController < ApplicationController
             paginate :page => 1, :per_page => (5 - results.count)  
             with :sold, false
             with :hold, false
+            with :activated, true
           end
           results += search.results
          end

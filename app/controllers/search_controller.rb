@@ -13,6 +13,7 @@ class SearchController < ApplicationController
     paginate :page => params[:page]
     with :sold, false
     with :hold, false
+    with :activated, true
     case params[:sort_by]
       when "low"
         order_by(:price, :asc)

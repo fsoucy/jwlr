@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160322173224) do
+ActiveRecord::Schema.define(version: 20160323024553) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(version: 20160322173224) do
     t.boolean  "fully_updated"
     t.decimal  "delivery_cost"
     t.boolean  "featured"
+    t.boolean  "activated"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id"
@@ -316,13 +317,13 @@ ActiveRecord::Schema.define(version: 20160322173224) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "full_street_address"
+    t.integer  "business_days_pickup"
+    t.decimal  "default_delivery_cost"
     t.text     "interests"
     t.integer  "products_bought"
     t.integer  "products_sold"
     t.text     "identifies_as"
     t.string   "profile_picture"
-    t.integer  "business_days_pickup"
-    t.decimal  "default_delivery_cost"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -76,7 +76,7 @@ class DealsController < ApplicationController
       exchange_agreement = true
     end
     @deal.product.hold = @deal.exchange_agreement_buyer
-    exchange_agreement = ((@deal.exchange_agreement_buyer and @deal.exchange_agreement_seller) or (!@deal.product.store.nil? and pickup))
+    exchange_agreement = ((@deal.exchange_agreement_buyer and @deal.exchange_agreement_seller) or (!@deal.product.store.nil? and @deal.exchange_method == 3))
     @deal.agreement_achieved = (selling_agreement and exchange_agreement)
     @deal.deal_complete = (@deal.buyer_satisfied and @deal.seller_satisfied and @deal.payment_complete and @deal.product_received and @deal.agreement_achieved)
     if @deal.deal_complete

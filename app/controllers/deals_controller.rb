@@ -5,7 +5,7 @@ class DealsController < ApplicationController
   def create
     @deal = current_user.buying_deals.build(deals_params)
     active_deal = Deal.where("product_id = ? and buyer_id = ?", @deal.product.id, current_user.id).first
-    if !active_deal.nil?
+    if active_deal.nil?
     if !@deal.product.sold && !@deal.product.hold && @deal.product.activated
     if @deal.save
       @deal.deal_complete = false

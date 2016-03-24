@@ -13,6 +13,11 @@ class ReviewsController < ApplicationController
     review = deal.reviews.build(review_params)
     review.user = current_user
     if review.save
+      if current_user == deal.seller
+         new_notification("Your deal on " + @deal.product.title + " has been reviewed by the seller.", deal.buyer, deal_url(deal))
+      else
+         new_notification("Your deal on " + @deal.product.title + " has been reviewed by the buyer.", deal.seller, deal_url(deal))
+      end
       redirect_to deal
     else
       render 'new'

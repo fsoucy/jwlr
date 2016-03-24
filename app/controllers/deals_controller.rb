@@ -24,6 +24,7 @@ class DealsController < ApplicationController
       @deal.exchange_method = @deal.product.exchange_method_links.first.exchange_method if @deal.product.exchange_method_links.count == 1
       @deal.payment_method = @deal.product.payment_method_links.first.payment_method if @deal.product.payment_method_links.count == 1
       @deal.save
+      new_notification("A user has initiated a deal on your product " + @deal.product.title, @deal.product.user, deal_url(@deal))
       redirect_to @deal
     else
       flash[:warning] = "Deal could not be completed"
@@ -41,6 +42,13 @@ class DealsController < ApplicationController
     @deal = Deal.find(params[:id])
     if !@deal.product.sold
     @deal.assign_attributes(deals_params)
+    if @deal.changed?
+      if current_user == @deal.seller
+        new_notification("Your deal on " + @deal.product.title + " has been updated by the seller.", @deal.buyer, deal_url(@deal))
+      else
+        new_notification("Your deal on " + @deal.product.title + " has been updated by the buyer.", @deal.seller, deal_url(@deal))
+      end
+    end
     if @deal.agreement_achieved && !@deal.deal_complete
       if current_user == @deal.seller
         @deal.assign_attributes(seller_params_accepted)
@@ -109,6 +117,11 @@ class DealsController < ApplicationController
     deal = Deal.find(params[:id])
     deal.product.hold = false
     deal.destroy
+    if deal.seller == current_user
+      new_notification("Your deal on " + deal.product.title + " has been cancelled by the seller.", deal.buyer, deal_url(deal))
+    else
+      new_notification("Your deal on " + deal.product.title + " has been cancelled by the buyer.", deal.seller, deal_url(deal))
+    end
     redirect_to deal.product
   end
 

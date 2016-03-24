@@ -16,7 +16,7 @@
 <% other = first_user_id %>
 <% end %>
 <%= f.hidden_field :other_id, value: other %>
-<%= f.text_field :content, class: "form_input", placeholder: "Write your message here..." %>
+<%= f.text_field :content, class: "form_input", id: "message_input", placeholder: "Write your message here..." %>
 <br>
 <%= f.submit "Send", class: "form_submit", id: "message_submit" %>
 <% end %>

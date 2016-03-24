@@ -52,7 +52,7 @@ class StoresController < ApplicationController
   end
 
   def index
-    @stores = Store.all
+    @stores = Store.all.paginate(page: params[:page])
   end
 
   def edit_times

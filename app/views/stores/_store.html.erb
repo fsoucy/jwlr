@@ -1,3 +1,4 @@
+<li>
 <div class="store_index">
 <%= link_to image_tag(store.profile_photo), store %>
 <h3>Name: <%= store.name %></h3>
@@ -6,4 +7,4 @@
 <h3>Products sold: <%= Deal.where("seller_id=? AND deal_complete=?", store.id, true).count %></h3>
 <h3>Products bought: <%= Deal.where("buyer_id=? AND deal_complete=?", store.id, true).count %></h3>
 </div>
-
+</li>

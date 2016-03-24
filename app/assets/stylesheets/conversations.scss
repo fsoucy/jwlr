@@ -1,3 +1,19 @@
 // Place all the styles related to the Conversations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.massages
+{
+  #display: flex;
+  #flex-direction: column-reverse;
+  list-style-type: none;
+}
+
+.massage_container
+{
+  width: 200px;
+  height: 200px;
+  overflow: scroll;
+  border: 1px solid pink;
+}
+	

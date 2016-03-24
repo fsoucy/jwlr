@@ -364,22 +364,16 @@ ActiveRecord::Schema.define(version: 20160324044617) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "full_street_address"
+    t.integer  "business_days_pickup"
+    t.decimal  "default_delivery_cost"
     t.text     "interests"
     t.integer  "products_bought"
     t.integer  "products_sold"
     t.text     "identifies_as"
-<<<<<<< HEAD
-    t.integer  "business_days_pickup"
-    t.decimal  "default_delivery_cost"
     t.string   "profile_picture_file_name"
     t.string   "profile_picture_content_type"
     t.integer  "profile_picture_file_size"
     t.datetime "profile_picture_updated_at"
-=======
-    t.string   "profile_picture"
-    t.integer  "business_days_pickup"
-    t.decimal  "default_delivery_cost"
->>>>>>> notifications
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

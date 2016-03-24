@@ -89,17 +89,3 @@
     height: 200px;
   }
 }
-
-.massages
-{
-  display: flex;
-  flex-direction: column-reverse;
-}
-
-.massage_container
-{
-  width: 200px;
-  height: 200px;
-  overflow: scroll;
-  border: 1px solid pink;
-}

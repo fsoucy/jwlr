@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   delete 'logout' => 'sessions#destroy'
   get 'logout' => 'sessions#destroy'
   get 'search' => 'search#new'
+  get 'test' => 'products#test'
   get 'search_suggestions' => 'search#suggestions'
   # option 'search_suggestions' => 'search#suggestions'
   #post 'signin' => 'api#signin'

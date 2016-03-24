@@ -24,6 +24,7 @@ class DealsController < ApplicationController
       @deal.exchange_method = @deal.product.exchange_method_links.first.exchange_method if @deal.product.exchange_method_links.count == 1
       @deal.payment_method = @deal.product.payment_method_links.first.payment_method if @deal.product.payment_method_links.count == 1
       @deal.save
+      new_notification("A user has initiated a deal on your product " + @deal.product.title, @deal.product.user, deal_url(@deal))
       redirect_to @deal
     else
       flash[:warning] = "Deal could not be completed"

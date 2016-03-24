@@ -12,7 +12,8 @@
       <button class="dropdown_toggle_header">Account Actions</button>
       <ul class="dropdown_menu_header">
 	<% if logged_in? %>
-	<li><%= link_to "Public Users", users_path %></li>
+	<li><%= link_to "Users Index", users_path %></li>
+	<li><%= link_to "Stores Index", stores_path %></li>
 	<li><%= link_to "Upload Product", new_product_path %></li>
 	<li><%= link_to "Profile", current_user %></li>
 	<li><%= link_to "Settings", edit_user_path(current_user) %></li>

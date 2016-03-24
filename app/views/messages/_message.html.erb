@@ -1,5 +1,5 @@
 <% if !message.sender_id.nil? %>
 <li class="message_block">
-  <%= message.sender.name %>: <%= message.content %>, <%= message.id %>
+  <%= image_tag message.sender.profile_picture(:thumbnail), class: "message_thumbnail" %><%= message.sender.name %>: <%= message.content %>
 </li>
 <% end %>

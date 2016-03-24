@@ -2,6 +2,9 @@ class ProductsController < ApplicationController
   before_action :logged_in_user, only: [:new, :create, :destroy]
   before_action :correct_user, only: [:destroy]  
   
+  def test
+  end
+  
   def new
     if current_user.stores.length > 0
       @has = true

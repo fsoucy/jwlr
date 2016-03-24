@@ -24,9 +24,13 @@ class StoresController < ApplicationController
     @store = Store.find_by(id: params[:id])
     if @store.update_attributes(store_params)
       flash[:success] = "Successfully updated your store!"
+      if params[:store][:redirect_times]
+        redirect_to edit_times_store_path(@store)
+        return
+      end
       redirect_to @store
-	  else
-      flash[:danger] = "You need a time for all your stuff!"
+    else
+      flash[:warning] = "You need a time for all your stuff!"
       redirect_to edit_times_store_path(@store.id)
     end         
   end
@@ -48,6 +52,7 @@ class StoresController < ApplicationController
   end
 
   def index
+    @stores = Store.all
   end
 
   def edit_times

@@ -14,13 +14,14 @@
   <div class="store_within store_gallery_within store_active">
     <h3>Featured Products</h3>
     <% @products.each do |prod| %>
+      <a href="<%= product_path(prod.id) %>">
       <div class="store_prod">
         <div class="image_container">
-          <%= image_tag prod.picture_url(:thumb), class: "store_prod_image" %>
+          <%= image_tag prod.pictures.first.photo_cropped(:medium), class: "store_prod_image" unless prod.pictures.first.nil? %>
 	  <button class="quick_view">Quick View</button>
 	</div>
         <h3 class="store_prod_name"><%= prod.category.name %></h3>
-        <h4 class="store_prod_price"><%= prod.price %></h4>
+        <h4 class="store_prod_price"><%= number_to_currency(prod.price) %></h4>
       </div>
     <% end %>
   </div>
@@ -57,19 +58,19 @@
   <div class="store_within store_about_within store_inactive">
     <div class="store_about_container">
       <div class="about_left">
-	<h3 class="store_about">About</h3>
-	<p class="store_description"><%= @store.description %></p>
+	<h2 class="store_about">About <%= @store.name %></h2><br>
+	<p class="store_description">Store Description: <%= @store.description %></p>
 	<% if @store.faqs.any? %>
-		<h4 class="faq_header">FAQ <%= link_to "New", new_faq_path if current_user?(@store.user) %></h4>
+		<h3 class="faq_header">FAQ <%= link_to "New", new_faq_path if current_user?(@store.user) %></h4><br>
 		<% @store.faqs.each do |faq| %>
-		    <h5 class="faq_question"><%= faq.question %>
+		    <h4 class="faq_question"><%= faq.question %>
         <% if current_user?(faq.store.user) %>
 			  <%= link_to "Delete", faq, method: :delete,
                                        data: { confirm: "Are you sure?" } %>
 			  | <%= link_to "Edit", edit_faq_path(faq) %>
       <% end %>
-			</h5>
-			<p><%= faq.answer %></p>
+			</h4>
+			<h5><%= faq.answer %></h5><br><br>
 		<% end %>
 	<% else %>
 		<h4 class="faq_header"><%= link_to "New FAQ", new_faq_path if current_user?(@store.user) %></h4>
@@ -79,45 +80,49 @@
 	<h3 class="store_location"><%= @store.full_street_address %></h3>
 	<%= image_tag @store.profile_photo_url, class: "store_profile_picture" %>
 	<h3 class="hoursofoperation">Hours of Operation <%= link_to "Edit", edit_times_store_url(@store) if current_user?(@store.user) %></h3>
+	<% if @store.valid_times %>
 	<div class="hours">
 	  <p>
       Monday: <% if @store.mondayopen %>
-      <%= @store.mondaystarthour %>:<%= @store.mondaystartminute %> <%= @store.mondaystartampm %> --> <%= @store.mondayendhour %>:<%= @store.mondayendminute %> <%= @store.mondayendampm %>
+      <%= @store.mondaystarthour %>:<%= sprintf "%02d", @store.mondaystartminute %> <%= @store.mondaystartampm %> --> <%= @store.mondayendhour %>:<%= sprintf "%02d", @store.mondayendminute %> <%= @store.mondayendampm %>
       <% else %>
       Closed
       <% end %>
       <br>Tuesday: <% if @store.tuesdayopen %>
-      <%= @store.tuesdaystarthour %>:<%= @store.tuesdaystartminute %> <%= @store.tuesdaystartampm %> --> <%= @store.tuesdayendhour %>:<%= @store.tuesdayendminute %> <%= @store.tuesdayendampm %>
+      <%= @store.tuesdaystarthour %>:<%= sprintf "%02d", @store.tuesdaystartminute %> <%= @store.tuesdaystartampm %> --> <%= @store.tuesdayendhour %>:<%= sprintf "%02d", @store.tuesdayendminute %> <%= @store.tuesdayendampm %>
       <% else %>
       Closed
       <% end %>
       <br>Wednesday: <% if @store.wednesdayopen %>
-      <%= @store.wednesdaystarthour %>:<%= @store.wednesdaystartminute %> <%= @store.wednesdaystartampm %> --> <%= @store.wednesdayendhour %>:<%= @store.wednesdayendminute %> <%= @store.wednesdayendampm %>
+      <%= @store.wednesdaystarthour %>:<%= sprintf "%02d", @store.wednesdaystartminute %> <%= @store.wednesdaystartampm %> --> <%= @store.wednesdayendhour %>:<%= sprintf "%02d", @store.wednesdayendminute %> <%= @store.wednesdayendampm %>
       <% else %>
       Closed
       <% end %>
       <br>Thursday: <% if @store.thursdayopen %>
-      <%= @store.thursdaystarthour %>:<%= @store.thursdaystartminute %> <%= @store.thursdaystartampm %> --> <%= @store.thursdayendhour %>:<%= @store.thursdayendminute %> <%= @store.thursdayendampm %>
+      <%= @store.thursdaystarthour %>:<%= sprintf "%02d", @store.thursdaystartminute %> <%= @store.thursdaystartampm %> --> <%= @store.thursdayendhour %>:<%= sprintf "%02d", @store.thursdayendminute %> <%= @store.thursdayendampm %>
       <% else %>
       Closed
       <% end %>
       <br>Friday: <% if @store.fridayopen %>
-      <%= @store.fridaystarthour %>:<%= @store.fridaystartminute %> <%= @store.fridaystartampm %> --> <%= @store.fridayendhour %>:<%= @store.fridayendminute %> <%= @store.fridayendampm %>
+      <%= @store.fridaystarthour %>:<%= sprintf "%02d", @store.fridaystartminute %> <%= @store.fridaystartampm %> --> <%= @store.fridayendhour %>:<%= sprintf "%02d", @store.fridayendminute %> <%= @store.fridayendampm %>
       <% else %>
       Closed
       <% end %>
       <br>Saturday: <% if @store.saturdayopen %>
-      <%= @store.saturdaystarthour %>:<%= @store.saturdaystartminute %> <%= @store.saturdaystartampm %> --> <%= @store.saturdayendhour %>:<%= @store.saturdayendminute %> <%= @store.saturdayendampm %>
+      <%= @store.saturdaystarthour %>:<%= sprintf "%02d", @store.saturdaystartminute %> <%= @store.saturdaystartampm %> --> <%= @store.saturdayendhour %>:<%= sprintf "%02d", @store.saturdayendminute %> <%= @store.saturdayendampm %>
       <% else %>
-      Closed
       <% end %>
       <br>Sunday: <% if @store.sundayopen %>
-      <%= @store.sundaystarthour %>:<%= @store.sundaystartminute %> <%= @store.sundaystartampm %> --> <%= @store.sundayendhour %>:<%= @store.sundayendminute %> <%= @store.sundayendampm %>
+      <%= @store.sundaystarthour %>:<%= sprintf "%02d", @store.sundaystartminute %> <%= @store.sundaystartampm %> --> <%= @store.sundayendhour %>:<%= sprintf "%02d", @store.sundayendminute %> <%= @store.sundayendampm %>
       <% else %>
       Closed
       <% end %>
     </p>
+    <%= link_to "Edit opening days", edit_store_path(@store) if current_user == @store.user %>
 	</div>
+	<% else %>
+	<p>Store hasn't updated their hours of operation</p>
+	<% end %>
       </div>
     </div>
   </div>

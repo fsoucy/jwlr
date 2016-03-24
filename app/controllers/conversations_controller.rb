@@ -17,7 +17,8 @@ class ConversationsController < ApplicationController
     new_messages = conversation.messages.paginate(:page => params[:page], :per_page => 50).order("created_at DESC").pluck(:content, :sender_id, :created_at).reverse
     data = Array.new
     new_messages.each do |message|
-      data.append([message[0], User.find(message[1]).name, message[2].to_time.to_i])
+      user = User.find(message[1])
+      data.append([message[0], user.name, message[2].to_time.to_i, user.profile_picture(:thumbnail)])
     end
     render json: data.to_json, status: 200
   end

@@ -1,3 +1,9 @@
+function refreshMessages()
+{
+    $(".massage_container").load('http://igold.ws:3000/conversations/8' + " .massages");
+    $('.massage_container').scrollTop(10000000);
+}
+
 $(document).ready(function() {
     $('.massage_container').scrollTop(10000000);
     window.page = 2;
@@ -31,7 +37,10 @@ $(document).ready(function() {
 	{
 	    event.preventDefault();
 	    var result = $.post('/messages', $('#message_form').serialize());
-	    $(".massages").load('http://igold.ws:3000/conversations/8' + " .massages");
+	    
+	    $(".massage_container").load('http://igold.ws:3000/conversations/8' + " .massages");
+	    $('.massage_container').scrollTop(10000000);
+	    $('#message_input').val('');
 	}
     });
 
@@ -39,9 +48,12 @@ $(document).ready(function() {
 	event.preventDefault();
 	$.post('/messages', $('#message_form').serialize());
 	$(".massages").load('http://igold.ws:3000/conversations/8' + " .massages");
+	$('.massage_container').scrollTop(10000000);
+	$('#message_input').val('');
     });
 
-    
+
+    setInterval(refreshMessages, 500);
     
 });
 

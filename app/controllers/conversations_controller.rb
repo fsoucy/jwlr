@@ -4,7 +4,10 @@ class ConversationsController < ApplicationController
 
   def show
     @conversation = Conversation.find(params[:id])
-    @messages = @conversation.messages
+    last = @conversation.messages.count
+    start = last - 50
+    start = 0 if start < 0
+    @messages = @conversation.messages[(start)..last]
 
     @msg = @conversation.messages.build
   end

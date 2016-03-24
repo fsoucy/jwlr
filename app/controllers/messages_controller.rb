@@ -2,8 +2,8 @@ class MessagesController < ApplicationController
   before_action :logged_in_user
   
   def create
-    other_id = params[:message][:other_id]
-    user_id = params[:message][:sender_id]
+    other_id = params[:message][:other_id].to_i
+    user_id = params[:message][:sender_id].to_i
     if current_user.id == user_id
       conversation = Conversation.where("first_user_id=? or first_user_id=? AND second_user_id=? or second_user_id=?", user_id, other_id, user_id, other_id)
       if conversation.first.nil?

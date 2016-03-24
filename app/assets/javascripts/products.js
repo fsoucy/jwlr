@@ -10,20 +10,5 @@ $(document).ready(function() {
 	$('.product_image').next().attr('href', smallLink);
 	$(this).next().attr('href', largeLink);
     });
-    $('.massage_container').scrollTop(10000000);
-    var page = 1;
-    $('.massage_container').scroll(function(event) {
-	if ($('.massage_container').scrollTop() < 10)
-	{
-	    page = page + 1;
-	    while (index < 30)
-	    {
-		str = 'Hello ' + hellos;
-		hellos = hellos + 1;
-		$('.massages').append('<li>' + str + '</li>');
-		index = index + 1;
-	    }
-	}
-    });
 
 });

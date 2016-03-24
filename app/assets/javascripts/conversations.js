@@ -25,4 +25,24 @@ $(document).ready(function() {
 	    window.page = window.page + 1;
 	}
     });
+
+    $(document).keydown(function(event) {
+	if (event.which == 13)
+	{
+	    event.preventDefault();
+	    var result = $.post('/messages', $('#message_form').serialize());
+	    $(".massages").load('http://igold.ws:3000/conversations/8' + " .massages");
+	}
+    });
+
+    $('#message_submit').click(function(event) {
+	event.preventDefault();
+	$.post('/messages', $('#message_form').serialize());
+	$(".massages").load('http://igold.ws:3000/conversations/8' + " .massages");
+    });
+
+    
+    
 });
+
+

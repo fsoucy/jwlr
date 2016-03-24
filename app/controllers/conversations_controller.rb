@@ -14,7 +14,7 @@ class ConversationsController < ApplicationController
 
   def pull_messages
     conversation = Conversation.find(params[:id])
-    new_messages = conversation.messages.paginate(:page => params[:page], :per_page => 50).order("created_at DESC").pluck(:content, :sender_id, :id).reverse
+    new_messages = conversation.messages.paginate(:page => params[:page], :per_page => 50).order("created_at DESC").pluck(:content, :sender_id, :created_at).reverse
     data = Array.new
     new_messages.each do |message|
       data.append([message[0], User.find(message[1]).name, message[2]])

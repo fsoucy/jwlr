@@ -1,4 +1,0 @@
-class AddPublicBooleanToUsers < ActiveRecord::Migration
-  def change
-  end
-end

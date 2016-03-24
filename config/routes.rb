@@ -25,7 +25,11 @@ Rails.application.routes.draw do
   #post 'newstatus' => 'api#newstatus'  
   #get 'users' => 'api#users'
 
-  resources :conversations
+  resources :conversations do
+    member do
+      get :pull_messages
+    end
+  end
   resources :messages
   resources :attribute_options, only: [:create, :destroy]
   resources :category_options, only: [:create, :destroy]
@@ -33,8 +37,10 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      get :edit_description, :user_stores, :noties, :selling, :buying
-    end
+      get :edit_description, :user_stores, :selling, :buying
+      get 'reviews' => 'reviews#index'
+      resources :notifications, only: [:update, :index]
+     end
   end  
 
   resources :blogposts, only: [:new, :create, :destroy, :edit, :update]
@@ -45,6 +51,7 @@ Rails.application.routes.draw do
 	    resources :faqs, only: [:new, :create, :destroy, :edit, :update]
     end
   end
+
   resources :products, only: [:new, :create, :show, :destroy, :edit, :update] do
     member do
       get :edit_toggle_options, :edit_exchange_methods, :edit_payment_methods, :edit_selling_methods
@@ -56,7 +63,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :deals
+  resources :deals do
+    member do
+      resources :reviews, only: [:new, :create]
+    end
+  end
   resources :payments, only: [:create]  
     
   resources :account_activations, only: [:edit]

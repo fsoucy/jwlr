@@ -1,0 +1,26 @@
+<h1><%= @user.name %> Reviews</h1>
+<h3><%= @user.score %>% positive reviews</h3>
+<br>
+<h2>Buying Reviews</h2>
+<% if @buying_reviews.empty? %>
+  <h3>This user has not bought any products</h3>
+<% else %>
+  <% @buying_reviews.each do |review| %>
+    <h3><%= review.verdict %></h3>
+    <p><%= review.message %></p>
+    <p><%= link_to "View Product", product_url(review.deal.product) %> | <%= link_to "View User", user_url(review.deal.seller) %></p>
+  <% end %>
+<% end %>
+<br>
+<h2>Selling Reviews</h2>
+<% if @selling_reviews.empty? %>
+  <h3>This user has not sold any products</h3>
+<% else %>
+  <% @selling_reviews.each do |review| %>
+    <h3><%= review.verdict %></h3>
+    <p><%= review.message %></p>
+    <p><%= link_to "View Product", product_url(review.deal.product) %> | <%= link_to "View User", user_url(review.deal.buyer) %></p>
+  <% end %>
+<% end %>
+
+

@@ -82,7 +82,7 @@
       </div>
       <div class="about_right">
 	<h3 class="store_location"><%= @store.full_street_address %></h3>
-	<%= image_tag @store.profile_photo_url, class: "store_profile_picture" %>
+	<%= image_tag @store.profile_picture(:thumb), class: "store_profile_picture" %>
 	<h3 class="hoursofoperation">Hours of Operation <%= link_to "Edit", edit_times_store_url(@store) if current_user?(@store.user) %></h3>
 	<% if @store.valid_times %>
 	<div class="hours">

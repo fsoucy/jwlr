@@ -1,5 +1,9 @@
 <a href="<%= deal_path(deal) %>">
+<% if deal.deal_complete && deal.reviews.where("user_id = ?", current_user.id).first.nil? %>
+<div class="deal reviewed_false">
+<% else %>
 <div class="deal finished_<%= deal.deal_complete.to_s %>">
+<% end %>
 <%= image_tag deal.product.pictures.first.photo_cropped.url(:thumb) %>
 <h3>Seller: <%= deal.seller.name %></h3>
 <h3>Buyer: <%= deal.buyer.name %></h3>
@@ -19,8 +23,10 @@
 <h3>The buyer has not received his purchased product.</h3>
 <% end %>
 <% if (deal.payment_complete and deal.product_received) %>
-<% if deal.deal_complete %>
+<% if deal.deal_complete && !deal.reviews.where("user_id = ?", current_user.id).first.nil? %>
 <h3>Boo yah! Deal complete and successful.</h3>
+<% elsif deal.deal_complete %>
+<h3><%= link_to "Please sumbit a review for this deal", new_review_url(deal) %></h3>
 <% else %>
 <h3>The product and payment have been received by respective parties but parties aren't completely satisfied.</h3>
 <% end %>

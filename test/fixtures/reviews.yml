@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  deal_id: 
+  verdict: MyString
+  message: MyString
+  user_id: 
+
+two:
+  deal_id: 
+  verdict: MyString
+  message: MyString
+  user_id: 

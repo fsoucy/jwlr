@@ -5,4 +5,5 @@ class Deal < ActiveRecord::Base
   belongs_to :selling_method
   belongs_to :exchange_method
   belongs_to :payment_method
+  has_many :reviews
 end

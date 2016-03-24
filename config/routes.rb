@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   delete 'logout' => 'sessions#destroy'
   get 'logout' => 'sessions#destroy'
   get 'search' => 'search#new'
-  get 'search_suggestions' => 'search#suggestions'
+  get 'search_suggestions' => 'search#suggestions'  
   # option 'search_suggestions' => 'search#suggestions'
   #post 'signin' => 'api#signin'
   #post 'signup' => 'api#signup'
@@ -24,7 +24,11 @@ Rails.application.routes.draw do
   #post 'newstatus' => 'api#newstatus'  
   #get 'users' => 'api#users'
 
-  resources :conversations
+  resources :conversations do
+    member do
+      get :pull_messages
+    end
+  end
   resources :messages
   resources :attribute_options, only: [:create, :destroy]
   resources :category_options, only: [:create, :destroy]
@@ -46,6 +50,7 @@ Rails.application.routes.draw do
 	    resources :faqs, only: [:new, :create, :destroy, :edit, :update]
     end
   end
+
   resources :products, only: [:new, :create, :show, :destroy, :edit, :update] do
     member do
       get :edit_toggle_options, :edit_exchange_methods, :edit_payment_methods, :edit_selling_methods

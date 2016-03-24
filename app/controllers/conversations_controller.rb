@@ -9,6 +9,12 @@ class ConversationsController < ApplicationController
     @msg = @conversation.messages.build
   end
 
+  def pull_messages
+    conversation = Conversation.find(params[:id])
+    new_messages = conversation.messages.paginate(:page => params[:page], :per_page => 50).order("created_at DESC").reverse
+    render json: new_messages.to_json, status: 200
+  end
+
   private
     
     def correct_user

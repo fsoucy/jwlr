@@ -63,12 +63,20 @@
           <%= f.hidden_field :min_price, value: @deal.product.min_accepted_price, id: "minimum_price" %>
           <h3>Your price: <%= f.number_field :user_proposed_price, value: @deal.user_proposed_price, id: "price_proposal" %>  <%= f.submit "Change offer", class: "propose_price" %></h3>
         <% end %>
+      <% if !@deal.user_proposed_price.nil? && !@deal.proposed_price_accepted %>
+        <h4>Offer made, waiting for seller to accept.</h4>
+      <% elsif @deal.proposed_price_accepted %>
+        <h4>Offer accepted!</h4>
+      <% end %>
       <% end %>
       <% if current_user.id == @deal.seller_id %>
         <h3>Listed price: <%= number_to_currency(@deal.product.price) %></h3>
         <%= form_for @deal do |f| %>
-          <%= f.hidden_field :proposed_price_accepted, value: true %>
-          <h3>Offered price: <%= number_to_currency(@deal.user_proposed_price) %>  <%= f.submit "Accept offer" %></h3>
+          <%= f.hidden_field :proposed_price_accepted, value: !@deal.proposed_price_accepted %>
+          <h3>Offered price: <%= number_to_currency(@deal.user_proposed_price) %>  <%= f.submit "Set offer accepted to #{!@deal.proposed_price_accepted}" %></h3>
+        <% end %>
+        <% if !@deal.user_proposed_price.nil? && !@deal.proposed_price_accepted %>
+          <h4>The buyer has made an offer, either accept it here or discuss with the buyer.</h4>
         <% end %>
       <% end %>
     <% end %>
@@ -92,7 +100,7 @@
     <% else %>
       <% if current_user.id == @deal.buyer_id %>
         <h3>Delivery cost: <%= number_to_currency(@deal.product.delivery_cost) %></h3>
-        <% if !@deal.exchange_agreement_buyer %>
+        <% if !@deal.agreement_achieved %>
           <%= form_for(@deal) do |f| %>
             <h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save" %></h3>
           <% end %>
@@ -265,7 +273,10 @@
     <%= f.submit "Set satisfied with completed deal to #{!@deal.buyer_satisfied}" %>
   <% end %>
   <% end %>  
-
+<% end %>
+<% review = @deal.reviews.where("user_id = ?", current_user.id).first %>
+<% if review.nil? && @deal.deal_complete %>
+  <%= link_to "Leave a review of this deal", new_review_url(@deal) %>
 <% end %>
 </div>
 <div class="messages_deal">

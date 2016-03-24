@@ -32,8 +32,10 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      get :edit_description, :user_stores, :noties, :selling, :buying
-    end
+      get :edit_description, :user_stores, :selling, :buying
+      get 'reviews' => 'reviews#index'
+      resources :notifications, only: [:update, :index]
+     end
   end  
 
   resources :blogposts, only: [:new, :create, :destroy, :edit, :update]
@@ -55,7 +57,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :deals
+  resources :deals do
+    member do
+      resources :reviews, only: [:new, :create]
+    end
+  end
   resources :payments, only: [:create]  
     
   resources :account_activations, only: [:edit]

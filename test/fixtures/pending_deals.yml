@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-two:
-  id: 28
-  buyer_id: 2
-  seller_id: 4
-  product_id: 28
-  seller_price: 100.0
-  buyer_price: 100.0

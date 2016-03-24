@@ -1,6 +1,6 @@
 <li>
 <div class="store_index">
-<%= link_to image_tag(store.profile_photo), store %>
+<%= link_to image_tag(store.profile_picture(:medium)), store %>
 <h3>Name: <%= store.name %></h3>
 <h3>Owner: <%= store.user.name %></h3>
 <h3>Location: <%= store.full_street_address %></h3>

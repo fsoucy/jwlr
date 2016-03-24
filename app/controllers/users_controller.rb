@@ -10,7 +10,6 @@ class UsersController < ApplicationController
   def index
     @users = User.all.paginate(page: params[:page])
   end
-
   
   def show
     @user = User.find(params[:id])
@@ -75,10 +74,6 @@ class UsersController < ApplicationController
       @stores = user.stores
       @has = true
     end
-  end
-
-  def noties
-    @notes = User.find(params[:id]).notifications
   end
 
   def selling

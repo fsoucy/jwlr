@@ -1,10 +1,11 @@
 class Store < ActiveRecord::Base
   belongs_to :user
-  mount_uploader :profile_photo, PictureUploader
   validate :selected_times
   has_many :products, dependent: :destroy
   has_many :faqs, dependent: :destroy
   has_many :blogposts, dependent: :destroy
+  has_attached_file :profile_picture, :styles => { :medium => ["300x300>", :png], :thumb => ["200x200>", :png], :thumbnail => ["50x50>", :png] }, default_url: "/images/:style/missing.png"
+  validates_attachment :profile_picture, :storage => :filesystem, :presence => true, :content_type => { :content_type => /\Aimage\/.*\Z/ }, :size => { :less_than => 10.megabyte }
 
   def selected_times
     things = []

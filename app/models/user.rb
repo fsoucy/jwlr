@@ -25,8 +25,9 @@ class User < ActiveRecord::Base
   has_many :messages, class_name: "Message", foreign_key: "sender", dependent: :destroy
   has_many :buying_deals, class_name: "Deal", foreign_key: "buyer_id", dependent: :destroy
   has_many :selling_deals, class_name: "Deal", foreign_key: "seller_id", dependent: :destroy
-  mount_uploader :profile_picture, PictureUploader
-
+  has_attached_file :profile_picture, :styles => { :medium => ["300x300>", :png], :thumb => ["200x200>", :png], :thumbnail => ["50x50>", :png] }, default_url: "/images/:style/missing.png"
+  validates_attachment :profile_picture, :storage => :filesystem, :presence => true, :content_type => { :content_type => /\Aimage\/.*\Z/ }, :size => { :less_than => 10.megabyte }
+  
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
     	   					  BCrypt::Engine.cost

@@ -1,6 +1,6 @@
 <% provide(:title, @user.name) %>
 <% unless @user.profile_picture.nil? %>
-<%= image_tag @user.profile_picture_url(:thumb), class: "pro_pic" %><br>
+<%= image_tag @user.profile_picture(:thumb), class: "pro_pic" %><br>
 <% end %>
 <h1><%= @user.name %></h1>
 <h3><%= link_to "Edit Page", edit_user_path(@user.id) if current_user?(@user) %></h3>

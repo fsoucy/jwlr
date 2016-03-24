@@ -20,7 +20,8 @@
 	<li><%= link_to "Bug report", new_bug_path %></li>
 	<li><%= link_to "My Selling Deals", selling_user_path(current_user) %></li>
 	<li><%= link_to "My Buying Deals", buying_user_path(current_user) %></li>
-	<li class="divider"></li>
+	<li><%= link_to "Notifications", notifications_path(current_user) %></li>
+  <li class="divider"></li>
 	<li><%= link_to "Log out", logout_path, method: "delete", class: 'bottom' %></li>
 	<% else %>
 	<li><%= link_to "Log in", login_path %></li>

@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   #post 'newstatus' => 'api#newstatus'  
   #get 'users' => 'api#users'
 
+  resources :conversations
+  resources :messages
   resources :attribute_options, only: [:create, :destroy]
   resources :category_options, only: [:create, :destroy]
   resources :bugs, only: [:new, :create, :destroy, :update, :index]

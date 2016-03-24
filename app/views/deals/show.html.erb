@@ -1,3 +1,4 @@
+<div class="deal_large">
 <h1>Welcome to the deal between <%= @deal.seller.name %> (seller) and <%= @deal.buyer.name %> (buyer)</h1>
 <% if (@deal.product_dispatched and current_user.id == @deal.buyer_id) %>
   <h2>The product is on its way to you!</h2>
@@ -266,3 +267,27 @@
   <% end %>  
 
 <% end %>
+</div>
+<div class="messages_deal">
+  <h1>Messages with this seller</h1>
+  <%= render @messages %>
+
+  <div class="form_fields">
+    <%= form_for @msg do |f| %>
+    <%= f.hidden_field :sender_id, value: current_user.id %>
+    <%= f.hidden_field :on_deals, value: true %>
+    <%= f.hidden_field :deal_id, value: @deal.id %>
+    <% first_user_id = @conversation.first_user_id %>
+    <% second_user_id = @conversation.second_user_id %>
+    <% if current_user.id == first_user_id %>
+    <% other = second_user_id %>
+    <% else %>
+    <% other = first_user_id %>
+    <% end %>
+    <%= f.hidden_field :other_id, value: other %>
+    <%= f.text_area :content, class: "form_input", placeholder: "Write your message here..." %>
+    <br>
+    <%= f.submit "Send", class: "form_submit" %>
+    <% end %>
+  </div>
+</div>

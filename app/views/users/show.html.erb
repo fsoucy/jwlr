@@ -55,3 +55,14 @@
   <p><%= post.content %></p>
 </div>
 <% end %>
+
+<h3>Message this user</h3>
+<div class="form_fields">
+  <%= form_for @message do |f| %>
+  <%= f.hidden_field :sender_id, value: current_user.id %>
+  <%= f.hidden_field :other_id, value: @user.id %>
+  <%= f.text_area :content, class: "form_input", placeholder: "Send a message" %>
+  <br>
+  <%= f.submit "Send message", class: "form_submit" %>
+  <% end %>
+</div>

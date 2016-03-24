@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('.massage_container').scrollTop(10000000);
-    var page = 1;
+    window.page = 2;
     $('.massage_container').scroll(function(event) {
 	if ($('.massage_container').scrollTop() < 10)
 	{
@@ -8,19 +8,21 @@ $(document).ready(function() {
 	    $.ajax({
 		type: "GET",// GET in place of POST
 		contentType: "application/json; charset=utf-8",
-		url: "http://" + window.location.host + "/conversations/8/pull_messages?page=" + page,
+		url: "http://" + window.location.host + "/conversations/8/pull_messages?page=" + window.page.toString(),
 		data: {},
 		dataType: "json",
 		success: function (result) {
-		    results = result;
+		    results = result.reverse();
+		    for (res in results)
+		    {
+			thing = results[parseInt(res)];
+			$('.massages').prepend('<li>' + thing[1] + ': ' + thing[0] + ',' + thing[2] + '</li>');
+		    }
 		},
 		error: function (e){
 		}
 	    });
-	    for (result in results)
-	    {
-	    }
-	    page = page + 1;
+	    window.page = window.page + 1;
 	}
     });
 });

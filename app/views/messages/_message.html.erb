@@ -1,5 +1,5 @@
 <% if !message.sender_id.nil? %>
 <li class="message_block">
-  <h3><%= message.sender.name %>: <%= message.content %></h3>
+  <%= message.sender.name %>: <%= message.content %>, <%= message.id %>
 </li>
 <% end %>

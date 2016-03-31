@@ -7,7 +7,7 @@ function refreshMessages()
     $.ajax({
 	type: "GET",// GET in place of POST
 	contentType: "application/json; charset=utf-8",
-	url: "http://" + window.location.host + "/conversations/8/pull_messages?page=1",
+	url: "http://" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=1",
 	data: {},
 	dataType: "json",
 	success: function (result) {
@@ -34,11 +34,11 @@ $(document).ready(function()
     {
 	window.page = 1;
 	var urlString = window.location.href;
-	
+	window.conversation = parseInt(urlString.substring(urlString.indexOf("conversations/") + ("conversations/").length))
 	$.ajax({
 	    type: "GET",// GET in place of POST
 	    contentType: "application/json; charset=utf-8",
-	    url: "http://" + window.location.host + "/conversations/8/pull_messages?page=" + window.page.toString(),
+	    url: "http://" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
 	    data: {},
 	    dataType: "json",
 	    success: function (result) {
@@ -70,7 +70,7 @@ $(document).ready(function()
 		$.ajax({
 		    type: "GET",// GET in place of POST
 		    contentType: "application/json; charset=utf-8",
-		    url: "http://" + window.location.host + "/conversations/8/pull_messages?page=" + window.page.toString(),
+		    url: "http://" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
 		    data: {},
 		    dataType: "json",
 		    success: function (result) {
@@ -116,9 +116,3 @@ $(document).ready(function()
     }
 });
 
-$(window).bind('load', function() {
-    if ($('.massages').length > 0)
-    {
-	$('.massage_container').scrollTop(1000000);
-    }
-});

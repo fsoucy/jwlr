@@ -17,7 +17,7 @@ function refreshMessages()
 		thing = results[parseInt(res)];
 		if (window.time != null && window.time < thing[2])
 		{
-		    $('.massages').append('<li>' + '<img class="message_image" src="' + thing[3] + '">' + thing[1] + ': ' + thing[0] + '</li>');
+		    $('.massages').append('<li class="message_list">' + '<img class="message_image" src="' + thing[3] + '">' + '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li><br><br>');
 		    window.time = thing[2]
 		    $('.massage_container').scrollTop(10000000);
 		}
@@ -47,7 +47,7 @@ $(document).ready(function()
 		for (res in results)
 		{
 		    thing = results[parseInt(res)];
-		    $('.massages').prepend('<li>' + '<img class="message_image" src="' + thing[3] + '">' +  thing[1] + ': ' + thing[0] + '</li>');
+		    $('.massages').prepend('<li class="message_list">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li><br><br>');
 		    if (!changed)
 		    {
 			window.time = thing[2];
@@ -78,7 +78,7 @@ $(document).ready(function()
 			for (res in results)
 			{
 			    thing = results[parseInt(res)];
-			    $('.massages').prepend('<li>' + '<img class="message_image" src="' + thing[3] + '">' + thing[1] + ': ' + thing[0] + '</li>');
+			    $('.massages').prepend('<li class="message_list">' + '<img class="message_image" src="' + thing[3] + '">' + '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li><br><br>');
 			    //window.time = thing[2];
 			}
 		    },

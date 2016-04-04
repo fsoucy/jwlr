@@ -12,5 +12,17 @@
  *
  *= require_tree .
  *= require_self
+ *= require purecss
  *= require dropzone/dropzone
  */
+
+.content {
+  margin-top: 180px;
+}
+
+@media (min-width: 48em)
+{
+  .content {
+    margin-top: 50px;
+  }
+}

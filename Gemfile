@@ -24,6 +24,7 @@ gem 'rack-cors'
 gem 'progress_bar'
 gem 'dropzonejs-rails'
 gem 'paperclip'
+gem 'purecss-rails'
 
 group :development, :test do
   gem 'sqlite3'

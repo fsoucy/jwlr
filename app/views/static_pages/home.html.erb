@@ -1,107 +1,75 @@
 <% provide(:title, "Home") %>
 
-<% if logged_in? %>
-<% end %>
-<div class="home_main">
-  <div class="buy_now">
-    <div id="coins">
-      <p>Gold Coins</p>
-      <p>$5 and up</p>
-      <button>Shop now</button>
-    </div>
-    <div id="bullion">
-      <p>Bullion</p>
-      <p>$100 and up</p>
-      <button>Shop now</button>
-    </div>
-    <div id="watch">
-      <p>Watches</p>
-      <p>$50 and up</p>
-      <button>Shop now</button>
-    </div>
-    <div id="necklace">
-      <p>Necklaces</p>
-      <p>$60 and up</p>
-      <button>Shop now</button>
-    </div>
-    <div id="ring">
-      <p>Rings</p>
-      <p>$30 and up</p>
-      <button>Shop now</button>
-    </div>
-    <div id="jewelry">
-      <p>Jewelry</p>
-      <p>$50 and up</p>
-      <button>Shop now</button>
-    </div>
-  </div>
-  <div class="sell_now sell_active">
-    <p>Start your online business</p>
-    <% if logged_in? %>
-    <a href="stores/new"><button class="sell">Let's get started</button></a>
-    <% else %>
-    <a href="signup"><button class="sell">Let's get started</button></a>
-    <% end %>
+<% if !logged_in? %>
+<div class="sign-up">
+  <div class="splash">
+    <h1 class="splash-head">iGold.com</h1>
+    <p class="splash-subtitle">
+      Where the world trades gold.
+    </p>
+    <p>
+      <%= link_to "Get Started", signup_url, class: 'pure-button pure-button-primary' %>
+    </p>
   </div>
 </div>
-  <div class="home_gallery">
-    <h1>For You</h1>
+<% end %>
     <div class="gallery_container">
+        <h1>For You</h1>
+  <div class="pure-g">
       <% if @for_you[0].nil? %>
-      <div class="gallery_main" id="gallery_main_first"><a><img></a></div>
+      <div class="gallery_main pure-u-1 pure-u-md-1-5" id="gallery_main_first"><a><img></a></div>
       <% else %>
-      <div class="gallery_main" id="gallery_main_first"><a href="<%= product_path(@for_you[0]) %>"><%= image_tag @for_you[0].pictures.first.photo_cropped.url(:medium) %></a></div>
+      <div class="gallery_main pure-u-1 pure-u-md-1-5" id="gallery_main_first"><a href="<%= product_path(@for_you[0]) %>"><%= image_tag @for_you[0].pictures.first.photo_cropped.url(:medium) %></a></div>
       <% end %>
       <% if @for_you[1].nil? %>
-      <div class="gallery_other"><a href="#"><img></a></div>
+      <div class="gallery_other pure-u-1 pure-u-md-1-5"><a href="#"><img></a></div>
       <% else %>
-      <div class="gallery_other"><a href="<%= product_path(@for_you[1]) %>"><%= image_tag @for_you[1].pictures.first.photo_cropped.url(:thumb) %></a></div>
+      <div class="gallery_other pure-u-1 pure-u-md-1-5"><a href="<%= product_path(@for_you[1]) %>"><%= image_tag @for_you[1].pictures.first.photo_cropped.url(:thumb) %></a></div>
       <% end %>
       <% if @for_you[2].nil? %>
-      <div class="gallery_other"><a href="#"><img></a></div>
+      <div class="gallery_other pure-u-1 pure-u-md-1-5"><a href="#"><img></a></div>
       <% else %>
-      <div class="gallery_other"><a href="<%= product_path(@for_you[2]) %>"><%= image_tag @for_you[2].pictures.first.photo_cropped.url(:thumb) %></a></div>
+      <div class="gallery_other pure-u-1 pure-u-md-1-5"><a href="<%= product_path(@for_you[2]) %>"><%= image_tag @for_you[2].pictures.first.photo_cropped.url(:thumb) %></a></div>
       <% end %>
       <% if @for_you[3].nil? %>
-      <div class="gallery_other"><a href="#"><img></a></div>
+      <div class="gallery_other pure-u-1 pure-u-md-1-5"><a href="#"><img></a></div>
       <% else %>
-      <div class="gallery_other"><a href="<%= product_path(@for_you[3]) %>"><%= image_tag @for_you[3].pictures.first.photo_cropped.url(:thumb) %></a></div>
+      <div class="gallery_other pure-u-1 pure-u-md-1-5"><a href="<%= product_path(@for_you[3]) %>"><%= image_tag @for_you[3].pictures.first.photo_cropped.url(:thumb) %></a></div>
       <% end %>
       <% if @for_you[4].nil? %>
-      <div class="gallery_other"><a href="#"><img></a></div>
+      <div class="gallery_other pure-u-1 pure-u-md-1-5"><a href="#"><img></a></div>
       <% else %>
-      <div class="gallery_other"><a href="<%= product_path(@for_you[4]) %>"><%= image_tag @for_you[4].pictures.first.photo_cropped.url(:thumb) %></a></div>
+      <div class="gallery_other pure-u-1 pure-u-md-1-5"><a href="<%= product_path(@for_you[4]) %>"><%= image_tag @for_you[4].pictures.first.photo_cropped.url(:thumb) %></a></div>
       <% end %>
     </div>
   </div>
-  <div class="home_gallery">
-    <h1>Featured Products</h1>
-    <div class="featured_container">
+      <div class="featured_container">
+      <h1>Featured Products</h1>
+  <div class="pure-g">
       <% if @featured[0].nil? %>
-      <div class="featured_main" id="featured_main_first"><a><img></a></div>
+      <div class="featured_main pure-u-1 pure-u-md-1-5" id="featured_main_first"><a><img></a></div>
       <% else %>
-      <div class="featured_main" id="featured_main_first"><a href="<%= product_path(@featured[0]) %>"><%= image_tag @featured[0].pictures.first.photo_cropped.url(:medium) %></a></div>
+      <div class="featured_main pure-u-1 pure-u-md-1-5" id="featured_main_first"><a href="<%= product_path(@featured[0]) %>"><%= image_tag @featured[0].pictures.first.photo_cropped.url(:medium) %></a></div>
       <% end %>
       <% if @featured[1].nil? %>
-      <div class="featured_other"><a href="#"><img></a></div>
+      <div class="featured_other pure-u-1 pure-u-md-1-5"><a href="#"><img></a></div>
       <% else %>
-      <div class="featured_other"><a href="<%= product_path(@featured[1]) %>"><%= image_tag @featured[1].pictures.first.photo_cropped.url(:thumb) %></a></div>
+      <div class="featured_other pure-u-1 pure-u-md-1-5"><a href="<%= product_path(@featured[1]) %>"><%= image_tag @featured[1].pictures.first.photo_cropped.url(:thumb) %></a></div>
       <% end %>
       <% if @featured[2].nil? %>
-      <div class="featured_other"><a href="#"><img></a></div>
+      <div class="featured_other pure-u-1 pure-u-md-1-5"><a href="#"><img></a></div>
       <% else %>
-      <div class="featured_other"><a href="<%= product_path(@featured[2]) %>"><%= image_tag @featured[2].pictures.first.photo_cropped.url(:thumb) %></a></div>
+      <div class="featured_other pure-u-1 pure-u-md-1-5"><a href="<%= product_path(@featured[2]) %>"><%= image_tag @featured[2].pictures.first.photo_cropped.url(:thumb) %></a></div>
       <% end %>
       <% if @featured[3].nil? %>
-      <div class="featured_other"><a href="#"><img></a></div>
+      <div class="featured_other pure-u-1 pure-u-md-1-5"><a href="#"><img></a></div>
       <% else %>
-      <div class="featured_other"><a href="<%= product_path(@featured[3]) %>"><%= image_tag @featured[3].pictures.first.photo_cropped.url(:thumb) %></a></div>
+      <div class="featured_other pure-u-1 pure-u-md-1-5"><a href="<%= product_path(@featured[3]) %>"><%= image_tag @featured[3].pictures.first.photo_cropped.url(:thumb) %></a></div>
       <% end %>
       <% if @featured[4].nil? %>
-      <div class="featured_other"><a href="#"><img></a></div>
+      <div class="featured_other pure-u-1 pure-u-md-1-5"><a href="#"><img></a></div>
       <% else %>
-      <div class="featured_other"><a href="<%= product_path(@featured[4]) %>"><%= image_tag @featured[4].pictures.first.photo_cropped.url(:thumb) %></a></div>
+      <div class="featured_other pure-u-1 pure-u-md-1-5"><a href="<%= product_path(@featured[4]) %>"><%= image_tag @featured[4].pictures.first.photo_cropped.url(:thumb) %></a></div>
       <% end %>
     </div>
   </div>
-  

@@ -10,8 +10,8 @@
   <%= render 'layouts/shim' %>
 </head>
 <body>
-<div class="content">
   <%= render 'layouts/header' %>
+  <div class="content">
     <% flash.each do |message_type, message| %>
       <div class="alert alert-<%= message_type %>"><%= message %></div>
     <% end %>

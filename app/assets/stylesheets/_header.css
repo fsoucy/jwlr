@@ -1,0 +1,57 @@
+.top-menu {
+  padding: 0.5em;
+  box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
+  background: #003459;
+  text-align: center;
+}
+
+.top-menu .pure-menu-heading {
+  color: white;
+  font-weight: 400;
+  font-size: 120%;
+}
+
+.top-menu .pure-menu-selected a {
+  color: white;
+}
+
+.top-menu a {
+  color: #00A8E8;
+}
+
+.top-menu li a:hover, 
+.top-menu li a:focus {
+  background: #003459;
+  border: none;
+  color: #007EA7;
+}
+
+.top-menu li {
+  width: 100%;
+}
+
+.top-menu .pure-menu-children {
+  background-color: #003459;
+}
+
+.top-menu input[type=text] {
+    width: 100%;
+}
+
+@media (min-width: 48em) {
+  .top-menu form {
+    display: inline-block;
+  }
+  
+  .top-menu {
+    text-align: left;
+  }
+ 
+  .top-menu ul {
+    float: right;
+  }
+  
+  .top-menu input[type=text] {
+    width: 20em;
+  }
+}

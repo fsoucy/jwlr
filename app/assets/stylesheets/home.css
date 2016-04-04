@@ -48,6 +48,26 @@
   padding-left: 1em;
 }
 
+.gallery_main {
+  width: 300px;
+  height: 300px;
+}
+
+.gallery_other {
+  width: 200px;
+  height: 200px;
+}
+
+.featured_main {
+  width: 300px;
+  height: 300px;
+}
+
+.featured_other {
+  width: 200px;
+  height: 200px;
+}
+
 @media (min-width: 48em)
 {
     .splash {

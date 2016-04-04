@@ -61,7 +61,6 @@ $(document).ready(function() {
     });
 
     $('.search_string').keyup(function(event) {
-	
 	var key = event.which;
 	if (key == 38 || key == 40)
 	{
@@ -161,6 +160,7 @@ $(document).ready(function() {
 		}
 		console.log(thing);
 		console.log(res);
+		$('#sug_list').html("");
 		$('#sug_list').html("");
 		$('#sug_list').html(str);
 		console.log(str);

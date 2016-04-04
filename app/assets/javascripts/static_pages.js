@@ -44,9 +44,9 @@ $(document).ready(function() {
 	}
 	if (mainImg.attr('src') != null)
 	{
-	    $('img', this).attr('src', mainImg.attr('src').replace('medium', 'thumb'));
+	    $('img', this).attr('src', mainImg.attr('src').replace('thumb', 'thumb'));
 	}
-	$('#gallery_main_first img').attr('src', src.replace('thumb', 'medium'));
+	$('#gallery_main_first img').attr('src', src.replace('thumb', 'thumb'));
 	$('#gallery_main_first img').attr('alt', alt);
 	$('#gallery_main_first a').attr('href', otherLink);
 	$('a', this).attr('href', mainLink);
@@ -70,9 +70,9 @@ $(document).ready(function() {
 	}
 	if (mainImg.attr('src') != null)
 	{
-	    $('img', this).attr('src', mainImg.attr('src').replace('medium', 'thumb'));
+	    $('img', this).attr('src', mainImg.attr('src').replace('thumb', 'thumb'));
 	}
-	$('#featured_main_first img').attr('src', src.replace('thumb', 'medium'));
+	$('#featured_main_first img').attr('src', src.replace('thumb', 'thumb'));
 	$('#featured_main_first img').attr('alt', alt);
 	$('#featured_main_first a').attr('href', otherLink);
 	$('a', this).attr('href', mainLink);

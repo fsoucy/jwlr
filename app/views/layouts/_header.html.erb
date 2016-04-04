@@ -2,11 +2,11 @@
   <div class="top-menu pure-menu pure-menu-horizontal pure-menu-fixed">
     <%= link_to "iGold", root_path, class: 'pure-menu-heading' %>
     <%= form_tag "/search", method: "get", class: 'pure-form' do %>
-    <%= text_field_tag "search_string", "", placeholder: "Search for a product", autocomplete: 'off' %>
+    <%= text_field_tag "search_string", "", placeholder: "Search for a product", autocomplete: 'off', class: 'search_string' %>
     <%= submit_tag "Search", class: 'pure-button pure-button-primary' %>
     <ul class="suggestions" id="sug_list"></ul>
     <% end %>
-    <ul class="pure-menu-list">
+    <ul class="pure-menu-list top-menu-dropdown">
       <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
         <a href="#" class="pure-menu-link">Account Actions</a>
         <ul class="pure-menu-children">

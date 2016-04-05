@@ -46,20 +46,18 @@
   margin-top: 0px;
   overflow: visible;
   z-index: 2;
-  padding-left: 2px;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  border: 1px solid #00171F;
+  padding: 2px;
   color: #00171F;
   background-color: #FFFFFF;
-  list-style-type: none;  
-  border: 1px solid #00171F;
+  list-style-type: none;
 }
 
-.active {
+li.active {
   background-color: #00A8E8;
   color: #FFFFFF;
 }
-  
+    
 @media (min-width: 48em) {
   .top-menu form {
     display: inline-block;

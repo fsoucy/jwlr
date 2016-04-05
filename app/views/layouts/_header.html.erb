@@ -1,6 +1,6 @@
 <div class="header">
   <div class="top-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-    <%= link_to "iGold", root_path, class: 'pure-menu-heading' %>
+    <%= link_to "iGold", root_path, class: 'pure-menu-heading search-header' %>
     <%= form_tag "/search", method: "get", class: 'pure-form' do %>
     <%= text_field_tag "search_string", "", placeholder: "Search for a product", autocomplete: 'off', class: 'search_string' %>
     <%= submit_tag "Search", class: 'pure-button pure-button-primary' %>

@@ -14,6 +14,7 @@ function refreshMessages()
 	    results = result.reverse();
 	    for (res in results)
 	    {
+		
 		thing = results[parseInt(res)];
 		if (window.time != null && window.time < thing[2])
 		{
@@ -52,7 +53,6 @@ $(document).ready(function()
 		    {
 			window.time = thing[2];
 		    }
-		    changed = true;
 		}
 	        window.interval = setInterval(refreshMessages, 1000);
 		window.page = window.page + 1;

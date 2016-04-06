@@ -1,6 +1,6 @@
 //hard coded for conversation 8
 
-
+/*
 function refreshMessages()
 {
     //$(".massage_container").load('http://igold.ws:3000/conversations/8' + " .massages");
@@ -127,3 +127,4 @@ ce').val()))
     });
 });
 
+*/

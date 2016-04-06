@@ -56,7 +56,7 @@
   <p><%= post.content %></p>
 </div>
 <% end %>
-
+<% if current_user.id != @user.id %>
 <h3>Message this user</h3>
 <div class="form_fields">
   <%= form_for @message do |f| %>
@@ -67,3 +67,4 @@
   <%= f.submit "Send message", class: "form_submit" %>
   <% end %>
 </div>
+<% end %>

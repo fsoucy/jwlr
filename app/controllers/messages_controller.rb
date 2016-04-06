@@ -4,6 +4,11 @@ class MessagesController < ApplicationController
   def create
     other_id = params[:message][:other_id].to_i
     user_id = params[:message][:sender_id].to_i
+    if user_id == other_id
+      flash[:warning] = "You can't talk to yourself"
+      redirect_to current_user
+      return
+    end
     if current_user.id == user_id
       conversation = Conversation.where("(first_user_id=? or first_user_id=?) AND (second_user_id=? or second_user_id=?)", user_id, other_id, user_id, other_id)
       if conversation.first.nil?
@@ -29,4 +34,6 @@ class MessagesController < ApplicationController
   def message_params
     params.require(:message).permit(:sender_id, :content)
   end
+
 end
+

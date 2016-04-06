@@ -34,7 +34,7 @@ $(document).ready(function()
     {
 	window.page = 1;
 	var urlString = window.location.href;
-	window.conversation = parseInt(urlString.substring(urlString.indexOf("conversations/") + ("conversations/").length))
+	window.conversation = parseInt($('#conversation_id').val());
 	$.ajax({
 	    type: "GET",// GET in place of POST
 	    contentType: "application/json; charset=utf-8",

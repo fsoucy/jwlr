@@ -1,26 +1,3 @@
-<h2>Conversation between <%= @conversation.first_user.name %> and <%= @conversation.second_user.name %></h2>
-<div id="messages" class="massage_container">
-  <ul class="massages">
-  </ul>
-</div>
+<%= render @conversation %>
 
-<div class="form_fields">
-<%= form_for @msg, :html => { :id => 'message_form' } do |f| %>
-<%= f.hidden_field :sender_id, value: current_user.id %>
-<% first_user_id = @conversation.first_user_id %>
-<% second_user_id = @conversation.second_user_id %>
-<% if current_user.id == first_user_id %>
-<% other = second_user_id %>
-<% else %>
-<% other = first_user_id %>
-<% end %>
-<%= f.hidden_field :other_id, value: other %>
-<%= f.text_field :content, class: "form_input", id: "message_input", placeholder: "Write your message here..." %>
-<br>
-<%= f.submit "Send", class: "form_submit", id: "message_submit" %>
-<% end %>
-</div>
-
-<script>
-
-</script>
+<%= hidden_field_tag :conversation_id, @conversation.id %>

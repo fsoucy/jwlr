@@ -1,0 +1,16 @@
+<% @conversations.each do |conversation| %>
+  <a href="<%= conversation_url(conversation) %>">
+    <% if conversation.first_user_id == current_user.id %>
+      <h3><%= conversation.second_user.name %></h3>
+    <% else %>
+      <h3><%= conversation.first_user.name %></h3>
+    <% end %>
+    <p>
+      <% message = conversation.messages.order(created_at: :desc).limit(1).first %>    
+      <%= message.content %>
+      <br>
+      <%= message.created_at %>
+    </p>
+  </a>
+  <br>
+<% end %>

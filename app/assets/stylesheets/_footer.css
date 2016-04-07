@@ -1,0 +1,26 @@
+.footer {
+  background-color: #003459;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 1em;
+}
+
+.footer ul, li {
+  list-style-type: none;
+  list-style-position: inside;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.bottom-links {
+  padding-top: 2em;
+}
+
+@media (min-width: 48em)
+{
+  .footer ul, li {
+    text-align: left;
+    padding-left: 1em;
+  }
+}

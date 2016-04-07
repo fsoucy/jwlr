@@ -25,6 +25,14 @@
 body {
   color: #00171F;
 }
+
+a {
+  color: #00A8E8;
+}
+
+a:hover, a:focus {
+  color: #007EA7;
+}
  
 .content {
   margin-top: 180px;

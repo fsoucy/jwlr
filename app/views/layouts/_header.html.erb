@@ -4,7 +4,9 @@
     <%= form_tag "/search", method: "get", class: 'pure-form' do %>
     <%= text_field_tag "search_string", "", placeholder: "Search for a product", autocomplete: 'off', class: 'search_string' %>
     <%= submit_tag "Search", class: 'pure-button pure-button-primary' %>
-    <ul class="suggestions" id="sug_list"></ul>
+    <div class="suggestions">
+    <ul id="sug_list"></ul>
+    </div>
     <% end %>
     <ul class="pure-menu-list top-menu-dropdown">
       <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">

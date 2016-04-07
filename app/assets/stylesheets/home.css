@@ -35,23 +35,12 @@
     opacity: 0.8;
 }
 
-.gallery_container {
+.gallery-container {
   padding-top: 1em;
   padding-left: 1em;
 }
 
-.gallery_container img {
-  border-width: 1px;
-  border-style: solid;
-  border-color: #00171F;
-}
-
-.featured_container {
-  padding-top: 1em;
-  padding-left: 1em;
-}
-
-.featured_container img {
+.gallery-container img {
   border-width: 1px;
   border-style: solid;
   border-color: #00171F;
@@ -80,11 +69,11 @@
 
 .no-fees {
   text-align: center;
-  font-size: 25px;
+  font-size: 35px;
 }
 
 .no-fees-subheader {
-  font-size: 20px;
+  font-size: 30px;
   text-align: center;
 }
 

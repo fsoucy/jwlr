@@ -1,6 +1,6 @@
 class ConversationsController < ApplicationController
   before_action :logged_in_user
-  before_action :correct_user
+  before_action :correct_user, only: [:show, :pull_messages]
   before_action :not_same_user, only: [:create]
 
   def show
@@ -22,6 +22,10 @@ class ConversationsController < ApplicationController
       data.append([message[0], user.name, message[2].to_time.to_i, user.profile_picture(:thumbnail)])
     end
     render json: data.to_json, status: 200
+  end
+
+  def index
+    @conversations = Conversation.where("first_user_id = ? OR second_user_id = ?", current_user.id, current_user.id)
   end
 
   private

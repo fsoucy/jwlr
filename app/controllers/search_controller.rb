@@ -76,6 +76,7 @@ class SearchController < ApplicationController
       end
     end
   
+    @params = params
     @categories = search.facet(:category_id)
     @results = search.results
     @selling_methods = SellingMethod.all

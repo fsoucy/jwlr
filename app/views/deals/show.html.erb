@@ -1,3 +1,4 @@
+<div class="deal_large">
 <h1>Welcome to the deal between <%= @deal.seller.name %> (seller) and <%= @deal.buyer.name %> (buyer)</h1>
 <% if (@deal.product_dispatched and current_user.id == @deal.buyer_id) %>
   <h2>The product is on its way to you!</h2>
@@ -277,3 +278,8 @@
 <% if review.nil? && @deal.deal_complete %>
   <%= link_to "Leave a review of this deal", new_review_url(@deal) %>
 <% end %>
+</div>
+<div class="messages_deal">
+  <%= hidden_field_tag :conversation_id, @conversation.id %>
+  <%= render @conversation %>
+</div>

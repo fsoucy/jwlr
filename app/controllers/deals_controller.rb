@@ -111,6 +111,15 @@ class DealsController < ApplicationController
   
   def show
     @deal = Deal.find_by(id: params[:id])
+    @conversation = Conversation.where("first_user_id=? or first_user_id=? AND second_user_id=? or second_user_id=?", @deal.seller.id, @deal.buyer.id, @deal.seller.id, @deal.buyer.id).first
+    if @conversation.nil?
+      @conversation = Conversation.new(first_user_id: @deal.seller.id, second_user_id: @deal.buyer.id).save
+    end
+    last = @conversation.messages.count
+    start = last - 50
+    start = 0 if start < 0
+    @messages = @conversation.messages[(start)..last]
+    @msg = @conversation.messages.build
   end
 
   def destroy

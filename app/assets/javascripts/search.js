@@ -21,7 +21,8 @@ or sorting or ordering preferences updated */
 function leadToRefresh()
 {
     var url = window.location.href;
-    
+
+    debugger;
     //here I'm going to clear the unnecessary hash in URL
     $('input.toggle').each(function(index, data) {
 	var str = "&" + $(this).attr('name');
@@ -66,13 +67,52 @@ function leadToRefresh()
 	    {
 		attrString = attrString.replace(" ", "_");
 		url += attrString;
+		
 	    }
 	}
     });
 
+    if (parseInt($('#price_lower').val()) != 0)
+    {
+	url += "&price_lower=" + $('#price_lower').val();
+    }
+
+    if (parseInt($('#price_upper').val()) != 0)
+    {
+	url += "&price_upper=" + $('#price_upper').val();
+    }
+
     //update URL
+    finalURL = url;
+    if (url.indexOf("category_id") == -1)
+    {
+	var finalURL = "";
+	var anotherHash = url.split("&");
+	for (i in anotherHash)
+	{
+	    var index = parseInt(i);
+	    debugger;
+	    if (anotherHash[index].indexOf("attribute_option_id") == -1)
+	    {
+		if (index == 0)
+		{
+		    debugger;
+		    finalURL += anotherHash[index];
+		}
+		else
+		{
+		    debugger;
+		    finalURL += "&" + anotherHash[index];
+		}
+	    }
+	    else
+	    {
+		// no more attribute option ids
+	    }
+	}
+    }
     //debugger;
-    window.location.href = url;
+    window.location.href = finalURL;
 }
 
 function uponRefresh()
@@ -138,6 +178,39 @@ function uponRefresh()
     {
 	$('select').val(dict["sort_by"][0]);
     }
+
+    if ($('.result').length == 0)
+    {
+	var urlString = window.location.href;
+	var hashSplit = urlString.split("&");
+	var toGo = "";
+	// "attribute_option_id", "category_id", "selling_method_id", "exchange_method_id", "payment_method_id", "price"
+	for (uni in hashSplit)
+	{
+	    debugger;
+	    unit = hashSplit[parseInt(uni)];
+	    if (unit.indexOf("attribute_option_id") != -1 || unit.indexOf("category_id") != -1 || unit.indexOf("selling_method_id") != -1 || unit.indexOf("exchange_method_id") != -1 || unit.indexOf("payment_method_id") != -1 || unit.indexOf("price") != -1)
+	    {
+		//do nothing
+	    }
+	    else
+	    {
+		if (parseInt(uni) == 0)
+		{
+		    toGo += unit;
+		}
+		else
+		{
+		    toGo += "&" + unit;
+		}
+	    }
+	}
+	window.location.href = toGo;
+    }
+
+
+
+    
     
 }
 
@@ -147,6 +220,10 @@ $(document).ready(function() {
 	leadToRefresh();
     });
     $('select.searchpage').change(function() {
+	leadToRefresh();
+    });
+
+    $('#prices_man').click(function() {
 	leadToRefresh();
     });
     

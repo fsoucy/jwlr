@@ -1,8 +1,9 @@
 //hard coded for conversation 8
 
-/*
+
 function refreshMessages()
 {
+
     //$(".massage_container").load('http://igold.ws:3000/conversations/8' + " .massages");
     $.ajax({
 	type: "GET",// GET in place of POST
@@ -17,7 +18,7 @@ function refreshMessages()
 		thing = results[parseInt(res)];
 		if (window.time != null && window.time < thing[2])
 		{
-		    $('.massages').append('<li class="message_list">' + '<img class="message_image" src="' + thing[3] + '">' + '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li><br><br>');
+		    $('.massages').append('<li class="message_list">' + '<img class="message_image" src="' + thing[3] + '">' + '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li>');
 		    window.time = thing[2]
 		    $('.massage_container').scrollTop(10000000);
 		}
@@ -47,12 +48,12 @@ $(document).ready(function()
 		for (res in results)
 		{
 		    thing = results[parseInt(res)];
-		    $('.massages').prepend('<li class="message_list">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li><br><br>');
+		    $('.massages').prepend('<li class="message_list">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li>');
 		    if (!changed)
 		    {
+			changed = true;
 			window.time = thing[2];
 		    }
-		    changed = true;
 		}
 	        window.interval = setInterval(refreshMessages, 1000);
 		window.page = window.page + 1;
@@ -78,7 +79,7 @@ $(document).ready(function()
 			for (res in results)
 			{
 			    thing = results[parseInt(res)];
-			    $('.massages').prepend('<li class="message_list">' + '<img class="message_image" src="' + thing[3] + '">' + '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li><br><br>');
+			    $('.massages').prepend('<li class="message_list">' + '<img class="message_image" src="' + thing[3] + '">' + '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li>');
 			    //window.time = thing[2];
 			}
 		    },
@@ -114,17 +115,5 @@ $(document).ready(function()
     {
 	clearInterval(window.interval);
     }
-    $('#price_warning').hide()
-    $('.propose_price').click(function(e) {
-	if (parseFloat($('#price_proposal').val()) < parseFloat($('#minimum_pri\
-ce').val()))
-	{
-	    e.preventDefault();
-	    $('#price_proposal').css('color', 'red');
-	    $('#price_proposal').css('border-color', 'red');
-	    $('#price_warning').show();
-	}
-    });
 });
 
-*/

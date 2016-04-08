@@ -10,15 +10,17 @@ class UsersController < ApplicationController
   def index
     @users = User.all.paginate(page: params[:page])
   end
-
   
   def show
     @user = User.find(params[:id])
     @products = Product.where("user_id = ?", @user.id)
-    @gold_coins = Product.where("user_id = ? AND commodity = ?", @user.id, "Gold Coins")
-    @jewelry = Product.where("user_id = ? AND commodity = ?", @user.id, "Jewelry")
-    @gold_bricks = Product.where("user_id = ? AND commodity = ?", @user.id, "Gold Bricks")
-    @precious_stones = Product.where("user_id = ? AND commodity = ?", @user.id, "Precious Stones")
+    conversation = Conversation.where("first_user_id=? or first_user_id=? AND second_user_id=? or second_user_id=?", current_user.id, @user.id, current_user.id, @user.id)
+    if conversation.first.nil?
+      convo = Conversation.new(first_user_id: @user.id, second_user_id: current_user.id)
+    else
+      convo = conversation.first
+    end
+    @message = convo.messages.build(sender_id: current_user.id)
   end
   
   def create
@@ -72,10 +74,6 @@ class UsersController < ApplicationController
       @stores = user.stores
       @has = true
     end
-  end
-
-  def noties
-    @notes = User.find(params[:id]).notifications
   end
 
   def selling

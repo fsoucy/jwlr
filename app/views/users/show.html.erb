@@ -1,6 +1,6 @@
 <% provide(:title, @user.name) %>
 <% unless @user.profile_picture.nil? %>
-<%= image_tag @user.profile_picture_url(:thumb), class: "pro_pic" %><br>
+<%= image_tag @user.profile_picture(:thumb), class: "pro_pic" %><br>
 <% end %>
 <h1><%= @user.name %></h1>
 <h3><%= link_to "Edit Page", edit_user_path(@user.id) if current_user?(@user) %></h3>
@@ -54,5 +54,17 @@
     <% end %>
   </h4>
   <p><%= post.content %></p>
+</div>
+<% end %>
+<% if current_user.id != @user.id %>
+<h3>Message this user</h3>
+<div class="form_fields">
+  <%= form_for @message do |f| %>
+  <%= f.hidden_field :sender_id, value: current_user.id %>
+  <%= f.hidden_field :other_id, value: @user.id %>
+  <%= f.text_area :content, class: "form_input", placeholder: "Send a message" %>
+  <br>
+  <%= f.submit "Send message", class: "form_submit" %>
+  <% end %>
 </div>
 <% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323180604) do
+ActiveRecord::Schema.define(version: 20160402222632) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -61,6 +61,17 @@ ActiveRecord::Schema.define(version: 20160323180604) do
   end
 
   add_index "category_options", ["category_id"], name: "index_category_options_on_category_id"
+
+  create_table "conversations", force: :cascade do |t|
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "first_user_id"
+    t.integer  "second_user_id"
+    t.boolean  "active"
+  end
+
+  add_index "conversations", ["first_user_id"], name: "index_conversations_on_first_user_id"
+  add_index "conversations", ["second_user_id"], name: "index_conversations_on_second_user_id"
 
   create_table "deals", force: :cascade do |t|
     t.datetime "created_at",                null: false
@@ -117,6 +128,17 @@ ActiveRecord::Schema.define(version: 20160323180604) do
   end
 
   add_index "faqs", ["store_id"], name: "index_faqs_on_store_id"
+
+  create_table "messages", force: :cascade do |t|
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "conversation_id"
+    t.integer  "sender_id"
+    t.text     "content"
+  end
+
+  add_index "messages", ["conversation_id"], name: "index_messages_on_conversation_id"
+  add_index "messages", ["sender_id"], name: "index_messages_on_sender_id"
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id"
@@ -244,13 +266,22 @@ ActiveRecord::Schema.define(version: 20160323180604) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "settings", force: :cascade do |t|
+    t.string   "attribute"
+    t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "settings", ["attribute"], name: "index_settings_on_attribute", unique: true
+
   create_table "stores", force: :cascade do |t|
     t.string   "full_street_address"
     t.string   "name"
     t.integer  "business_days_pickup"
     t.integer  "user_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.boolean  "mondayopen"
     t.boolean  "tuesdayopen"
     t.boolean  "wednesdayopen"
@@ -302,9 +333,12 @@ ActiveRecord::Schema.define(version: 20160323180604) do
     t.integer  "sundayendminute"
     t.string   "sundayendampm"
     t.string   "cover_photo"
-    t.string   "profile_photo"
     t.string   "specialty_commodity"
     t.string   "phone"
+    t.string   "profile_picture_file_name"
+    t.string   "profile_picture_content_type"
+    t.integer  "profile_picture_file_size"
+    t.datetime "profile_picture_updated_at"
   end
 
   add_index "stores", ["user_id"], name: "index_stores_on_user_id"
@@ -322,17 +356,17 @@ ActiveRecord::Schema.define(version: 20160323180604) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.string   "password_digest"
     t.string   "remember_digest"
-    t.boolean  "admin",                 default: false
+    t.boolean  "admin",                        default: false
     t.string   "activation_digest"
-    t.boolean  "activated",             default: false
+    t.boolean  "activated",                    default: false
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
-    t.boolean  "public",                default: false
+    t.boolean  "public",                       default: false
     t.text     "description"
     t.string   "auth_token"
     t.datetime "auth_expiry"
@@ -343,9 +377,12 @@ ActiveRecord::Schema.define(version: 20160323180604) do
     t.integer  "products_bought"
     t.integer  "products_sold"
     t.text     "identifies_as"
-    t.string   "profile_picture"
     t.integer  "business_days_pickup"
     t.decimal  "default_delivery_cost"
+    t.string   "profile_picture_file_name"
+    t.string   "profile_picture_content_type"
+    t.integer  "profile_picture_file_size"
+    t.datetime "profile_picture_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -9,10 +9,15 @@
   color: #FFFFFF;
   overflow: hidden;
   border-radius: 1em;
+  word-wrap: break-word;
 }
 
 .log-in input {
   color: #00171F;
+}
+
+.log-in input[type=submit] {
+  color: #FFFFFF;
 }
 
 .log-in legend {

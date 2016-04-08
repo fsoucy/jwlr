@@ -201,7 +201,14 @@ function uponRefresh()
 		}
 		else
 		{
-		    toGo += "&" + unit;
+		    if (unit.indexOf("search_string") == -1)
+		    {
+			toGo += "&" + unit;
+		    }
+		    else
+		    {
+			toGo += "&" + "search_string=";
+		    }
 		}
 	    }
 	}

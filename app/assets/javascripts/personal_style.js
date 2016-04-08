@@ -23,11 +23,19 @@ $(document).ready(function() {
       
 
     $('#sug_list').mousedown(function() {
+	debugger;
 	if($(this).hasClass('active'))
 	{
+	    debugger;
 	    var go = window.location.href;
-	    go = go + "search?&search_string=" + $('.search_string').val();
-	    window.location.href = go;
+	    var goSplit = go.split("/");
+	    var url = goSplit[0];
+	    url = url + "/search?&search_string=" + $('.search_string').val();
+	    window.location.href = url;
+	}
+	else
+	{
+	    debugger;
 	}
     });
     

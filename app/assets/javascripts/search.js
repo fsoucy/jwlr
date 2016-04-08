@@ -72,6 +72,16 @@ function leadToRefresh()
 	}
     });
 
+    if (parseInt($('#price_lower').val()) != 0)
+    {
+	url += "&price_lower=" + $('#price_lower').val();
+    }
+
+    if (parseInt($('#price_upper').val()) != 0)
+    {
+	url += "&price_upper=" + $('#price_upper').val();
+    }
+
     //update URL
     finalURL = url;
     if (url.indexOf("category_id") == -1)
@@ -210,6 +220,10 @@ $(document).ready(function() {
 	leadToRefresh();
     });
     $('select.searchpage').change(function() {
+	leadToRefresh();
+    });
+
+    $('#prices_man').click(function() {
 	leadToRefresh();
     });
     

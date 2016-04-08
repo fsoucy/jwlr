@@ -3,6 +3,7 @@
 
 function refreshMessages()
 {
+
     //$(".massage_container").load('http://igold.ws:3000/conversations/8' + " .massages");
     $.ajax({
 	type: "GET",// GET in place of POST
@@ -14,7 +15,6 @@ function refreshMessages()
 	    results = result.reverse();
 	    for (res in results)
 	    {
-		
 		thing = results[parseInt(res)];
 		if (window.time != null && window.time < thing[2])
 		{
@@ -51,6 +51,7 @@ $(document).ready(function()
 		    $('.massages').prepend('<li class="message_list">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li>');
 		    if (!changed)
 		    {
+			changed = true;
 			window.time = thing[2];
 		    }
 		}

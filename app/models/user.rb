@@ -20,8 +20,8 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   geocoded_by :full_street_address
   after_validation :geocode
-  has_many :conversations, class_name: "Conversation", foreign_key: "first_user", dependent: :destroy
-  has_many :conversations, class_name: "Conversation", foreign_key: "second_user", dependent: :destroy
+  has_many :conversations, class_name: "Conversation", foreign_key: "first_user_id", dependent: :destroy
+  has_many :conversations, class_name: "Conversation", foreign_key: "second_user_id", dependent: :destroy
   has_many :messages, class_name: "Message", foreign_key: "sender", dependent: :destroy
   has_many :buying_deals, class_name: "Deal", foreign_key: "buyer_id", dependent: :destroy
   has_many :selling_deals, class_name: "Deal", foreign_key: "seller_id", dependent: :destroy

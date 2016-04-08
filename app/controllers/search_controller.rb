@@ -33,14 +33,9 @@ class SearchController < ApplicationController
         order_by_geodist :location, geocode.latitude, geocode.longitude unless geocode.nil?
       end
     
-      if !params[:price].nil?
-        prices = params[:price].split(',')
-        ranges = Array.new
-        prices.each do |price|
-          with :price, Range.new(price.split("..").first.to_f, price.split("..").last.to_f)
-        end
+      if !params[:price_lower].nil? || !params[:price_upper].nil?
+        with(:price).between(Range.new(params[:price_lower].to_i, params[:price_upper].to_i))
       end
-      facet :price, :range => 0..100000, :range_interval => 100
 
       if !params[:category_id].nil?
         categories = params[:category_id].split(',')
@@ -49,22 +44,22 @@ class SearchController < ApplicationController
 
       if !params[:attribute_option_id].nil?
         ids = params[:attribute_option_id].split(',')
-        with :attribute_option_id, ids
+        with(:attribute_option_id).all_of(ids)
       end
 
       if !params[:selling_method_id].nil?
         methods = params[:selling_method_id].split(',')
-        with :selling_method_id, methods
+        with(:selling_method_id).any_of(methods)
       end
 
       if !params[:exchange_method_id].nil?
         methods = params[:exchange_method_id].split(',')
-        with :exchange_method_id, methods
+        with(:exchange_method_id).any_of(methods)
       end
 
       if !params[:payment_method_id].nil?
         methods = params[:payment_method_id].split(',')
-        with :payment_method_id, methods
+        with(:payment_method_id).any_of(methods)
       end
 
       facet :category_id, :exclude => category
@@ -80,8 +75,8 @@ class SearchController < ApplicationController
         usersearch.save
       end
     end
-
-    @prices = search.facet(:price)
+  
+    @params = params
     @categories = search.facet(:category_id)
     @results = search.results
     @selling_methods = SellingMethod.all

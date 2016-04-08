@@ -1,6 +1,7 @@
 class ConversationsController < ApplicationController
   before_action :logged_in_user
-  before_action :correct_user
+  before_action :correct_user, only: [:show, :pull_messages]
+  before_action :not_same_user, only: [:create]
 
   def show
     @conversation = Conversation.find(params[:id])
@@ -23,6 +24,10 @@ class ConversationsController < ApplicationController
     render json: data.to_json, status: 200
   end
 
+  def index
+    @conversations = Conversation.where("first_user_id = ? OR second_user_id = ?", current_user.id, current_user.id)
+  end
+
   private
     
     def correct_user
@@ -31,5 +36,12 @@ class ConversationsController < ApplicationController
         redirect_to root_url
       end
       return true
+    end
+
+    def not_same_user
+      if first_user.id == second_user.id
+        flash[:warning] = "You can't start a conversation with yourself!"
+        redirect_to current_user
+      end
     end
 end

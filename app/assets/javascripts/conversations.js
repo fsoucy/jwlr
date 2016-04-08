@@ -3,6 +3,7 @@
 
 function refreshMessages()
 {
+
     //$(".massage_container").load('http://igold.ws:3000/conversations/8' + " .massages");
     $.ajax({
 	type: "GET",// GET in place of POST
@@ -34,7 +35,7 @@ $(document).ready(function()
     {
 	window.page = 1;
 	var urlString = window.location.href;
-	window.conversation = parseInt(urlString.substring(urlString.indexOf("conversations/") + ("conversations/").length))
+	window.conversation = parseInt($('#conversation_id').val());
 	$.ajax({
 	    type: "GET",// GET in place of POST
 	    contentType: "application/json; charset=utf-8",
@@ -50,9 +51,9 @@ $(document).ready(function()
 		    $('.massages').prepend('<li class="message_list">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li>');
 		    if (!changed)
 		    {
+			changed = true;
 			window.time = thing[2];
 		    }
-		    changed = true;
 		}
 	        window.interval = setInterval(refreshMessages, 1000);
 		window.page = window.page + 1;
@@ -90,7 +91,7 @@ $(document).ready(function()
 	});
 
 	$(document).keydown(function(event) {
-	    if (event.which == 13)
+	    if (event.which == 13 && $('#message_input').val().length > 0)
 	    {
 		event.preventDefault();
 		var result = $.post('/messages', $('#message_form').serialize());

@@ -17,7 +17,7 @@
       <h2>Price</h2>
       <p>
         <form class="price">
-         $<input type="text" name="price_lower" value="<%= params[:price_lower].to_i %>"></input> to $<input type="text" name="price_upper" value="<%= params[:price_lower].to_i %>"></input>
+         $<input type="text" name="price_lower" value="<%= @params[:price_lower].to_i %>"></input> to $<input type="text" name="price_upper" value="<%= @params[:price_upper].to_i %>"></input>
           <button type="button">Go</button>
         </form>
       </p>

@@ -91,7 +91,7 @@ $(document).ready(function()
 	});
 
 	$(document).keydown(function(event) {
-	    if (event.which == 13)
+	    if (event.which == 13 && $('#message_input').val().length > 0)
 	    {
 		event.preventDefault();
 		var result = $.post('/messages', $('#message_form').serialize());

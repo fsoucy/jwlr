@@ -1,5 +1,6 @@
-<li>
-  <%= image_tag user.profile_picture %>
+<div class="result">
+  <%= image_tag user.profile_picture(:thumb) %>
+  <div class="result_info">
   <%= link_to user.name, user %>
   <h3>Products sold: <%= Deal.where("seller_id=? AND deal_complete=?", user.id, true).count %></h3>
   <h3>Products bought: <%= Deal.where("buyer_id=? AND deal_complete=?", user.id, true).count %></h3>
@@ -7,4 +8,5 @@
     | <%= link_to "delete", user, method: :delete,
 	data: { confirm: "You sure?" } %>
   <% end %>
-</li>
+  </div>
+</div>

@@ -1,10 +1,9 @@
 <% provide(:title, 'Public Users') %>
-<h1>Users</h1>
 
+<h1 class="index_header">All Users</h1>
 <%= will_paginate %>
 
-<ul class="users">
-  <%= render @users %>
-</ul>
+
+<%= render @users %>
 
 <%= will_paginate %>

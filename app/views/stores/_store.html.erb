@@ -1,10 +1,11 @@
-<li>
-<div class="store_index">
+
+<div class="result">
 <%= link_to image_tag(store.profile_picture(:medium)), store %>
+<div class="result_info">
 <h3>Name: <%= store.name %></h3>
 <h3>Owner: <%= store.user.name %></h3>
 <h3>Location: <%= store.full_street_address %></h3>
 <h3>Products sold: <%= Deal.where("seller_id=? AND deal_complete=?", store.id, true).count %></h3>
 <h3>Products bought: <%= Deal.where("buyer_id=? AND deal_complete=?", store.id, true).count %></h3>
 </div>
-</li>
+</div>

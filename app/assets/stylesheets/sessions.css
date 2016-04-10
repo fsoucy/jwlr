@@ -10,6 +10,7 @@
   overflow: hidden;
   border-radius: 1em;
   word-wrap: break-word;
+  height: auto;
 }
 
 .log-in input {

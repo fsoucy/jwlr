@@ -1,0 +1,24 @@
+.massages
+{
+    #display: flex;
+    #flex-direction: column-reverse;
+    list-style-position: inside;
+    margin-left: 10px;
+    padding: 0;
+}
+
+
+.massage_container
+{
+    margin: 5px;
+    width: 500px;
+    height: 200px;
+    overflow: scroll;
+    border: 1px solid #5a8693;
+}
+
+.message_image
+{
+    width: 50px;
+    height: 50px;
+}

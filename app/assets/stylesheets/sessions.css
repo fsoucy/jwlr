@@ -1,6 +1,6 @@
 .log-in {
   padding: 1em;
-  line-height: 3em;
+  line-height: 2em;
 }
 
 .log-in-form {
@@ -16,13 +16,20 @@
   color: #00171F;
 }
 
-.log-in input[type=submit] {
-  color: #FFFFFF;
+
+#phone_field
+{
+    width: 12em;
+}
+
+.log-in textarea {
+    color: #00171F;
 }
 
 .log-in legend {
   color: #FFFFFF;
 }
+
 
 .log-in input[type=checkbox] {
   display: inline-block;

@@ -74,9 +74,9 @@ class StoresController < ApplicationController
     for i in 1..12
       @hours.push([(sprintf("%0.2d", i)).to_s, i])
     end
-    for i in 1..50
-      @minutes.push([(sprintf("%0.2d", i)).to_s, i])
-    end
+    @minutes.push(["15", 15])
+    @minutes.push(["30", 30])
+    @minutes.push(["45", 45])
   end
 
   private

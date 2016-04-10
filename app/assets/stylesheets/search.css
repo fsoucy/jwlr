@@ -1,0 +1,39 @@
+.result
+{
+    clear: both;
+    padding: 2px;
+    border: 1px solid #003459;
+    overflow: auto;
+    margin: 5px;
+}
+
+.result img
+{
+    clear: none;
+    float: left;
+    display: block;
+}
+
+.result_info
+{
+    margin-left: 3px;
+    clear: none;
+    float: left;
+    display: block;
+}
+
+h2
+{
+    margin-top: 0px;
+    padding: 0px;
+}
+
+.search-form
+{
+    background-color: #003459;
+    padding: 1em;
+    color: #FFFFFF;
+    overflow: hidden;
+    word-wrap: break-word;
+
+}

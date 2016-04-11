@@ -17,7 +17,6 @@
   color: #00171F;
 }
 
-
 #phone_field
 {
     width: 12em;
@@ -31,7 +30,10 @@
   color: #FFFFFF;
 }
 
-
 .log-in input[type=checkbox] {
   display: inline-block;
+}
+
+.log-in input[type=submit] {
+  color: #FFFFFF;
 }

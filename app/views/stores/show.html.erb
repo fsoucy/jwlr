@@ -29,12 +29,24 @@
   <div class="store_within store_blog_within store_inactive">
     <h3>Blog <%= link_to "New", new_blogpost_url if current_user?(@store.user) %></h3>
     <% @store.blogposts.each do |post| %>
-      <h4><%= post.title %>
-        <% if current_user?(post.store.user) %>
-       	  <%= link_to "Delete", post, method: :delete, data: { confirm: "Are you sure?" } %> | <%= link_to "Edit", edit_blogpost_path(post) %>
-      	<% end %>
-      </h4>
-      <p><%= post.content %></p>
+    <div class="pure-g pad">
+      <div class="pure-u-md-1-2 pure-u-1 pad">
+	<h1>Blog <% if current_user?(@user) %></h1><a href="<%= new_blogpost_url %>"><button class="pure-button pure-button-primary">New</button></a><% end %>
+	<% @user.blogposts.each do |post| %>
+	<h2 class="post-title"><%= post.title %></h2>
+	<p class="post-meta">By <%= post.user.name %></p>
+	
+	<div class="post-description">
+	  <p><%= post.content %></p>
+	</div>
+	<h4>
+	  <% if current_user?(post.user) %>
+	  <%= link_to "Delete", post, method: :delete, data: { confirm: "Are you sure?" } %> | <%= link_to "Edit", edit_blogpost_path(post) %>
+	  <% end %>
+	</h4>
+	<% end %>
+	
+      </div>
     <% end %>
   </div>
   <div class="store_within store_contact_within store_inactive">

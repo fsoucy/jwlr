@@ -1,3 +1,7 @@
 .log-in-form input[type=number] {
   display: inline-block;
 }
+
+.log-in-form select {
+  color: #00171F;
+}

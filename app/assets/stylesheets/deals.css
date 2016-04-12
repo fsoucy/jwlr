@@ -1,0 +1,9 @@
+.message_form {
+    background-color: #003459;
+    padding: 1em;
+    color: #FFFFFF;
+    overflow: hidden;
+    border-radius: 1em;
+    word-wrap: break-word;
+    height: auto;
+}

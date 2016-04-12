@@ -1,6 +1,6 @@
 <div class="deal_large">
 <h1>Welcome to the deal between <%= @deal.seller.name %> (seller) and <%= @deal.buyer.name %> (buyer)</h1>
-<% if (@deal.product_dispatched and current_user.id == @deal.buyer_id) %>
+<% if (@deal.product_dispatched and current_user.id == @deal.buyer_id and !@deal.product_received) %>
   <h2>The product is on its way to you!</h2>
 <% end %>
 <%= link_to "Cancel this deal", @deal, method: :delete, class: "btn btn-primary down",

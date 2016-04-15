@@ -1,7 +1,7 @@
-<% provide(:title, "Search Results") %>
-
+<div class="pure-g search-page">
+<div class="pure-u-1 pure-u-md-1-5 pure-form log-in-form">
       <h2>Sort By</h2>
-      <select id="sort" class="searchpage" >
+      <select id="sort" class="searchpage">
         <option value="relevance">Relevance</option>
         <option value="low">Price: Low to High</option>
         <option value="high">Price: High to Low</option>
@@ -9,14 +9,14 @@
       <h2>Category</h2>
       <p>
 	<% @categories.rows.each do |facet| %>
-	<%= Category.find(facet.value).name %> (<%= facet.count %>): <input type="checkbox" name="category_id" value="<%= facet.value %>" class="toggle"><br>
+	<%= Category.find(facet.value).name %> (<%= facet.count %>): <input type="checkbox" name="category_id" value="<%= facet.value %>" class="toggle pure-form-checkbox"><br>
 	<% end %>
       </p>
       <h2>Price</h2>
       <p>
         <form class="price">
          $<input type="text" name="price_lower" id="price_lower" value="<%= params[:price_lower].to_i %>"></input> to $<input type="text" name="price_upper" id="price_upper" value="<%= params[:price_upper].to_i %>"></input>
-          <button type="button" id="prices_man">Go</button>
+          <button type="button" id="prices_man" class="pure-button pure-button-primary">Go</button>
         </form>
       </p>
     <% if !@category_options.nil? %>
@@ -29,6 +29,7 @@
             <% category_option.attribute_options[0...1].each do |attr| %>
 	    <%= attr.value %>: <input type="checkbox" name="attribute_option_id" value="<%= attr.id %>" class="toggle"><br>
 	    <% end %>
+      </div>
 	  <div class="attr_long">
 	    <% len = category_option.attribute_options.length %>
 	    <% category_option.attribute_options[1...(len)].each do |attr| %>
@@ -88,7 +89,8 @@
       </p>
      
 
-
+</div>
+<div class="pure-u-1 pure-u-md-4-5 search-results">
 
     <% @results.each do |prod| %>
 
@@ -109,4 +111,6 @@
 	</div>
     </div>
     <% end %>
+</div>
+</div>
 

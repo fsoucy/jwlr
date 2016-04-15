@@ -22,7 +22,7 @@
     display: block;
 }
 
-h2
+.search-page h2, h3
 {
     margin-top: 0px;
     padding: 0px;
@@ -35,5 +35,16 @@ h2
     color: #FFFFFF;
     overflow: hidden;
     word-wrap: break-word;
+}
 
+.search-page {
+  padding: 1em;
+}
+
+.price input[type=text] {
+  width: 20%;
+}
+
+.search-results {
+  padding: 1em;
 }

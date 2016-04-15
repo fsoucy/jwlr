@@ -117,6 +117,7 @@ function leadToRefresh()
 
 function uponRefresh()
 {
+  
     var loc = window.location.href;
     loc = loc.split("&");
     for (thing in loc)
@@ -158,10 +159,10 @@ function uponRefresh()
 	var name = s.slice(s.indexOf("&") + 1, s.indexOf("="));
 	name = name.replace('space', ' ');
 	dict[name] = thingString;
-	/*dict.push({
-	    key: s.slice(s.indexOf("&") + 1, s.indexOf("=")),
-	    value: thingString
-	});*/
+	//dict.push({
+	//    key: s.slice(s.indexOf("&") + 1, s.indexOf("=")),
+	//    value: thingString
+	//});
     }
     //we now have a hash. keys are the names of the params. values are an array of appropriate values for the param
     $('input').each(function(index, data) {
@@ -214,10 +215,6 @@ function uponRefresh()
 	}
 	window.location.href = toGo;
     }
-
-
-
-    
     
 }
 

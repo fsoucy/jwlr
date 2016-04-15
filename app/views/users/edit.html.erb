@@ -1,32 +1,33 @@
-<% provide(:title, "Edit user") %>
-<div class="form_fields">
-<h1>Update your profile</h1>
+<div class="form-g log-in">
+<div class="pure-u-1 pure-u-md-1-3"></div>
+<div class="pure-u-1 pure-u-md-1-3 log-in-form">
 
-    <%= form_for(@user) do |f| %>
+    <%= form_for @user, html: {class: "pure-form pure-form-stacked"} do |f| %>
+      <fieldset>
+      <legend>Update your profile</legend>
       <%= render 'shared/error_messages', object: f.object %>
 
-      <%= f.label :profile_picture, "Upload Profile Picture" %>
-      <%= f.file_field :profile_picture, class: 'file' %>
-      <br>
+        <%= f.label :profile_picture, "Upload Profile Picture" %>
+        <%= f.file_field :profile_picture, :required => true %>
       
-      <%= f.text_field :name, class: 'form_input', placeholder: 'Name' %>
-      <br>
-      <%= f.email_field :email, class: 'form_input', placeholder: 'Email' %>
-      <br>
-      <%= f.password_field :password, class: 'form_input', placeholder: 'Password' %>
-      <br>
-      <%= f.password_field :password_confirmation, class: 'form_input', placeholder: 'Password confirmation' %>
-      <br>
-      <%= f.text_field :full_street_address, class: 'form_input', placeholder: 'Full street address' %>
-      <br>
-      <%= f.text_field :interests, class: 'form_input', placeholder: 'What are your interests in the industry?' %>
-      <br>
-      <%= f.text_field :identifies_as, class: 'form_input', placeholder: 'How do you identify as a user?' %>
-      <br>
-      <%= f.label :default_delivery_cost, "Default delivery cost if you plan on delivering products" %>
-      <%= f.number_field :default_delivery_cost, class: 'form_input', placeholder: 'Default delivery cost' %>
-      <br>
-      <%= f.submit "Save changes", class: "form_submit" %>
+        <%= f.text_field :name, placeholder: 'Your name', :required => true %>
+
+        <%= f.email_field :email, placeholder: 'Email', :required => true  %>
+
+        <%= f.password_field :password, placeholder: 'Password', :required => true %>
+
+        <%= f.password_field :password_confirmation, placeholder: 'Password Confirmation', :required => true %>
+
+        <%= f.text_field :full_street_address, placeholder: 'Full Street Address', :required => true %>
+
+        <%= f.label :default_delivery_cost, "Planning on delivering products to your customers? Add a default delivery cost." %>
+        <label>
+          $ <%= f.number_field :default_delivery_cost, placeholder: 'Default delivery cost' %>
+        </label>
+        
+        <%= f.submit "Create my account", class: "pure-button pure-button-primary" %>
+      </fieldset>
     <% end %>
-    
+</div>
+<div class="pure-u-1 pure-u-md-1-3"></div>
 </div>

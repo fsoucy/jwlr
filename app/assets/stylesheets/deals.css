@@ -7,3 +7,15 @@
     word-wrap: break-word;
     height: auto;
 }
+
+.finished_true {
+  color: green;
+}
+
+.finished_false {
+  color: red;
+}
+
+.reviewed_false {
+  color: blue;
+}

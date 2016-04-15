@@ -1,3 +1,4 @@
+<div class="result">
 <a href="<%= deal_path(deal) %>">
 <% if deal.deal_complete && deal.reviews.where("user_id = ?", current_user.id).first.nil? %>
 <div class="deal reviewed_false">
@@ -33,3 +34,4 @@
 <% end %>
 </div>
 </a>
+</div>

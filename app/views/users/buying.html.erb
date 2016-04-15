@@ -1,6 +1,7 @@
-<% provide(:title, "Buying") %>
+<div class="search-page">
 <h1>My Buying Deals</h1>
 <% if @buying.count == 0 %>
 <%= link_to "You have no buying deals. Click here to see some products.", "/search?" %>
 <% end %>
 <%= render @buying %>
+</div>

@@ -48,3 +48,8 @@
 .search-results {
   padding: 1em;
 }
+
+.attr_long
+{
+    display: none;
+}

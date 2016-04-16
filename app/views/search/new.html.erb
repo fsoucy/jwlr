@@ -1,5 +1,7 @@
 <div class="pure-g search-page">
 <div class="pure-u-1 pure-u-md-1-5 pure-form log-in-form">
+  <div class="toggle_options">
+    <div class="option">
       <h2>Sort By</h2>
       <select id="sort" class="searchpage">
         <option value="relevance">Relevance</option>
@@ -23,6 +25,7 @@
       <h2>Toggle Options</h2>
       <p>
 	<% @category_options.each do |category_option| %>
+	<div class="category">
 	  <% thing = category_option.name.gsub(" ", "_") %>
           <h3 class="options_dropdown_name <%= thing %>"><%= category_option.name %></h3>
 	  <div class="attr_short attr_active">
@@ -36,6 +39,7 @@
 	    <%= attr.value %>: <input type="checkbox" name="attribute_option_id" value="<%= attr.id %>" class="toggle"><br>
 	    <% end %>
 	  </div>
+	</div>
 	<% end %>
       </p>
     <% else %>
@@ -43,6 +47,7 @@
       <% end %>
 
       <p>
+	<div class="selling_methods">
 	  <h3 class="options_dropdown_name Selling_Method">Selling Method</h3>
 	  <div class="attr_short attr_active">
 	    <% @selling_methods[0...2].each do |method| %>
@@ -53,11 +58,12 @@
 	    <% @selling_methods[2...@selling_methods.length].each do |method| %>
 	    <%= method.method %>: <input type="checkbox" name="selling_method_id" value="<%= method.id %>" class="toggle"><br>
 	    <% end %>
-	  </div>	
+	  </div>
+	</div>
       </p>
 
       <p>
-
+	<div class="payment_methods">
 	  <h3 class="options_dropdown_name Payment_Method">Payment Method</h3>
 
 	    <% @payment_methods[0...2].each do |method| %>
@@ -69,11 +75,11 @@
 	    <%= method.method %>: <input type="checkbox" name="payment_method_id" value="<%= method.id %>" class="toggle"><br>
 	    <% end %>
 	  </div>
-
+	</div>
       </p>
 
       <p>
-
+	<div class="exchange_methods">
 	  <h3 class="options_dropdown_name Exchange_Method">Exchange Method</h3>
 	  <div class="attr_short attr_active">
 	    <% @exchange_methods[0...2].each do |method| %>
@@ -85,10 +91,11 @@
 	    <%= method.method %>: <input type="checkbox" name="exchange_method_id" value="<%= method.id %>" class="toggle"><br>
 	    <% end %>
 	  </div>
-
+	</div>
       </p>
      
-
+    </div>
+  </div>
 </div>
 <div class="pure-u-1 pure-u-md-4-5 search-results">
 

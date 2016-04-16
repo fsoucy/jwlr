@@ -22,8 +22,7 @@
         </form>
       </p>
     <% if !@category_options.nil? %>
-      <h2>Toggle Options</h2>
-	<% @category_options.each do |category_option| %>
+      <h2>Toggle Options</h2>      <p>	<% @category_options.each do |category_option| %>
 	<div class="category">
 	  <% thing = category_option.name.gsub(" ", "_") %>
           <h3 class="options_dropdown_name <%= thing %>"><%= category_option.name %></h3>

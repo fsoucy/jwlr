@@ -1,12 +1,12 @@
 <% provide(:title, @store.name) %>
 <div class="storefront_gallery">
-  <div class="storefront_nav">
-    <div class="storefront_nav_within">
-      <button class="gallery_button"><a href="#gallery">Products</a></button>
-      <button class="about_button"><a href="#about">About</a></button>
-      <button class="contact_button"><a href="#contact">Contact</a></button>
-      <button class="blog_button"><a href="#blog">Blog</a></button>
-    </div>
+  <div class="pure-menu pure-menu-horizontal">
+    <ul class="pure-menu-list">
+      <li class="pure-menu-item gallery_butt"><a href="#gallery" class="pure-menu-link">Products</a></li>
+      <li class="pure-menu-item about_butt"><a href="#about" class="pure-menu-link">About</a></li>
+      <li class="pure-menu-item contact_butt"><a href="#contact" class="pure-menu-link">Contact</a></li>
+      <li class="pure-menu-item blog_butt"><a href="#blog" class="pure-menu-link">Blog</a></li>
+    </ul>
   </div>
   <div class="store_title">
 	<h1><%= @store.name %> <%= link_to "Edit", edit_store_url(@store) if current_user?(@store.user) %></h1>
@@ -17,8 +17,7 @@
       <a href="<%= product_path(prod.id) %>">
       <div class="store_prod">
         <div class="image_container">
-          <%= image_tag prod.pictures.first.photo_cropped(:medium), class: "store_prod_image" unless prod.pictures.first.nil? %>
-	  <button class="quick_view">Quick View</button>
+          <%= image_tag prod.pictures.first.photo_cropped, class: "store_prod_image" unless prod.pictures.first.nil? %>
 	</div>
         <h3 class="store_prod_name"><%= prod.category.name %></h3>
         <h4 class="store_prod_price"><%= number_to_currency(prod.price) %></h4>
@@ -29,10 +28,9 @@
   <div class="store_within store_blog_within store_inactive">
     <h3>Blog <%= link_to "New", new_blogpost_url if current_user?(@store.user) %></h3>
     <% @store.blogposts.each do |post| %>
-    <div class="pure-g pad">
-      <div class="pure-u-md-1-2 pure-u-1 pad">
+    <div class="pure-g pad log-in">
+      <div class="pure-u-md-1-2 pure-u-1 pad log-in-form">
 	<h1>Blog <% if current_user?(@user) %></h1><a href="<%= new_blogpost_url %>"><button class="pure-button pure-button-primary">New</button></a><% end %>
-	<% @user.blogposts.each do |post| %>
 	<h2 class="post-title"><%= post.title %></h2>
 	<p class="post-meta">By <%= post.user.name %></p>
 	
@@ -42,38 +40,38 @@
 	<h4>
 	  <% if current_user?(post.user) %>
 	  <%= link_to "Delete", post, method: :delete, data: { confirm: "Are you sure?" } %> | <%= link_to "Edit", edit_blogpost_path(post) %>
-	  <% end %>
 	</h4>
 	<% end %>
-	
+	</div>
       </div>
     <% end %>
   </div>
   <div class="store_within store_contact_within store_inactive">
     <div "store_contact_container">
-      <div class="contact_left">
+      <div class="pure-g log-in">
+      <div class="pure-u-1 pure-u-md-1-2 log-in-form">
 	<h3>Contact Information</h3>
 	<h4>Phone: <%= @store.phone %></h4>
 	<h4>Email: <%= @store.user.email %></h4>
 	<h4><%= @store.full_street_address %></h4>
-	<br>
-	<h4>Feel free to message me at any time!</h4>
       </div>
-      <div class="contact_right">
-	<div class="form_fields">
+      <div class="pure-u-1 pure-u-md-1-2 log-in-form">
+	<h3>Message this user</h3>
 	<%= form_for @message do |f| %>
 	<%= f.hidden_field :sender_id, value: current_user.id %>
 	<%= f.hidden_field :other_id, value: @store.user.id %>
-	<%= f.text_area :content, class: "form_input", placeholder: "Send a message" %>
-	<%= f.submit "Send message", class: "form_submit" %>
+	<%= f.text_area :content, class: "message_input", placeholder: "Send a message" %>
+	<br>
+	<%= f.submit "Send message", class: "form_submit pure-button pure-button-primary" %>
 	<% end %>
-	</div>
+      </div>
       </div>
     </div>
   </div>
   <div class="store_within store_about_within store_inactive">
     <div class="store_about_container">
-      <div class="about_left">
+      <div class="pure-g log-in">
+	<div class="pure-u-1 pure-u-md-1-2 log-in-form">
 	<h2 class="store_about">About <%= @store.name %></h2><br>
 	<p class="store_description">Store Description: <%= @store.description %></p>
 	<% if @store.faqs.any? %>
@@ -92,7 +90,7 @@
 		<h4 class="faq_header"><%= link_to "New FAQ", new_faq_path if current_user?(@store.user) %></h4>
 	<% end %>
       </div>
-      <div class="about_right">
+      <div class="pure-u-1 pure-u-md-1-2 log-in-form">
 	<h3 class="store_location"><%= @store.full_street_address %></h3>
 	<%= image_tag @store.profile_picture(:thumb), class: "store_profile_picture" %>
 	<h3 class="hoursofoperation">Hours of Operation <%= link_to "Edit", edit_times_store_url(@store) if current_user?(@store.user) %></h3>
@@ -139,7 +137,9 @@
 	<% else %>
 	<p>Store hasn't updated their hours of operation</p>
 	<% end %>
-      </div>
+     </div>
+</div>
+									
     </div>
   </div>
 </div>

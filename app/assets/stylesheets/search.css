@@ -75,3 +75,8 @@
 {
     margin-top: 0.5em;
 }
+
+.price input[type=text]
+{
+    color: black;
+}

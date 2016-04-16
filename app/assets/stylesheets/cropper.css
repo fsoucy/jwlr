@@ -1,3 +1,8 @@
+.picture {
+  padding: 1em;
+}
+
+
 .dropzone
 {
     margin-top: 10px;
@@ -18,8 +23,13 @@
 
 .modal-body
 {
+    padding: 1em;
     width: 600px;
     height: 600px;
+}
+
+.modal-body form {
+  margin: 1em;
 }
 
 #image
@@ -115,6 +125,8 @@
     touch-action: none;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
+
+    padding: 1em;
 }
 
 .cropper-container img {

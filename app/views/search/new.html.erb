@@ -22,7 +22,8 @@
         </form>
       </p>
     <% if !@category_options.nil? %>
-      <h2>Toggle Options</h2>
+    <h2>Toggle Options</h2>
+    <p>
 	<% @category_options.each do |category_option| %>
 	<div class="category">
 	  <% thing = category_option.name.gsub(" ", "_") %>
@@ -40,6 +41,7 @@
 	  </div>
 	</div>
 	<% end %>
+	</p>
     <% else %>
       <h2>Select a category to sort</h2>
       <% end %>

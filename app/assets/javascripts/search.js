@@ -262,9 +262,16 @@ $(document).ready(function() {
 
     $('.options_dropdown_name').click(function() {
 	//console.log("ok");
+	if ($(this).siblings('.attr_long').hasClass('attr_active'))
+	{
+	    $(this).siblings('.attr_long').css('display', 'none').removeClass('attr_active');
+	}
+	else
+	{
 	//$(this).siblings('.attr_short').css('display', 'none').removeClass('attr_active');
-	$(this).siblings('.attr_long').css('display', 'block').addClass('attr_active');
-	
+	    $(this).siblings('.attr_long').css('display', 'block').addClass('attr_active');
+	}
+	    
     });
 
 });

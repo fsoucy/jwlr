@@ -53,3 +53,25 @@
 {
     display: none;
 }
+
+.category h3, .selling_methods h3, .exchange_methods h3, .payment_methods h3, .option h2
+{
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+.category
+{
+    margin-bottom: 1em;
+}
+
+.option p
+{
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+#prices_man
+{
+    margin-top: 0.5em;
+}

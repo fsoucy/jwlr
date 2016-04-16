@@ -104,7 +104,7 @@
     <div class="result">
         
         <% if !prod.pictures.first.nil? %>
-          <a class="magnifier" href="<%= prod.pictures.first.photo %>">
+          <a class="magnifier" href="<%= prod.pictures.first.photo_cropped(:large) %>">
             <%= image_tag prod.pictures.first.photo_cropped(:thumb), class: "product_image_search" %> 
           </a>
         <% end %>

@@ -11,4 +11,16 @@ $(document).ready(function() {
 	$(this).next().attr('href', largeLink);
     });
 
+$('#magnifier').loupe({
+  width: 600, // width of magnifier
+  height: 600, // height of magnifier
+  loupe: 'loupe' // css class for magnifier
+});
+
+$('.magnifier').loupe({
+  width: 300, // width of magnifier
+  height: 300, // height of magnifier
+  loupe: 'loupe' // css class for magnifier
+});
+
 });

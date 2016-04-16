@@ -4,7 +4,9 @@
   <h1><%= @product.title %> (<%= @product.category.name %>)</h1>
   
   <% if !@product.pictures.first.nil? %>
-  <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "product_image" %>
+  <a id="magnifier" href="<%= @product.pictures.first.photo %>">
+    <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "product_image" %>
+  </a>
   <% if @product.user == current_user %>
   <% link_to("Edit", edit_picture_path(@product.pictures.first)) %>
   <% end %>

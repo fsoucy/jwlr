@@ -102,10 +102,12 @@
     <% @results.each do |prod| %>
 
     <div class="result">
-        <%= if !prod.pictures.first.nil?
-              image_tag prod.pictures.first.photo_cropped(:thumb), class: "product_image_search" 
-          end
-        %>
+        
+        <% if !prod.pictures.first.nil? %>
+          <a class="magnifier" href="<%= prod.pictures.first.photo %>">
+            <%= image_tag prod.pictures.first.photo_cropped(:thumb), class: "product_image_search" %> 
+          </a>
+        <% end %>
 	<div class="result_info">
 	<a href = "<%= product_url(prod) %>"><h2><%= prod.title %></h2></a>
         <h3><%= number_to_currency(prod.price) %></h3>

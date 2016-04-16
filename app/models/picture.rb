@@ -1,7 +1,7 @@
 class Picture < ActiveRecord::Base
   belongs_to :product
   has_attached_file :photo, default_url: "/images/:style/missing.png"
-  has_attached_file :photo_cropped, :styles => { :medium => ["300x300>", :png], :thumb => ["200x200>", :png], :thumbnail => ["50x50>", :png] }, default_url: "/images/:style/missing.png"
+  has_attached_file :photo_cropped, :styles => { :medium => ["300x300>", :jpg], :thumb => ["200x200>", :jpg], :thumbnail => ["50x50>", :jpg] }, default_url: "/images/:style/missing.png"
   validates_attachment :photo, :storage => :filesystem, :presence => true, :content_type => { :content_type => /\Aimage\/.*\Z/ }, :size => { :less_than => 10.megabyte }
   validate :check_dimensions  
 

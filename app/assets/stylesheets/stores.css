@@ -1,0 +1,40 @@
+.post-title, .post-meta
+{
+    margin: 0;
+}
+
+.blog_header
+{
+    padding-left: 2em;
+}
+
+.store_description, .store_about, .faq_question, .faq_header, .faq_answer
+{
+    margin: 0;
+    padding: 0;
+}
+
+
+.inner
+{
+    margin: .5em;
+    overflow: auto;
+
+    border-radius: 2em;
+    background-color: #003459;
+    color: #FFFFFF;
+    padding: 1em;
+}
+
+.store-divider
+{
+    overflow: hidden;
+    border-radius: 1em;
+    word-wrap: break-word;
+    height: auto;
+}
+
+.store_header, .store-menu
+{
+    padding-left: 1em;
+}

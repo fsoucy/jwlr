@@ -40,6 +40,10 @@
   padding-left: 1em;
 }
 
+.gallery-container h3 {
+  padding-left: 1em;
+}
+
 .gallery-container img {
   border-width: 1px;
   border-style: solid;

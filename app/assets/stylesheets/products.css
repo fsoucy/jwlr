@@ -1,3 +1,25 @@
+.product {
+  vertical-align: top;
+  display: inline-block;
+  text-align: left;
+  border: 1px solid #00171F;
+  margin: 1em;
+}
+
+.product img {
+  padding: 1em;
+  margin-bottom: 0 !important;
+  border-bottom: 1px solid #00171F;
+}
+
+.product-info {
+  display: block;
+  margin: 0.3em;
+  padding: 0.2em;
+  line-height: 1.2em;
+  overflow: auto;
+}
+
 .product_box {
   float: left;
   display: inline-block;

@@ -13,20 +13,12 @@
   <!--GALLERY--->
   <div class="store_within store_gallery_within store_active">
     <div class="pure-g log-in">
-      <div class="pure-u-1 pure-u-md-1-3 store-divider">
+      <div class="pure-u-1 store-divider">
 	<div class="inner">
 	  <h3>Featured Products</h3>
 	  <% @products.each do |prod| %>
-	  <div class="pure-u-md-1-5 pure-u-1 pad">
-	    <a href="<%= product_path(prod.id) %>">
-	      <% if !prod.pictures.first.nil? %>
-	      <%= image_tag prod.pictures.first.photo_cropped(:thumb), class: "pure-img product-img" %>
-	      <% end %>
-	      <div class="text-box">
-		<h3><%= prod.category.name %></h3>
-		<h3><%= number_to_currency(prod.price) %></h3>
-	      </div>
-	    </a>
+	  <div class="pure-u-md-1-5 pure-u-1">
+      <%= render prod %> 
 	  </div>
 	  <% end %>
 	</div>

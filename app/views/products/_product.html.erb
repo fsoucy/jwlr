@@ -1,8 +1,7 @@
-<div class="product_feed">
-<center><%= link_to  image_tag(product.picture_url(:thumb)), product %></center>
-<div>
-<center><p>Seller: <%= product.user.name %></p></center>
-<center><p>Price: $<%= product.price %></p></center>
-<center><p>Location: <%= product.full_street_address %></p></center>
-</div>
-</div>
+<div class="product">
+ <a href="<%= product_path(product) %>"><%= image_tag product.pictures.first.photo_cropped(:thumb), class: 'pure-img' %>
+                          <p class="product-info"><%= product.title %><br>
+                          <%= number_to_currency(product.price) %></p>
+                        </a>
+                      </div>
+

@@ -35,23 +35,6 @@
     opacity: 0.8;
 }
 
-.gallery-container {
-  padding-top: 1em;
-  padding-left: 1em;
-}
-
-.gallery-container h3 {
-  padding-left: 1em;
-}
-
-.gallery-container img {
-  border-width: 1px;
-  border-style: solid;
-  border-color: #00171F;
-  float: left;
-  margin: 1em;
-}
-
 .content-header {
   font-weight: 400;
   letter-spacing: 0.1em;
@@ -61,6 +44,7 @@
 
 .content-subhead {
   color: #00A8E8;
+  padding-left: 1em;
 }
 
 .pad-box {

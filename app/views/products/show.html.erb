@@ -1,109 +1,188 @@
 <% title = "Product by " + @product.user.name %>
 <div class="pure-g search-page">
-<div class="pure-u-1 pure-u-md-1-3">
-  <h1><%= @product.title %> (<%= @product.category.name %>)</h1>
+	<div class="pure-u-1 pure-u-md-1-3 product_view">
+    <h1><%= @product.title %> (<%= @product.category.name %>)</h1>
   
-  <% if !@product.pictures.first.nil? %>
-  <a id="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
-    <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "product_image" %>
-  </a>
-  <% if @product.user == current_user %>
-  <% link_to("Edit", edit_picture_path(@product.pictures.first)) %>
-  <% end %>
-  <% end %>
-      
-  <% @product.pictures.each do |picture| %>
-  <%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show" unless picture == @product.pictures.first %>
-  <% if @product.user == current_user %>
-  <%= link_to "Edit", edit_picture_path(picture) %>
-  <% end %>
-  <% end %>
-  <% @toggle_options.each do |opt| %>
-  <h3><%= opt.attribute_option.category_option.name %>: <%= opt.attribute_option.value %></h3>
-  <% end %>
-</div>
-<div class="pure-u-1 pure-u-md-1-3">
-  <h1>Product Details</h1>
-  <h3>Price: <%= number_to_currency(@product.price) %></h3>
-  <h3>Address: <%= @product.full_street_address %></h3>
-  <% unless @distance_away.nil? %>
-  <h3>Distance from you: <%= @distance_away.round(1) %> miles</h3>
-  <% end %>
-  <h3>Owner: <%= @product.user.name %></h3>
-  <h3>Description: <%= @product.description %></h3>
-  <h3>Views: <%= @product.views %></h3>
+  	<% if !@product.pictures.first.nil? %>
+  	  <a id="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
+   		  <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "product_image pure-img" %>
+  		</a>
+  		<% if @product.user == current_user %>
+  	    <%= link_to("Edit", edit_picture_path(@product.pictures.first)) %>
+  		<% end %>
+  	<% end %>
+  	<br>
+  	<% @product.pictures.each do |picture| %>
+  		<% if picture == @product.pictures.first %>
+  			<%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show pic_active" %>
+  		<% else %>
+  			<%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show" %>
+  		<% end %>
+  		<% if @product.user == current_user %>
+  			<%= hidden_field_tag :pathway, edit_picture_path(picture) %>
+  		<% end %>
+  	<% end %>
 
-  <% if !@product.sold && !@product.hold %>
-  <% if @product.user == current_user %><%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
+	</div>
+	<div class="pure-u-1 pure-u-md-1-3 product_view">
+    <h1>Buying Details</h1>
+  	<% if !@product.sold && !@product.hold %>
+  		<% if @product.user == current_user %><%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
 					    data: { confirm: "Are you sure you wish to delete this?" } %>
-  <br>
-  <%= link_to "Edit product", edit_product_path(@product.id) %>
-  <% else %>
-  <% if @product.activated && logged_in? %>
-  <% active_deal = Deal.where("product_id = ? and buyer_id = ?", @product.id, current_user).first %>
-  <% if active_deal.nil? %>
-  <%= form_for(@deal) do |f| %>
-  <%= f.hidden_field :seller_id, value: @deal.seller_id %>
-  <%= f.hidden_field :buyer_id, value: @deal.buyer_id %>
-  <%= f.hidden_field :product_id, value: @deal.product_id %>
-  <%= f.submit "Buy this product", class: 'pure-button pure-button-primary' %>
-  <% end %>
-  <% else %>
-  <%= link_to "Go to active deal", deal_path(active_deal.id) %>
-  <% end %>
-  <% elsif @product.activated %>
-  <% store_location %>
-  <%= form_tag "/login", method: "get" do %>
-  <%= submit_tag "Buy this product", class: 'pure-button pure-button-primary' %>
-  <% end %>
-  <% end %>
-  <% end %>
-  <% end %>
-</div>
-<div class="pure-u-1 pure-u-md-1-3">
-  <% if @product.selling_method_links.count < 1 && @product.user == current_user %>
-  <a href="<%= edit_selling_methods_product_path(@product) %>"><h1 class = "method_alert">Selling Methods</h1></a>
-  <% else %>
-  <h1>Selling Methods</h1>
-  <% @product.selling_method_links.each do |s| %>
-  <h3><%= s.selling_method.method %></h3>
-  <% end %>
-  <% end %>
+  		  <br>
+        <%= link_to "Edit product", edit_product_path(@product.id) %>
+      <% end %>
+    <% end %>      
   
-  <% if @product.exchange_method_links.count < 1 && @product.user == current_user %>
-  <a href="<%= edit_exchange_methods_product_path(@product) %>"><h1 class = "method_alert">Exchange Methods</h1></a>
-  <% else %>
-     
-  <h1>Exchange Methods</h1>
-  <% @product.exchange_method_links.each do |s| %>
-  <h3><%= s.exchange_method.method %></h3>
-  <% if s.exchange_method.method == "Delivery" %>
-  <h4>Delivery cost: <%= number_to_currency(@product.delivery_cost) %></h4>
-  <% end %>
-  <% end %>
-  <% end %>
+    <% if @product.user == current_user %>
+      <a href="<%= edit_selling_methods_product_path(@product) %>"><h1 class = "method_alert">Selling Methods</h1></a>
+      <% @product.selling_method_links.each do |s| %>
+        <h3><%= s.selling_method.method %></h3>
+      <% end %>
+  
+      <a href="<%= edit_exchange_methods_product_path(@product) %>"><h1 class = "method_alert">Exchange Methods</h1></a>
+      <% @product.exchange_method_links.each do |s| %>
+        <h3><%= s.exchange_method.method %></h3>
+        <% if s.exchange_method.method == "Delivery" %>
+          <h4>Delivery cost: <%= number_to_currency(@product.delivery_cost) %></h4>
+        <% end %>
+      <% end %>
+      <a href="<%= edit_selling_methods_product_path(@product) %>"><h1 class = "method_alert">Payment Methods</h1></a>
+      <% @product.payment_method_links.each do |s| %>
+        <h3><%= s.payment_method.method %></h3>
+      <% end %>
+    <% else %>
 
-  <% if @product.payment_method_links.count < 1 && @product.user == current_user %>
-  <a href="<%= edit_selling_methods_product_path(@product) %>"><h1 class = "method_alert">Payment Methods</h1></a>
-  <% else %>
-  
-  <h1>Payment Methods</h1>
-  <% @product.payment_method_links.each do |s| %>
-  <h3><%= s.payment_method.method %></h3>
-  <% end %>
-  <% end %>
+      <!-- USER DOESN't OWN PRODUCT -->
+      <% if !@product.sold and !@product.hold %>
+        <% if @product.activated && logged_in? %>
+          <% active_deal = Deal.where("product_id = ? and buyer_id = ?", @product.id, current_user).first %>
+          <% if active_deal.nil? %>
+            <!-- LOOGGED IN -->
+            <% if @deal.product.selling_method_links.count > 1 or @deal.product.exchange_method_links.count > 1 or @deal.product.payment_method_links.count > 1 %>
+              <%= form_for(@deal) do |f| %>
+                <p>Selling Methods (choose one)</p>
+                <% @deal.product.selling_method_links.each do |s| %>
+                  <% if s.selling_method.method == "Static Price" %>
+                    <%= f.label :selling_method, "Static Price ($#{@deal.product.price})" %>
+                  <% else %>
+                    <%= f.label :selling_method, "Negotiation (listed price: $#{@deal.product.price})" %>
+                  <% end %>
+                  <%= f.radio_button :selling_method_id, s.selling_method.id %>
+                  <% if s.selling_method.method == "Negotiation" %>
+                    <%= f.number_field :user_proposed_price %>
+                  <% end %>
+                <% end %>
+                <p>Exchange Methods (choose one) </p>
+                <% @deal.product.exchange_method_links.each do |e| %>
+                  <% if e.exchange_method.method == "Delivery" %>
+                    <%= f.label :exchange_method, "Delivery (cost #{@deal.product.delivery_cost})" %>
+                  <% else %>
+                    <%= f.label :exchange_method, "#{e.exchange_method.method}" %>
+                    <%= f.radio_button :exchange_method_id, e.exchange_method.id %>
+                    
+                  <% end %>
+                <% end %>
+                <p>Payment Methods (choose one)</p>
+                <% @deal.product.payment_method_links.each do |p| %>
+                  <%= f.label :payment_method, "#{p.payment_method.method}" %>
+                  <%= f.radio_button :payment_method_id, p.payment_method.id %>
+                <% end %>
+                <br>
+                <%= f.submit "Buy this product", class: "pure-button pure-button-primary" %>
+              <% end %>
+            <% else %>
+              <%= form_for(@deal) do |f| %>
+                <p>Selling method: <%= @deal.product.selling_method_links.first.selling_method.method unless @deal.product.selling_method_links.first.nil? %></p>
+                <% if !@deal.product.selling_method_links.first.nil? && @deal.product.selling_method_links.first.selling_method.method == "Static Price" %>
+                  <p>Price: <%= @deal.product.price %></p>
+                <% elsif !@deal.product.selling_method_links.first.nil? && @deal.product.selling_method_links.first.selling_method.method == "Negotiation" %>
+                  <p>Listed price: <%= @deal.product.price %></p>
+                  <%= f.number_field :user_proposed_price %>
+                <% end %>
+                <p>Exchange method: <%= @deal.product.exchange_method_links.first.exchange_method.method unless @deal.product.exchange_method_links.first.nil? %></p>
+                <% if !@deal.product.exchange_method_links.first.nil? && !@deal.product.exchange_method_links.first.exchange_method.method == "Delivery" %>
+                  <p>Cost: <%= @deal.product.delivery_cost %></p>
+                <% end %>
+                <p>Payment method: <%= @deal.product.payment_method_links.first.payment_method.method unless @deal.product.payment_method_links.first.nil? %></p>
+                <%= f.hidden_field :selling_method_id, value: @deal.product.selling_method_links.first.selling_method.id %>
+                <%= f.hidden_field :payment_method_id, value: @deal.product.payment_method_links.first.payment_method.id %>
+                <%= f.hidden_field :exchange_method_id, value: @deal.product.exchange_method_links.first.exchange_method.id %>
+                <%= f.submit "Buy product", class: "pure-button pure-button-primary" %>
+              <% end %>
+            <% end %>
+          <% else %>
+            <% link_to active_deal, "Go to your deal" %>
+          <% end %>
+        <% elsif @product.activated %>
+          <% store_location %>
+          <%= form_tag "/login", method: "get" do %>
+            <%= submit_tag "Buy this product", class: 'pure-button pure-button-primary' %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <h1>Product is unavailable for sale.</h1>
+      <% end %>  
+    <% end %>
+  </div>
+
+  <div class="pure-u-1 pure-u-md-1-3 product_view">
+    <% if @product.store != nil %>
+      <h1><%= @product.store.name %></h1>
+    <% else %>
+      <h1><%= @product.user.name %></h1>
+    <% end %>
+    <table class="pure-table pure-table-bordered pure-table-striped">
+      <tbody>
+        <tr>
+	        <td>Address</td>
+	        <td><%= @product.full_street_address %></td>
+        </tr>
+        <% unless @distance_away.nil? %>
+          <tr>
+	          <td>Distance from you</td>
+	          <td><%= @distance_away.round(1) %> miles</td>
+          </tr>
+        <% end %>
+        <tr>
+	        <td>Views</td>
+	        <td><%= @product.views %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<div class="pure-g search-page">
+  <div class="pure-u-1 pure-u-md-1-3">
+    <table class="pure-table pure-table-bordered pure-table-striped product_attributes">
+      <tbody>
+	      <% @toggle_options.each do |opt| %>
+	        <tr>
+	          <td><%= opt.attribute_option.category_option.name %></td>
+	          <td><%= opt.attribute_option.value %></td>
+	        </tr>
+	      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="pure-u-1 pure-u-md-1-3">
+    <h2>Product Description</h2>
+    <p><%= @product.description %></p>
+  </div>
+  <div class="pure-u-1 pure-u-md-1-3"></div>
 </div>
+
 <div class="search-page"><h1>Related Products</h1></div>
 <div class="more_like_this search-page pure-g">
-<% unless @more_like_this.nil? %>
-<% @more_like_this.each do |prod| %>
-<div class="product_box pure-u-1 pure-u-md-1-5">
-<a href="<%= product_url(prod) %>">
-<%= image_tag prod.pictures.first.photo_cropped(:thumb), class: "pure-img" unless prod.pictures.first.nil? %>
-<p><%= prod.title %><br> <%= number_to_currency(prod.price) %></p>
-</a>
-</div>
-<% end
-end %>
+  <% unless @more_like_this.nil? %>
+    <% @more_like_this.each do |prod| %>
+      <div class="product_box pure-u-1 pure-u-md-1-5">
+        <a href="<%= product_url(prod) %>">
+          <%= image_tag prod.pictures.first.photo_cropped(:thumb), class: "pure-img" unless prod.pictures.first.nil? %>
+          <p><%= prod.title %><br> <%= number_to_currency(prod.price) %></p>
+        </a>
+      </div>
+    <% end %>
+  <% end %>
 </div>

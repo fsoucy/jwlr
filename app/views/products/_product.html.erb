@@ -1,6 +1,8 @@
 <div class="product">
+  <% unless product.pictures.first.nil? %>
  <a href="<%= product_path(product) %>"><%= image_tag product.pictures.first.photo_cropped(:thumb), class: 'pure-img' %>
-                          <p class="product-info"><%= product.title %><br>
+<% end %>
+   <p class="product-info"><%= product.title %><br>
                           <%= number_to_currency(product.price) %></p>
                         </a>
                       </div>

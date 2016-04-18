@@ -78,7 +78,6 @@ class ProductsController < ApplicationController
       end
       productview.save
     end
-    debugger
   end
 
   def destroy

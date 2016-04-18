@@ -55,6 +55,10 @@ $(document).ready(function()
 			window.time = thing[2];
 		    }
 		}
+		if (window.time == null)
+		{
+		    window.time = new Date().getTime() / 1000;
+		}
 	        window.interval = setInterval(refreshMessages, 1000);
 		window.page = window.page + 1;
 		$('.massage_container').scrollTop(10000);

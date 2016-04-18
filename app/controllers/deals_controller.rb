@@ -111,7 +111,7 @@ class DealsController < ApplicationController
   
   def show
     @deal = Deal.find_by(id: params[:id])
-    @conversation = Conversation.where("first_user_id=? or first_user_id=? AND second_user_id=? or second_user_id=?", @deal.seller.id, @deal.buyer.id, @deal.seller.id, @deal.buyer.id).first
+    @conversation = Conversation.where("(first_user_id=? or first_user_id=?) AND (second_user_id=? or second_user_id=?)", @deal.seller.id, @deal.buyer.id, @deal.seller.id, @deal.buyer.id).first
     if @conversation.nil?
       @conversation = Conversation.new(first_user_id: @deal.seller.id, second_user_id: @deal.buyer.id)
       @conversation.save

@@ -71,36 +71,36 @@
     </div>
     <h1 class="content-header">Take a tour.</h1>
         <div class="pad-box pure-g">
-            <div class="pad-box gallery-container pure-u-1 pure-u-md-1-2">
+            <div class="pure-u-1 pure-u-md-1-2">
 
                 <h3 class="content-subhead">
                     Featured products
                 </h3>
                 <p>
                     <% @featured.each do |product| %>
-                      <a href="<%= product_path(product) %>"><%= image_tag product.pictures.first.photo_cropped(:thumb), class: 'pure-img' %></a>
+                      <%= render product %>
                     <% end %>
                 </p>
             </div>
-            <div class="pad-box gallery-container pure-u-1 pure-u-md-1-2">
+            <div class="pure-u-1 pure-u-md-1-2">
                 <h3 class="content-subhead">
                     Featured stores
                 </h3>
                 <p>
                     <% @featured.each do |product| %>
-                      <a href="<%= product_path(product) %>"><%= image_tag product.pictures.first.photo_cropped(:thumb), class: 'pure-img' %></a>
+                      <%= render product %>
                     <% end %>
                 </p>
             </div>
         </div>
         <div class="pad-box pure-g">
-            <div class="pad-box gallery-container pure-u-1">
+            <div class="pure-u-1">
                 <h3 class="content-subhead">
                     Most popular
                 </h3>
                 <p>
                     <% @featured.each do |product| %>
-                      <a href="<%= product_path(product) %>"><%= image_tag product.pictures.first.photo_cropped(:thumb), class: 'pure-img' %></a>
+                      <%= render product %>
                     <% end %>
                 </p>
             </div>

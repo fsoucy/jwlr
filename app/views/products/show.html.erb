@@ -176,13 +176,13 @@
 <div class="search-page"><h1>Related Products</h1></div>
 <div class="more_like_this search-page pure-g">
   <% unless @more_like_this.nil? %>
-    <% @more_like_this.each do |prod| %>
-      <div class="product_box pure-u-1 pure-u-md-1-5">
-        <a href="<%= product_url(prod) %>">
-          <%= image_tag prod.pictures.first.photo_cropped(:thumb), class: "pure-img" unless prod.pictures.first.nil? %>
-          <p><%= prod.title %><br> <%= number_to_currency(prod.price) %></p>
-        </a>
-      </div>
+  <% @more_like_this.each do |prod| %>
+  <div class="pure-u-1 pure-u-md-1-5">
+    <%= render prod %>
+  </div>
     <% end %>
   <% end %>
+</div>
+<% end
+end %>
 </div>

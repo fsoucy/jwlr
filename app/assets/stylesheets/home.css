@@ -95,5 +95,5 @@
 html, button, input, select, textarea,
 .pure-g [class *= "pure-u"], h1, a, h2, h3, h4, h5, h6, p{
     /* Set your content font stack here: */
-    font-family: 'Droid Sans', sans-serif;
+    font-family: 'Droid Sans', sans-serif !important;
 }

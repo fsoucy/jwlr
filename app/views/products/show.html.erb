@@ -1,11 +1,11 @@
 <% title = "Product by " + @product.user.name %>
 <div class="pure-g search-page">
-	<div class="pure-u-1 pure-u-md-1-3 product_view">
+	<div class="pure-u-1 pure-u-md-1-3 product_view pad-box">
     <h1><%= @product.title %> (<%= @product.category.name %>)</h1>
   
   	<% if !@product.pictures.first.nil? %>
   	  <a id="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
-   		  <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "product_image pure-img" %>
+   		  <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "pad-box product_image pure-img" %>
   		</a>
   		<% if @product.user == current_user %>
   	    <%= link_to("Edit", edit_picture_path(@product.pictures.first)) %>
@@ -24,7 +24,7 @@
   	<% end %>
 
 	</div>
-	<div class="pure-u-1 pure-u-md-1-3 product_view">
+	<div class="pure-u-1 pure-u-md-1-3 product_view pad-box">
     <h1>Buying Details</h1>
   	<% if !@product.sold && !@product.hold %>
   		<% if @product.user == current_user %><%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
@@ -132,7 +132,7 @@
     <% end %>
   </div>
 
-  <div class="pure-u-1 pure-u-md-1-3 product_view">
+  <div class="pure-u-1 pure-u-md-1-3 product_view pad-box">
     <% if @product.store != nil %>
       <h1><%= @product.store.name %></h1>
     <% else %>
@@ -160,7 +160,7 @@
 </div>
 
 <div class="pure-g search-page">
-  <div class="pure-u-1 pure-u-md-1-3">
+  <div class="pure-u-1 pure-u-md-1-3 pad-box">
     <table class="pure-table pure-table-bordered pure-table-striped product_attributes">
       <tbody>
 	      <% @toggle_options.each do |opt| %>
@@ -172,7 +172,7 @@
       </tbody>
     </table>
   </div>
-  <div class="pure-u-1 pure-u-md-1-3">
+  <div class="pure-u-1 pure-u-md-1-3 pad-box">
     <h2>Product Description</h2>
     <p><%= @product.description %></p>
   </div>
@@ -183,7 +183,7 @@
 <div class="more_like_this search-page pure-g">
   <% unless @more_like_this.nil? %>
   <% @more_like_this.each do |prod| %>
-  <div class="pure-u-1 pure-u-md-1-5">
+  <div class="pure-u-1 pure-u-md-1-5 pad-box">
     <%= render prod %>
   </div>
     <% end %>

@@ -25,6 +25,7 @@ gem 'progress_bar'
 gem 'dropzonejs-rails'
 gem 'paperclip'
 gem 'purecss-rails'
+gem 'fog'
 
 group :development, :test do
   gem 'sqlite3'
@@ -41,6 +42,7 @@ end
 
 group :production do
   gem 'mysql2'
+  gem 'makara'
   gem 'rails_12factor'
 end
 

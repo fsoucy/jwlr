@@ -9,6 +9,9 @@ class ProductsController < ApplicationController
     if current_user.stores.length > 0
       @has = true
       stos = Array.new
+      @selling_methods = SellingMethod.all
+      @payment_methods = PaymentMethod.all
+      @exchange_methods = ExchangeMethod.all
       @product = current_user.products.build
       @product.user.stores.each do |s|
         stos.push([s.name, s.id])

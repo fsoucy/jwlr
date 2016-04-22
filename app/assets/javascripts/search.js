@@ -230,8 +230,10 @@ $(document).ready(function() {
     $('#prices_man').click(function() {
 	leadToRefresh();
     });
-    
-    uponRefresh();
+    if ($('#search_page').length > 0)
+    {
+	uponRefresh();
+    }
     $('.result').click(function() {
 	//$(this).append('<div class="buy_container"><p>Hello</p></div>');
 	//$('.search_actions').fadeIn(500);

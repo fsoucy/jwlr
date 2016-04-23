@@ -24,4 +24,30 @@ $('.magnifier').loupe({
   loupe: 'loupe' // css class for magnifier
 });
 
+    $('#toggle_options_form').hide();
+    $('#selling_methods_form').hide();
+    $('#exchange_methods_form').hide();
+    $('#payment_methods_form').hide();
+    $('#toggle_options_button').click(function() {
+	$('.product_form').hide();
+	$('#toggle_options_form').show();
+    });
+
+    $('#selling_methods_button').click(function() {
+	$('.product_form').hide();
+	$('#selling_methods_form').show();
+	
+    });
+    $('#exchange_methods_button').click(function() {
+	$('.product_form').hide();
+	$('#exchange_methods_form').show();
+    });
+    $('#payment_methods_button').click(function() {
+	$('.product_form').hide();
+	$('#payment_methods_form').show();
+    });
+    $('#main_form_button').click(function() {
+	$('.product_form').hide();
+	$('#main_form').show();
+    });
 });

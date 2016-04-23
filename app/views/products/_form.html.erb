@@ -6,8 +6,7 @@
       <legend>Upload Product</legend>
       <%= render 'shared/error_messages', object: f.object %>
     
-      <%= f.label :category_id, "Product Type" %>
-      <%= f.select :category_id, nested_dropdown(Category.where(:parent_id => nil), true) %>
+
     
       <%= f.text_field :title, placeholder: 'Title' %>
 

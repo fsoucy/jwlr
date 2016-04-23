@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160402222632) do
+ActiveRecord::Schema.define(version: 20160423184037) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -102,6 +102,36 @@ ActiveRecord::Schema.define(version: 20160402222632) do
   add_index "deals", ["product_id"], name: "index_deals_on_product_id"
   add_index "deals", ["seller_id"], name: "index_deals_on_seller_id"
   add_index "deals", ["selling_method_id"], name: "index_deals_on_selling_method_id"
+
+  create_table "default_exchange_method_links", force: :cascade do |t|
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "exchange_method_id"
+    t.integer  "user_id"
+  end
+
+  add_index "default_exchange_method_links", ["exchange_method_id"], name: "index_default_exchange_method_links_on_exchange_method_id"
+  add_index "default_exchange_method_links", ["user_id"], name: "index_default_exchange_method_links_on_user_id"
+
+  create_table "default_payment_method_links", force: :cascade do |t|
+    t.integer  "payment_method_id"
+    t.integer  "user_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "default_payment_method_links", ["payment_method_id"], name: "index_default_payment_method_links_on_payment_method_id"
+  add_index "default_payment_method_links", ["user_id"], name: "index_default_payment_method_links_on_user_id"
+
+  create_table "default_selling_method_links", force: :cascade do |t|
+    t.integer  "selling_method_id"
+    t.integer  "user_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "default_selling_method_links", ["selling_method_id"], name: "index_default_selling_method_links_on_selling_method_id"
+  add_index "default_selling_method_links", ["user_id"], name: "index_default_selling_method_links_on_user_id"
 
   create_table "exchange_method_links", force: :cascade do |t|
     t.integer  "product_id"
@@ -266,15 +296,6 @@ ActiveRecord::Schema.define(version: 20160402222632) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "settings", force: :cascade do |t|
-    t.string   "attribute"
-    t.string   "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "settings", ["attribute"], name: "index_settings_on_attribute", unique: true
-
   create_table "stores", force: :cascade do |t|
     t.string   "full_street_address"
     t.string   "name"
@@ -373,12 +394,12 @@ ActiveRecord::Schema.define(version: 20160402222632) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "full_street_address"
+    t.integer  "business_days_pickup"
+    t.decimal  "default_delivery_cost"
     t.text     "interests"
     t.integer  "products_bought"
     t.integer  "products_sold"
     t.text     "identifies_as"
-    t.integer  "business_days_pickup"
-    t.decimal  "default_delivery_cost"
     t.string   "profile_picture_file_name"
     t.string   "profile_picture_content_type"
     t.integer  "profile_picture_file_size"

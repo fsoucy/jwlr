@@ -1,0 +1,38 @@
+<div class="pure-g log-in">
+  <div class="pure-u-1 pure-u-md-1-3"></div>
+  <div class="pure-u-1 pure-u-md-1-3 log-in-form">
+    <%= form_for(@user, html: {multipart: true, class: "pure-form pure-form-stacked"} ) do |f| %>
+    <fieldset>
+      <legend>Selling Methods</legend>
+      <% @selling_methods.each do |selling_method| %>
+      <%= fields_for "selling_method_links[#{selling_method.id}]", selling_method do |link| %>
+      <% boo = !DefaultSellingMethodLink.where("user_id=? AND selling_method_id=?", @user.id, selling_method.id).first.nil? %>
+      <label class="pure-checkbox" for="selling_method">
+	<%= link.check_box :id, checked: boo, class: "pure-checkbox"  %> <%= selling_method.method %>
+      </label>
+      <% end %>
+      <% end %>
+      <legend>Exchange Methods</legend>
+      <% @exchange_methods.each do |exchange_method| %>
+      <%= fields_for "exchange_method_links[#{exchange_method.id}]", exchange_method do |link| %>
+      <% boo = !DefaultExchangeMethodLink.where("user_id=? AND exchange_method_id=?", @user.id, exchange_method.id).first.nil? %>
+      <label class="pure-checkbox" for="exchange_method">
+	<%= link.check_box :id, checked: boo, class: "pure-checkbox"  %> <%= exchange_method.method %>
+      </label>
+      <% end %>
+      <% end %>
+      <legend>Payment Methods</legend>
+      <% @payment_methods.each do |payment_method| %>
+      <%= fields_for "payment_method_links[#{payment_method.id}]", payment_method do |link| %>
+      <% boo = !DefaultPaymentMethodLink.where("user_id=? AND payment_method_id=?", @user.id, payment_method.id).first.nil? %>
+      <label class="pure-checkbox" for="payment_method">
+	<%= link.check_box :id, checked: boo, class: "pure-checkbox"  %> <%= payment_method.method %>
+      </label>
+      <% end %>
+      <% end %>
+      <%= f.submit "Save changes", class: "pure-button pure-button-primary" %>
+    </fieldset>
+    <% end %>
+  </div>
+  <div class="pure-u-1 pure-u-md-1-3"></div>
+</div>

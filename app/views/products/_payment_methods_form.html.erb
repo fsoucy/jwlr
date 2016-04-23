@@ -1,7 +1,7 @@
 <div class="pure-g log-in">
   <div class="pure-u-1 pure-u-md-1-3"></div>
   <div class="pure-u-1 pure-u-md-1-3 log-in-form">
-    <%= form_for(@product, html: {multipart: true, class: "pure-form pure-form-stacked"}) do |f| %>
+
       <fieldset>
         <legend>Payment Methods</legend>
         <%= f.hidden_field :description, value: @product.description %>
@@ -15,7 +15,7 @@
         <% end %>
         <%= f.submit "Save changes", class: "submit_the_form pure-button pure-button-primary" %>
       </fieldset>
-    <% end %>
+      <% end %>
   </div>
   <div class="pure-u-1 pure-u-md-1-3"></div>
 </div>

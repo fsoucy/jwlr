@@ -51,11 +51,31 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
-      redirect_to @user
+    if params[:selling_method_links].nil? and params[:exchange_method_links].nil? and params[:payment_method_links].nil?
+      if @user.update_attributes(user_params)
+        flash[:success] = "Profile updated"
+        redirect_to @user
+      else
+        render 'edit'
+      end
     else
-      render 'edit'
+      params[:selling_method_links].each do |method, value|
+        if value["id"].to_i == 1
+          DefaultSellingMethodLink.create(selling_method_id: method.to_i, user_id: @user.id)
+        end
+      end
+      params[:exchange_method_links].each do |method, value|
+        if value["id"].to_i == 1
+          DefaultExchangeMethodLink.create(exchange_method_id: method.to_i, user_id: @user.id)
+        end
+      end
+      params[:payment_method_links].each do |method, value|
+        if value["id"].to_i == 1
+          DefaultPaymentMethodLink.create(payment_method_id: method.to_i, user_id: @user.id)
+        end
+      end
+      flash[:success] = "Methods updated"
+      redirect_to @user
     end
   end
 
@@ -65,7 +85,12 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
-
+  def edit_default_preferences
+    @user = User.find_by(id: params[:id])
+    @selling_methods = SellingMethod.all
+    @payment_methods = PaymentMethod.all
+    @exchange_methods = ExchangeMethod.all
+  end
 
   def user_stores
     user = User.find(params[:id])

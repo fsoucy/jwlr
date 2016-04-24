@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
   end
   
   def create
-
+    debugger
     if params[:store_id] != nil && store = Store.find_by(params[:store_id])
       @product = store.products.build(product_params)
       @product.full_street_address = store.full_street_address

@@ -9,7 +9,7 @@
       <%= fields_for "selling_method_links[#{selling_method.id}]", selling_method do |link| %>
          <% boo = !SellingMethodLink.where("product_id=? AND selling_method_id=?", @product.id, selling_method.id).first.nil? %>
           <label class="pure-checkbox" for="selling_method">
-            <%= link.check_box :id, checked: boo, class: "pure-checkbox"  %> <%= selling_method.method %>
+            <%= link.check_box :id, checked: boo, class: "pure-checkbox selling_method"  %> <%= selling_method.method %>
           </label>
         <% end %>
       <% end %>

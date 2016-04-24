@@ -11,7 +11,9 @@
     vertical-align: top;
     margin: 0;
     padding: 0;
-    padding-left: 3px;
+    padding-left: 6px;
+    max-width: 400px;
+    line-height: 1.5em;
     display: inline-block;
     
 }
@@ -20,4 +22,7 @@
 {
     display: block;
     overflow: auto;
+    float: left;
+    margin-left: 8px;
+    clear: left;
 }

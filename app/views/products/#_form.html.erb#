@@ -33,7 +33,7 @@
       <% else %>
         $ <%= f.number_field :delivery_cost %>
       <% end %>
-      <%= render 'form_information' %>
+
       <p>
         <%= f.submit "Upload product", class: "pure-button pure-button-primary" %>
       </p>

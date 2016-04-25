@@ -67,11 +67,26 @@ class ProductsController < ApplicationController
         @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
       end
     end
-    debugger
     if @product.save
       flash[:success] = "You have successfully uploaded a new product!"
       redirect_to @product
     else
+      if current_user.stores.length > 0
+        @has = true
+        stos = Array.new
+        @selling_methods = SellingMethod.all
+        @payment_methods = PaymentMethod.all
+        @exchange_methods = ExchangeMethod.all
+        @product = current_user.products.build
+        @product.user.stores.each do |s|
+          stos.push([s.name, s.id])
+        end
+        @stos = stos
+        @default = @product.user.stores.first
+      else
+        @product = current_user.products.build
+        @has = false
+      end
       flash.now[:warning] = "Product upload failed."
       render 'new'
     end

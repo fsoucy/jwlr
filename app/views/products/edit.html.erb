@@ -1,4 +1,10 @@
-<div class="form_fields">
-<h1>Edit product</h1>
-<%= render 'form' %>
+<div class="pure-menu pure-menu-horizontal store-menu">
+  <ul class="pure-menu-list">
+    <li class="pure-menu-item" id="main_form_button"><a href="#main" class="pure-menu-link">Main Product Details</a></li>
+    <li class="pure-menu-item" id="toggle_options_button"><a href="#toggle" class="pure-menu-link">Toggle Options</a></li>
+    <li class="pure-menu-item" id="selling_methods_button"><a href="#selling" class="pure-menu-link">Selling Methods</a></li>
+    <li class="pure-menu-item" id="exchange_methods_button"><a href="#exchange" class="pure-menu-link">Exchange Methods</a></li>
+    <li class="pure-menu-item" id="payment_methods_button"><a href="#payment" class="pure-menu-link">Payment Methods</a></li>
+  </ul>
 </div>
+<%= render 'form' %>

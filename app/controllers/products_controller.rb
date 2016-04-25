@@ -6,6 +6,7 @@ class ProductsController < ApplicationController
   end
   
   def new
+    @edit = false
     if current_user.stores.length > 0
       @has = true
       stos = Array.new
@@ -146,9 +147,24 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @edit = true
     @product = Product.find(params[:id])
     if @product.hold
       redirect_to @product.deal
+    end
+    if current_user.stores.length > 0
+      @has = true
+      stos = Array.new
+      @selling_methods = SellingMethod.all
+      @payment_methods = PaymentMethod.all
+      @exchange_methods = ExchangeMethod.all
+      @stos = stos
+      @product.user.stores.each do |s|
+        stos.push([s.name, s.id])
+      end
+      @default = @product.user.stores.first
+    else
+      @has = false
     end
   end
 

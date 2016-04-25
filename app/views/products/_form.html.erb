@@ -6,12 +6,9 @@
       <legend>Upload Product</legend>
       <%= render 'shared/error_messages', object: f.object %>
     
-      
-    
       <%= f.text_field :title, placeholder: 'Title' %>
 
       $ <%= f.number_field :price, placeholder: 'Price' %>
-
 
       <%= f.label :category_id, "Product Type" %>
       <%= f.select :category_id, nested_dropdown(Category.where(:parent_id => nil), true) %>
@@ -33,7 +30,6 @@
       <% else %>
         $ <%= f.number_field :delivery_cost %>
       <% end %>
-      <%= render 'form_information' %>
       <p>
         <%= f.submit "Upload product", class: "pure-button pure-button-primary" %>
       </p>
@@ -82,7 +78,6 @@
     </fieldset>
     <fieldset id="payment_methods_form">
       <legend>Payment Methods</legend>
-      <%= f.hidden_field :description, value: @product.description %>
       <% @payment_methods.each do |payment_method| %>
       <%= fields_for "payment_method_links[#{payment_method.id}]", payment_method do |link| %>
       <% boo = !PaymentMethodLink.where("product_id=? AND payment_method_id=?", @product.id, payment_method.id).first.nil? %>

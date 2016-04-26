@@ -58,6 +58,62 @@ function paymentMethods()
     return thing;
 }
 
+function evaluateMain()
+{
+    if(mainDetails())
+    {
+	$('#main_form_button').removeClass('incomplete').addClass('complete');
+    }
+    else
+    {
+	$('#main_form_button').addClass('incomplete').removeClass('complete');
+    }
+}
+
+function evaluateSelling()
+{
+    if (sellingMethods())
+    {
+	$('#selling_methods_button').removeClass('incomplete').addClass('complete');
+    }
+    else
+    {
+	$('#selling_methods_button').removeClass('complete').addClass('incomplete');
+    }
+}
+
+function evaluateExchange()
+{
+    if (exchangeMethods())
+    {
+	$('#exchange_methods_button').removeClass('incomplete').addClass('complete');
+    }
+    else
+    {
+	$('#exchange_methods_button').removeClass('complete').addClass('incomplete');
+    }
+}
+
+function evaluatePayment()
+{
+    if (paymentMethods())
+    {
+	$('#payment_methods_button').removeClass('incomplete').addClass('complete');
+    }
+    else
+    {
+	$('#payment_methods_button').removeClass('complete').addClass('incomplete');
+    }
+}
+function evaluateAll()
+{
+    evaluateMain();
+    evaluateSelling();
+    evaluateExchange();
+    evaluatePayment();
+    $('#toggle_options_button').addClass('complete');
+}
+
 $(document).ready(function() {
     $('.cropped_show').click(function() {
 	console.log('hi');
@@ -72,85 +128,34 @@ $(document).ready(function() {
 
     });
 
+    evaluateAll();
+
     $('.main_field').keyup(function() {
-	if(mainDetails())
-	{
-	    $('#main_form_button').removeClass('incomplete').addClass('complete');
-	}
-	else
-	{
-	    $('#main_form_button').addClass('incomplete').removeClass('complete');
-	}
+	evaluateMain();
     });
 
     $('.selling_method').click(function() {
-	if (sellingMethods())
-	{
-	    $('#selling_methods_button').removeClass('incomplete').addClass('complete');
-	}
-	else
-	{
-	    $('#selling_methods_button').removeClass('complete').addClass('incomplete');
-	}
+	evaluateSelling();
     });
 
     $('#selling_methods_button').click(function() {
-	if (sellingMethods())
-	{
-	    $('#selling_methods_button').removeClass('incomplete').addClass('complete');
-	}
-	else
-	{
-	    $('#selling_methods_button').removeClass('complete').addClass('incomplete');
-	}
+	evaluateSelling();
     });
 
     $('.exchange_method').click(function() {
-	if (exchangeMethods())
-	{
-	    $('#exchange_methods_button').removeClass('incomplete').addClass('complete');
-	}
-	else
-	{
-	    $('#exchange_methods_button').removeClass('complete').addClass('incomplete');
-	}
+	evaluateExchange();
     });
 
     $('#exchange_methods_button').click(function() {
-	if (exchangeMethods())
-	{
-	    $('#exchange_methods_button').removeClass('incomplete').addClass('complete');
-	}
-	else
-	{
-	    $('#exchange_methods_button').removeClass('complete').addClass('incomplete');
-	}
+	evaluateExchange();
     });
 
     $('.payment_method').click(function() {
-	if (paymentMethods())
-	{
-	    $('#payment_methods_button').removeClass('incomplete').addClass('complete');
-	}
-	else
-	{
-	    $('#payment_methods_button').removeClass('complete').addClass('incomplete');
-	}
+	evaluatePayment();
     });
 
-    $('#payment_method_button').click(function() {
-	if (paymentMethods())
-	{
-	    $('#payment_methods_button').removeClass('incomplete').addClass('complete');
-	}
-	else
-	{
-	    $('#payment_methods_button').removeClass('complete').addClass('incomplete');
-	}
-    });
-
-    $('#toggle_options_button').click(function() {
-	$('#toggle_options_button').addClass('complete');
+    $('#payment_methods_button').click(function() {
+	evaluatePayment();
     });
 
     $('.submit_product').click(function(e) {

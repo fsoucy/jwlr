@@ -190,69 +190,81 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-
-    if params[:store_id] && store = Store.find_by(id: params[:store_id]) and store.id != @product.store.id
-      @product.store.id = store.id
-      @product.save
-    end
-    
-    @product.selling_method_links.each do |l|
-      l.destroy
-    end
-    @product.exchange_method_links.each do |l|
-      l.destroy
-    end
-    @product.payment_method_links.each do |l|
-      l.destroy
-    end
-    toggle_options = params[:toggle_options]
-    selling_methods = params[:selling_method_links]
-    exchange_methods = params[:exchange_method_links]
-    payment_methods = params[:payment_method_links]
-      
-    @product.update_attributes(product_params)
-    @product.save
-    toggle_options.each do |attr|
-      toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
-      toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
-      toggle_option.save
-      @product.save
-    end
-    payment_methods.each do |id, selected|
-      @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
-    end
-    exchange_methods.each do |id, selected|
-      @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
-    end
-    selling_methods.each do |id, selected|
-      @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
-    end
-    has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links.count > 0 && @product.payment_method_links.count > 0
-    if @product.save
-      flash[:success] = "You have successfully edited your product!"
-      redirect_to @product
-    else
-      if current_user.stores.length > 0
-        @has = true
-        stos = Array.new
-        @selling_methods = SellingMethod.all
-        @payment_methods = PaymentMethod.all
-        @exchange_methods = ExchangeMethod.all
-        @product = Product.find(params[:id])
-        @product.user.stores.each do |s|
-          stos.push([s.name, s.id])
-        end
-        @stos = stos
-        @default = @product.user.stores.first
-      else
-        @product = current_user.products.build
-        @has = false
+    if !@product.hold && !@product.sold
+      if params[:store_id] && store = Store.find_by(id: params[:store_id]) and store.id != @product.store.id
+        @product.store.id = store.id
+        @product.save
       end
-      flash.now[:warning] = "Product edit failed."
-      render 'edit'
+      
+      @product.selling_method_links.each do |l|
+        l.destroy
+      end
+      @product.exchange_method_links.each do |l|
+        l.destroy
+      end
+      @product.payment_method_links.each do |l|
+        l.destroy
+      end
+      toggle_options = params[:toggle_options]
+      selling_methods = params[:selling_method_links]
+      exchange_methods = params[:exchange_method_links]
+      payment_methods = params[:payment_method_links]
+      
+      @product.update_attributes(product_params)
+      @product.save
+      toggle_options.each do |attr|
+        toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
+        toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
+        toggle_option.save
+        @product.save
+      end
+      payment_methods.each do |id, selected|
+        @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
+      end
+      exchange_methods.each do |id, selected|
+        @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
+      end
+      selling_methods.each do |id, selected|
+        @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
+      end
+      has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links.count > 0 && @product.payment_method_links.count > 0
+      if @product.save
+        if params[:product][:on_deals]
+          deal = Deal.find(params[:product][:deal_id])
+          if @product.changed?
+            deal.exchange_agreement_seller = false
+            deal.exchange_agreement_buyer = false
+            deal.agreement_achieved = false
+            deal.save
+            redirect_to deal
+            return
+          end
+        end
+        flash[:success] = "You have successfully edited your product!"
+        redirect_to @product
+      else
+        if current_user.stores.length > 0
+          @has = true
+          stos = Array.new
+          @selling_methods = SellingMethod.all
+          @payment_methods = PaymentMethod.all
+          @exchange_methods = ExchangeMethod.all
+          @product = Product.find(params[:id])
+          @product.user.stores.each do |s|
+            stos.push([s.name, s.id])
+          end
+          @stos = stos
+          @default = @product.user.stores.first
+        else
+          @product = current_user.products.build
+          @has = false
+        end
+        flash.now[:warning] = "Product edit failed."
+        render 'edit'
+      end
     end
-    """
-    if !picture.nil?
+      """
+    if !pictewure.nil?
       if @product.pictures.count < 1
         flash[:warning] = your product must have bla
         redirect_to new_picture_url

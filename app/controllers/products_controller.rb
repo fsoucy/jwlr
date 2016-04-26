@@ -7,12 +7,12 @@ class ProductsController < ApplicationController
   
   def new
     @edit = false
+    @selling_methods = SellingMethod.all
+    @payment_methods = PaymentMethod.all
+    @exchange_methods = ExchangeMethod.all
     if current_user.stores.length > 0
       @has = true
       stos = Array.new
-      @selling_methods = SellingMethod.all
-      @payment_methods = PaymentMethod.all
-      @exchange_methods = ExchangeMethod.all
       @product = current_user.products.build
       @product.user.stores.each do |s|
         stos.push([s.name, s.id])
@@ -149,6 +149,9 @@ class ProductsController < ApplicationController
 
   def edit
     @edit = true
+    @selling_methods = SellingMethod.all
+    @payment_methods = PaymentMethod.all
+    @exchange_methods = ExchangeMethod.all
     @product = Product.find(params[:id])
     if @product.hold
       redirect_to @product.deal
@@ -156,9 +159,6 @@ class ProductsController < ApplicationController
     if current_user.stores.length > 0
       @has = true
       stos = Array.new
-      @selling_methods = SellingMethod.all
-      @payment_methods = PaymentMethod.all
-      @exchange_methods = ExchangeMethod.all
       @stos = stos
       @product.user.stores.each do |s|
         stos.push([s.name, s.id])

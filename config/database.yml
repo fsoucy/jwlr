@@ -22,9 +22,20 @@ test:
 
 production:
   <<: *default
-  adapter: mysql2
-  password: MyNZw3VkgcSUvnJHufQXDm4J
-  database: igold
-  username: igold
-  host: localhost
-  port: 3306
+  adapter: 'mysql2_makara'
+  password: 'cwYHuShPVTS9xrsurXB4HMTE'
+  database: 'igold'
+  username: 'igold'
+
+  makara:
+
+    blacklist_duration: 5
+    master_ttl: 5
+    master_strategy: round_robin
+    sticky: true
+
+    connections:
+      - role: master
+        host: 10.6.93.6
+      - role: master
+        host: 10.6.93.7

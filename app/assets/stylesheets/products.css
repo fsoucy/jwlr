@@ -1,3 +1,4 @@
+
 .complete
 {
     background-color: green;
@@ -11,6 +12,9 @@
 .complete a, .incomplete a
 {
     color: white !important;
+
+.pure-radio {
+  display: inline-block !important;
 }
 
 .product {
@@ -59,7 +63,7 @@
 
 .product_view h3, .product_view h1
 {
-    margin-bottom: 0em;
+    margin-bottom: 1em;
     margin-top: 0em;
     padding-top: 0em;
     padding-bottom: 0em;
@@ -72,4 +76,11 @@
 
 .product_attributes
 {
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.inline-heading {
+  display: inline;
 }

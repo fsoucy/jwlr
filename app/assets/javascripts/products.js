@@ -94,7 +94,29 @@ $(document).ready(function() {
 	}
     });
 
+    $('#selling_methods_button').click(function() {
+	if (sellingMethods())
+	{
+	    $('#selling_methods_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#selling_methods_button').removeClass('complete').addClass('incomplete');
+	}
+    });
+
     $('.exchange_method').click(function() {
+	if (exchangeMethods())
+	{
+	    $('#exchange_methods_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#exchange_methods_button').removeClass('complete').addClass('incomplete');
+	}
+    });
+
+    $('#exchange_methods_button').click(functon() {
 	if (exchangeMethods())
 	{
 	    $('#exchange_methods_button').removeClass('incomplete').addClass('complete');
@@ -114,6 +136,49 @@ $(document).ready(function() {
 	{
 	    $('#payment_methods_button').removeClass('complete').addClass('incomplete');
 	}
+    });
+
+    $('#payment_method_button').click(function() {
+	if (paymentMethods())
+	{
+	    $('#payment_methods_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#payment_methods_button').removeClass('complete').addClass('incomplete');
+	}
+    });
+
+    $('#toggle_options_button').click(function() {
+	$('#toggle_options_button').addClass('complete');
+    });
+
+    $('.submit_product').click(function(e) {
+	var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods();
+	if (!forms)
+	{
+	    e.preventDefault();
+	    var msg = "You are missing important information: ";
+	    if (!mainDetails())
+	    {
+		msg += "main product information";
+	    }
+	    if (!sellingMethods())
+	    {
+		msg += ", selling methods";
+	    }
+	    if (!exchangeMethods())
+	    {
+		msg += ", exchange methods";
+	    }
+	    if (!paymentMethods())
+	    {
+		msg += ", payment methods";
+	    }
+	    $('.alert').remove();
+	    $('.content').prepend("<div class='alert alert-warning'>" + msg + "</div>");
+	}
+	
     });
 
 $('#magnifier').loupe({

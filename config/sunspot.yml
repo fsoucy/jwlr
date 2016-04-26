@@ -1,11 +1,18 @@
 production:
   solr:
-    hostname: localhost
-    port: 8080
+    hostname: 10.6.93.8
+    port: 8983
     log_level: WARNING
-    path: /solr/default
+    path: /solr/sunspot
     # read_timeout: 2
     # open_timeout: 0.5
+    master_hostname: 10.6.93.10
+    master_port: 8983
+  master_solr:
+    hostname: 10.6.93.10
+    port: 8983
+    log_level: WARNING
+
 
 development:
   solr:

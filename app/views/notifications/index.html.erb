@@ -1,8 +1,12 @@
-<h1>Notifications</h1>
-<% if @notifications.count == 0 %>
-<h2>You have no notifications</h2>
-<% end %>
-<% @notifications.each do |notif| %>
-<%= render notif %>
-<% end %>
-<%= will_paginate @notifications %>
+<div class="pure-g pad-box">
+  <div class="pure-u-1">
+    <h1>Notifications</h1>
+    <% if @notifications.count == 0 %>
+      <h3>You have no notifications</h3>
+    <% end %>
+    <% @notifications.each do |notif| %>
+      <%= render notif %>
+    <% end %>
+    <%= will_paginate @notifications %>
+  </div>
+</div>

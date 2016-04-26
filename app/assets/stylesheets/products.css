@@ -1,3 +1,7 @@
+.pure-radio {
+  display: inline-block !important;
+}
+
 .product {
   vertical-align: top;
   display: inline-block;
@@ -55,6 +59,10 @@
     border: 2px solid gold;
 }
 
-.product_attributes
-{
+.no-margin {
+  margin: 0 !important;
+}
+
+.inline-heading {
+  display: inline;
 }

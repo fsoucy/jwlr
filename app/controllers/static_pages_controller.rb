@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
-    @top_products = Product.joins(:productviews).order('productviews.views DESC').limit(8)
+    @top_products = Product.joins(:productviews).order('productviews.views DESC').limit(15)
     if logged_in?
       searches = current_user.searches.all.sort_by(&:frequency).take(5).map(&:search_text)
       results = Array.new
@@ -51,7 +51,7 @@ class StaticPagesController < ApplicationController
     end
     
     index = 0
-    while (@featured.count < 5 and Product.count > @featured.count and index < 20)
+    while (@featured.count < 15 and Product.count > @featured.count and index < 20)
       product = nil
       while product.nil? and index < 20
         product = Product.find_by(id: index)

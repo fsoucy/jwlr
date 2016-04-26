@@ -1,3 +1,19 @@
+function mainDetails()
+{
+    var title = $('#product_title').val().length > 0;
+    var price = $('#product_price').val() > 0;
+    var description = $('#product_description').val().length > 0;
+    if (!($('#product_address').length > 0))
+    {
+	var address = true;
+    }
+    else
+    {
+	var address = $('#product_address').val().length > 0;
+    }
+    return (title && price && description && address);
+}
+
 $(document).ready(function() {
     $('.cropped_show').click(function() {
 	console.log('hi');

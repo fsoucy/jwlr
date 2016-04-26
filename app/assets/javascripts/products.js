@@ -14,6 +14,50 @@ function mainDetails()
     return (title && price && description && address);
 }
 
+function toggleOptions()
+{
+    return true;
+}
+
+function sellingMethods()
+{
+    var thing = false;
+    $('.selling_method').each(function(data, index) {
+
+	if ($(this).prop("checked"))
+	{
+	    thing = true;
+	}
+    });
+    return thing;    
+}
+
+function exchangeMethods()
+{
+    var thing = false;
+    $('.exchange_method').each(function(data, index) {
+
+	if ($(this).prop("checked"))
+	{
+	    thing = true;
+	}
+    });
+    return thing;
+}
+
+function paymentMethods()
+{
+    var thing = false;
+    $('.payment_method').each(function(data, index) {
+
+	if ($(this).prop("checked"))
+	{
+	    thing = true;
+	}
+    });
+    return thing;
+}
+
 $(document).ready(function() {
     $('.cropped_show').click(function() {
 	console.log('hi');
@@ -26,6 +70,50 @@ $(document).ready(function() {
 	$('.product_image').attr('src', smallImage.replace('thumbnail', 'medium'));
 	$('#magnifier').next().attr('href', smallLink);
 
+    });
+
+    $('.main_field').keyup(function() {
+	if(mainDetails())
+	{
+	    $('#main_form_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#main_form_button').addClass('incomplete').removeClass('complete');
+	}
+    });
+
+    $('.selling_method').click(function() {
+	if (sellingMethods())
+	{
+	    $('#selling_methods_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#selling_methods_button').removeClass('complete').addClass('incomplete');
+	}
+    });
+
+    $('.exchange_method').click(function() {
+	if (exchangeMethods())
+	{
+	    $('#exchange_methods_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#exchange_methods_button').removeClass('complete').addClass('incomplete');
+	}
+    });
+
+    $('.payment_method').click(function() {
+	if (paymentMethods())
+	{
+	    $('#payment_methods_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#payment_methods_button').removeClass('complete').addClass('incomplete');
+	}
     });
 
 $('#magnifier').loupe({

@@ -63,6 +63,7 @@
     <% end %>      
   
     <% if @product.user == current_user %>
+    <div class="log-in-form">
       <a href="<%= edit_selling_methods_product_path(@product) %>"><h1 class = "method_alert">Selling Methods</h1></a>
       <% @product.selling_method_links.each do |s| %>
         <h3><%= s.selling_method.method %></h3>
@@ -79,15 +80,15 @@
       <% @product.payment_method_links.each do |s| %>
         <h3><%= s.payment_method.method %></h3>
       <% end %>
+      </div>
     <% else %>
 
       <% if !@product.sold and !@product.hold %>
         <% if logged_in? %>
 	  <% active_deal = Deal.where("product_id = ? and buyer_id = ?", @product.id, current_user).first %>
           <% if active_deal.nil? %>
-            <% if @deal.product.selling_method_links.count > 1 or @deal.product.exchange_method_links.count > 1 or @deal.product.payment_method_links.count > 1 %>
               <%= form_for(@deal, html: { class: "pure-form pure-form-stacked log-in-form"}) do |f| %>
-                <p>Selling Methods (choose one)</p>
+                <h3>Selling Methods (choose one)</h3>
                 <% @deal.product.selling_method_links.each do |s| %>
                   <% if s.selling_method.method == "Static Price" %>
                     <%= f.label :selling_method, "Static Price ($#{@deal.product.price})", class: "pure-radio" %>
@@ -98,52 +99,32 @@
                   <% if s.selling_method.method == "Negotiation" %>
                     <%= f.number_field :user_proposed_price %>
                   <% end %>
+                  <br>
                 <% end %>
-                <p>Exchange Methods (choose one) </p>
+                <h3>Exchange Methods (choose one) </h3>
                 <% @deal.product.exchange_method_links.each do |e| %>
                     <%= f.label :exchange_method, "#{e.exchange_method.method}", class: "pure-radio" %>
                     <%= f.radio_button :exchange_method_id, e.exchange_method.id %>
-		<% end %>
-                <p>Payment Methods (choose one)</p>
+		              <br>
+                <% end %>
+                <h3>Payment Methods (choose one)</h3>
                 <% @deal.product.payment_method_links.each do |p| %>
                   <%= f.label :payment_method, "#{p.payment_method.method}", class: "pure-radio" %>
                   <%= f.radio_button :payment_method_id, p.payment_method.id %>
+                  <br>
                 <% end %>
                 <br>
-		<%= f.hidden_field :product_id, value: @product.id %>
-		<%= f.hidden_field :seller_id, value: @product.user.id %>
-		<%= f.hidden_field :buyer_id, value: current_user.id %>
+		            <%= f.hidden_field :product_id, value: @product.id %>
+		            <%= f.hidden_field :seller_id, value: @product.user.id %>
+		            <%= f.hidden_field :buyer_id, value: current_user.id %>
                 <%= f.submit "Buy this product", class: "pure-button pure-button-primary" %>
               <% end %>
-            <% else %>
-              <%= form_for(@deal) do |f| %>
-                <p>Selling method: <%= @deal.product.selling_method_links.first.selling_method.method unless @deal.product.selling_method_links.first.nil? %></p>
-                <% if !@deal.product.selling_method_links.first.nil? && @deal.product.selling_method_links.first.selling_method.method == "Static Price" %>
-                  <p>Price: <%= @deal.product.price %></p>
-                <% elsif !@deal.product.selling_method_links.first.nil? && @deal.product.selling_method_links.first.selling_method.method == "Negotiation" %>
-                  <p>Listed price: <%= @deal.product.price %></p>
-                  <%= f.number_field :user_proposed_price %>
-                <% end %>
-                <p>Exchange method: <%= @deal.product.exchange_method_links.first.exchange_method.method unless @deal.product.exchange_method_links.first.nil? %></p>
-                <% if !@deal.product.exchange_method_links.first.nil? && !@deal.product.exchange_method_links.first.exchange_method.method == "Delivery" %>
-                  <p>Cost: <%= @deal.product.delivery_cost %></p>
-                <% end %>
-                <p>Payment method: <%= @deal.product.payment_method_links.first.payment_method.method unless @deal.product.payment_method_links.first.nil? %></p>
-                <%= f.hidden_field :selling_method_id, value: @deal.product.selling_method_links.first.selling_method.id %>
-                <%= f.hidden_field :payment_method_id, value: @deal.product.payment_method_links.first.payment_method.id %>
-                <%= f.hidden_field :exchange_method_id, value: @deal.product.exchange_method_links.first.exchange_method.id %>
-		<%= f.hidden_field :product_id, value: @product.id %>
-		<%= f.hidden_field :seller_id, value: @product.user.id %>
-		<%= f.hidden_field :buyer_id, value: current_user.id %>
-		<%= f.submit "Buy product", class: "pure-button pure-button-primary" %>
-              <% end %>
-            <% end %>
           <% else %>
             <%= link_to "Go to your deal", active_deal %>
           <% end %>
         <% else %>
           <% store_location %>
-          <%= form_tag "/login", method: "get" do %>
+          <%= form_tag "/login", method: "get", class: "log-in-form" do %>
             <%= submit_tag "Buy this product", class: 'pure-button pure-button-primary' %>
           <% end %>
         <% end %>

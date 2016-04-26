@@ -68,7 +68,7 @@ class ProductsController < ApplicationController
         @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
       end
     end
-    has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links > 0 && @product.payment_method_links > 0
+    has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links.count > 0 && @product.payment_method_links.count > 0
     if @product.save and has_methods
       flash[:success] = "You have successfully uploaded a new product!"
       redirect_to @product

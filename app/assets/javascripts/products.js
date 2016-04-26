@@ -14,6 +14,50 @@ function mainDetails()
     return (title && price && description && address);
 }
 
+function toggleOptions()
+{
+    return true;
+}
+
+function sellingMethods()
+{
+    var thing = false;
+    $('.selling_method').each(function(data, index) {
+
+	if ($(this).prop("checked"))
+	{
+	    thing = true;
+	}
+    });
+    return thing;    
+}
+
+function exchangeMethods()
+{
+    var thing = false;
+    $('.exchange_method').each(function(data, index) {
+
+	if ($(this).prop("checked"))
+	{
+	    thing = true;
+	}
+    });
+    return thing;
+}
+
+function paymentMethods()
+{
+    var thing = false;
+    $('.payment_method').each(function(data, index) {
+
+	if ($(this).prop("checked"))
+	{
+	    thing = true;
+	}
+    });
+    return thing;
+}
+
 $(document).ready(function() {
     $('.cropped_show').click(function() {
 	console.log('hi');
@@ -26,6 +70,115 @@ $(document).ready(function() {
 	$('.product_image').attr('src', smallImage.replace('thumbnail', 'medium'));
 	$('#magnifier').next().attr('href', smallLink);
 
+    });
+
+    $('.main_field').keyup(function() {
+	if(mainDetails())
+	{
+	    $('#main_form_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#main_form_button').addClass('incomplete').removeClass('complete');
+	}
+    });
+
+    $('.selling_method').click(function() {
+	if (sellingMethods())
+	{
+	    $('#selling_methods_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#selling_methods_button').removeClass('complete').addClass('incomplete');
+	}
+    });
+
+    $('#selling_methods_button').click(function() {
+	if (sellingMethods())
+	{
+	    $('#selling_methods_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#selling_methods_button').removeClass('complete').addClass('incomplete');
+	}
+    });
+
+    $('.exchange_method').click(function() {
+	if (exchangeMethods())
+	{
+	    $('#exchange_methods_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#exchange_methods_button').removeClass('complete').addClass('incomplete');
+	}
+    });
+
+    $('#exchange_methods_button').click(function() {
+	if (exchangeMethods())
+	{
+	    $('#exchange_methods_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#exchange_methods_button').removeClass('complete').addClass('incomplete');
+	}
+    });
+
+    $('.payment_method').click(function() {
+	if (paymentMethods())
+	{
+	    $('#payment_methods_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#payment_methods_button').removeClass('complete').addClass('incomplete');
+	}
+    });
+
+    $('#payment_method_button').click(function() {
+	if (paymentMethods())
+	{
+	    $('#payment_methods_button').removeClass('incomplete').addClass('complete');
+	}
+	else
+	{
+	    $('#payment_methods_button').removeClass('complete').addClass('incomplete');
+	}
+    });
+
+    $('#toggle_options_button').click(function() {
+	$('#toggle_options_button').addClass('complete');
+    });
+
+    $('.submit_product').click(function(e) {
+	var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods();
+	if (!forms)
+	{
+	    e.preventDefault();
+	    var msg = "You are missing important information: ";
+	    if (!mainDetails())
+	    {
+		msg += "main product information";
+	    }
+	    if (!sellingMethods())
+	    {
+		msg += ", selling methods";
+	    }
+	    if (!exchangeMethods())
+	    {
+		msg += ", exchange methods";
+	    }
+	    if (!paymentMethods())
+	    {
+		msg += ", payment methods";
+	    }
+	    $('.alert').remove();
+	    $('.content').prepend("<div class='alert alert-warning'>" + msg + "</div>");
+	}
+	
     });
 
 $('#magnifier').loupe({

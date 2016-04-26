@@ -6,9 +6,9 @@
       <legend>Upload Product</legend>
       <%= render 'shared/error_messages', object: f.object %>
     
-      <%= f.text_field :title, placeholder: 'Title', id: 'product_title' %>
+      <%= f.text_field :title, placeholder: 'Title', id: 'product_title', class: 'main_field' %>
 
-      $ <%= f.number_field :price, placeholder: 'Price', id: 'product_price' %>
+      $ <%= f.number_field :price, placeholder: 'Price', id: 'product_price', class: 'main_field' %>
 
       <%= f.label :category_id, "Product Type" %>
       <%= f.select :category_id, nested_dropdown(Category.where(:parent_id => nil), true) %>
@@ -18,10 +18,10 @@
         <%= f.label :store_id, "Store of Product" %>
         <%= f.select :store_id, options_for_select(@stos, @default) %>
       <% else %>
-        <%= f.text_field :full_street_address, placeholder: 'Full street address of product', id: 'product_address' %>
+        <%= f.text_field :full_street_address, placeholder: 'Full street address of product', id: 'product_address', class: 'main_field' %>
       <% end %>         
     
-      <%= f.text_area :description, placeholder: 'Description of product', id: 'product_description' %>
+      <%= f.text_area :description, placeholder: 'Description of product', id: 'product_description', class: 'main_field' %>
 
       <%= f.label :delivery_cost, "Planning on adding a delivery cost? Specify that here. If not, just leave this unchanged." %>
       
@@ -31,7 +31,7 @@
         $ <%= f.number_field :delivery_cost %>
       <% end %>
       <br>
-      <%= f.submit "Submit product", class: "pure-button pure-button-primary" %>
+      <%= f.submit "Submit product", class: "pure-button pure-button-primary submit_product" %>
 
     </fieldset>
     <fieldset id="toggle_options_form">
@@ -50,7 +50,7 @@
       <% end %>
       <% end %>
       <br>
-      <%= f.submit "Submit Toggle Options", class: "pure-button pure-button-primary" %>
+      <%= f.submit "Submit Toggle Options", class: "pure-button pure-button-primary submit_product" %>
     </fieldset>
     <fieldset id="selling_methods_form">
       <legend>Selling Methods</legend>
@@ -67,7 +67,7 @@
       </label>
       <% end %>
       <% end %>
-      <%= f.submit "Submit product", class: "pure-button pure-button-primary" %>
+      <%= f.submit "Submit product", class: "pure-button pure-button-primary submit_product" %>
     </fieldset>
     <fieldset id="exchange_methods_form">
       <legend>Exchange Methods</legend>
@@ -79,11 +79,11 @@
       <% boo = !ExchangeMethodLink.where("product_id=? AND exchange_method_id=?", @product.id, exchange_method.id).first.nil? %>
       <% end %>
       <label class="pure-checkbox" for="exchange_method">
-	<%= link.check_box :id, checked: boo, class: "pure-checkbox" %> <%= exchange_method.method %>
+	<%= link.check_box :id, checked: boo, class: "pure-checkbox exchange_method" %> <%= exchange_method.method %>
       </label>
       <% end %>
       <% end %>
-      <%= f.submit "Submit product", class: "pure-button pure-button-primary" %>
+      <%= f.submit "Submit product", class: "pure-button pure-button-primary submit_product" %>
     </fieldset>
     <fieldset id="payment_methods_form">
       <legend>Payment Methods</legend>
@@ -95,11 +95,11 @@
       <% boo = !PaymentMethodLink.where("product_id=? AND payment_method_id=?", @product.id, payment_method.id).first.nil? %>
       <% end %>
       <label class="pure-checkbox" for="payment_method">
-	<%= link.check_box :id, checked: boo, class: "pure-checkbox" %> <%= payment_method.method %>
+	<%= link.check_box :id, checked: boo, class: "pure-checkbox payment_method" %> <%= payment_method.method %>
       </label>
       <% end %>
       <% end %>
-      <%= f.submit "Submit product", class: "submit_the_form pure-button pure-button-primary" %>
+      <%= f.submit "Submit product", class: "submit_the_form pure-button pure-button-primary submit_product" %>
     </fieldset>
     <% end %>
     <div class="pure-u-1 pure-u-md-1-3"></div>

@@ -30,6 +30,9 @@ Rails.application.routes.draw do
       get :pull_messages
     end
   end
+
+  get 'api/getToggleOptions'
+
   resources :messages
   resources :attribute_options, only: [:create, :destroy]
   resources :category_options, only: [:create, :destroy]

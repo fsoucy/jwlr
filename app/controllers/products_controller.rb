@@ -68,7 +68,8 @@ class ProductsController < ApplicationController
         @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
       end
     end
-    if @product.save
+    has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links > 0 && @product.payment_method_links > 0
+    if @product.save and has_methods
       flash[:success] = "You have successfully uploaded a new product!"
       redirect_to @product
     else
@@ -189,82 +190,83 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-    if !@product.sold
-    toggle_options = params[:toggle_options]
-    selling_methods = params[:selling_method_links]
-    exchange_methods = params[:exchange_method_links]
-    payment_methods = params[:payment_method_links]
-    picture = params[:picture]
-    
-    if !@product.hold
-    unless toggle_options.nil?
+    if !@product.hold && !@product.sold
+      if params[:store_id] && store = Store.find_by(id: params[:store_id]) and store.id != @product.store.id
+        @product.store.id = store.id
+        @product.save
+      end
+      
+      @product.selling_method_links.each do |l|
+        l.destroy
+      end
+      @product.exchange_method_links.each do |l|
+        l.destroy
+      end
+      @product.payment_method_links.each do |l|
+        l.destroy
+      end
+      toggle_options = params[:toggle_options]
+      selling_methods = params[:selling_method_links]
+      exchange_methods = params[:exchange_method_links]
+      payment_methods = params[:payment_method_links]
+      
+      @product.update_attributes(product_params)
+      @product.save
       toggle_options.each do |attr|
         toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
         toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
         toggle_option.save
         @product.save
       end
-      redirect_to edit_selling_methods_product_path(@product.id)
-      return
-    end
-
-    unless selling_methods.nil?
-      @product.selling_method_links.each do |l|
-        l.destroy
-      end
-      selling_methods.each do |id, selected|
-        @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
-      end
-      @product.save
-      if @product.selling_method_links.count < 1
-        flash[:warning] = "You need at least one accepted selling method!"
-        redirect_to edit_selling_methods_product_path(@product)
-        return
-      else
-        redirect_to edit_exchange_methods_product_path(@product.id)
-        return
-      end
-    end
-
-    unless exchange_methods.nil?
-      @product.exchange_method_links.each do |l|
-        l.destroy
+      payment_methods.each do |id, selected|
+        @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
       end
       exchange_methods.each do |id, selected|
         @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
       end
-      @product.save
-      if @product.exchange_method_links.count < 1
-        flash[:warning] = "You need at least one accepted exchange method!"
-        redirect_to edit_exchange_methods_product_path(@product)
-        return
+      selling_methods.each do |id, selected|
+        @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
+      end
+      has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links.count > 0 && @product.payment_method_links.count > 0
+      if @product.save
+        if params[:product][:on_deals]
+          deal = Deal.find(params[:product][:deal_id])
+          if @product.changed?
+            deal.exchange_agreement_seller = false
+            deal.exchange_agreement_buyer = false
+            deal.agreement_achieved = false
+            deal.save
+            redirect_to deal
+            return
+          end
+        end
+        flash[:success] = "You have successfully edited your product!"
+        redirect_to @product
       else
-        redirect_to edit_payment_methods_product_path(@product.id)
-        return
+        if current_user.stores.length > 0
+          @has = true
+          stos = Array.new
+          @selling_methods = SellingMethod.all
+          @payment_methods = PaymentMethod.all
+          @exchange_methods = ExchangeMethod.all
+          @product = Product.find(params[:id])
+          @product.user.stores.each do |s|
+            stos.push([s.name, s.id])
+          end
+          @stos = stos
+          @default = @product.user.stores.first
+        else
+          @product = current_user.products.build
+          @has = false
+        end
+        flash.now[:warning] = "Product edit failed."
+        render 'edit'
       end
     end
-
-    unless payment_methods.nil?
-      @product.payment_method_links.each do |l|
-        l.destroy
-      end
-      payment_methods.each do |id, selected|
-        @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
-      end
-      @product.save
-      if @product.payment_method_links.count < 1
-        flash[:warning] = "You need at least one accepted payment method!"
-        redirect_to edit_payment_methods_product_path(@product)
-        return
-      else
-        redirect_to new_picture_url
-        return
-      end
-    end
-
-    if !picture.nil?
+      """
+    if !pictewure.nil?
       if @product.pictures.count < 1
-        flash[:warning] = "Your product must have at least one picture!"
+        flash[:warning] = your product must have bla
         redirect_to new_picture_url
         return
       end
@@ -294,6 +296,7 @@ class ProductsController < ApplicationController
     else
       redirect_to @product
     end
+"""
   end
 
   private

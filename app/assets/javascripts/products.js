@@ -116,7 +116,7 @@ $(document).ready(function() {
 	}
     });
 
-    $('#exchange_methods_button').click(functon() {
+    $('#exchange_methods_button').click(function() {
 	if (exchangeMethods())
 	{
 	    $('#exchange_methods_button').removeClass('incomplete').addClass('complete');

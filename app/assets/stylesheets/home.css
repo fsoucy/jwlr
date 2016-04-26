@@ -35,16 +35,26 @@
     opacity: 0.8;
 }
 
+h1 {
+  font-weight: 400 !important;
+  letter-spacing: 0.1em !important;
+}
+
+.log-in-form h3 {
+  color: white;
+}
+
 .content-header {
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  margin: 2em 0 1em;
   text-align: center;
+  margin: 2em 0 1em;
+}
+
+h3 {
+  color: #00A8E8;
 }
 
 .content-subhead {
-  color: #00A8E8;
-  padding-left: 1em;
+  margin-left: 1em;
 }
 
 .pad-box {

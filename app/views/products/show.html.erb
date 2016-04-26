@@ -141,13 +141,13 @@
  
   </div>
   <div class="pure-u-1 pure-u-md-2-5 pad-box">
-    <h2>Product Description</h2>
+    <h3>Product Description</h3>
     <p><%= @product.description %></p>
   </div>
   <div class="pure-u-1 pure-u-md-1-5"></div>
 </div>
 
-<div class="search-page"><h1>Related Products</h1></div>
+<div class="search-page"><h1 class="content-subhead">Related Products</h1></div>
 <div class="more_like_this search-page pure-g">
   <% unless @more_like_this.nil? %>
   <% @more_like_this.each do |prod| %>

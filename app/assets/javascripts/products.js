@@ -1,3 +1,41 @@
+function getToggleOptions(category_id)
+{
+
+    $.ajax({
+	type: "GET",// GET in place of POST
+	contentType: "application/json; charset=utf-8",
+	url: "http://" + window.location.host + "/api/getToggleOptions?id=" + category_id.toString(),
+	data: {},
+	dataType: "json",
+	success: function (result) {
+	    for(var i = 0; i < result.length; i++)
+	    {
+		console.log(result[i]);
+		addToggle(result[i]);
+				    
+	    }
+	},
+	error: function (e){
+	}
+    });
+}
+
+function addToggle(toggle_option)
+{
+    var id = toggle_option["id"];
+    var name = toggle_option["name"];
+    $('#toggle_options_form').append("<label for='toggle_options_" + id.toString() + "_name'>" + name + "</label>");
+    var select_id = "toggle_options_" + id + "_name";
+    $('#toggle_options_form').append("<select name='toggle_options[" + id + "][name]' id='" + select_id +  "'></select>");
+    var attr = toggle_option["attribute_options"];
+    var select_access = "#" + select_id;
+    $(select_access).remove();
+    for (var j = 0; j < attr.length; j++)
+    {
+	$(select_access).append("<option value='" + attr[j][0] + "'>" + attr[j][1] + "</option>");
+    }
+}
+
 function mainDetails()
 {
     var title = $('#product_title').val().length > 0;
@@ -235,3 +273,5 @@ $('.magnifier').loupe({
 	$('#dropper').show();
     });
 });
+
+

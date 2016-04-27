@@ -127,9 +127,11 @@ $(document).ready(function() {
 	$('#magnifier').next().attr('href', smallLink);
 
     });
-
-    evaluateAll();
-
+    if ($('#product_title').length > 0)
+    {
+	evaluateAll();
+    }
+    
     $('.main_field').keyup(function() {
 	evaluateMain();
     });
@@ -183,7 +185,6 @@ $(document).ready(function() {
 	    $('.alert').remove();
 	    $('.content').prepend("<div class='alert alert-warning'>" + msg + "</div>");
 	}
-	
     });
 
 $('#magnifier').loupe({
@@ -197,31 +198,40 @@ $('.magnifier').loupe({
   height: 300, // height of magnifier
   loupe: 'loupe' // css class for magnifier
 });
-
+    $('#dropper').hide();
     $('#toggle_options_form').hide();
     $('#selling_methods_form').hide();
     $('#exchange_methods_form').hide();
     $('#payment_methods_form').hide();
     $('#toggle_options_button').click(function() {
 	$('fieldset').hide();
+	$('#dropper').hide();
 	$('#toggle_options_form').show();
     });
 
     $('#selling_methods_button').click(function() {
 	$('fieldset').hide();
+	$('#dropper').hide();
 	$('#selling_methods_form').show();
 	
     });
     $('#exchange_methods_button').click(function() {
 	$('fieldset').hide();
+	$('#dropper').hide();
 	$('#exchange_methods_form').show();
     });
     $('#payment_methods_button').click(function() {
 	$('fieldset').hide();
+	$('#dropper').hide()
 	$('#payment_methods_form').show();
     });
     $('#main_form_button').click(function() {
 	$('fieldset').hide();
+	$('#dropper').hide();
 	$('#product_form').show();
+    });
+    $('#dropper_button').click(function() {
+	$('fieldset').hide();
+	$('#dropper').show();
     });
 });

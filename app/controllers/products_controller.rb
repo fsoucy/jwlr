@@ -148,6 +148,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @picture = Picture.new
     @edit = true
     @selling_methods = SellingMethod.all
     @payment_methods = PaymentMethod.all

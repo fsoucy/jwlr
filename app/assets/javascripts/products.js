@@ -8,12 +8,15 @@ function getToggleOptions(category_id)
 	data: {},
 	dataType: "json",
 	success: function (result) {
+	    $('.toggle_option_option').remove();
+	    $('.submit_toggles').remove();
 	    for(var i = 0; i < result.length; i++)
 	    {
 		console.log(result[i]);
 		addToggle(result[i]);
 				    
 	    }
+	    $('#toggle_options_form').append("<input type='submit' name='commit' value='Submit Toggle Options' class='pure-button pure-button-primary submit_product submit_toggles'>");
 	},
 	error: function (e){
 	}
@@ -24,7 +27,7 @@ function addToggle(toggle_option)
 {
     var id = toggle_option["id"];
     var name = toggle_option["name"];
-    $('#toggle_options_form').append("<label for='toggle_options_" + id.toString() + "_name'>" + name + "</label>");
+    $('#toggle_options_form').append("<label for='toggle_options_" + id.toString() + "_name' class='toggle_option_option'>" + name + "</label>");
     var select_id = "toggle_options_" + id + "_name";
     $('#toggle_options_form').append("<select name='toggle_options[" + id + "][name]' id='" + select_id +  "'></select>");
     var attr = toggle_option["attribute_options"];

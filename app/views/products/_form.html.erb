@@ -11,7 +11,7 @@
       $ <%= f.number_field :price, placeholder: 'Price', id: 'product_price', class: 'main_field' %>
 
       <%= f.label :category_id, "Product Type" %>
-      <%= f.select :category_id, nested_dropdown(Category.where(:parent_id => nil), true) %>
+      <%= f.select :category_id, nested_dropdown(Category.where(:parent_id => nil), true), {}, {required: 'true', autofocus: 'true', class: 'category_name' } %>
       
 
       <% if @has %>
@@ -37,19 +37,19 @@
     <fieldset id="toggle_options_form">
       <legend>Edit Toggle Options</legend>
       <%= f.label :category_id, "Product Type" %>
-      <%= f.select :category_id, nested_dropdown(Category.where(:parent_id => nil), true) %>
+      <%= f.select :category_id, nested_dropdown(Category.where(:parent_id => nil), true), {}, {required: 'true', autofocus: 'true', class: 'category_name' } %>
       <% Category.first.category_options.each do |option| %>
       <%= fields_for "toggle_options[#{option.id}]", option do |opt| %>
       <%= opt.label :name, option.name, class: "toggle_option_option" %>
       <% selected = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, option.id).first %>
       <% if !selected.nil? %>
-      <%= opt.select :name, option.attribute_options.all.pluck(:value, :id), :selected => selected.attribute_option_id, class: "pure-checkbox" %>
+      <%= opt.select :name, options_for_select(option.attribute_options.all.pluck(:value, :id), selected.attribute_option_id), {}, {required: 'true', autofocus: 'true', class: "toggle_option_select"}  %>
       <% else %>
-      <%= opt.select :name, option.attribute_options.all.pluck(:value, :id), class: "pure-checkbox" %>
+      <%= opt.select :name, options_for_select(option.attribute_options.all.pluck(:value, :id)), {}, {required: 'true', autofocus: 'true', class: "toggle_option_select"} %>
       <% end %>
       <% end %>
       <% end %>
-      <br>
+      <br class="toggle_br">
       <%= f.submit "Submit Toggle Options", class: "pure-button pure-button-primary submit_product submit_toggles" %>
     </fieldset>
     <fieldset id="selling_methods_form">

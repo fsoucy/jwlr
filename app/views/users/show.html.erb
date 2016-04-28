@@ -21,7 +21,7 @@
   </div>
   <div class="pure-u-md-1-3 pure-u-1 pad-box">
     <h1>Stores</h1>
-    <% if current_user.id == @user.id %>
+    <% if current_user?(@user) %>
     <%= link_to "Add Store", new_store_path %>
     <% end %>
     <% if @user.stores.length > 0 %>
@@ -53,6 +53,16 @@
   </div>
   <% end %>
 </div>
+<% if current_user?(@user) %>
+  <h1 class="pad-box">Draft Products</h1>
+  <div class="pure-g pad-box">
+    <% @draft_products.each do |product| %>
+      <div class="pure-u-md-1-5 pure-u-1 pad-box">
+        <%= render product %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
 <div class="pure-g pad-box">
   <div class="pure-u-md-1-2 pure-u-1 pad-box">
     <h1>Blog <% if current_user?(@user) %></h1><a href="<%= new_blogpost_url %>"><button class="pure-button pure-button-primary">New</button></a><% end %>
@@ -73,7 +83,7 @@
   </div>
 
   <div class="pure-u-md-1-2 pure-u-1 pad-box">
-    <% if current_user != @user %>
+    <% if !current_user?(@user) %>
       <h2>Message this user</h2>
       <%= form_for @message do |f| %>
         <%= f.hidden_field :sender_id, value: current_user.id %>

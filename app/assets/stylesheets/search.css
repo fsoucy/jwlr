@@ -1,31 +1,29 @@
 .result
 {
-    clear: both;
-    padding: 2px;
-    border: 1px solid #003459;
-    overflow: auto;
-    margin: 5px;
+  clear: both;
+  padding: 1em;
+  border: 1px solid #003459;
+  overflow: auto;
 }
 
 .result img
 {
-    clear: none;
-    float: left;
-    display: block;
+  clear: none;
+  float: left;
+  display: block;
+  border: 1px solid black;
 }
 
 .result_info
 {
-    margin-left: 3px;
     clear: none;
     float: left;
     display: block;
+  padding-left: 1em;
 }
 
-.search-page h2, h3
-{
-    margin-top: 0px;
-    padding: 0px;
+.result_info h2 {
+  margin-top: 0;
 }
 
 .search-form

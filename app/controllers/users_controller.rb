@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @products = Product.where("user_id = ?", @user.id)
+    @products = @user.products.where(:activated => true)
     conversation = Conversation.where("first_user_id=? or first_user_id=? AND second_user_id=? or second_user_id=?", current_user.id, @user.id, current_user.id, @user.id)
     if conversation.first.nil?
       convo = Conversation.new(first_user_id: @user.id, second_user_id: current_user.id)

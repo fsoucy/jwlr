@@ -1,9 +1,17 @@
-<div class="product">
-  <% unless product.pictures.first.nil? %>
- <a href="<%= product_path(product) %>"><%= image_tag product.pictures.first.photo_cropped(:thumb), class: 'pure-img' %>
-<% end %>
-   <p class="product-info"><%= product.title %><br>
-                          <%= number_to_currency(product.price) %></p>
-                        </a>
-                      </div>
-
+<a href="<%= product_path(product) %>">
+  <div class="product">
+    <% unless product.pictures.first.nil? %>
+      <%= image_tag product.pictures.first.photo_cropped(:thumb), class: 'pure-img' %>
+    <% end %>
+    <p class="product-info">
+      <%= product.title %><br>
+      <%= number_to_currency(product.price) %>
+    </p>
+    <% if !product.activated and current_user?(product.user) %>
+      <p class="product-info">
+        <%= link_to "Delete", product, method: :delete,
+              data: { confirm: "Are you sure you wish to delete this?" } %>
+      </p>
+    <% end %>
+  </div>
+</a>

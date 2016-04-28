@@ -1,4 +1,4 @@
 <div class="dropper" id="dropper">
-  <%= form_for @picture, url: new_picture_path(@picture, :id => @product.id), html: { multipart: true, class: "dropzone"} do |f|  %>
+  <%= form_for @picture, url: product_path(@product) + "/pictures", html: { multipart: true, class: "dropzone"} do |f|  %>
   <% end %>
 </div>

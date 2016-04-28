@@ -227,6 +227,9 @@ class ProductsController < ApplicationController
         @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
       end
       has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links.count > 0 && @product.payment_method_links.count > 0
+      if @product.store_id != nil
+        @product.full_street_address = @product.store.full_street_address
+      end
       if @product.save
         if params[:product][:on_deals]
           deal = Deal.find(params[:product][:deal_id])
@@ -259,7 +262,7 @@ class ProductsController < ApplicationController
           @has = false
         end
         flash.now[:warning] = "Product edit failed."
-        render 'edit'
+        redirect_to edit_product_path(@product)
       end
     end
       """

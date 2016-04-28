@@ -1,6 +1,5 @@
 function getToggleOptions(category_id)
 {
-
     $.ajax({
 	type: "GET",// GET in place of POST
 	contentType: "application/json; charset=utf-8",
@@ -10,12 +9,14 @@ function getToggleOptions(category_id)
 	success: function (result) {
 	    $('.toggle_option_option').remove();
 	    $('.submit_toggles').remove();
+	    $('.toggle_option_select').remove();
 	    for(var i = 0; i < result.length; i++)
 	    {
 		addToggle(result[i]);
 				    
 	    }
-	    $('#toggle_options_form').append("<input type='submit' name='commit' value='Submit Toggle Options' class='pure-button pure-button-primary submit_product submit_toggles'>");
+	    $('.toggle_br').remove();
+	    $('#toggle_options_form').append("<br class='toggle_br'><input type='submit' name='commit' value='Submit Toggle Options' class='pure-button pure-button-primary submit_product submit_toggles'>");
 	},
 	error: function (e){
 	}
@@ -29,8 +30,8 @@ function addToggle(toggle_option)
     var select_access = "#" + select_id;
     $(select_access).remove();
     var name = toggle_option["name"];
-    $('#toggle_options_form').append("<label for='toggle_options_" + id.toString() + "_name' class='toggle_option_option'>" + name + "</label>");
-    $('#toggle_options_form').append("<select name='toggle_options[" + id + "][name]' id='" + select_id +  "'></select>");
+    $('#toggle_options_form').append("<label for='toggle_options_" + id.toString() + "_name' class='toggle_option_option toggle_option_select'>" + name + "</label>");
+    $('#toggle_options_form').append("<select name='toggle_options[" + id + "][name]' id='" + select_id +  "' class='toggle_option_select'></select>");
     var attr = toggle_option["attribute_options"];
     var select_access = "#" + select_id;
     for (var j = 0; j < attr.length; j++)
@@ -168,6 +169,13 @@ $(document).ready(function() {
 	$('#magnifier').next().attr('href', smallLink);
 
     });
+
+    $('.category_name').change(function() {
+	$('.category_name').val($(this).val());
+	getToggleOptions(parseInt($(this).val()));
+	
+    });
+    
     if ($('#product_title').length > 0)
     {
 	evaluateAll();

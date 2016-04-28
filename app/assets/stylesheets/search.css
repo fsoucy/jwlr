@@ -4,6 +4,7 @@
   padding: 1em;
   border: 1px solid #003459;
   overflow: auto;
+  margin-bottom: 0.5em;
 }
 
 .result img

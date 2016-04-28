@@ -1,7 +1,7 @@
 <%= hidden_field_tag :factor, @factor %>
 <div class="picture">
   <div class="modal-body">
-    <%= image_tag @picture.photo(:original), :id => "image" %>
+    <%= image_tag @picture.photo(:original), :id => "image", :class => "my_cropper_img" %>
   </div>
   
   <%= form_tag add_cropped_picture_path(@picture.id), :method => "Post" %>

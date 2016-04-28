@@ -12,6 +12,7 @@
 .complete a, .incomplete a
 {
     color: white !important;
+}
 
 .pure-radio {
   display: inline-block !important;
@@ -74,13 +75,10 @@
     border: 2px solid gold;
 }
 
-.product_attributes
-{
-
 .no-margin {
   margin: 0 !important;
 }
 
-.inline-heading {
+.inline-header {
   display: inline;
 }

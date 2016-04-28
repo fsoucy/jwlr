@@ -1,5 +1,4 @@
 <div class="dropper" id="dropper">
-  <%= form_for @picture, html: { multipart: true, class: "dropzone"} do |f|  %>
+  <%= form_for @picture, url: new_picture_path(@picture, :id => @product.id), html: { multipart: true, class: "dropzone"} do |f|  %>
   <% end %>
-  <a href="<%= product_url(params[:id]) %>"><button class="pure-button pure-button-primary submit_the_form">Done</button></a>
 </div>

@@ -2,27 +2,25 @@ class ProductsController < ApplicationController
   before_action :logged_in_user, only: [:new, :create, :destroy]
   before_action :correct_user, only: [:destroy]  
   
-  def test
-  end
-  
   def new
     @edit = false
     @selling_methods = SellingMethod.all
     @payment_methods = PaymentMethod.all
     @exchange_methods = ExchangeMethod.all
+    @product = current_user.products.build
+    @picture = Picture.new
     if current_user.stores.length > 0
       @has = true
       stos = Array.new
-      @product = current_user.products.build
       @product.user.stores.each do |s|
         stos.push([s.name, s.id])
       end
       @stos = stos
       @default = @product.user.stores.first
     else
-      @product = current_user.products.build
       @has = false
     end
+    @product.save(validate: false)
   end
   
   def create

@@ -1,5 +1,5 @@
 <% title = "Product by " + @product.user.name %>
-<div class="pure-g search-page">
+<div class="pure-g pad-box">
 	<div class="pure-u-1 pure-u-md-1-5 product_view pad-box">
   
   	<% if !@product.pictures.first.nil? %>
@@ -27,10 +27,12 @@
     	<h1 class="no-margin"><%= @product.title %></h1>
       <%= @product.user.name %> - <%= @distance_away.round(1) %> miles from you - <%= @product.user.score %>% rating
       <p>
-        <h3 class="inline-heading">Price:</h3> <%= number_to_currency(@product.price) %>
+        <h3 class="inline-header">Price:</h3> 
+        <%= number_to_currency(@product.price) %>
       </p>
       <p>
-        <h3 class="inline-heading">Views:</h3> <%= @product.views %>
+        <h3 class="inline-header">Views:</h3> 
+        <%= @product.views %>
       </p>
 
       <table class="pure-table pure-table-bordered pure-table-striped product_attributes">
@@ -136,7 +138,7 @@
   </div>
 </div>
 
-<div class="pure-g search-page">
+<div class="pure-g pad-box">
   <div class="pure-u-1 pure-u-md-1-5 pad-box">
  
   </div>
@@ -147,8 +149,8 @@
   <div class="pure-u-1 pure-u-md-1-5"></div>
 </div>
 
-<div class="search-page"><h1 class="content-subhead">Related Products</h1></div>
-<div class="more_like_this search-page pure-g">
+<div class="more_like_this pure-g">
+<h1 class="content-subhead">Related Products</h1>
   <% unless @more_like_this.nil? %>
   <% @more_like_this.each do |prod| %>
   <div class="pure-u-1 pure-u-md-1-5 pad-box">

@@ -12,11 +12,12 @@
 
 .modal-body
 {
-    width: 600px;
-    height: 600px;
+    width: 600px !important;
+    height: 600px !important;
+    padding: 0 !important;
 }
 
-img
+.my_cropper_img
 {
     height: 300px;
     width: 300px;

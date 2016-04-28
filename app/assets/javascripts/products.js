@@ -61,6 +61,23 @@ function toggleOptions()
     return true;
 }
 
+function productPicture()
+{
+    return $('.dz-success').length > 0;
+}
+
+function evaluatePicture()
+{
+    if (productPicture())
+    {
+	$('#dropper_button').removeClass('incomplete').addClass('complete');
+    }
+    else
+    {
+	$('#dropper_button').removeClass('complete').addClass('incomplete');
+    }
+}
+
 function sellingMethods()
 {
     var thing = false;
@@ -153,6 +170,7 @@ function evaluateAll()
     evaluateSelling();
     evaluateExchange();
     evaluatePayment();
+    evaluatePicture();
     $('#toggle_options_button').addClass('complete');
 }
 
@@ -209,8 +227,9 @@ $(document).ready(function() {
 	evaluatePayment();
     });
 
+
     $('.submit_product').click(function(e) {
-	var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods();
+	var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods() && productPicture();
 	if (!forms)
 	{
 	    e.preventDefault();

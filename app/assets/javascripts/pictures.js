@@ -9,7 +9,8 @@ $(document).ready(function(){
     // changed the passed param to one accepted by
     // our rails app
     paramName: "picture[photo]",
-    // show remove links on each image upload
+      // show remove links on each image upload
+    dictDefaultMessage: "Upload here",
     addRemoveLinks: false,
     maxFiles: 8,
     acceptedFiles: "image/*",
@@ -19,7 +20,8 @@ $(document).ready(function(){
       // based of the fileID response from the server
       $(file.previewTemplate).find('.dz-remove').attr('id', response.fileID);
       // add the dz-success class (the green tick sign)
-      $(file.previewElement).addClass("dz-success");
+	$(file.previewElement).addClass("dz-success");
+	evaluatePicture();
     },
     //when the remove button is clicked
     removedfile: function(file){
@@ -31,7 +33,8 @@ $(document).ready(function(){
         type: 'DELETE',
         url: '/pictures/' + id,
         success: function(data){
-          console.log(data.message);
+            console.log(data.message);
+	    evaluatePicture();
         }
       });
     }

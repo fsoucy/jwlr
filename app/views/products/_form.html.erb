@@ -37,7 +37,7 @@
     <fieldset id="toggle_options_form">
       <legend>Edit Toggle Options</legend>
       <%= f.label :category_id, "Product Type" %>
-      <%= f.select :category_id, nested_dropdown(Category.where(:parent_id => nil), true), {}, {required: 'true', autofocus: 'true', class: 'category_name' } %>
+      <%= f.select :category_id, options_for_select(Category.where(:parent_id => nil)), {}, {required: 'true', autofocus: 'true', class: 'category_name' } %>
       <% Category.first.category_options.each do |option| %>
       <%= fields_for "toggle_options[#{option.id}]", option do |opt| %>
       <%= opt.label :name, option.name, class: "toggle_option_option" %>

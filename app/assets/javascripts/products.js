@@ -12,7 +12,6 @@ function getToggleOptions(category_id)
 	    $('.submit_toggles').remove();
 	    for(var i = 0; i < result.length; i++)
 	    {
-		debugger;
 		addToggle(result[i]);
 				    
 	    }
@@ -34,7 +33,6 @@ function addToggle(toggle_option)
     $('#toggle_options_form').append("<select name='toggle_options[" + id + "][name]' id='" + select_id +  "'></select>");
     var attr = toggle_option["attribute_options"];
     var select_access = "#" + select_id;
-    debugger;
     for (var j = 0; j < attr.length; j++)
     {
 	$(select_access).append("<option value='" + attr[j][0] + "'>" + attr[j][1] + "</option>");

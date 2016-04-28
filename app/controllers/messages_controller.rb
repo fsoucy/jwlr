@@ -18,8 +18,9 @@ class MessagesController < ApplicationController
       else
         convo = conversation.first
       end
+      params[:message][:content] = params[:message][:content].squish
       @message = convo.messages.build(message_params)
-      @message.save
+      @message.save unless params[:message][:content] == ""
       if params[:message][:on_deals]
         redirect_to Deal.find(params[:message][:deal_id])
       else

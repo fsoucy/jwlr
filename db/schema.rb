@@ -296,15 +296,6 @@ ActiveRecord::Schema.define(version: 20160423184037) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "settings", force: :cascade do |t|
-    t.string   "attribute"
-    t.string   "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "settings", ["attribute"], name: "index_settings_on_attribute", unique: true
-
   create_table "stores", force: :cascade do |t|
     t.string   "full_street_address"
     t.string   "name"

@@ -1,5 +1,6 @@
-<a href="<%= product_path(product) %>">
   <div class="product">
+<a href="<%= product_path(product) %>">
+
     <% unless product.pictures.first.nil? %>
       <%= image_tag product.pictures.first.photo_cropped(:thumb), class: 'pure-img' %>
     <% end %>
@@ -13,5 +14,6 @@
               data: { confirm: "Are you sure you wish to delete this?" } %>
       </p>
     <% end %>
-  </div>
 </a>
+
+  </div>

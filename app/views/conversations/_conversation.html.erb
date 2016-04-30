@@ -1,4 +1,5 @@
 <div class="pure-u-1 pure-u-md-2-3 message_form">
+  <div class="convo_thing">
 <h2 class="conversation_header">Conversation between <%= @conversation.first_user.name %> and <%= @conversation.second_user.name %></h2>
 <div id="messages" class="massage_container">
   <ul class="massages">
@@ -21,5 +22,6 @@
 </div>
 
 <%= hidden_field_tag :conversation_id, @conversation.id %>
-</div>
+  </div>
+  </div>
 </div>

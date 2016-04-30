@@ -1,7 +1,27 @@
 .notification
 {
-    border: 1px solid #00171F;
+
     width: auto;
     padding: 1em;
     margin: 1em;
+}
+
+.notification_read
+{
+    border: 2px solid green;
+}
+
+.notification_not_read
+{
+    border: 2px solid red;
+}
+
+.notification .read
+{
+    color: black;
+}
+
+.notification .not_read
+{
+    color: red;
 }

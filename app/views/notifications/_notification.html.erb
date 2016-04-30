@@ -7,7 +7,8 @@
 </strong>
 <% end %>
 <%= form_for(notification) do |f| %>
-<%= f.hidden_field :read, :value => !notification.read %>
-<%= f.hidden_field :id, value: notification.id, class: "notification_id" %>
+<%= f.hidden_field :read, :value => true %>
+<%= f.hidden_field :id, value: notification.id, class: 'notification_id' %>
+<%= f.submit "Seen" %>
 <% end %>
 </div>

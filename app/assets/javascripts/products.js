@@ -63,7 +63,7 @@ function toggleOptions()
 
 function productPicture()
 {
-    return $('.dz-success').length > 0;
+    return $('.dz-success').length > 0 || $('.edit').val() === "true" ;
 }
 
 function evaluatePicture()
@@ -193,6 +193,11 @@ $(document).ready(function() {
 	getToggleOptions(parseInt($(this).val()));
 	
     });
+
+    $('.submit_product_picture').click(function(e) {
+	e.preventDefault();
+	$('.submit_product').trigger('click');
+    });
     
     if ($('#product_title').length > 0)
     {
@@ -236,22 +241,26 @@ $(document).ready(function() {
 	    var msg = "You are missing important information: ";
 	    if (!mainDetails())
 	    {
-		msg += "main product information";
+		msg += "<br>Main product information";
 	    }
 	    if (!sellingMethods())
 	    {
-		msg += ", selling methods";
+		msg += "<br>Selling methods";
 	    }
 	    if (!exchangeMethods())
 	    {
-		msg += ", exchange methods";
+		msg += "<br>Exchange methods";
 	    }
 	    if (!paymentMethods())
 	    {
-		msg += ", payment methods";
+		msg += "<br>Payment methods";
+	    }
+	    if (!productPicture())
+	    {
+		msg += "<br>Picture";
 	    }
 	    $('.alert').remove();
-	    $('.content').prepend("<div class='alert alert-warning'>" + msg + "</div>");
+	    $('.content').prepend("<div class='alert alert-warning'><h4>" + msg + "</h4></div>");
 	}
     });
 

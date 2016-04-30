@@ -89,6 +89,7 @@ class ProductsController < ApplicationController
         @product = current_user.products.build
         @has = false
       end
+      @edit = false
       flash.now[:warning] = "Product upload failed."
       render 'new'
     end
@@ -210,6 +211,8 @@ class ProductsController < ApplicationController
       selling_methods = params[:selling_method_links]
       exchange_methods = params[:exchange_method_links]
       payment_methods = params[:payment_method_links]
+
+      @product.toggle_options.destroy_all
       
       @product.update_attributes(product_params)
       @product.save
@@ -252,6 +255,7 @@ class ProductsController < ApplicationController
           stos = Array.new
           @selling_methods = SellingMethod.all
           @payment_methods = PaymentMethod.all
+          @edit = true
           @exchange_methods = ExchangeMethod.all
           @product = Product.find(params[:id])
           @product.user.stores.each do |s|

@@ -1,3 +1,4 @@
+
 function getToggleOptions(category_id)
 {
     $.ajax({

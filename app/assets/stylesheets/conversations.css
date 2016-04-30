@@ -1,3 +1,18 @@
+.conversations_indexing
+{
+    border: 1px solid #5a8693;
+    padding: 1em;
+    margin: 1em;
+}
+
+.conversations_indexing img
+{
+    height: 200px;
+    width: 200px;
+    padding: 1em;
+    border: 1px solid #5a8693;
+}
+
 .massages
 {
     #display: flex;

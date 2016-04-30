@@ -1,10 +1,13 @@
+<div class="notification">
 <% if notification.read %>
-<p><%= notification.message.html_safe %><br>Date: <%= notification.created_at %></p>
+<p><%= notification.message.html_safe %><br>Posted <%= notification.created_at.strftime("%A") + ", " + notification.created_at.strftime("%m/%d/%y") +\
+						        " " + notification.created_at.strftime("at %I:%M%p") %></p>
 <% else %>
-<strong><p><%= notification.message.html_safe %><br>Date: <%= notification.created_at %></p>
+<strong><p><%= notification.message.html_safe %><br>Posted <%= notification.created_at.strftime("%A") + ", " + notification.created_at.strftime("%m/%d/%y") + " " + notification.created_at.strftime("at %I:%M%p") %></p>
 </strong>
 <% end %>
 <%= form_for(notification) do |f| %>
 <%= f.hidden_field :read, :value => !notification.read %>
-<%= f.submit "Change read to #{!notification.read}" %>
+<%= f.hidden_field :id, value: notification.id, class: "notification_id" %>
 <% end %>
+</div>

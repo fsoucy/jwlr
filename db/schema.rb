@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160423184037) do
+ActiveRecord::Schema.define(version: 20160501020945) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -159,6 +159,15 @@ ActiveRecord::Schema.define(version: 20160423184037) do
 
   add_index "faqs", ["store_id"], name: "index_faqs_on_store_id"
 
+  create_table "key_stores", force: :cascade do |t|
+    t.string   "key"
+    t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "key_stores", ["key"], name: "index_key_stores_on_key", unique: true
+
   create_table "messages", force: :cascade do |t|
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
@@ -295,6 +304,15 @@ ActiveRecord::Schema.define(version: 20160423184037) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "settings", force: :cascade do |t|
+    t.string   "attribute"
+    t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "settings", ["attribute"], name: "index_settings_on_attribute", unique: true
 
   create_table "stores", force: :cascade do |t|
     t.string   "full_street_address"

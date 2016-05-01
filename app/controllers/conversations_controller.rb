@@ -25,6 +25,7 @@ class ConversationsController < ApplicationController
   end
 
   def index
+    @message_edit = true
     @conversations = Conversation.where("first_user_id = ? OR second_user_id = ?", current_user.id, current_user.id)
   end
 

@@ -1,9 +1,8 @@
 
-<div class="pure-g pad-box">
-  <div class="pure-u-1 pure-u-md-1-3">
     <h1>Conversations</h1>
     <% @conversations.each do |conversation| %>
-    <div class="conversations_indexing">
+    <div class="pure-g">
+    <div class="conversations_indexing pure-u-1 pure-u-md-1-3 convo_index_page">
     <a href="<%= conversation_url(conversation) %>">
       
         <% if conversation.first_user_id == current_user.id %>
@@ -17,13 +16,11 @@
           <% message = conversation.messages.order(created_at: :desc).limit(1).first %>    
           <%= message.content %>
           <br>
-	  Sent <%= message.created_at.strftime("%A") + ", " + message.created_at.strftime("%m/%d/%y") +\
-		      " " + message.created_at.strftime("at %I:%M%p") %>
+	  Sent <%= message.created_at.strftime("%A") + ", " + message.created_at.strftime("%m/%d/%y") + " " + message.created_at.strftime("at %I:%M%p") %>
         </p>
       </a>
-    <br>
+    </div>
+    <div class="pure-u-1 pure-u-md-1-3 big"></div>
     </div>
     <% end %>
-  </div>
-  <div class="pure-u-1 pure-u-md-2-3 big"></div>
-</div>
+

@@ -1,0 +1,294 @@
+<div class="pure-g log-in">
+<div class="pure-u-1 pure-u-md-1-3">
+<h1>Welcome to the deal between <%= @deal.seller.name %> (seller) and <%= @deal.buyer.name %> (buyer)</h1>
+<% if (@deal.product_dispatched and current_user.id == @deal.buyer_id and !@deal.product_received) %>
+  <h2>The product is on its way to you!</h2>
+<% end %>
+<%= link_to "Cancel this deal", @deal, method: :delete, class: "btn btn-primary down",
+              data: { confirm: "Are you sure you wish to cancel this deal?" } unless @deal.agreement_achieved %>
+<h2>Payment complete: <%= @deal.payment_complete %></h2>
+<h2>Product received: <%= @deal.product_received %></h2>
+<h2>Deal complete: <%= @deal.deal_complete %></h2>
+</div>
+<%= render @conversation %>
+</div>
+
+<div class="pure-g log-in">
+  <div class="pure-u-1 pure-u-md-1-3">
+    <a href="<%= product_path(@deal.product) %>"><h1><%= @deal.product.title %></h1></a>
+<%= image_tag @deal.product.pictures.first.photo_cropped(:medium), class: 'pure-img deals_img' %>
+<h2>Listed price: <%= number_to_currency(@deal.product.price) %></h2>
+  </div>
+
+  <div class="pure-u-1 pure-u-md-1-3">
+<% if @deal.buyer.id == current_user.id && !@deal.agreement_achieved %>
+  <% if @deal.product.selling_method_links.count > 1 or @deal.product.exchange_method_links.count > 1 or @deal.product.payment_method_links.count > 1 %>
+  <%= form_for(@deal) do |f| %>
+  <p>Selling Methods (choose one)</p>
+  <% @deal.product.selling_method_links.each do |s| %>
+    <%= f.label :selling_method, "#{s.selling_method.method}" %>
+    <%= f.radio_button :selling_method_id, s.selling_method.id %>
+  <% end %>
+  <p>Exchange Methods (choose one) </p>
+  <% @deal.product.exchange_method_links.each do |e| %>
+    <%= f.label :exchange_method, "#{e.exchange_method.method}" %>
+    <%= f.radio_button :exchange_method_id, e.exchange_method.id %>
+  <% end %>
+  <p>Payment Methods (choose one)</p>
+  <% @deal.product.payment_method_links.each do |p| %>
+    <%= f.label :payment_method, "#{p.payment_method.method}" %>
+    <%= f.radio_button :payment_method_id, p.payment_method.id %>
+  <% end %>
+  <br>
+  <%= f.submit "Save new method preferences", class: "pure-button pure-button-primary" %>
+  <% end %>
+  <% else %>
+  <p>Selling method: <%= @deal.selling_method.method unless @deal.selling_method.nil? %></p>
+  <p>Exchange method: <%= @deal.exchange_method.method unless @deal.exchange_method.nil? %></p>
+  <p>Payment method: <%= @deal.payment_method.method unless @deal.payment_method.nil? %></p>
+  <% end %>
+<% else %>
+  <% if !SellingMethodLink.where("selling_method_id IN (?,?) AND product_id=?", 3, 4, @deal.product.id) %>
+    <%= form_for @deal.product do |f| %>
+      <h3>Minimum Accepted Price: <%= f.number_field :min_accepted_price %><%= f.submit "Change" %></h3>
+    <% end %>
+  <% end %>
+  <h3>The user has selected these transaction methods:</h3>
+  <h4>Selling Methods: <%= @deal.selling_method.method unless @deal.selling_method_id.nil?  %></h4>
+  <h4>Exchange Methods: <%= @deal.exchange_method.method unless @deal.exchange_method_id.nil?  %></h4>
+  <h4>Payment Methods: <%= @deal.payment_method.method unless @deal.payment_method_id.nil?  %></h4>
+  <% end %>
+  </div>
+  <div class="pure-u-1 pure-u-md-1-3">
+<% selling_method = @deal.selling_method unless @deal.selling_method_id.nil? %>
+<% if !selling_method.nil? %>
+  <h2>Selling Method: <%= selling_method.method %></h2>
+  <% if selling_method.id == 3 or selling_method.id == 4 %>
+    <% if @deal.exchange_agreement_seller %>
+      <h3>The deal is going through for <%= number_to_currency(@deal.user_proposed_price) %></h3>
+    <% else %>
+      <% if current_user.id == @deal.buyer_id %>
+        <h3>Listed price: <%= number_to_currency(@deal.product.price) %></h3>
+        <!--<h3>iGold's suggested value for premium users</h3>-->
+        <%= form_for(@deal) do |f| %>
+          <h3 id="price_warning">Price is too low! Not accepted.</h3>
+          <%= f.hidden_field :min_price, value: @deal.product.min_accepted_price, id: "minimum_price" %>
+          <h3>Your price: <%= f.number_field :user_proposed_price, value: @deal.user_proposed_price, id: "price_proposal" %>  <%= f.submit "Change offer", class: "propose_price" %></h3>
+        <% end %>
+      <% if !@deal.user_proposed_price.nil? && !@deal.proposed_price_accepted %>
+        <h4>Offer made, waiting for seller to accept.</h4>
+      <% elsif @deal.proposed_price_accepted %>
+        <h4>Offer accepted!</h4>
+      <% end %>
+      <% end %>
+      <% if current_user.id == @deal.seller_id %>
+        <h3>Listed price: <%= number_to_currency(@deal.product.price) %></h3>
+        <%= form_for @deal do |f| %>
+          <%= f.hidden_field :proposed_price_accepted, value: !@deal.proposed_price_accepted %>
+          <h3>Offered price: <%= number_to_currency(@deal.user_proposed_price) %>  <%= f.submit "Set offer accepted to #{!@deal.proposed_price_accepted}" %></h3>
+        <% end %>
+        <% if !@deal.user_proposed_price.nil? && !@deal.proposed_price_accepted %>
+          <h4>The buyer has made an offer, either accept it here or discuss with the buyer.</h4>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% if selling_method.id == 2 %>
+    <h3>This product has a set price: <%= number_to_currency(@deal.product.price) %></h3>
+  <% end %>
+<% end %>
+
+<br>
+
+<% exchange_method = @deal.exchange_method unless @deal.exchange_method_id.nil? %>
+<% if !exchange_method.nil? %>
+  <h2>Exchange Method: <%= exchange_method.method %></h2>
+  <% if exchange_method.id == 1 %>
+    <% if (@deal.exchange_agreement_seller and @deal.exchange_agreement_buyer) %>
+      <h3>The exchange methods have been completely agreed upon.</h3>
+      <h4>The seller will deliver the product to the buyer</h4>
+      <h4>Dropoff location: <%= @deal.dropoff %></h4>
+      <h4>Delivery cost: <%= number_to_currency(@deal.product.delivery_cost) %></h4>
+    <% else %>
+      <% if current_user.id == @deal.buyer_id %>
+        <h3>Delivery cost: <%= number_to_currency(@deal.product.delivery_cost) %></h3>
+        <% if !@deal.agreement_achieved %>
+          <%= form_for(@deal) do |f| %>
+            <h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save", class: "pure-button pure-button-primary" %></h3>
+          <% end %>
+	<% else %>
+	  <h3>Your location for delivery: <%= @deal.dropoff %></h3>
+	<% end %>
+	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "" and @deal.proposed_price_accepted) %>
+	  <% if !@deal.exchange_agreement_buyer %>
+            <%= form_for @deal do |f| %>
+              <%= f.hidden_field :exchange_agreement_buyer, value: true %>
+              <%= f.submit "Accept exchange", class: "pure-button pure-button-primary" %>
+            <% end %>
+	  <% else %>
+	    <h4>Already accepted exchange! Waiting on seller to agree.</h4>
+	  <% end %>
+	<% end %>  
+      <% end %>
+      <% if current_user.id == @deal.seller_id %>
+        <% if !@deal.agreement_achieved %>
+          <%= form_for(@deal.product) do |f| %>
+            <%= f.hidden_field :on_deals, value: true %>
+	    <%= f.hidden_field :deal_id, value: @deal.id %>
+            <h3>Delivery cost: <%= f.number_field :delivery_cost %></h3>
+            <%= f.submit "Save changes on delivery exchange", class: "pure-button pure-button-primary" %>
+          <% end %>
+	<% else %>
+	  <h3>Delivery cost: <%= @deal.product.delivery_cost %></h3>
+	<% end %>
+        <h3>Delivery location: <%= @deal.dropoff %></h3>
+	<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "" and @deal.proposed_price_accepted and @deal.exchange_agreement_buyer) %>
+            <%= form_for @deal do |f| %>
+              <%= f.hidden_field :exchange_agreement_seller, value: true %>
+              <%= f.submit "Accept exchange", class: "pure-button pure-button-primary" %>
+            <% end %>	  
+<% elsif @deal.proposed_price_accepted %>
+	    <h3>Waiting for buyer to accept exchange</h3>
+	  <% end %>
+    <% end %>
+    <% end %>
+  <% end %>    
+  <% if exchange_method.id == 2 %>
+    <% if !@deal.agreement_achieved %>
+    <h4>Buyer and seller will need to decide upon a location and datetime in messaging</h4>
+    <% else %>
+    <h4>Agreement achieved</h4>
+    <% end %>
+    <% if current_user.id == @deal.seller_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_seller %>
+      <%= form_for @deal do |f| %>
+        <%= f.hidden_field :exchange_agreement_seller, value: true %>
+        <%= f.submit "Agreed exchange", class: "pure-button pure-button-primary" %>
+      <% end %>
+    <% elsif (current_user.id == @deal.seller_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
+      <h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
+    <% end %>
+    <% if current_user.id == @deal.buyer_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_buyer %>
+      <%= form_for @deal do |f| %>
+        <%= f.hidden_field :exchange_agreement_buyer, value: true %>
+        <%= f.submit "Agreed exchange", class: "pure-button pure-button-primary" %>
+      <% end %>
+    <% elsif (current_user.id == @deal.buyer_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
+      <h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
+    <% end %>
+  <% end %>
+  <% if exchange_method.id == 3 %>
+    <% if !@deal.product.store.nil? %>
+      <h4>The buyer needs to go to the user's store and pick up the product.</h4>
+      <h5>Location of pickup: <%= @deal.product.store.full_street_address %></h5>
+      <h5>Business days to pickup: <%= @deal.product.store.business_days_pickup %></h5>
+      <h5>The pickup will have to correspond to the <%= link_to "store's hours of operation.", @store %></h5>
+    <% else %>
+      <% if !@deal.agreement_achieved %>
+      <h4>Buyer and seller should agreement on a pickup time and location in messaging</h4>
+      <% else %>
+      <h4>Agreement achieved</h4>
+      <% end %>
+      <% if current_user.id == @deal.seller_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_seller %>
+        <%= form_for @deal do |f| %>
+          <%= f.hidden_field :exchange_agreement_seller, value: true %>
+          <%= f.submit "Agreed exchange", class: "pure-button pure-button-primary" %>
+        <% end %>
+      <% elsif (current_user.id == @deal.seller_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
+        <h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
+      <% end %>
+      <% if current_user.id == @deal.buyer_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_buyer %>
+        <%= form_for @deal do |f| %>
+          <%= f.hidden_field :exchange_agreement_buyer, value: true %>
+          <%= f.submit "Agreed exchange", class: "pure-button pure-button-primary" %>
+        <% end %>
+      <% elsif (current_user.id == @deal.buyer_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
+        <h4>Exchange agreed, waiting for seller to accept exchange.</h4>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+<br>
+
+<% payment_method = @deal.payment_method unless @deal.payment_method_id.nil? %>
+<% if !payment_method.nil? %>
+  <h2>Payment Method: <%= payment_method.method %></h2>
+<% end %>
+<% if !@deal.payment_method.nil? %>
+  <% if @deal.payment_method.method == "Paypal" && @deal.seller_id != current_user.id && @deal.agreement_achieved? && !@deal.payment_complete? %>
+    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+    <input type="hidden" name="cmd" value="_xclick">
+    <input type="hidden" name="business" value="<%= @deal.seller.email %>">
+    <input type="hidden" name="lc" value="US">
+    <input type="hidden" name="item_name" value="<%= @deal.product.title %>">
+    <input type="hidden" name="item_number" value="<%= @deal.id %>">
+    <input type="hidden" name="amount" value="<%= @deal.user_proposed_price %>">
+    <input type="hidden" name="currency_code" value="USD">
+    <input type="hidden" name="button_subtype" value="services">
+    <input type="hidden" name="no_note" value="0">
+    <input type="hidden" name="tax_rate" value="0.000">
+    <input type="hidden" name="return" value="<%= request.original_url %>">
+    <input type="hidden" name="rm" value="1">
+    <% if !@deal.dropoff.nil? %>
+      <% location = Geocoder.search @deal.dropoff %>
+      <input type="hidden" name="address_override" value="1">
+      <input type="hidden" name="address1" value="<%= location[0].street_address %>">
+      <input type="hidden" name="country" value="<%= location[0].country %>">
+      <input type="hidden" name="city" value="<%= location[0].city %>">
+      <input type="hidden" name="zip" value="<%= location[0].postal_code %>">
+      <input type="hidden" name="state" value="<%= location[0].state_code %>">
+    <% else %>
+      <input type="hidden" name="no_shipping" value="1">
+    <% end %>
+    <input type="hidden" name="notify_url" value="http://www.igold.ws:3002/payments">
+    <input type="hidden" name="shipping" value="<%= @deal.product.delivery_cost %>">
+    <input type="hidden" name="bn" value="PP-BuyNowBF:btn_paynowCC_LG.gif:NonHostedGuest">
+    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+    </form>
+  <% end %>
+<% end %>
+
+<% if ((current_user.id  == @deal.seller_id) and @deal.agreement_achieved and !@deal.deal_complete and !@deal.seller_satisfied) %>
+  <% if @deal.exchange_method.method == "Delivery" %>
+  <%= form_for @deal do |f| %>
+    <%= f.hidden_field :product_dispatched, value: !@deal.product_dispatched %>
+    <%= f.submit "Set product dispatched to #{!@deal.product_dispatched}", class: "pure-button pure-button-primary" %>
+  <% end %>
+  <% end %> 
+
+  <% if @deal.payment_method.method != "Paypal" and !@deal.seller_satisfied %>
+  <%= form_for @deal do |f| %>
+    <%= f.hidden_field :payment_complete, value: !@deal.payment_complete %>
+    <%= f.submit "Set payment received to #{!@deal.payment_complete}", class: "pure-button pure-button-primary" %>
+  <% end %>
+  <% end %>  
+
+  <% if (@deal.payment_complete and @deal.product_received and !@deal.deal_complete) %>
+  <%= form_for @deal do |f| %>
+    <%= f.hidden_field :seller_satisfied, value: !@deal.seller_satisfied %>
+    <%= f.submit "Set satisfied with completed deal to #{!@deal.seller_satisfied}", class: "pure-button pure-button-primary" %>
+  <% end %>
+  <% end %>
+  
+<% end %>
+<% if ((current_user.id == @deal.buyer_id) and @deal.agreement_achieved and !@deal.deal_complete) %>
+  <% if !@deal.buyer_satisfied %>
+  <%= form_for @deal do |f| %>
+    <%= f.hidden_field :product_received, value: !@deal.product_received %>
+    <%= f.submit "Set product received to #{!@deal.product_received}", class: "pure-button pure-button-primary" %>
+  <% end %>
+  <% end %>
+
+  <% if (@deal.product_received and @deal.payment_complete and !@deal.deal_complete) %>
+  <%= form_for @deal do |f| %>
+    <%= f.hidden_field :buyer_satisfied, value: !@deal.buyer_satisfied %>
+    <%= f.submit "Set satisfied with completed deal to #{!@deal.buyer_satisfied}", class: "pure-button pure-button-primary" %>
+  <% end %>
+  <% end %>  
+<% end %>
+<% review = @deal.reviews.where("user_id = ?", current_user.id).first %>
+<% if review.nil? && @deal.deal_complete %>
+  <%= link_to "Leave a review of this deal", new_review_url(@deal) %>
+<% end %>
+</div>
+</div>

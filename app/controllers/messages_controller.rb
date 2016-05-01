@@ -23,6 +23,7 @@ class MessagesController < ApplicationController
       @message.save unless params[:message][:content] == ""
       if params[:message][:on_deals]
         redirect_to Deal.find(params[:message][:deal_id])
+
       else
         redirect_to @message.conversation
       end

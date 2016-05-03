@@ -1,4 +1,0 @@
-<%= form_for(current_user.active_deals.find_by(product_id: @product.id),
-    html: {method: :delete }) do |f| %>
-  <%= f.submit "End Deal", class: "btn btn-primary" %>
-<% end %>

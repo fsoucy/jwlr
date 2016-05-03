@@ -10,8 +10,10 @@
   <%= hidden_field_tag :width, 300 %>
   <%= hidden_field_tag :height, 300 %>
   
-  <%= submit_tag "Done cropping", class: 'pure-button pure-button-primary' %>
-  <%= link_to "Delete", @picture, method: :delete,
+  <div class="submit_the_form">
+    <%= submit_tag "Done cropping", class: 'pure-button pure-button-primary' %>
+    <%= link_to "Delete", @picture, method: :delete,
                                        data: { confirm: "Are you sure?" } %>
+  </div>
 </div>
 

@@ -305,15 +305,6 @@ ActiveRecord::Schema.define(version: 20160501020945) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "settings", force: :cascade do |t|
-    t.string   "attribute"
-    t.string   "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "settings", ["attribute"], name: "index_settings_on_attribute", unique: true
-
   create_table "stores", force: :cascade do |t|
     t.string   "full_street_address"
     t.string   "name"
@@ -412,12 +403,12 @@ ActiveRecord::Schema.define(version: 20160501020945) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "full_street_address"
+    t.integer  "business_days_pickup"
+    t.decimal  "default_delivery_cost"
     t.text     "interests"
     t.integer  "products_bought"
     t.integer  "products_sold"
     t.text     "identifies_as"
-    t.integer  "business_days_pickup"
-    t.decimal  "default_delivery_cost"
     t.string   "profile_picture_file_name"
     t.string   "profile_picture_content_type"
     t.integer  "profile_picture_file_size"

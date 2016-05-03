@@ -6,7 +6,7 @@ function loadOnIndex(num_conversation)
 
     window.page = 1;
     var urlString = window.location.href;
-    window.conversation = 8;
+    window.conversation = num_conversation;
     $.ajax({
 	type: "GET",// GET in place of POST
 	contentType: "application/json; charset=utf-8",
@@ -164,8 +164,9 @@ $(document).ready(function()
     
     $('.convo_index_page').click(function(e){
 	e.preventDefault();
-	$(this).siblings('.big').load('http://igold.ws:3000/conversations/8' + " .convo_thing", function() {
-	    loadOnIndex(8);
+	var id = $(this).children('a').children('.conversation_id').val();
+	$(this).siblings('.big').load('http://igold.ws:3000/conversations/' + id + " .convo_thing", function() {
+	    loadOnIndex(parseInt(id));
 	});
     });
 });

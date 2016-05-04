@@ -42,8 +42,8 @@ $(document).ready(function(){
 
     var $image = $('#image');
     var factor = parseFloat($('#factor').val());
-    var cropBoxData = { width: 800 * factor, height: 800 * factor};
-    var canvasData;
+    var cropBoxData = { left: 0, top: 0, width: 800, height: 800};
+    var canvasData = { left: 0, top: 0, width: 800, height: 800 } ;
 
     
     $image.cropper({
@@ -57,9 +57,27 @@ $(document).ready(function(){
 	}
 
     });
-
+    debugger;
+    
+    if ($('#factor').length > 0)
+    {
+	debugger;
+	cropBoxData = $image.cropper('getCropBoxData');
+	canvasData = $image.cropper('getCanvasData');
+	var x = cropBoxData.left;
+	var y = cropBoxData.top;
+	var factor = 1 / parseFloat($('#factor').val());
+	console.log(x);
+	var offsetX = (600.0 - $('.cropper-canvas').width()) / 2.0;
+	var offsetY =  (600.0 - $('.cropper-canvas').height()) / 2.0;
+	$('#x').val(x - offsetX);
+	$('#y').val(y - offsetY);
+	$('#width').val(cropBoxData.width * factor);
+	$('#height').val(cropBoxData.height * factor);
+    }
+    
     $('.modal-body').mouseup(function () {
-	console.log('action');
+	debugger;
 	cropBoxData = $image.cropper('getCropBoxData');
 	canvasData = $image.cropper('getCanvasData');
 	var x = cropBoxData.left;

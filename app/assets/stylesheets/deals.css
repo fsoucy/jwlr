@@ -19,3 +19,7 @@
 .reviewed_false {
   color: blue;
 }
+
+.deal img {
+  margin-right: 1em;
+}

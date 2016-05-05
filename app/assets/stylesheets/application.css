@@ -63,3 +63,18 @@ a.pure-button-primary {
 {
     margin-top: 1em;
 }
+
+.pagination a, .pagination em, .pagination span
+{
+    border: 1px solid black;
+    padding: 2px;
+    text-decoration: none;
+    color: blue;
+}
+
+.pagination
+{
+    padding-top: .5em;
+    padding-bottom: .5em;
+}
+

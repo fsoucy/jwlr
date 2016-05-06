@@ -5,21 +5,25 @@
   	<% if !@product.pictures.first.nil? %>
   	  <a id="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
    		  <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "pad-box product_image pure-img" %>
-  		</a>
+  	  </a>
   		<% if @product.user == current_user %>
-  	    <%= link_to("Edit", edit_picture_path(@product.pictures.first)) %>
+  		<%= link_to("Edit", edit_picture_path(@product.pictures.first)) %>
   		<% end %>
   	<% end %>
   	<br>
   	<% @product.pictures.each do |picture| %>
+	<div class="pickers">
   		<% if picture == @product.pictures.first %>
   			<%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show pic_active" %>
   		<% else %>
   			<%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show" %>
   		<% end %>
-  		<% if @product.user == current_user %>
-  			<%= hidden_field_tag :pathway, edit_picture_path(picture) %>
+		<%= hidden_field_tag :mag, picture.photo_cropped(:large), { class: 'mag_link' } %>
+		<% if @product.user == current_user %>
+		
+  		<%= hidden_field_tag :pathway, edit_picture_path(picture), { class: 'pathway' } %>
   		<% end %>
+	</div>
   	<% end %>
 
 	</div>

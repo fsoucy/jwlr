@@ -166,7 +166,7 @@ $(document).ready(function()
 	e.preventDefault();
 	$('.convo_thing').remove();
 	var id = $(this).children('a').children('.conversation_id').val();
-	$(this).siblings('.big').load('http://igold.ws:3000/conversations/' + id + " .convo_thing", function() {
+	$(this).siblings('.big').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
 	    loadOnIndex(parseInt(id));
 	});
     });

@@ -54,19 +54,24 @@ $(document).ready(function(){
 	built: function () {
 	    $image.cropper('setCanvasData', canvasData);
 	    $image.cropper('setCropBoxData', cropBoxData);
+	    cropBoxData = $image.cropper('getCropBoxData');
+	    canvasData = $image.cropper('getCanvasData');
+	    var x = cropBoxData.left;
+	    var y = cropBoxData.top;
+	    var factor = 1 / parseFloat($('#factor').val());
+	    console.log(x);
+	    var offsetX = (600.0 - $('.cropper-canvas').width()) / 2.0;
+	    var offsetY =  (600.0 - $('.cropper-canvas').height()) / 2.0;
+	    $('#x').val(x - offsetX);
+	    $('#y').val(y - offsetY);
+	    $('#width').val(cropBoxData.width * factor);
+	    $('#height').val(cropBoxData.height * factor);
 	}
 
     });
-
-    $('#x').val(0);
-    $('#y').val(0);
-    $('#width').val(800 * factor);
-    $('#height').val(800 * factor);
     
-
     
     $('.modal-body').mouseup(function () {
-	debugger;
 	cropBoxData = $image.cropper('getCropBoxData');
 	canvasData = $image.cropper('getCanvasData');
 	var x = cropBoxData.left;

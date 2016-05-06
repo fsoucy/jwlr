@@ -178,15 +178,18 @@ function evaluateAll()
 $(document).ready(function() {
     $('.cropped_show').click(function() {
 	console.log('hi');
+	debugger;
 	smallImage = $(this).attr('src');
-	smallLink = $(this).next().val();
+	smallLink = $(this).siblings('.pathway').val();
 	$('.cropped_show').removeClass('pic_active');
 	$(this).addClass('pic_active');
 
 
 	$('.product_image').attr('src', smallImage.replace('thumbnail', 'medium'));
 	$('#magnifier').next().attr('href', smallLink);
+	var picLink = $(this).siblings('.mag_link').val();
 
+	$('#magnifier').attr('href', picLink);
     });
 
     $('.category_name').change(function() {

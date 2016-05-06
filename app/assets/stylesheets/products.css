@@ -5,17 +5,22 @@
 
 .complete
 {
-    background-color: green;
+    background-color: #003459;
 }
 
 .incomplete
 {
-    background-color: red;
+    background-color: #FFFFFF;
 }
 
-.complete a, .incomplete a
+.complete a
 {
     color: white !important;
+}
+
+.incomplete a
+{
+  color: #00A8E8;
 }
 
 .pure-radio {

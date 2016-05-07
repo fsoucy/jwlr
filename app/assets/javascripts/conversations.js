@@ -58,7 +58,7 @@ function loadOnIndex(num_conversation, myname)
 	    {
 		window.time = new Date().getTime() / 1000;
 	    }
-	    window.interval = setInterval(refreshMessages, 1000);
+	    window.interval = setInterval(refreshMessages, 3000);
 	    window.page = window.page + 1;
 	    $('.message_container').scrollTop(10000);
 	},
@@ -150,7 +150,7 @@ $(document).ready(function()
 		      {
 		        window.time = new Date().getTime() / 1000;
 		      }
-	        window.interval = setInterval(refreshMessages, 1000);
+	        window.interval = setInterval(refreshMessages, 3000);
 		      window.page = window.page + 1;
 		      $('.message_container').scrollTop(10000);
 	      },

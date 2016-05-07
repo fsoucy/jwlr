@@ -1,7 +1,5 @@
-<div class="convo_thing log-in-form">
-  <div id="messages" class="massage_container">
-    <ul class="massages"></ul>
-  </div>
+<div class="convo_thing">
+  <div class="pure-g message_container" id="messages"></div>
   <div class="form_fields">
     <%= form_for @msg, :html => { :id => 'message_form' } do |f| %>
       <%= f.hidden_field :sender_id, value: current_user.id %>

@@ -1,19 +1,19 @@
 <h1 class="pad-header">Conversations</h1>
-<div class="pure-g pad-box log-in">
+<div class="pure-g margin-box log-in-form">
   <div class="conversations_indexing pure-u-1 pure-u-md-1-3 pure-u-lg-1-5">
     <% @conversations.each do |conversation| %>
       <div class="convo_index_page">
       <a href="<%= conversation_url(conversation) %>">
         <% if conversation.first_user_id == current_user.id %>
      	    <%= image_tag conversation.second_user.profile_picture(:thumbnail) %>
-          <h3 ><%= conversation.second_user.name %></h3>
+          <h3><%= conversation.second_user.name %></h3>
         <% else %>
           <%= image_tag conversation.first_user.profile_picture(:thumbnail) %>
           <h3><%= conversation.first_user.name %></h3>
         <% end %>
         <p>
           <% message = conversation.messages.order(created_at: :desc).limit(1).first %>    
-          <%= message.content %>
+          <%= message.content.truncate_words(6) %>
           <br>
 	        Sent <%= message.created_at.strftime("%A") + ", " + message.created_at.strftime("%m/%d/%y") + " " + message.created_at.strftime("at %I:%M%p") %>
         </p>

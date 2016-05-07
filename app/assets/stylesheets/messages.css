@@ -1,30 +1,43 @@
 .message_image
 {
-    width: 50px;
-    height: 50px;
-    display: inline-block;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  padding: 0.5em;
+  border-radius: 75%;
+  vertical-align: middle;
 }
 
 .message_text
 {
-    height: auto;
-    vertical-align: top;
-    margin: 0;
-    padding: 0;
-    padding-left: 6px;
-    max-width: 400px;
-    line-height: 1.5em;
-    display: inline-block;
-    
+  height: auto;
+  vertical-align: middle;
+  margin: 0;
+  padding-left: 25px;
+  padding-right: 25px;
+  max-width: 70%;
+  display: inline-block;
+  background-color: #007EA7;
+  border-radius: 1em;
+  color: white;
 }
 
 .message_list_theirs
 {
-
+  line-height: 50px;
+  float: left;
+  clear: both;
+  margin: 0.1em;
 }
 
 .message_list_mine
 {
-
+  line-height: 50px;
+  text-align: right;
+  float: right;
+  clear: both;
+  margin: 0.1em;
+  height: auto;
+  padding: 0.2em;
 }
 

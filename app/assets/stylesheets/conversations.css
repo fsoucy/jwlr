@@ -1,45 +1,41 @@
+.margin-box
+{
+  padding: 1em;
+  margin: 1em;
+}
+
 .conversations_indexing
 {
   border: 1px solid #5a8693;
   padding: 1em;
   height: 50vh;
   overflow: scroll;
+  background-color: white;
 }
 
 .conversations_indexing h3 {
   display: inline;
+  color: #00A8E8 !important;
+  vertical-align: top;
+  line-height: 50px;
+  padding-left: 0.5em;
 }
 
 .conversations_indexing img
 {
-    height: 50px;
-    width: 50px;
-    border: 1px solid #5a8693;
+  vertical-align: top;
+  height: 50px;
+  width: 50px;
+  border-radius: 75%;
 }
 
-.massages
+.message_container
 {
-    #display: flex;
-    #flex-direction: column-reverse;
-    list-style-position: inside;
-    margin-left: 10px;
-    padding: 0;
-}
-
-
-.massage_container
-{
-    height: 50vh;
-    overflow: scroll;
-    border: 1px solid #5a8693;
+  height: 50vh;
+  overflow: scroll;
+  border: 1px solid #5a8693;
   background-color: white;
   color: #00171F;
-}
-
-.message_image
-{
-    width: 50px;
-    height: 50px;
 }
 
 .form_input
@@ -68,4 +64,8 @@
   width: 10%;
   height: 35px;
   margin-top: 5px;
+}
+
+.convo_index_page {
+  display: inline;
 }

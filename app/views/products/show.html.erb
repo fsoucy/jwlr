@@ -40,8 +40,12 @@
       </p>
 
       <table class="pure-table pure-table-bordered pure-table-striped product_attributes">
-      <tbody>
-	      <% @toggle_options.each do |opt| %>
+	<tbody>
+	  <tr>
+	    <td>Type</td>
+	    <td><%= @product.category.name %></td>
+	  </tr>
+	  <% @toggle_options.each do |opt| %>
 	        <% if opt.attribute_option.value != "Not Specified" %>
             <tr>
               <td><%= opt.attribute_option.category_option.name %></td>

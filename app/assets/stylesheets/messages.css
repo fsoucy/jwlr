@@ -18,11 +18,13 @@
     
 }
 
-.message_list
+.message_list_theirs
 {
-    display: block;
-    overflow: auto;
-    float: left;
-    margin-left: 8px;
-    clear: left;
+
 }
+
+.message_list_mine
+{
+
+}
+

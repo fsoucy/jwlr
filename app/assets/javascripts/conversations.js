@@ -1,4 +1,4 @@
-function loadOnIndex(num_conversation)
+function loadOnIndex(num_conversation, myname)
 {
 
     window.page = 1;
@@ -16,8 +16,15 @@ function loadOnIndex(num_conversation)
 	    for (res in results)
 	    {
 		thing = results[parseInt(res)];
-		$('.massages').prepend('<li class="message_list">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li>');
-		if (!changed)
+		if(myname == thing[1])
+    {
+        $('.massages').prepend('<li class="message_list_mine">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li>');
+		}
+    else
+    {
+      $('.massages').prepend('<li class="message_list_theirs">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[1] + ': ' + thing[0] + '</span></li>');
+    }
+    if (!changed)
 		{
 		    changed = true;
 		    window.time = thing[2];
@@ -163,9 +170,10 @@ $(document).ready(function()
 	e.preventDefault();
 	$('.convo_thing').remove();
 	var id = $(this).children('a').children('.conversation_id').val();
+  var myname = $(this).children('a').children('.myname').val();
   clearInterval(window.interval);
   $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
-	    loadOnIndex(parseInt(id));
+	    loadOnIndex(parseInt(id), myname.toString());
 	});
     });
 });

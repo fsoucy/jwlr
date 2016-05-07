@@ -30,6 +30,7 @@
   height: auto;
   overflow: visible;
   max-width: 80%;
+  text-align: left;
 }
 
 .message_list_theirs span {
@@ -48,5 +49,6 @@
   padding: 0.1em;
   height: auto;
   overflow: visible;
+  text-align: right;
 }
 

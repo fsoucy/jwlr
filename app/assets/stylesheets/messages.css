@@ -1,11 +1,12 @@
 .message_image
 {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   display: inline-block;
-  padding: 0.5em;
   border-radius: 75%;
   vertical-align: middle;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
 }
 
 .message_text
@@ -13,31 +14,39 @@
   height: auto;
   vertical-align: middle;
   margin: 0;
-  padding-left: 25px;
-  padding-right: 25px;
-  max-width: 70%;
+  padding: 0.75em;
+  max-width: 90%;
   display: inline-block;
-  background-color: #007EA7;
   border-radius: 1em;
   color: white;
 }
 
 .message_list_theirs
 {
-  line-height: 50px;
   float: left;
   clear: both;
-  margin: 0.1em;
+  padding: 0.1em;
+  height: auto;
+  overflow: visible;
+  max-width: 80%;
+}
+
+.message_list_theirs span {
+  background-color: #00A8E8;
+}
+
+.message_list_mine span {
+  background-color: #003459;
 }
 
 .message_list_mine
 {
-  line-height: 50px;
+  max-width: 80%;
   text-align: right;
   float: right;
   clear: both;
-  margin: 0.1em;
+  padding: 0.1em;
   height: auto;
-  padding: 0.2em;
+  overflow: visible;
 }
 

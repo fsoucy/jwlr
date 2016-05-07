@@ -1,5 +1,9 @@
 <div class="result">
+  <% if !user.profile_picture(:thumb).include?("missing") %>
   <%= image_tag user.profile_picture(:thumb) %>
+  <% else %>
+  <%= image_tag "/assets/blankimg.png" %>
+  <% end %>
   <div class="result_info">
   <%= link_to user.name, user %>
   <h3>Products sold: <%= Deal.where("seller_id=? AND deal_complete=?", user.id, true).count %></h3>

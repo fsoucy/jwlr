@@ -1,6 +1,7 @@
 <div class="pure-g pad-box">
   <div class="pure-u-1">
     <h1>Notifications</h1>
+    <%= will_paginate @notifications %>
     <% if @notifications.count == 0 %>
       <h3>You have no notifications</h3>
     <% end %>

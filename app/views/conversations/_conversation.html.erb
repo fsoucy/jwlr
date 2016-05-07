@@ -1,10 +1,11 @@
 <div class="convo_thing">
-  <div class="pure-g message_container" id="messages"></div>
+  <div class="message_container" id="messages"></div>
   <div class="form_fields">
-    <%= form_for @msg, :html => { :id => 'message_form' } do |f| %>
+    <% msg = Message.new %>
+    <%= form_for msg, :html => { :id => 'message_form' } do |f| %>
       <%= f.hidden_field :sender_id, value: current_user.id %>
-      <% first_user_id = @conversation.first_user_id %>
-      <% second_user_id = @conversation.second_user_id %>
+      <% first_user_id = conversation.first_user_id %>
+      <% second_user_id = conversation.second_user_id %>
       <% if current_user.id == first_user_id %>
         <% other = second_user_id %>
       <% else %>
@@ -13,7 +14,8 @@
       <%= f.hidden_field :other_id, value: other %>
       <%= f.text_field :content, class: "form_input", id: "message_input", placeholder: "Write your message here..." %>
       <%= f.submit "Send", class: "pure-button pure-button-primary send_message", id: "message_submit" %>
-    <% end %>
+      <% end %>
+
   </div>
-  <%= hidden_field_tag :conversation_id, @conversation.id %>
+  <%= hidden_field_tag :conversation_id, conversation.id %>
 </div>

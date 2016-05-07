@@ -1,8 +1,8 @@
 function setMessages(message_data, append)
 {
   var thing = message_data;
-  var mine = '<div class="pure-u-1 message_list_mine">' + '<span class="message_text">' + thing[0] + '</span><img class="message_image" src="' + thing[3] + '"></div>';
-  var theirs = '<div class="pure-u-1 message_list_theirs">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[0] + '</span></div>';
+  var mine = '<div class="message_list_mine">' + '<span class="message_text">' + thing[0] + '</span><img class="message_image" src="' + thing[3] + '"></div>';
+  var theirs = '<div class="message_list_theirs">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[0] + '</span></div>';
   if(append)
   {
     if(window.myname == thing[1])
@@ -60,7 +60,7 @@ function loadOnIndex(num_conversation, myname)
 	    }
 	    window.interval = setInterval(refreshMessages, 1000);
 	    window.page = window.page + 1;
-	    $('.massage_container').scrollTop(10000);
+	    $('.message_container').scrollTop(10000);
 	},
 	error: function (e){
 	}
@@ -85,7 +85,7 @@ function refreshMessages()
 		{
         setMessages(thing, true);
 		    window.time = thing[2]
-		    $('.massage_container').scrollTop(10000000);
+		    $('.message_container').scrollTop(10000000);
 		}
 	    }
 	},
@@ -96,6 +96,32 @@ function refreshMessages()
 
 $(document).ready(function()
 {   
+    window.myname = $('.convo_index_page').children('a').children('.myname').val();
+    $('#messages').bind('scroll', function(event) {
+      if ($('#messages').scrollTop() < 10)
+  {
+      var results;
+      $.ajax({
+    type: "GET",// GET in place of POST
+    contentType: "application/json; charset=utf-8",
+    url: "http://" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
+    data: {},
+    dataType: "json",
+    success: function (result) {
+        results = result.reverse();
+        for (res in results)
+        {
+      thing = results[parseInt(res)];
+      setMessages(thing, false);
+        }
+    },
+    error: function (e){
+    }
+      });
+      window.page = window.page + 1;
+  }
+    });
+
     if ($('#messages').length > 0)
     {
 	    window.page = 1;
@@ -113,20 +139,20 @@ $(document).ready(function()
 		      for (res in results)
 		      {
 		        thing = results[parseInt(res)];
-            setMessages(thing, true);
+            setMessages(thing, false);
 		        if (!changed)
 		        {
 			        changed = true;
 			        window.time = thing[2];
 		        }
 		      }
-		      if (window.time == null)
+    if (window.time == null)
 		      {
 		        window.time = new Date().getTime() / 1000;
 		      }
 	        window.interval = setInterval(refreshMessages, 1000);
 		      window.page = window.page + 1;
-		      $('.massage_container').scrollTop(10000);
+		      $('.message_container').scrollTop(10000);
 	      },
 	      error: function (e){
 	      
@@ -138,32 +164,6 @@ $(document).ready(function()
 	    clearInterval(window.interval);
     }
 
-    $('#messages').bind('scroll', function(event) {
-      if ($(this).scrollTop() < 10)
-	    {
-	      var results;
-	      $.ajax({
-		      type: "GET",// GET in place of POST
-		      contentType: "application/json; charset=utf-8",
-		      url: "http://" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
-		      data: {},
-		      dataType: "json",
-		      success: function (result) {
-		        results = result.reverse();
-		        for (res in results)
-		        {
-			        thing = results[parseInt(res)];
-		        }
-            window.page += 1;
-		    },
-		    error: function (e){
-		      }
-	      });
-	      window.page = window.page + 1;
-	    }
-    });
-
-    
     
     $(document).keydown(function(event) {
 	if (event.which == 13 && $('#message_input').val().length > 0)
@@ -172,21 +172,20 @@ $(document).ready(function()
 	    event.preventDefault();
 	    var result = $.post('/messages', $('#message_form').serialize());
 	    refreshMessages();
-	    //$(".massage_container").load('http://igold.ws:3000/conversations/8' + " #messages");
-	    $('.massage_container').scrollTop(10000000);
+	    $('.message_container').scrollTop(10000000);
 	    $('#message_input').val('');
 	}
     });
-    
-    $('#message_submit').click(function(event) {
-	    event.preventDefault();
-	    $.post('/messages', $('#message_form').serialize());
-	    refreshMessages();
-	    $('.massage_container').scrollTop(10000000);
-	    $('#message_input').val('');
+
+        
+    $(document).on('click', '#message_submit', function(event) {
+	event.preventDefault();
+	$.post('/messages', $('#message_form').serialize());
+	refreshMessages();
+	$('.message_container').scrollTop(10000000);
+	$('#message_input').val('');
+
     });
-    
-    
     
     $('.convo_index_page').click(function(e){
 	    e.preventDefault();
@@ -196,7 +195,32 @@ $(document).ready(function()
       clearInterval(window.interval);
       $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
 	      loadOnIndex(parseInt(id), myname.toString());
-	    });
+	  $('#messages').bind('scroll', function(event) {
+      if ($('#messages').scrollTop() < 10)
+  {
+      var results;
+      $.ajax({
+    type: "GET",// GET in place of POST
+    contentType: "application/json; charset=utf-8",
+    url: "http://" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
+    data: {},
+    dataType: "json",
+    success: function (result) {
+        results = result.reverse();
+        for (res in results)
+        {
+      thing = results[parseInt(res)];
+      setMessages(thing, false);
+        }
+    },
+    error: function (e){
+    }
+      });
+      window.page = window.page + 1;
+  }
+	  });
+	  
+      });
     });
 });
 

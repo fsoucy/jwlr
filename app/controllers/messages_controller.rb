@@ -20,12 +20,14 @@ class MessagesController < ApplicationController
       end
       params[:message][:content] = params[:message][:content].squish
       @message = convo.messages.build(message_params)
-      @message.save unless params[:message][:content] == ""
+      if @message.content.length > 0
+        @message.save
+        convo.save
+      end
       if params[:message][:on_deals]
         redirect_to Deal.find(params[:message][:deal_id])
-
       else
-        redirect_to @message.conversation
+        redirect_to(controller: 'conversations', action: 'index', id: convo.id)
       end
     else
       redirect_to root_url

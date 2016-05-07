@@ -66,8 +66,8 @@
 .product_image
 {
     border: 1px solid #003459;
-    height: 300px !important;
-    width: 300px !important;
+    height: 200px !important;
+    width: 200px !important;
 }
 
 .product_view h3, .product_view h1
@@ -89,4 +89,11 @@
 
 .inline-header {
   display: inline;
+}
+
+.cropped_show
+{
+    display: block;
+    float: left;
+    clear: none;
 }

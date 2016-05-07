@@ -6,10 +6,10 @@
 
 .conversations_indexing
 {
-  border: 1px solid #5a8693;
   padding: 1em;
   height: 50vh;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   background-color: white;
 }
 
@@ -32,7 +32,8 @@
 .message_container
 {
   height: 50vh;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   border: 1px solid #5a8693;
   background-color: white;
   color: #00171F;
@@ -40,21 +41,22 @@
 
 .form_input
 {
-    margin: 5px;
-    float: left;
-    clear: none;
-    display: block;
+  margin: 5px;
+  float: left;
+  clear: none;
+  display: block;
 }
 
 .conversation_header
 {
-    margin: 5px;
+  margin: 5px;
 }
 
 .form_input[type=text]
 {
   width: 85%;
   height: 35px;
+  color: black;
 }
 
 .send_message
@@ -66,6 +68,17 @@
   margin-top: 5px;
 }
 
+.convo_index_page p {
+  border: 1px solid #00171F;
+  padding: 0.25em;
+  margin: 0.25em;
+  color: #00171F;
+}
+
+.convo_index_page a {
+  text-decoration: none;
+}
+
 .convo_index_page {
-  display: inline;
+  margin: 0;
 }

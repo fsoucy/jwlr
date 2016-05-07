@@ -6,7 +6,7 @@
       <a href="<%= conversation_url(conversation) %>">
         <% if conversation.first_user_id == current_user.id %>
      	    <%= image_tag conversation.second_user.profile_picture(:thumbnail) %>
-          <h3><%= conversation.second_user.name %></h3>
+          <h3 ><%= conversation.second_user.name %></h3>
         <% else %>
           <%= image_tag conversation.first_user.profile_picture(:thumbnail) %>
           <h3><%= conversation.first_user.name %></h3>
@@ -18,6 +18,7 @@
 	        Sent <%= message.created_at.strftime("%A") + ", " + message.created_at.strftime("%m/%d/%y") + " " + message.created_at.strftime("at %I:%M%p") %>
         </p>
 	      <%= hidden_field_tag :conversation_id, conversation.id, class: 'conversation_id' %>
+        <%= hidden_field_tag :myname, current_user.name, class: 'myname' %>      
       </a>
       </div>
     <% end %>

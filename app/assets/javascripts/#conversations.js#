@@ -172,6 +172,7 @@ $(document).ready(function()
   clearInterval(window.interval);
   $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
 	    loadOnIndex(parseInt(id), myname.toString());
+
 	});
     });
 });

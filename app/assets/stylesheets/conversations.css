@@ -1,15 +1,19 @@
 .conversations_indexing
 {
-    border: 1px solid #5a8693;
-    padding: 1em;
-    margin: 1em;
+  border: 1px solid #5a8693;
+  padding: 1em;
+  height: 50vh;
+  overflow: scroll;
+}
+
+.conversations_indexing h3 {
+  display: inline;
 }
 
 .conversations_indexing img
 {
-    height: 200px;
-    width: 200px;
-    padding: 1em;
+    height: 50px;
+    width: 50px;
     border: 1px solid #5a8693;
 }
 
@@ -25,11 +29,11 @@
 
 .massage_container
 {
-    margin: 5px;
-    width: 500px;
-    height: 200px;
+    height: 50vh;
     overflow: scroll;
     border: 1px solid #5a8693;
+  background-color: white;
+  color: #00171F;
 }
 
 .message_image
@@ -53,18 +57,15 @@
 
 .form_input[type=text]
 {
-    width: 350px;
-    height: 35px;
-    border: 1px solid #FFFFFF;
-    outline: none;
+  width: 85%;
+  height: 35px;
 }
 
 .send_message
 {
-    float: left;
-    clear: none;
-    width: 100px;
-    height: 35px;
-    display: block;
-    margin: 5px;
+  float: left;
+  clear: none;
+  width: 10%;
+  height: 35px;
+  margin-top: 5px;
 }

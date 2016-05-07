@@ -19,6 +19,7 @@
   display: inline-block;
   border-radius: 1em;
   color: white;
+  text-align: left;
 }
 
 .message_list_theirs
@@ -42,7 +43,6 @@
 .message_list_mine
 {
   max-width: 80%;
-  text-align: right;
   float: right;
   clear: both;
   padding: 0.1em;

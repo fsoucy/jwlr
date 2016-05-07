@@ -178,7 +178,6 @@ function evaluateAll()
 $(document).ready(function() {
     $('.cropped_show').click(function() {
 	console.log('hi');
-	debugger;
 	smallImage = $(this).attr('src');
 	smallLink = $(this).siblings('.pathway').val();
 	$('.cropped_show').removeClass('pic_active');
@@ -188,8 +187,9 @@ $(document).ready(function() {
 	$('.product_image').attr('src', smallImage.replace('thumbnail', 'medium'));
 	$('#magnifier').next().attr('href', smallLink);
 	var picLink = $(this).siblings('.mag_link').val();
-
+	
 	$('#magnifier').attr('href', picLink);
+	$('.loupe img').attr('src', $('#magnifier').attr('href'));
     });
 
     $('.category_name').change(function() {

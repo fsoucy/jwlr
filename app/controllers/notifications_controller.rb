@@ -10,7 +10,7 @@ class NotificationsController < ApplicationController
   end
 
   def index
-    @notifications = Notification.where("user_id = ?", params[:id]).paginate(:page => params[:page]).order(created_at: :desc)
+    @notifications = Notification.where("user_id = ?", params[:id]).paginate(:page => params[:page], per_page: 15).order(created_at: :desc)
   end
 
   private

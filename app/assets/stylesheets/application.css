@@ -72,6 +72,11 @@ a.pure-button-primary {
     color: blue;
 }
 
+.pagination .current
+{
+    color: black;
+}
+
 .pagination
 {
     padding-top: .5em;

@@ -15,7 +15,8 @@
       <%= f.hidden_field :other_id, value: other %>
       <%= f.text_field :content, class: "form_input", id: "message_input", placeholder: "Write your message here..." %>
       <%= f.submit "Send", class: "pure-button pure-button-primary send_message", id: "message_submit" %>
-    <% end %>
+      <% end %>
+
   </div>
   <%= hidden_field_tag :conversation_id, @conversation.id %>
 </div>

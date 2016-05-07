@@ -7,7 +7,7 @@
    		  <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "pad-box product_image pure-img" %>
   	  </a>
   		<% if @product.user == current_user %>
-  		<%= link_to("Edit", edit_picture_path(@product.pictures.first)) %>
+  		<%= link_to("Edit", edit_picture_path(@product.pictures.first), class: 'product_edit' ) %>
   		<% end %>
   	<% end %>
   	<br>

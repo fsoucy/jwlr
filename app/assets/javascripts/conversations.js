@@ -146,9 +146,9 @@ $(document).ready(function()
 	    $('#message_input').val('');
 	}
     });
-    
-    $('#message_submit').click(function(event) {
-	debugger;
+
+        
+    $(document).on('click', '#message_submit', function(event) {
 	event.preventDefault();
 	$.post('/messages', $('#message_form').serialize());
 	//$(".massages").load('http://igold.ws:3000/conversations/8' + " .massages");
@@ -157,14 +157,12 @@ $(document).ready(function()
 	$('#message_input').val('');
     });
     
-    
-    
     $('.convo_index_page').click(function(e){
 	e.preventDefault();
 	$('.convo_thing').remove();
 	var id = $(this).children('a').children('.conversation_id').val();
   clearInterval(window.interval);
-  $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
+	$('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
 	    loadOnIndex(parseInt(id));
 	});
     });

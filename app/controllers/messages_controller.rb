@@ -14,7 +14,7 @@ class MessagesController < ApplicationController
       if conversation.first.nil?
         convo = Conversation.new(first_user_id: other_id, second_user_id: user_id)
         convo.save
-        new_notification(convo.first_user.name + " has opened a conversation with you.", convo.second_user, conversation_url(convo))
+        new_notification(convo.first_user.name + " has opened a conversation with you.", convo.second_user, conversations_path(id: convo.id))
       else
         convo = conversation.first
       end

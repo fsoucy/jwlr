@@ -3,3 +3,14 @@
   padding: 1em;
   margin: 0.5em;
 }
+
+.feed_item img {
+  display: inline;
+  vertical-align: middle;
+}
+
+.feed_item h2 {
+  display: inline;
+  vertical-align: middle;
+  margin-left: 0.25em;
+}

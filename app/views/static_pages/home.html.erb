@@ -108,37 +108,58 @@
     </div>
     <div class="pure-u-1 pure-u-md-2-3">
       <% @feed_items.each do |item| %>
-        <% case item.class.name %>
-          <% when "Notification" %>
-            <div class="feed_item feed_notification">
-              <h3>
-                <%= item.message.html_safe %>
-              </h3>
-          <% when "Deal" %>
-            <div class="feed_item feed_deal">
-              <h3>
-                <%= link_to "Your deal on #{item.product.title}", item %>
-              </h3>
-              <%= image_tag item.product.pictures.first.photo_cropped(:thumb) %>
-              <p>
-                Current status: 
-                <% if item.deal_complete %>
-                  Complete
-                <% elsif item.product_received %>
-                  Product Received
-                <% elsif item.payment_complete %>
-                  Payment Complete
-                <% elsif item.agreement_achieved %>
-                  Sale Agreed
+        <div class="feed_item">
+          <% case item.class.name %>
+            <% when "Notification" %>
+              <div class="feed_notification">
+                <%= image_tag item.user.profile_picture(:thumbnail) %>
+                <h2><%= item.user.name %></h2>
+                <h3>
+                  <%= item.message.html_safe %>
+                </h3>
+            <% when "Deal" %>
+              <div class="feed_deal">
+                <% if item.seller_id == current_user.id %>
+                  <%= image_tag item.buyer.profile_picture(:thumbnail) %>
+                  <h2><%= item.buyer.name %></h2>
                 <% else %>
-                  This deal is still under negotiation
+                  <%= image_tag item.seller.profile_picture(:thumbnail) %>
+                  <h2><%= item.seller.name %></h2>
                 <% end %>
-              </p>
-        <% end %>
-          <p>
-            <%= time_ago_in_words(item.updated_at) %> ago        
-          </p>
-        </div>       
+                <h3>
+                  <%= link_to "Your deal on #{item.product.title}", item %>
+                </h3>
+                <%= image_tag item.product.pictures.first.photo_cropped(:thumb) %>
+                <p>
+                  Current status: 
+                  <% if item.deal_complete %>
+                    Complete
+                  <% elsif item.product_received %>
+                    Product Received
+                  <% elsif item.payment_complete %>
+                    Payment Complete
+                  <% elsif item.agreement_achieved %>
+                    Sale Agreed
+                  <% else %>
+                    This deal is still under negotiation
+                  <% end %>
+                </p>
+            <% when "Blogpost" %>
+              <div class="feed_blogpost">
+                <%= image_tag item.user.profile_picture(:thumbnail) %>
+                <h2><%= item.user.name %></h2>
+                <h3>
+                  <%= item.title %>
+                </h3> 
+                <p>
+                  <%= item.content %>
+                </p>
+          <% end %>
+            <p>
+              <%= time_ago_in_words(item.updated_at) %> ago        
+            </p>
+          </div> 
+        </div>      
       <% end %>
     </div>
   </div>

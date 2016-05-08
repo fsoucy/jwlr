@@ -47,6 +47,9 @@ class StaticPagesController < ApplicationController
       deals = current_user.selling_deals.order(updated_at: :desc).limit(50)
       @feed_items += deals      
 
+      blogposts = current_user.blogposts.order(created_at: :desc).limit(50)
+      @feed_items += blogposts
+
       @feed_items = @feed_items.sort_by(&:updated_at).reverse
     end
     @for_you = [] if @for_you.nil?

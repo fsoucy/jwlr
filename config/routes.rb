@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   #post 'newstatus' => 'api#newstatus'  
   #get 'users' => 'api#users'
 
+  get 'conversations/conversations_index'
+
   resources :conversations do
     member do
       get :pull_messages

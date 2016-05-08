@@ -97,7 +97,17 @@ function refreshMessages()
 function refreshIndex()
 {
   $.get("http://" + window.location.host + '/conversations/conversations_index', function(data) {
-     $(".conversations_indexing").replaceWith($(data).find(".conversations_indexing"));
+    $(".conversations_indexing").replaceWith($(data).find(".conversations_indexing"));
+    $('.convo_index_page').click(function(e){
+      e.preventDefault();
+      $('.convo_thing').remove();
+      var id = $(this).children('a').children('.conversation_id').val();
+      var myname = $(this).children('a').children('.myname').val();
+      clearInterval(window.interval);
+      $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
+        loadOnIndex(parseInt(id), myname.toString());
+      });
+    });
   });
 }
 

@@ -1,40 +1,53 @@
 class StaticPagesController < ApplicationController
+
   def home
     @top_products = Product.joins(:productviews).order('productviews.views DESC').limit(15)
     if logged_in?
-      searches = current_user.searches.all.sort_by(&:frequency).take(5).map(&:search_text)
-      results = Array.new
-      searches.each do |search_text|
-        search = Product.search do
-          fulltext search_text do
-            query_phrase_slop 3
-            boost_fields :title => 2.0
-            phrase_fields :title => 2.0
-            phrase_slop 1
-            boost_fields :description => 1.0
-          end
-          paginate :page => 1, :per_page => 1
-          with :sold, false
-          with :hold, false
-          with :activated, true
-        end
-        results += search.results
-      end
-      if results.count < 5
-        product = current_user.productviews.all.sort_by(&:views).take(1).map(&:product_id)
-        unless product.empty?
-          search = Sunspot.more_like_this(Product.find(product.first)) do
-            fields :description, :title
-            boost_by_relevance true
-            paginate :page => 1, :per_page => (5 - results.count)  
-            with :sold, false
-            with :hold, false
-            with :activated, true
-          end
-          results += search.results
-         end
-      end
-      @for_you = results
+      #searches = current_user.searches.all.sort_by(&:frequency).take(5).map(&:search_text)
+      #results = Array.new
+      #searches.each do |search_text|
+      #  search = Product.search do
+      #    fulltext search_text do
+      #      query_phrase_slop 3
+      #      boost_fields :title => 2.0
+      #      phrase_fields :title => 2.0
+      #      phrase_slop 1
+      #      boost_fields :description => 1.0
+      #    end
+      #    paginate :page => 1, :per_page => 1
+      #    with :sold, false
+      #    with :hold, false
+      #    with :activated, true
+      #  end
+      #  results += search.results
+      #end
+      #if results.count < 5
+      #  product = current_user.productviews.all.sort_by(&:views).take(1).map(&:product_id)
+      #  unless product.empty?
+      #    search = Sunspot.more_like_this(Product.find(product.first)) do
+      #      fields :description, :title
+      #      boost_by_relevance true
+      #      paginate :page => 1, :per_page => (5 - results.count)  
+      #      with :sold, false
+      #      with :hold, false
+      #      with :activated, true
+      #    end
+      #    results += search.results
+      #   end
+      #end
+      #@for_you = results
+      @feed_items = Array.new
+      
+      notifications = current_user.notifications.order(updated_at: :desc).limit(50)
+      @feed_items += notifications
+      
+      deals = current_user.buying_deals.order(updated_at: :desc).limit(50)
+      @feed_items += deals
+
+      deals = current_user.selling_deals.order(updated_at: :desc).limit(50)
+      @feed_items += deals      
+
+      @feed_items = @feed_items.sort_by(&:updated_at).reverse
     end
     @for_you = [] if @for_you.nil?
     @featured = [] if @featured.nil?

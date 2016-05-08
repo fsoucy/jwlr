@@ -1,6 +1,6 @@
 class ConversationsController < ApplicationController
   before_action :logged_in_user
-  before_action :correct_user, only: [:show, :pull_messages]
+  before_action :correct_user, only: [:show, :pull_messages], except: [:conversations_index]
   before_action :not_same_user, only: [:create]
 
   def show
@@ -26,6 +26,10 @@ class ConversationsController < ApplicationController
 
   def index
     @message_edit = true
+    @conversations = Conversation.where("first_user_id = ? OR second_user_id = ?", current_user.id, current_user.id).order(updated_at: :desc)
+  end
+
+  def conversations_index
     @conversations = Conversation.where("first_user_id = ? OR second_user_id = ?", current_user.id, current_user.id).order(updated_at: :desc)
   end
 

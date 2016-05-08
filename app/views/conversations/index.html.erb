@@ -1,32 +1,6 @@
 <h1 class="pad-header">Conversations</h1>
 <div class="pure-g margin-box log-in-form">
-  <div class="conversations_indexing pure-u-1 pure-u-md-1-3 pure-u-lg-1-5">
-    <% @conversations.each do |conversation| %>
-      <div class="convo_index_page">
-      <a href="<%= conversation_url(conversation) %>">
-        <p>
-          <% if conversation.first_user_id == current_user.id %>
-     	      <%= image_tag conversation.second_user.profile_picture(:thumbnail) %>
-            <%= conversation.second_user.name %>
-          <% else %>
-            <%= image_tag conversation.first_user.profile_picture(:thumbnail) %>
-            <%= conversation.first_user.name %>
-          <% end %>
-          <br>
-          <% message = conversation.messages.order(created_at: :desc).limit(1).first %>    
-          <%= message.content.truncate(20) %>
-          <br>
-	        <%= time_ago_in_words(message.created_at) + " ago" %>
-        </p>
-	      <%= hidden_field_tag :conversation_id, conversation.id, class: 'conversation_id' %>
-        <%= hidden_field_tag :myname, current_user.name, class: 'myname' %>      
-      </a>
-      </div>
-    <% end %>
-    <% if @conversations.first.nil? %>
-      <h3>You have no active conversations.</h3>
-    <% end %>
-  </div>
+  <%= render partial: 'conversations_index' %>
   <div class="pure-u-1 pure-u-md-2-3 pure-u-lg-4-5 conversation_window">
     <% if params[:id].nil? %>
       <% conversation = @conversations.first %>

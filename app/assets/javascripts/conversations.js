@@ -94,8 +94,16 @@ function refreshMessages()
     });
 }
 
+function refreshIndex()
+{
+  $.get("http://" + window.location.host + '/conversations/conversations_index', function(data) {
+     $(".conversations_indexing").replaceWith($(data).find(".conversations_indexing"));
+  });
+}
+
 $(document).ready(function()
 {   
+  window.interval2 = setInterval(refreshIndex, 10000);
     window.myname = $('.convo_index_page').children('a').children('.myname').val();
     $('#messages').bind('scroll', function(event) {
       if ($('#messages').scrollTop() < 10)
@@ -222,5 +230,7 @@ $(document).ready(function()
 	  
       });
     });
+  
+
 });
 

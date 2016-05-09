@@ -1,0 +1,107 @@
+<% exchange_method = @deal.exchange_method unless @deal.exchange_method_id.nil? %>
+<% if !exchange_method.nil? %>
+<h2>Exchange Method: <%= exchange_method.method %></h2>
+<% if exchange_method.id == 1 %>
+<% if (@deal.exchange_agreement_seller and @deal.exchange_agreement_buyer) %>
+<h3>The exchange methods have been completely agreed upon.</h3>
+<h4>The seller will deliver the product to the buyer</h4>
+<h4>Dropoff location: <%= @deal.dropoff %></h4>
+<h4>Delivery cost: <%= number_to_currency(@deal.product.delivery_cost) %></h4>
+<% else %>
+<% if current_user.id == @deal.buyer_id %>
+<h3>Delivery cost: <%= number_to_currency(@deal.product.delivery_cost) %></h3>
+<% if !@deal.agreement_achieved %>
+<%= form_for(@deal) do |f| %>
+<h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save", class: "pure-button pure-button-primary" %></h3>
+<% end %>
+<% else %>
+<h3>Your location for delivery: <%= @deal.dropoff %></h3>
+<% end %>
+<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "" and @deal.proposed_price_accepted) %>
+<% if !@deal.exchange_agreement_buyer %>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :exchange_agreement_buyer, value: true %>
+<%= f.submit "Accept exchange", class: "pure-button pure-button-primary" %>
+<% end %>
+<% else %>
+<h4>Already accepted exchange! Waiting on seller to agree.</h4>
+<% end %>
+<% end %>
+<% end %>
+<% if current_user.id == @deal.seller_id %>
+<% if !@deal.agreement_achieved %>
+<%= form_for(@deal.product) do |f| %>
+<%= f.hidden_field :on_deals, value: true %>
+<%= f.hidden_field :deal_id, value: @deal.id %>
+<h3>Delivery cost: <%= f.number_field :delivery_cost %></h3>
+<%= f.submit "Save changes on delivery exchange", class: "pure-button pure-button-primary" %>
+<% end %>
+<% else %>
+<h3>Delivery cost: <%= @deal.product.delivery_cost %></h3>
+<% end %>
+<h3>Delivery location: <%= @deal.dropoff %></h3>
+<% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "" and @deal.proposed_price_accepted and @deal.exchange_agreement_buyer) %>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :exchange_agreement_seller, value: true %>
+<%= f.submit "Accept exchange", class: "pure-button pure-button-primary" %>
+<% end %>
+<% elsif @deal.proposed_price_accepted %>
+<h3>Waiting for buyer to accept exchange</h3>
+<% end %>
+<% end %>
+<% end %>
+<% end %>
+<% if exchange_method.id == 2 %>
+<% if !@deal.agreement_achieved %>
+<h4>Buyer and seller will need to decide upon a location and datetime in messaging</h4>
+<% else %>
+<h4>Agreement achieved</h4>
+<% end %>
+<% if current_user.id == @deal.seller_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_seller %>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :exchange_agreement_seller, value: true %>
+<%= f.submit "Agreed exchange", class: "pure-button pure-button-primary" %>
+<% end %>
+<% elsif (current_user.id == @deal.seller_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
+<h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
+<% end %>
+<% if current_user.id == @deal.buyer_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_buyer %>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :exchange_agreement_buyer, value: true %>
+<%= f.submit "Agreed exchange", class: "pure-button pure-button-primary" %>
+<% end %>
+<% elsif (current_user.id == @deal.buyer_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
+<h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
+<% end %>
+<% end %>
+<% if exchange_method.id == 3 %>
+<% if !@deal.product.store.nil? %>
+<h4>The buyer needs to go to the user's store and pick up the product.</h4>
+<h5>Location of pickup: <%= @deal.product.store.full_street_address %></h5>
+<h5>Business days to pickup: <%= @deal.product.store.business_days_pickup %></h5>
+<h5>The pickup will have to correspond to the <%= link_to "store's hours of operation.", @store %></h5>
+<% else %>
+<% if !@deal.agreement_achieved %>
+<h4>Buyer and seller should agreement on a pickup time and location in messaging</h4>
+<% else %>
+<h4>Agreement achieved</h4>
+<% end %>
+<% if current_user.id == @deal.seller_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_seller %>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :exchange_agreement_seller, value: true %>
+<%= f.submit "Agreed exchange", class: "pure-button pure-button-primary" %>
+<% end %>
+<% elsif (current_user.id == @deal.seller_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
+<h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
+<% end %>
+<% if current_user.id == @deal.buyer_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_buyer %>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :exchange_agreement_buyer, value: true %>
+<%= f.submit "Agreed exchange", class: "pure-button pure-button-primary" %>
+<% end %>
+<% elsif (current_user.id == @deal.buyer_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
+<h4>Exchange agreed, waiting for seller to accept exchange.</h4>
+<% end %>
+<% end %>
+<% end %>
+<% end %>

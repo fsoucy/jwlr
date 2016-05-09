@@ -1,0 +1,55 @@
+<h2>Welcome to the deals guide! We hope these instructions help you to proceed with your deal and get what you want.</h2>
+<% if current_user.id == @deal.buyer_id %> <!-- IS BUYER -->
+  <!-- STAGES of DEAL for BUYER -->
+  <!-- 1. needs to select methods -->
+  <!-- 2. needs to agree on selling method -->
+  <!-- 3. needs to agree on exchange method -->
+  <!-- 4. needs to pay -->
+  <!-- 5. Receive product and affirm conducted transaction -->
+  <!-- 6. leave a review -->
+  <% if @deal.product.selling_method_links.count > 1 && @deal.selling_method_id.nil? %> <!-- Hasn't decided on selling method -->
+    <h3>First, you will need to choose a selling method on the following page. Do you want to pay the static price, or negotiate?</h3>
+  <% end %>
+  <% if @deal.product.exchange_method_links.count > 1 && @deal.exchange_method_id.nil? %> <!-- Hasn't decided on exchange method -->
+    <h3>You will need to choose an exchange method on the following page. Delivery, pickup, or meetup?</h3>    
+  <% end %>
+  <% if @deal.product.payment_method_links.count > 1 && @deal.payment_method_id.nil? %> <!-- Hasn't decided on payment method -->
+    <h3>Choose the payment method, and let your seller know how you'd like to conduct the transaction.</h3>
+  <% end %>
+
+  <% unless @deal.selling_method_id.nil? || @deal.exchange_method_id.nil? || @deal.payment_method_id.nil? %> <!-- Successfuly chosen methods. -->
+    <h3>Congrats! You've successfully selected selling, exchange, and payment methods. Now, it's time to complete the deal and get your product!</h3>
+  <% end %>
+  
+  <% selling_completed = (@deal.selling_method_id == 2 || @deal.proposed_price_accepted ) %>
+  <% exchange_completed = (@deal.exchange_agreement_seller && @deal.exchange_agreement_buyer) %>
+  <% payment_completed = @deal.payment_complete %>
+  <% if !selling_completed %>
+    <h3><span class="selling_button inline_button">Now, you will need to agree on a price with the seller. </span>Feel free to use messaging to communicate.</h3>
+  <% end %>
+
+  <% if selling_completed && !exchange_completed %>
+    <h3><span class="exchange_button inline_button">You will need to agree on an exchange method with the seller. </span>Feel free to use messaging to communicate.</h3>
+  <% end %>
+
+  <% if selling_completed && exchange_completed && !payment_completed %>
+    <h3>You're almost done! <span class="payment_button inline_button">Now make your payment so you can get your product.</span></h3>
+  <% end %>
+
+  <% if selling_completed && exchange_completed && payment_completed %>
+    <% if @deal.exchange_method_id == 1 %>
+      <h3>The product is being shipped to you. <span class="complete_button inline_button">Let us know when you receive it.</span></h3>
+    <% end %> 
+    <% if @deal.exchange_method_id == 2 %>
+      <h3>Meet the seller at the location specified and <span class="complete_button inline_button">let us know when you get the product.</span></h3>
+    <% end %>
+    <% if @deal.exchange_method_id == 3 %>
+      <h3>Pickup the product at the store. <span class="complete_button inline_button">Let us know when you do.</span></h3>
+    <% end %>
+  <% end %>  
+
+<% else %>
+
+
+
+<% end %>

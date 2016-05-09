@@ -23,3 +23,28 @@
 .deal img {
   margin-right: 1em;
 }
+
+.deals_img
+{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+
+
+.marg
+{
+    margin: 1em;
+}
+
+.deals_welcome
+{
+    padding-left: 0.5em;
+}
+
+.inline_button
+{
+    color: green;
+    cursor: pointer;
+}
+

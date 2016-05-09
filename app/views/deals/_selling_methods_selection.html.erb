@@ -1,0 +1,39 @@
+<% selling_method = @deal.selling_method unless @deal.selling_method_id.nil? %>
+<% if !selling_method.nil? %>
+<h2>Selling Method: <%= selling_method.method %></h2>
+<% if selling_method.id == 3 or selling_method.id == 4 %>
+<% if @deal.exchange_agreement_seller %>
+<h3>The deal is going through for <%= number_to_currency(@deal.user_proposed_price) %></h3>
+<% else %>
+<% if current_user.id == @deal.buyer_id %>
+<h3>Listed price: <%= number_to_currency(@deal.product.price) %></h3>
+<!--<h3>iGold's suggested value for premium users</h3>-->
+<%= form_for(@deal) do |f| %>
+<% if 2 == 3 %>
+<h3 id="price_warning">Price is too low! Not accepted.</h3>
+<% end %>
+<%= f.hidden_field :min_price, value: @deal.product.min_accepted_price, id: "minimum_price" %>
+<h3>Your price: <%= f.number_field :user_proposed_price, value: @deal.user_proposed_price, id: "price_proposal" %>  <%= f.submit "Change offer", class: "propose_price pure-button pure-button-primary" %></h3>
+<% end %>
+<% if !@deal.user_proposed_price.nil? && !@deal.proposed_price_accepted %>
+<h4>Offer made, waiting for seller to accept.</h4>
+<% elsif @deal.proposed_price_accepted %>
+<h4>Offer accepted!</h4>
+<% end %>
+<% end %>
+<% if current_user.id == @deal.seller_id %>
+<h3>Listed price: <%= number_to_currency(@deal.product.price) %></h3>
+<%= form_for @deal do |f| %>
+<%= f.hidden_field :proposed_price_accepted, value: !@deal.proposed_price_accepted %>
+<h3>Offered price: <%= number_to_currency(@deal.user_proposed_price) %>  <%= f.submit "Set offer accepted to #{!@deal.proposed_price_accepted} pure-button pure-button-primary" %></h3>
+<% end %>
+<% if !@deal.user_proposed_price.nil? && !@deal.proposed_price_accepted %>
+<h4>The buyer has made an offer, either accept it here or discuss with the buyer.</h4>
+<% end %>
+<% end %>
+<% end %>
+<% end %>
+<% if selling_method.id == 2 %>
+<h3>This product has a set price: <%= number_to_currency(@deal.product.price) %></h3>
+<% end %>
+<% end %>

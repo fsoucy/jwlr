@@ -4,6 +4,8 @@ class KeyStore < ActiveRecord::Base
     to_return = ::KeyStore.where(key: key).first
     if !to_return.nil?
       to_return.value
+    else
+      nil
     end
   end
 

@@ -1,7 +1,7 @@
-<div class="conversations_indexing pure-u-1 pure-u-md-1-3 pure-u-lg-1-5">
+<div class="conversations_indexing">
   <% @conversations.each do |conversation| %>
     <div class="convo_index_page">
-      <a href="<%= conversation_url(conversation) %>">
+      <a href="<%= conversations_url(id: conversation.id) %>">
         <p>
           <% if conversation.first_user_id == current_user.id %>
             <%= image_tag conversation.second_user.profile_picture(:thumbnail) %>

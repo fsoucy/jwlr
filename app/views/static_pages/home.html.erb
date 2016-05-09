@@ -103,17 +103,28 @@
         </div>
 <% else %>
   <div class="pure-g pad-box">
-    <div class="pure-u-1 pure-u-md-1-3">
-
+    <div class="pure-u-1 pure-u-md-1-4 fixed">
+      <%= image_tag current_user.profile_picture(:thumb) %>
+      <div class="pure-menu">
+        <span class="pure-menu-heading"><%= current_user.name %></span>
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item"><a href="<%= root_url %>" class="pure-menu-link">Feed</a></li>
+          <li class="pure-menu-item"><a href="<%= edit_user_path(current_user) %>" class="pure-menu-link">Edit Profile</a></li>
+          <li class="pure-menu-item"><a href="#" class="pure-menu-link">Followers</a></li>
+          <li class="pure-menu-item"><a href="#" class="pure-menu-link">Following</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="pure-u-1 pure-u-md-2-3">
+    <div class="pure-u-1 pure-u-md-1-4"></div>
+    <div class="pure-u-1 pure-u-md-1-2">
+      <% item_number = 1 %>
       <% @feed_items.each do |item| %>
         <div class="feed_item">
           <% case item.class.name %>
             <% when "Notification" %>
               <div class="feed_notification">
                 <%= image_tag item.user.profile_picture(:thumbnail) %>
-                <h2><%= item.user.name %></h2>
+                <a href="<%= user_path(item.user) %>"><h2><%= item.user.name %></h2></a>
                 <h3>
                   <%= item.message.html_safe %>
                 </h3>
@@ -121,10 +132,10 @@
               <div class="feed_deal">
                 <% if item.seller_id == current_user.id %>
                   <%= image_tag item.buyer.profile_picture(:thumbnail) %>
-                  <h2><%= item.buyer.name %></h2>
+                  <a href="<%= user_path(item.buyer) %>"><h2><%= item.buyer.name %></h2></a>
                 <% else %>
                   <%= image_tag item.seller.profile_picture(:thumbnail) %>
-                  <h2><%= item.seller.name %></h2>
+                  <a href="<%= user_path(item.seller) %>"><h2><%= item.seller.name %></h2></a>
                 <% end %>
                 <h3>
                   <%= link_to "Your deal on #{item.product.title}", item %>
@@ -147,7 +158,7 @@
             <% when "Blogpost" %>
               <div class="feed_blogpost">
                 <%= image_tag item.user.profile_picture(:thumbnail) %>
-                <h2><%= item.user.name %></h2>
+                <a href="<%= user_path(item.user) %>"><h2><%= item.user.name %></h2></a>
                 <h3>
                   <%= item.title %>
                 </h3> 
@@ -159,8 +170,36 @@
               <%= time_ago_in_words(item.updated_at) %> ago        
             </p>
           </div> 
-        </div>      
+        </div>
+        <% if item_number % 10 == 0 and item_number % 20 != 0 %>
+          <div class="feed_item">
+            <h3>For You</h3>
+            <div class="pure-g">
+              <% @for_you.each do |product| %>
+                <div class="pure-u-1-3">
+                  <%= render product %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% elsif item_number % 20 == 0 %>
+          <div class="feed_item">
+            <h3>Top Products</h3>
+            <div class="pure-g">
+              <% @top_products.each do |product| %>
+                <div class="pure-u-1-3">
+                  <%= render product %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <% item_number += 1 %>      
       <% end %>
+    </div>
+    <div class="pure-u-1 pure-u-md-1-4 fixed">
+      <h3 class="pad-box">Conversations</h3>
+      <%= render partial: "conversations/conversations_index" %>
     </div>
   </div>
 <% end %>

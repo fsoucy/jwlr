@@ -2,21 +2,21 @@
 <% if @deal.exchange_method.method == "Delivery" %>
 <%= form_for @deal do |f| %>
 <%= f.hidden_field :product_dispatched, value: !@deal.product_dispatched %>
-<%= f.submit "Set product dispatched to #{!@deal.product_dispatched}" %>
+<%= f.submit "Set product dispatched to #{!@deal.product_dispatched}", class: "pure-button pure-button-primary" %>
 <% end %>
 <% end %>
 
 <% if @deal.payment_method.method != "Paypal" and !@deal.seller_satisfied %>
 <%= form_for @deal do |f| %>
 <%= f.hidden_field :payment_complete, value: !@deal.payment_complete %>
-<%= f.submit "Set payment received to #{!@deal.payment_complete}" %>
+<%= f.submit "Set payment received to #{!@deal.payment_complete}", class: "pure-button pure-button-primary" %>
 <% end %>
 <% end %>
 
 <% if (@deal.payment_complete and @deal.product_received and !@deal.deal_complete) %>
 <%= form_for @deal do |f| %>
 <%= f.hidden_field :seller_satisfied, value: !@deal.seller_satisfied %>
-<%= f.submit "Set satisfied with completed deal to #{!@deal.seller_satisfied}" %>
+<%= f.submit "Set satisfied with completed deal to #{!@deal.seller_satisfied}", class: "pure-button pure-button-primary" %>
 <% end %>
 <% end %>
 
@@ -25,14 +25,14 @@
 <% if !@deal.buyer_satisfied %>
 <%= form_for @deal do |f| %>
 <%= f.hidden_field :product_received, value: !@deal.product_received %>
-<%= f.submit "Set product received to #{!@deal.product_received}" %>
+<%= f.submit "Set product received to #{!@deal.product_received}", class: "pure-button pure-button-primary" %>
 <% end %>
 <% end %>
 
 <% if (@deal.product_received and @deal.payment_complete and !@deal.deal_complete) %>
 <%= form_for @deal do |f| %>
 <%= f.hidden_field :buyer_satisfied, value: !@deal.buyer_satisfied %>
-<%= f.submit "Set satisfied with completed deal to #{!@deal.buyer_satisfied}" %>
+<%= f.submit "Set satisfied with completed deal to #{!@deal.buyer_satisfied}", class: "pure-button pure-button-primary" %>
 <% end %>
 <% end %>
 <% end %>

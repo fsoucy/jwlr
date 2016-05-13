@@ -96,19 +96,29 @@ function refreshMessages()
 
 function refreshIndex()
 {
-  $.get("http://" + window.location.host + '/conversations/conversations_index', function(data) {
-    $(".conversations_indexing").replaceWith($(data).find(".conversations_indexing"));
-    $('.convo_index_page').click(function(e){
-      e.preventDefault();
-      $('.convo_thing').remove();
-      var id = $(this).children('a').children('.conversation_id').val();
-      var myname = $(this).children('a').children('.myname').val();
-      clearInterval(window.interval);
-      $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
-        loadOnIndex(parseInt(id), myname.toString());
+  if($('.convo_index_page').length)
+  {
+    $.get("http://" + window.location.host + '/conversations/conversations_index', function(data) {
+      $(".conversations_indexing").replaceWith($(data).find(".conversations_indexing"));
+      $('.convo_index_page').click(function(e){
+        if($('.convo_thing').length)
+        {
+          e.preventDefault();
+          $('.convo_thing').remove();
+          var id = $(this).children('a').children('.conversation_id').val();
+          var myname = $(this).children('a').children('.myname').val();
+          clearInterval(window.interval);
+          $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
+            loadOnIndex(parseInt(id), myname.toString());
+          });
+        }
       });
     });
-  });
+  }
+  else
+  {
+    clearInterval(window.interval2);
+  }
 }
 
 $(document).ready(function()
@@ -206,41 +216,42 @@ $(document).ready(function()
     });
     
     $('.convo_index_page').click(function(e){
-	    e.preventDefault();
-	    $('.convo_thing').remove();
-	    var id = $(this).children('a').children('.conversation_id').val();
-      var myname = $(this).children('a').children('.myname').val();
-      clearInterval(window.interval);
-      $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
-	      loadOnIndex(parseInt(id), myname.toString());
-	  $('#messages').bind('scroll', function(event) {
-      if ($('#messages').scrollTop() < 10)
-  {
-      var results;
-      $.ajax({
-    type: "GET",// GET in place of POST
-    contentType: "application/json; charset=utf-8",
-    url: "http://" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
-    data: {},
-    dataType: "json",
-    success: function (result) {
-        results = result.reverse();
-        for (res in results)
-        {
-      thing = results[parseInt(res)];
-      setMessages(thing, false);
-        }
-    },
-    error: function (e){
-    }
-      });
-      window.page = window.page + 1;
-  }
-	  });
-	  
-      });
+	    debugger;
+      if($('.convo_thing').length > 0)
+      {
+        e.preventDefault();
+	      $('.convo_thing').remove();
+	      var id = $(this).children('a').children('.conversation_id').val();
+        var myname = $(this).children('a').children('.myname').val();
+        clearInterval(window.interval);
+        $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
+	        loadOnIndex(parseInt(id), myname.toString());
+	        $('#messages').bind('scroll', function(event) {
+            if ($('#messages').scrollTop() < 10)
+            {
+              var results;
+              $.ajax({
+                type: "GET",// GET in place of POST
+                contentType: "application/json; charset=utf-8",
+                url: "http://" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
+                data: {},
+                dataType: "json",
+                success: function (result) {
+                  results = result.reverse();
+                  for (res in results)
+                  {
+                    thing = results[parseInt(res)];
+                    setMessages(thing, false);
+                  }
+                },
+                error: function (e){
+                }
+              });
+              window.page = window.page + 1;
+            }
+	        });
+	      });
+      }
     });
-  
-
 });
 

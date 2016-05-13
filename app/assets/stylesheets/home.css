@@ -107,3 +107,7 @@ html, button, input, select, textarea,
     /* Set your content font stack here: */
     font-family: 'Droid Sans', sans-serif !important;
 }
+
+.fixed {
+  position: fixed;
+}

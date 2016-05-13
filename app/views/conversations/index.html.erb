@@ -1,6 +1,8 @@
 <h1 class="pad-header">Conversations</h1>
 <div class="pure-g margin-box log-in-form">
-  <%= render partial: 'conversations_index' %>
+  <div class="pure-u-1 pure-u-md-1-3 pure-u-lg-1-5">
+    <%= render partial: 'conversations_index' %>
+  </div>
   <div class="pure-u-1 pure-u-md-2-3 pure-u-lg-4-5 conversation_window">
     <% if params[:id].nil? %>
       <% conversation = @conversations.first %>

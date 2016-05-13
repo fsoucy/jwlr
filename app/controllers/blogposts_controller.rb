@@ -1,6 +1,5 @@
 class BlogpostsController < ApplicationController
   before_action :logged_in_user
-  before_action :correct_user_store, only: [:new, :create]
   before_action :correct_user_blogpost, only: [:edit, :update, :destroy]  
 
   def new
@@ -21,8 +20,13 @@ class BlogpostsController < ApplicationController
     if params[:store_id].to_i == -1 or params[:store_id].nil?
       @blogpost = current_user.blogposts.build(blogpost_params)
     else
-      @blogpost = current_user.stores.find_by(id: params[:store_id]).blogposts.build(blogpost_params)
-      @blogpost.user_id = current_user.id
+      store = current_user.stores.find_by(id: params[:store_id])
+      if !store.nil?
+        @blogpost = store.blogposts.build(blogpost_params)
+        @blogpost.user_id = current_user.id
+      else
+        redirect_to root_url
+      end
     end
     if @blogpost.save
       flash[:success] = "Blogpost created!"
@@ -60,14 +64,13 @@ class BlogpostsController < ApplicationController
       params.require(:blogpost).permit(:title, :content)
     end
 
-    def correct_user_store
-      #@store = current_user.stores.find(params[:id])
-      #redirect_to root_url if @store.nil?
-    end
-
     def correct_user_blogpost
       @blogpost = Blogpost.find(params[:id])
-      redirect_to root_url if @blogpost.store.user != current_user
+      if @blogpost.store.nil?
+        redirect_to root_url if @blogpost.user != current_user
+      else
+        redirect_to root_url if @blogpost.store.user != current_user
+      end
     end
   
 end

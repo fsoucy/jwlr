@@ -97,25 +97,25 @@
   <% if selling_completed && exchange_completed && payment_completed %>
     <% if current_user.id == @deal.buyer_id %>
       <% if @deal.exchange_method_id == 1 %>
-        <h3>The product is being shipped to you. <span class="complete_button inline_button">Let us know when you receive it.</span></h3>
+        <h3>The product is being shipped to you. <span class="completed_button inline_button">Let us know when you receive it.</span></h3>
       <% end %> 
       <% if @deal.exchange_method_id == 2 %>
-        <h3>Meet the seller at the location specified and <span class="complete_button inline_button">let us know when you get the product.</span></h3>
+        <h3>Meet the seller at the location specified and <span class="completed_button inline_button">let us know when you get the product.</span></h3>
       <% end %>
       <% if @deal.exchange_method_id == 3 %>
-        <h3>Pickup the product at the store. <span class="complete_button inline_button">Let us know when you do.</span></h3>
+        <h3>Pickup the product at the store. <span class="completed_button inline_button">Let us know when you do.</span></h3>
       <% end %>
     <% end %>
     
     <% if current_user.id == @deal.seller_id %>
       <% if @deal.exchange_method_id == 1 %>
-        <h3>You need to ship the product to the user. <span class="complete_button inline_button">Let us know whenyou do.</span></h3>
+        <h3>You need to ship the product to the user. <span class="completed_button inline_button">Let us know when you do.</span></h3>
       <% end %>
       <% if @deal.exchange_method_id == 2 %>
-        <h3>Meet the buyer and the location specified and <span class="complete_button inline_button">let us know when you complete the deal.</span></h3>
+        <h3>Meet the buyer and the location specified and <span class="completed_button inline_button">let us know when you complete the deal.</span></h3>
       <% end %>
       <% if @deal.exchange_method_id == 3 %>
-        <h3>The buyer will be picking up the product. <span class="complete_button inline_button">Let us know when the deal is done.</span></h3>
+        <h3>The buyer will be picking up the product. <span class="completed_button inline_button">Let us know when the deal is done.</span></h3>
       <% end %>
     <% end %>
 

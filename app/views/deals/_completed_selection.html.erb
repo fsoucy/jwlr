@@ -20,6 +20,8 @@
 <% end %>
 <% end %>
 
+
+
 <% end %>
 <% if ((current_user.id == @deal.buyer_id) and @deal.agreement_achieved and !@deal.deal_complete) %>
 <% if !@deal.buyer_satisfied %>
@@ -39,4 +41,9 @@
 <% review = @deal.reviews.where("user_id = ?", current_user.id).first %>
 <% if review.nil? && @deal.deal_complete %>
 <%= link_to "Leave a review of this deal", new_review_url(@deal) %>
+<% end %>
+
+
+<% if (!review.nil? && @deal.product_received && @deal.payment_complete && @deal.deal_complete) %>
+<h3>Congrats, you have successfully completed your deal!</h3>
 <% end %>

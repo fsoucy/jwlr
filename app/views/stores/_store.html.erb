@@ -1,10 +1,6 @@
 
 <div class="result">
-<% if !store.profile_picture(:medium).include?("missing") %>
 <%= link_to image_tag(store.profile_picture(:medium)), store %>
-<% else %>
-<%= link_to image_tag("/assets/blankimg.png"), store %>
-<% end %>
 <div class="result_info">
 <h3>Name: <%= store.name %></h3>
 <h3>Owner: <%= store.user.name %></h3>

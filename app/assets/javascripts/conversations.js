@@ -154,7 +154,18 @@ $(document).ready(function()
     {
 	    window.page = 1;
 	    var urlString = window.location.href;
-	    window.conversation = parseInt($('#conversation_id').val());
+	window.conversation = parseInt($('#conversation_id').val());
+	debugger;
+	if (urlString.includes("conversations?id="))
+	{
+	    debugger;
+	    var index = urlString.indexOf("id=");
+	    var realIndex = index + 3;
+	    var convo = parseInt(urlString.substring(realIndex));
+	    window.conversation = convo;
+	    
+	}
+	   
 	    $.ajax({
 	      type: "GET",// GET in place of POST
 	      contentType: "application/json; charset=utf-8",
@@ -220,8 +231,8 @@ $(document).ready(function()
       if($('.convo_thing').length > 0)
       {
         e.preventDefault();
-	      $('.convo_thing').remove();
-	      var id = $(this).children('a').children('.conversation_id').val();
+	  $('.convo_thing').remove();
+	  var id = $(this).children('a').children('.conversation_id').val();
         var myname = $(this).children('a').children('.myname').val();
         clearInterval(window.interval);
         $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {

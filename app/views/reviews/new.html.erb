@@ -1,11 +1,14 @@
-<%= form_for(@review) do |f| %>
-<%= f.label :verdict %>
-<%= f.select :verdict, options_for_select([['Positive', 'Positive'], ['Neutral', 'Neutral'], ['Negative', 'Negative']]) %>
-<br>
-<%= f.label :message, "Review" %>
-<br>
-<%= f.text_area :message %>
-<br>
-<%= f.submit "Submit Review (Cannot be changed)" %>
-<% end %>
-
+<div class="pure-g log-in">
+  <div class="pure-u-1 pure-u-md-1-3"></div>
+  <div class="pure-u-1 pure-u-md-1-3 log-in-form">
+    <%= form_for @review, html: {class: "pure-form pure-form-stacked"} do |f| %>
+      <fieldset>
+        <legend>Leave a review</legend>
+        <%= f.select :verdict, options_for_select([['Positive', 'Positive'], ['Neutral', 'Neutral'], ['Negative', 'Negative']]) %>
+        <%= f.text_area :message, placeholder: 'Message' %>
+        <%= f.submit "Submit Review (Cannot be changed)", class: "pure-button pure-button-primary" %>
+      </fieldset>
+    <% end %>
+  </div>
+  <div class="pure-u-1 pure-u-md-1-3"></div>
+</div>

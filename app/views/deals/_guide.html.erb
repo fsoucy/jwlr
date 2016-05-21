@@ -122,7 +122,7 @@
 
     
     <% end %>  
-  <% elif @deal.exchange_method.id == 2 %>
+  <% elsif @deal.exchange_method.id == 2 %>
     <% if current_user.id == @deal.buyer_id %>
       <h3>Now all you need to do is meet the seller and purchase the product. <span class="completed_button inline_button">Let us know when you do.</span></h3>
     <% end %>
@@ -130,7 +130,7 @@
       <h3>Meet the buyer and sell the product. <span class="completed_button inline_button">Let us know when you do.</span></h3>
     <% end %>
 
-  <% elif @deal.exchange_method.id == 3 %>
+  <% elsif @deal.exchange_method.id == 3 %>
     <% if current_user.id == @deal.buyer_id %>
       <h3>Now, you need to pick up and pay for the product. <span class="completed_button inline_button">Let us know when you do</span></h3>
     <% end %>

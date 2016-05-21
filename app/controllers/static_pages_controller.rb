@@ -3,7 +3,7 @@ class StaticPagesController < ApplicationController
   def home
     @top_products = Product.joins(:productviews).order('productviews.views DESC').limit(9)
     if logged_in?
-      searches = current_user.searches.all.sort_by(&:frequency).take(9).map(&:search_text)
+      searches = current_user.searches.order('"search_relationships"."frequency" DESC').limit(9).pluck(:search_text)
       results = Array.new
       searches.each do |search_text|
         search = Product.search do
@@ -22,7 +22,7 @@ class StaticPagesController < ApplicationController
         results += search.results
       end
       if results.count < 9
-        product = current_user.productviews.all.sort_by(&:views).take(1).map(&:product_id)
+        product = current_user.productviews.order(views: :desc).limit(1).pluck(:product_id)
         unless product.empty?
           search = Sunspot.more_like_this(Product.find(product.first)) do
             fields :description, :title

@@ -14,7 +14,7 @@
           <% message = conversation.messages.order(created_at: :desc).limit(1).first %>
           <%= message.content.truncate(20) %>
           <br>
-          <%= time_ago_in_words(message.created_at) + " ago" %>
+          <%= time_ago_in_words(conversation.updated_at) + " ago" %>
         </p>
         <%= hidden_field_tag :conversation_id, conversation.id, class: 'conversation_id' %>
         <%= hidden_field_tag :myname, current_user.name, class: 'myname' %>

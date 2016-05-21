@@ -12,22 +12,23 @@ class MessagesController < ApplicationController
     if current_user.id == user_id
       conversation = Conversation.where("(first_user_id=? or first_user_id=?) AND (second_user_id=? or second_user_id=?)", user_id, other_id, user_id, other_id)
       if conversation.first.nil?
-        convo = Conversation.new(first_user_id: other_id, second_user_id: user_id)
-        convo.save
-        new_notification(convo.first_user.name + " has opened a conversation with you.", convo.second_user, conversations_path(id: convo.id))
+        conversation = Conversation.new(first_user_id: other_id, second_user_id: user_id)
+        conversation.save
+        new_notification(conversation.first_user.name + " has opened a conversation with you.", conversation.second_user, conversations_path(id: conversation.id))
       else
-        convo = conversation.first
+        conversation = conversation.first
       end
       params[:message][:content] = params[:message][:content].squish
-      @message = convo.messages.build(message_params)
+      @message = conversation.messages.build(message_params)
       if @message.content.length > 0
         @message.save
-        convo.save
+        conversation.update_attribute(:updated_at, Time.now)
+        conversation.save
       end
       if params[:message][:on_deals]
         redirect_to Deal.find(params[:message][:deal_id])
       else
-        redirect_to(controller: 'conversations', action: 'index', id: convo.id)
+        redirect_to(controller: 'conversations', action: 'index', id: conversation.id)
       end
     else
       redirect_to root_url

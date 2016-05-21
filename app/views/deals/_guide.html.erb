@@ -83,42 +83,59 @@
     <% end %>
   <% end %>
 
-  <!-- Need to account for meetup and pickup and not paypal-->
-  <% if selling_completed && exchange_completed && !payment_completed %>
+  <% if @deal.payment_method.id == 1 %>
+    <!-- Need to account for meetup and pickup and not paypal-->
+    <% if selling_completed && exchange_completed && !payment_completed %>
+      <% if current_user.id == @deal.buyer_id %>
+        <h3>You're almost done! <span class="payment_button inline_button">Now make your payment so you can get your product.</span></h3>
+      <% end %>
+    
+      <% if current_user.id == @deal.seller_id %>
+        <h3>You're almost done! Waiting on the buyer to complete the payment.</h3>
+      <% end %>
+    <% end %>
+
+    <% if selling_completed && exchange_completed && payment_completed %>
+      <% if current_user.id == @deal.buyer_id %>
+        <% if @deal.exchange_method_id == 1 %>
+          <h3>The product is being shipped to you. <span class="completed_button inline_button">Let us know when you receive it.</span></h3>
+        <% end %> 
+        <% if @deal.exchange_method_id == 2 %>
+          <h3>Meet the seller at the location specified and <span class="completed_button inline_button">let us know when you get the product.</span></h3>
+        <% end %>
+        <% if @deal.exchange_method_id == 3 %>
+          <h3>Pickup the product at the store. <span class="completed_button inline_button">Let us know when you do.</span></h3>
+        <% end %>
+      <% end %>
+    
+      <% if current_user.id == @deal.seller_id %>
+        <% if @deal.exchange_method_id == 1 %>
+          <h3>You need to ship the product to the user. <span class="completed_button inline_button">Let us know when you do.</span></h3>
+        <% end %>
+        <% if @deal.exchange_method_id == 2 %>
+          <h3>Meet the buyer and the location specified and <span class="completed_button inline_button">let us know when you complete the deal.</span></h3>
+        <% end %>
+        <% if @deal.exchange_method_id == 3 %>
+          <h3>The buyer will be picking up the product. <span class="completed_button inline_button">Let us know when the deal is done.</span></h3>
+        <% end %>
+      <% end %>
+
+    
+    <% end %>  
+  <% elif @deal.exchange_method.id == 2 %>
     <% if current_user.id == @deal.buyer_id %>
-      <h3>You're almost done! <span class="payment_button inline_button">Now make your payment so you can get your product.</span></h3>
+      <h3>Now all you need to do is meet the seller and purchase the product. <span class="completed_button inline_button">Let us know when you do.</span></h3>
+    <% end %>
+    <% if current_user.id == @deal.seller_id %>
+      <h3>Meet the buyer and sell the product. <span class="completed_button inline_button">Let us know when you do.</span></h3>
+    <% end %>
+
+  <% elif @deal.exchange_method.id == 3 %>
+    <% if current_user.id == @deal.buyer_id %>
+      <h3>Now, you need to pick up and pay for the product. <span class="completed_button inline_button">Let us know when you do</span></h3>
+    <% end %>
+    <% if current_user.id == @deal.seller_id %>
+      <h3>The buyer will pick up and pay for the product. <span class="completed_button inline_button">Let us know when the deal is done.</span></h3>
     <% end %>
     
-    <% if current_user.id == @deal.seller_id %>
-      <h3>You're almost done! Waiting on the buyer to complete the payment.</h3>
-    <% end %>
   <% end %>
-
-  <% if selling_completed && exchange_completed && payment_completed %>
-    <% if current_user.id == @deal.buyer_id %>
-      <% if @deal.exchange_method_id == 1 %>
-        <h3>The product is being shipped to you. <span class="completed_button inline_button">Let us know when you receive it.</span></h3>
-      <% end %> 
-      <% if @deal.exchange_method_id == 2 %>
-        <h3>Meet the seller at the location specified and <span class="completed_button inline_button">let us know when you get the product.</span></h3>
-      <% end %>
-      <% if @deal.exchange_method_id == 3 %>
-        <h3>Pickup the product at the store. <span class="completed_button inline_button">Let us know when you do.</span></h3>
-      <% end %>
-    <% end %>
-    
-    <% if current_user.id == @deal.seller_id %>
-      <% if @deal.exchange_method_id == 1 %>
-        <h3>You need to ship the product to the user. <span class="completed_button inline_button">Let us know when you do.</span></h3>
-      <% end %>
-      <% if @deal.exchange_method_id == 2 %>
-        <h3>Meet the buyer and the location specified and <span class="completed_button inline_button">let us know when you complete the deal.</span></h3>
-      <% end %>
-      <% if @deal.exchange_method_id == 3 %>
-        <h3>The buyer will be picking up the product. <span class="completed_button inline_button">Let us know when the deal is done.</span></h3>
-      <% end %>
-    <% end %>
-
-    
-  <% end %>  
-

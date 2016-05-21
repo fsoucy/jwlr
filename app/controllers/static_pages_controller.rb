@@ -50,6 +50,9 @@ class StaticPagesController < ApplicationController
       blogposts = current_user.blogposts.order(created_at: :desc).limit(50)
       @feed_items += blogposts
 
+      microposts = current_user.microposts.order(created_at: :desc).limit(50)
+      @feed_items += microposts
+
       @feed_items = @feed_items.sort_by(&:updated_at).reverse
     
       @conversations = current_user.conversations

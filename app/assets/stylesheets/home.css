@@ -1,3 +1,15 @@
+.full-width {
+  width: 100%;
+}
+
+.align-right {
+  float: right;
+}
+
+.pure-button {
+  padding: 0.5em !important;
+}
+
 .sign-up {
     background: #00A8E8;
     z-index: 1;

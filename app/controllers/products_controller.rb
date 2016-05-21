@@ -10,7 +10,6 @@ class ProductsController < ApplicationController
     @product = current_user.products.build
     @picture = Picture.new
 
-    
     if current_user.stores.length > 0
       @has = true
       stos = Array.new

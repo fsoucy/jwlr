@@ -74,7 +74,9 @@ Rails.application.routes.draw do
     end
   end
   resources :payments, only: [:create]  
-    
+  
+  resources :microposts, only: [:create, :update, :destroy]
+  
   resources :account_activations, only: [:edit]
   resources :categories
   

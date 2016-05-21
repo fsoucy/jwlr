@@ -117,10 +117,25 @@
     </div>
     <div class="pure-u-1 pure-u-md-1-4"></div>
     <div class="pure-u-1 pure-u-md-1-2">
+      <div class="log-in log-in-form">
+        <%= form_for(Micropost.new, html: { class: "pure-form pure-form-stacked" }) do |f| %>
+          <fieldset>
+            <%= f.text_field :content, placeholder: "Share something with your followers", class: "full-width" %>
+            <%= f.submit "Post", class: "align-right pure-button pure-button-primary" %>
+          </fieldset>
+        <% end %>
+      </div>
       <% item_number = 1 %>
       <% @feed_items.each do |item| %>
         <div class="feed_item">
           <% case item.class.name %>
+            <% when "Micropost" %>
+              <div class="feed_micropost">
+                <%= image_tag item.user.profile_picture(:thumbnail) %>
+                <a href="<%= user_path(item.user) %>"><h2><%= item.user.name %></h2></a>
+                <p>
+                  <%= item.content %>
+                </p>
             <% when "Notification" %>
               <div class="feed_notification">
                 <%= image_tag item.user.profile_picture(:thumbnail) %>

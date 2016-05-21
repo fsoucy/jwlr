@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   has_many :selling_deals, class_name: "Deal", foreign_key: "seller_id", dependent: :destroy
   has_attached_file :profile_picture, :styles => { :medium => ["300x300>", :png], :thumb => ["200x200>", :png], :thumbnail => ["50x50>", :png] }, default_url: "/assets/missing_:style.jpg"
   validates_attachment :profile_picture, :storage => :filesystem, :presence => true, :content_type => { :content_type => /\Aimage\/.*\Z/ }, :size => { :less_than => 10.megabyte }
+  has_many :microposts, dependent: :destroy
 
   def score
     reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("user_id != ? and deals.seller_id = ? or deals.buyer_id = ?", self.id, self.id, self.id)

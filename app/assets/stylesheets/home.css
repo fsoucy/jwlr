@@ -10,6 +10,10 @@
   padding: 0.5em !important;
 }
 
+.restrict-width {
+  display: inline-block;
+}
+
 .sign-up {
     background: #00A8E8;
     z-index: 1;

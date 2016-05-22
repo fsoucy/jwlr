@@ -3,15 +3,15 @@
     <h1 class="deals_welcome">Welcome to the deal between <%= @deal.seller.name %> and <%= @deal.buyer.name %></h1>
     <div class="pure-menu pure-menu-horizontal pure-menu-scrollable deals_menu">
       <ul class="pure-menu-list">
-	<li class="pure-menu-item guide_button"><a href="#guide" class="pure-menu-link">Guide</a></li>
-	<li class="pure-menu-item methods_button"><a href="#methods" class="pure-menu-link">Methods</a></li>
-	<li class="pure-menu-item selling_button"><a href="#selling" class="pure-menu-link">Selling Method</a></li>
-	<li class="pure-menu-item exchange_button"><a href="#exchange" class="pure-menu-link">Exchange Method</a></li>
-	<li class="pure-menu-item payment_button"><a href="#payment" class="pure-menu-link">Payment Method</a></li>
-	<li class="pure-menu-item completed_button"><a href="#completed" class="pure-menu-link">Deal Completion</a></li>
+	<li class="pure-menu-item guide_button pure-menu-link">Guide</li>
+	<li class="pure-menu-item methods_button pure-menu-link">Methods</li>
+	<li class="pure-menu-item selling_button pure-menu-link">Exchange Method</li>
+	<li class="pure-menu-item exchange_button pure-menu-link">Exchange Method</li>
+	<li class="pure-menu-item payment_button pure-menu-link">Payment Method</li>
+	<li class="pure-menu-item completed_button pure-menu-link">Deal Completion</li>
       </ul>
     </div>
-    <div class="log-in-form marg">
+    <div class="log-in-form marg deals_form">
       <div class="guide_selection selection">
 	<%= render 'guide' %>
       </div>

@@ -17,7 +17,7 @@
 <%= f.radio_button :payment_method_id, p.payment_method.id %>
 <% end %>
 <br>
-<%= f.submit "Save new method preferences", class: "pure-button pure-button-primary" %>
+<%= f.submit "Save new method preferences", class: "pure-button pure-button-primary deals_form_button" %>
 <% end %>
 <% else %>
 <p>Selling method: <%= @deal.selling_method.method unless @deal.selling_method.nil? %></p>
@@ -27,7 +27,7 @@
 <% else %>
 <% if !SellingMethodLink.where("selling_method_id IN (?,?) AND product_id=?", 3, 4, @deal.product.id) %>
 <%= form_for @deal.product do |f| %>
-<h3>Minimum Accepted Price: <%= f.number_field :min_accepted_price %><%= f.submit "Change", class: "pure-button pure-button-primary" %></h3>
+<h3>Minimum Accepted Price: <%= f.number_field :min_accepted_price %><%= f.submit "Change", class: "pure-button pure-button-primary deals_form_button" %></h3>
 <% end %>
 <% end %>
 <h3>The user has selected these transaction methods:</h3>

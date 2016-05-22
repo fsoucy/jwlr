@@ -15,7 +15,13 @@ class MicropostsController < ApplicationController
   end
 
   def update
-
+    micropost = Micropost.find_by(id: params[:id])
+    micropost.update_attributes(micropost_params)
+    if micropost.save
+      render json: nil, status: 200
+    else
+      render json: nil, status: 400
+    end
   end
 
   private

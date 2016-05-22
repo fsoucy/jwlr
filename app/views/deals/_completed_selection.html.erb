@@ -14,47 +14,6 @@
 <!-- (CASE 3) Meetup/pickup without paypall -->
 <!-- They notify us when they're done -->
 
-
-<% if ((current_user.id  == @deal.seller_id) and @deal.agreement_achieved and !@deal.deal_complete and !@deal.seller_satisfied) %>
-  <% if @deal.exchange_method.method == "Delivery" %>
-    <%= form_for @deal do |f| %>
-      <%= f.hidden_field :product_dispatched, value: !@deal.product_dispatched %> 
-      <%= f.submit "Set product dispatched to #{!@deal.product_dispatched}", class: "pure-button pure-button-primary" %>
-    <% end %>
-  <% end %>
-
-  <% if @deal.payment_method.method != "Paypal" and !@deal.seller_satisfied %>
-    <%= form_for @deal do |f| %>
-      <%= f.hidden_field :payment_complete, value: !@deal.payment_complete %>
-      <%= f.submit "Set payment received to #{!@deal.payment_complete}", class: "pure-button pure-button-primary" %>
-    <% end %>
-  <% end %>
-
-  <% if (@deal.payment_complete and @deal.product_received and !@deal.deal_complete) %>
-    <%= form_for @deal do |f| %>
-      <%= f.hidden_field :seller_satisfied, value: !@deal.seller_satisfied %>
-      <%= f.submit "Set satisfied with completed deal to #{!@deal.seller_satisfied}", class: "pure-button pure-button-primary" %>
-    <% end %>
-  <% end %>
-<% end %>
-
-<% if ((current_user.id == @deal.buyer_id) and @deal.agreement_achieved and !@deal.deal_complete) %>
-  <% if !@deal.buyer_satisfied %>
-    <%= form_for @deal do |f| %>
-      <%= f.hidden_field :product_received, value: !@deal.product_received %>
-      <%= f.submit "Set product received to #{!@deal.product_received}", class: "pure-button pure-button-primary" %>
-    <% end %>
-  <% end %>
-
-  <% if (@deal.product_received and @deal.payment_complete and !@deal.deal_complete) %>
-    <%= form_for @deal do |f| %>
-      <%= f.hidden_field :buyer_satisfied, value: !@deal.buyer_satisfied %>
-      <%= f.submit "Set satisfied with completed deal to #{!@deal.buyer_satisfied}", class: "pure-button pure-button-primary" %>
-    <% end %>
-  <% end %>
-<% end %>
-
-
 <% if @deal.agreement_achieved and !@deal.deal_complete %>
   <!-- CASE 1 -->
   <% if @deal.exchange_method.method == "Delivery" %>
@@ -190,16 +149,48 @@
     <% else %> <!-- End of case 2, beginning of case 3 -->
       <% if current_user.id == @deal.buyer_id %>
         <% if !@deal.buyer_satisfied %>
+          <% if @deal.exchange_method.method == "Meetup" %>
+            <h3>You need to meet up with the seller to conduct the transaction.</h3>
+          <% end %>
+          <% if @deal.exchange_method.method == "Pickup" %>
+            <h3>You need to go to the seller's location and pickup the product.</h3>
+          <% end %>
+          <%= form_for @deal do |f| %>
+            <%= f.hidden_field :product_received, value: true %>
+            <%= f.hidden_field :buyer_satisfied, value: true %>
+            <%= f.submit "I have received the product and the transaction is completed" %>
+          <% end %>
         <% else %>
+          <%= form_for @deal do |f| %>
+            <%= f.hidden_field :product_received, value: false %>
+            <%= f.hidden_field :buyer_satisfied, value: false %>
+            <%= f.submit "The transaction is not complete" %>
+          <% end %>
         <% end %>    
       <% end %>
       
       <% if current_user.id == @deal.seller_id %>
-        <% if !@deal.seller_satisfied %>
+        <% if !@deal.buyer_satisfied %>
+          <% if @deal.exchange_method.method == "Meetup" %>
+            <h3>You need to meet up with the buyer to conduct the transaction.</h3>
+          <% end %>
+          <% if @deal.exchange_method.method == "Pickup" %>
+            <h3>The buyer will visit you to pickup the product and pay you.</h3>
+          <% end %>
+          <%= form_for @deal do |f| %>
+            <%= f.hidden_field :payment_complete, value: true %>
+            <%= f.hidden_field :seller_satisfied, value: true %>
+            <%= f.submit "I have been paid and the transaction is completed" %>
+          <% end %>
         <% else %>
+          <%= form_for @deal do |f| %>
+            <%= f.hidden_field :payment_complete, value: false %>
+            <%= f.hidden_field :seller_satisfied, value: false %>
+            <%= f.submit "The transaction is not complete" %>
+          <% end %>
         <% end %>
       <% end %>
-
+    
     <% end %>
   
 

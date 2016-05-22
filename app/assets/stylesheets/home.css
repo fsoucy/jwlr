@@ -115,6 +115,10 @@ h3 {
     .no-fees-subheader {
       font-size: 250%;
     }
+
+    .fixed {
+      position: fixed;
+    }
 }
 
 
@@ -124,6 +128,3 @@ html, button, input, select, textarea,
     font-family: 'Droid Sans', sans-serif !important;
 }
 
-.fixed {
-  position: fixed;
-}

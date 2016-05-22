@@ -9,7 +9,9 @@ class MicropostsController < ApplicationController
   end
 
   def destroy
-
+    micropost = Micropost.find_by(id: params[:id])
+    micropost.destroy
+    render json: nil, status: 200 
   end
 
   def update

@@ -22,4 +22,17 @@ class ApiController < ApplicationController
     end
   end
 
+  def getMicropost
+    micropost = Micropost.find_by_id(params[:id])
+    if !micropost.nil?
+      returning = {}
+      returning["content"] = micropost.content
+      returning["user"] = micropost.user.name
+
+      render json: returning.to_json, status: 200
+    else
+      render json: nil, status: 400
+    end
+  end
+
 end

@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   get 'category_options/create'
 
   get 'attribute_options/create'
-
-  get 'api/get_status'
+  
+  #api
+  get 'api/getToggleOptions'
+  get 'api/getMicropost'
 
   root 'static_pages#home'
   get 'help' =>  'static_pages#help'
@@ -32,8 +34,6 @@ Rails.application.routes.draw do
       get :pull_messages
     end
   end
-
-  get 'api/getToggleOptions'
 
   resources :messages
   resources :attribute_options, only: [:create, :destroy]

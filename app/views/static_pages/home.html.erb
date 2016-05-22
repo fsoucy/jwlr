@@ -120,7 +120,7 @@
       <div class="log-in log-in-form">
         <%= form_for(Micropost.new, html: { class: "pure-form pure-form-stacked" }) do |f| %>
           <fieldset>
-            <%= f.text_field :content, placeholder: "Share something with your followers", class: "full-width" %>
+            <%= f.text_field :content, placeholder: "Share something with your followers", class: "full-width", maxlength: 140 %>
             <%= f.submit "Post", class: "align-right pure-button pure-button-primary" %>
           </fieldset>
         <% end %>
@@ -133,9 +133,12 @@
               <div class="feed_micropost">
                 <%= image_tag item.user.profile_picture(:thumbnail) %>
                 <a href="<%= user_path(item.user) %>"><h2><%= item.user.name %></h2></a>
-                <p>
+                <p id="main_text">
                   <%= item.content %>
                 </p>
+                <% if item.user.id == current_user.id %>
+                  <%= link_to "Edit", '', id: "edit_micropost_#{item.id}" %> <%= link_to "Delete", '', id: "delete_micropost_#{item.id}" %>
+                <% end %>
             <% when "Notification" %>
               <div class="feed_notification">
                 <%= image_tag item.user.profile_picture(:thumbnail) %>

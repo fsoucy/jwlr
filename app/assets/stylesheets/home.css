@@ -119,6 +119,10 @@ h3 {
     .fixed {
       position: fixed;
     }
+
+    .restrict-width {
+      display: table-cell;
+    }
 }
 
 

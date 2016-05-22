@@ -38,22 +38,26 @@ class StaticPagesController < ApplicationController
       @for_you = results
       @feed_items = Array.new
       
-      notifications = current_user.notifications.order(updated_at: :desc).limit(50)
+      page = params[:page].to_i     
+      page = 1 if page < 1
+      per_page = 15
+
+      notifications = current_user.notifications.order(updated_at: :desc).limit(per_page * page)
       @feed_items += notifications
       
-      deals = current_user.buying_deals.order(updated_at: :desc).limit(50)
+      deals = current_user.buying_deals.order(updated_at: :desc).limit(per_page * page)
       @feed_items += deals
 
-      deals = current_user.selling_deals.order(updated_at: :desc).limit(50)
+      deals = current_user.selling_deals.order(updated_at: :desc).limit(per_page * page)
       @feed_items += deals      
 
-      blogposts = current_user.blogposts.order(created_at: :desc).limit(50)
+      blogposts = current_user.blogposts.order(created_at: :desc).limit(per_page * page)
       @feed_items += blogposts
 
-      microposts = current_user.microposts.order(created_at: :desc).limit(50)
+      microposts = current_user.microposts.order(created_at: :desc).limit(per_page * page)
       @feed_items += microposts
 
-      @feed_items = @feed_items.sort_by(&:updated_at).reverse
+      @feed_items = @feed_items.sort_by(&:updated_at).reverse.paginate(:page => page, :per_page => per_page)
     
       @conversations = current_user.conversations
     end

@@ -20,3 +20,23 @@ $(document).on('click', 'a[id*=edit_micropost_]', function(event) {
     }});
   });
 });
+
+$(window).scroll(function() {
+  if($('.feed_item').length)
+  {
+    if($(window).scrollTop() + $(window).height() > $(document).height() - 30)
+    {
+      if(typeof window.feed_page != 'undefined')
+      {
+        window.feed_page += 1;
+      }
+      else
+      {
+        window.feed_page = 2;
+      }
+      $.get('http://' + window.location.host + '/?page=' + window.feed_page, function(result) {
+        $('#feed').append($(result).find('#feed').children());      
+      });
+    }
+  }
+});

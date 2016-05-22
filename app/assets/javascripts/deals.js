@@ -33,12 +33,14 @@ $(document).ready(function() {
     });
 
 
-    $('.deals_form_button').click(function() {
+    $('.deals_form_button').click(function(e) {
+	e.preventDefault();
 	var str = window.location.href;
 	var beginIndex = str.indexOf("deals/");
-	var id = beginIndex.substring(beginIndex + 6);
+	var id = str.substring(beginIndex + 6);
+	debugger;
 	var postLoc = '/deals/' + id.toString();
-	$.post(postLoc, $('.edit_deal').serialize());
+	$.post('/deals/23', $(this).parent('form').serialize());
 	$('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .exchange_method_selection", function() {
 	});
 	$('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .selling_method_selection", function() {

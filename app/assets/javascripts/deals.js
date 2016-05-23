@@ -65,7 +65,7 @@ $(document).ready(function() {
 	var id = str.substring(beginIndex + 6);
 	debugger;
 	var postLoc = '/deals/' + id.toString();
-	$.post('/deals/23', $(this).parent('form').serialize());
+	$.post(postLoc, $(this).parent('form').serialize());
 	$('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .exchange_method_selection", function() {
 	});
 	$('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .selling_method_selection", function() {

@@ -23,6 +23,10 @@ class DealsController < ApplicationController
       end
       @deal.exchange_method = @deal.product.exchange_method_links.first.exchange_method if @deal.product.exchange_method_links.count == 1
       @deal.payment_method = @deal.product.payment_method_links.first.payment_method if @deal.product.payment_method_links.count == 1
+      if @deal.selling_method.method == "Static Price"
+        @deal.user_proposed_price = @deal.product.price
+        @deal.proposed_price_accepted = true
+      end
       @deal.save
       new_notification("A user has initiated a deal on your product " + @deal.product.title, @deal.product.user, deal_url(@deal))
       redirect_to @deal

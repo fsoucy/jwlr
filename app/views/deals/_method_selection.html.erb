@@ -1,3 +1,25 @@
+<!-- First, must select methods -->
+<!-- Second, must agree on a price -->
+<!-- Third, must agree on an exchange method -->
+<!-- Fourth, completion -->
+
+<% if @deal.selling_method_id.nil? || @deal.exchange_method_id.nil? || @deal.payment_method_id.nil? %>
+<%= hidden_field_tag :page, 1 %>
+
+<% elsif @deal.proposed_price_accepted == false %>
+<%= hidden_field_tag :page, 2 %>
+
+
+<% elsif !@deal.agreement_achieved %>
+<% hidden_field_tag :page, 3 %>
+
+<% else %>
+<%= hidden_field_tag :page, 4 %>
+
+<% end %>
+
+
+
 <% if @deal.buyer.id == current_user.id && !@deal.agreement_achieved %>
 <% if @deal.product.selling_method_links.count > 1 or @deal.product.exchange_method_links.count > 1 or @deal.product.payment_method_links.count > 1 %>
 <%= form_for(@deal) do |f| %>

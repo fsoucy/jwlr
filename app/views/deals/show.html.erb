@@ -3,18 +3,13 @@
     <h1 class="deals_welcome">Welcome to the deal between <%= @deal.seller.name %> and <%= @deal.buyer.name %></h1>
     <div class="pure-menu pure-menu-horizontal pure-menu-scrollable deals_menu">
       <ul class="pure-menu-list">
-	<li class="pure-menu-item guide_button pure-menu-link">Guide</li>
 	<li class="pure-menu-item methods_button pure-menu-link">Methods</li>
 	<li class="pure-menu-item selling_button pure-menu-link">Selling Method</li>
 	<li class="pure-menu-item exchange_button pure-menu-link">Exchange Method</li>
-	<li class="pure-menu-item payment_button pure-menu-link">Payment Method</li>
 	<li class="pure-menu-item completed_button pure-menu-link">Deal Completion</li>
       </ul>
     </div>
     <div class="log-in-form marg deals_form">
-      <div class="guide_selection selection">
-	<%= render 'guide' %>
-      </div>
       <div class="method_selection selection">
 	<%= render 'method_selection' %>
       </div>
@@ -23,9 +18,6 @@
       </div>
       <div class="exchange_method_selection selection">
 	<%= render 'exchange_methods_selection' %>
-      </div>
-      <div class="payment_method_selection selection">
-	<%= render 'payment_methods_selection' %>
       </div>
       <div class="completed_selection selection">
 	<%= render 'completed_selection' %>

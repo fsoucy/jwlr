@@ -52,3 +52,8 @@
 {
     cursor: pointer;
 }
+
+.leftside h3, .leftside h2, .leftside h4, .leftside h1, .leftside p
+{
+    margin-top: 0px;
+}

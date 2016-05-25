@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520235818) do
+ActiveRecord::Schema.define(version: 20160525191359) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -264,6 +264,17 @@ ActiveRecord::Schema.define(version: 20160520235818) do
   add_index "productviews", ["product_id"], name: "index_productviews_on_product_id"
   add_index "productviews", ["user_id", "product_id"], name: "index_productviews_on_user_id_and_product_id", unique: true
   add_index "productviews", ["user_id"], name: "index_productviews_on_user_id"
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id"
+  add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
+  add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id"
 
   create_table "reviews", force: :cascade do |t|
     t.integer  "deal_id"

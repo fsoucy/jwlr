@@ -33,6 +33,11 @@ class User < ActiveRecord::Base
   has_attached_file :profile_picture, :styles => { :medium => ["300x300>", :png], :thumb => ["200x200>", :png], :thumbnail => ["50x50>", :png] }, default_url: "/assets/missing_:style.jpg"
   validates_attachment :profile_picture, :storage => :filesystem, :presence => true, :content_type => { :content_type => /\Aimage\/.*\Z/ }, :size => { :less_than => 10.megabyte }
   has_many :microposts, dependent: :destroy
+  
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :followers, through: :passive_relationships, source: :follower   
 
   def score
     reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("user_id != ? and deals.seller_id = ? or deals.buyer_id = ?", self.id, self.id, self.id)
@@ -95,15 +100,24 @@ class User < ActiveRecord::Base
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end
-
-
   
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at, :password_digest, :remember_digest, :activation_digest, :activated_at, :reset_digest, :reset_sent_at]
     super(options)
   end
 
-    #hi
+  def follow(other_user)
+    active_relationships.create(followed_id: other_user.id)
+  end
+
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  def following?(other_user)
+    following.include?(other_user)
+  end
+
   private
   
   def create_activation_digest

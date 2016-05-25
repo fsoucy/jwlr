@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow]
   before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed]
   before_action :admin_user, only: :destroy  
   
@@ -109,7 +109,23 @@ class UsersController < ApplicationController
   def buying
     @buying = Deal.where("buyer_id=?", params[:id])
   end
-  
+
+  def follow
+    user = User.find(params[:id])
+    if !user.nil?
+      if current_user.following?(user)
+        current_user.unfollow(user)
+      else
+        current_user.follow(user)
+      end
+      
+      render json: nil, status: 200
+
+    else
+      render json: nil, status: 400
+    end
+  end
+
   private
 
     def user_params

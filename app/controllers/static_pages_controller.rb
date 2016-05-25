@@ -57,6 +57,14 @@ class StaticPagesController < ApplicationController
       microposts = current_user.microposts.order(created_at: :desc).limit(per_page * page)
       @feed_items += microposts
 
+      current_user.following.each do |user|
+        microposts = user.microposts.order(created_at: :desc).limit(per_page * page)
+        @feed_items += microposts
+
+        blogposts = user.blogposts.order(created_at: :desc).limit(per_page * page)
+        @feed_items += blogposts
+      end
+
       @feed_items = @feed_items.sort_by(&:updated_at).reverse.paginate(:page => page, :per_page => per_page)
     
       @conversations = current_user.conversations

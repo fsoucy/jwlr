@@ -1,3 +1,29 @@
+function isValidAddress(dropoff)
+{
+    var bool = false;
+    debugger;
+    $.ajax({
+	type: "GET",// GET in place of POST
+	contentType: "application/json; charset=utf-8",
+	url: "http://" + window.location.host + "/api/isStreetAddress?dropoff=" + dropoff,
+	data: {},
+	dataType: "json",
+	success: function (result) {
+	    debugger;
+	    if (parseInt(result[0]["valid"]) == 1)
+	    {
+		debugger;
+		bool = true;
+	    }
+	    else
+	    {
+	    }
+	},
+	async: false
+    });
+    return bool;
+}
+
 
 function redirectToPage()
 {
@@ -39,6 +65,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.methods_button', function() {
 	$('.selection').hide();
+	$('.methods_submission').remove();
 	$('.method_selection').show();
     });
 
@@ -55,6 +82,28 @@ $(document).ready(function() {
     $(document).on('click', '.completed_button', function() {
 	$('.selection').hide();
 	$('.completed_selection').show();
+    });
+
+    $(document).on('click', '.methods_form_button', function(e) {
+	e.preventDefault();
+
+	var str = window.location.href;
+	var beginIndex = str.indexOf("deals/");
+	var id = str.substring(beginIndex + 6);
+	var postLoc = '/deals/' + id.toString();
+	$('.instructions').append("<h3 class='methods_submission'>Congrats! You've successfully updated the methods of transaction.</h3>");
+	$.post(postLoc, $(this).parent('form').serialize());
+	$('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .exchange_method_selection", function() {
+	});
+	$('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .selling_method_selection", function() {
+	});
+	$('.payment_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .payment_method_selection", function() {
+	});
+	$('.completed_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .completed_selection", function() {
+	});
+	$('.guide_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
+	    redirectToPage();
+	});
     });
     
     $(document).on('click', '.deals_form_button', function(e) {
@@ -78,6 +127,28 @@ $(document).ready(function() {
 	    redirectToPage();
 	});
     });
+
+    $(document).on('click', '.dropoff_button', function(e) {
+	e.preventDefault();
+	if (isValidAddress($('#deal_dropoff').val()))
+	{
+	    var str = window.location.href;
+	    var beginIndex = str.indexOf("deals/");
+	    var id = str.substring(beginIndex + 6);
+	    var postLoc = '/deals/' + id.toString();
+	    $.post(postLoc, $(this).parent('form').serialize());
+	    $('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .exchange_method_selection", function() {
+	    });
+	    $('.valid_address').remove();
+	}
+	else
+	{
+	    $('.instructions').append("<h3 class='valid_address'>Please enter a valid street address.</h3>");
+	}
+
+    });
+
+    
 
     redirectToPage();
     

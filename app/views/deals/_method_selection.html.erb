@@ -18,7 +18,7 @@
 <%= f.radio_button :payment_method_id, p.payment_method.id %>
 <% end %>
 <br>
-<%= f.submit "Save new method preferences", class: "pure-button pure-button-primary deals_form_button" %>
+<%= f.submit "Next", class: "pure-button pure-button-primary methods_form_button" %>
 <% end %>
 <% else %>
 <p>Selling method: <%= @deal.selling_method.method unless @deal.selling_method.nil? %></p>

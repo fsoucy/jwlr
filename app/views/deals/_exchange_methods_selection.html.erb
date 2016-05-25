@@ -12,7 +12,7 @@
 <h3>Delivery cost: <%= number_to_currency(@deal.product.delivery_cost) %></h3>
 <% if !@deal.agreement_achieved %>
 <%= form_for(@deal) do |f| %>
-<h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save", class: "pure-button pure-button-primary" %></h3>
+<h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save", class: "pure-button pure-button-primary deals_form_button" %></h3>
 <% end %>
 <% else %>
 <h3>Your location for delivery: <%= @deal.dropoff %></h3>
@@ -21,7 +21,7 @@
 <% if !@deal.exchange_agreement_buyer %>
 <%= form_for @deal do |f| %>
 <%= f.hidden_field :exchange_agreement_buyer, value: true %>
-<%= f.submit "Accept exchange", class: "pure-button pure-button-primary" %>
+<%= f.submit "Accept exchange", class: "pure-button pure-button-primary deals_form_button" %>
 <% end %>
 <% else %>
 <h4>Already accepted exchange! Waiting on seller to agree.</h4>
@@ -34,7 +34,7 @@
 <%= f.hidden_field :on_deals, value: true %>
 <%= f.hidden_field :deal_id, value: @deal.id %>
 <h3>Delivery cost: <%= f.number_field :delivery_cost %></h3>
-<%= f.submit "Save changes on delivery exchange", class: "pure-button pure-button-primary" %>
+<%= f.submit "Save changes on delivery exchange", class: "pure-button pure-button-primary deals_form_button" %>
 <% end %>
 <% else %>
 <h3>Delivery cost: <%= @deal.product.delivery_cost %></h3>
@@ -43,7 +43,7 @@
 <% if (!@deal.dropoff.nil? and !@deal.product.delivery_cost.nil? and @deal.dropoff != "" and @deal.proposed_price_accepted and @deal.exchange_agreement_buyer) %>
 <%= form_for @deal do |f| %>
 <%= f.hidden_field :exchange_agreement_seller, value: true %>
-<%= f.submit "Accept exchange", class: "pure-button pure-button-primary" %>
+<%= f.submit "Accept exchange", class: "pure-button pure-button-primary deals_form_button" %>
 <% end %>
 <% elsif @deal.proposed_price_accepted %>
 <h3>Waiting for buyer to accept exchange</h3>
@@ -60,7 +60,7 @@
 <% if current_user.id == @deal.seller_id && (@deal.selling_method.id == 2 || @deal.proposed_price_accepted) && !@deal.exchange_agreement_seller %>
 <%= form_for @deal do |f| %>
 <%= f.hidden_field :exchange_agreement_seller, value: true %>
-<%= f.submit "Agreed exchange", class: "pure-button pure-button-primary" %>
+<%= f.submit "Agreed exchange", class: "pure-button pure-button-primary deals_form_button" %>
 <% end %>
 <% elsif (current_user.id == @deal.seller_id && !@deal.agreement_achieved && (@deal.selling_method.id == 2 || @deal.proposed_price_accepted)) %>
 <h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
@@ -68,7 +68,7 @@
 <% if current_user.id == @deal.buyer_id && (@deal.proposed_price_accepted || @deal.selling_method.id == 2)  && !@deal.exchange_agreement_buyer %>
 <%= form_for @deal do |f| %>
 <%= f.hidden_field :exchange_agreement_buyer, value: true %>
-<%= f.submit "Agreed exchange", class: "pure-button pure-button-primary" %>
+<%= f.submit "Agreed exchange", class: "pure-button pure-button-primary deals_form_button" %>
 <% end %>
 <% elsif (current_user.id == @deal.buyer_id && !@deal.agreement_achieved && (@deal.selling_method.id == 2 || @deal.proposed_price_accepted)) %>
 <h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
@@ -89,7 +89,7 @@
 <% if current_user.id == @deal.seller_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_seller %>
 <%= form_for @deal do |f| %>
 <%= f.hidden_field :exchange_agreement_seller, value: true %>
-<%= f.submit "Agreed exchange", class: "pure-button pure-button-primary" %>
+<%= f.submit "Agreed exchange", class: "pure-button pure-button-primary deals_form_button" %>
 <% end %>
 <% elsif (current_user.id == @deal.seller_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
 <h4>Exchange agreed, waiting for buyer to accept exchange.</h4>
@@ -97,7 +97,7 @@
 <% if current_user.id == @deal.buyer_id && @deal.proposed_price_accepted && !@deal.exchange_agreement_buyer %>
 <%= form_for @deal do |f| %>
 <%= f.hidden_field :exchange_agreement_buyer, value: true %>
-<%= f.submit "Agreed exchange", class: "pure-button pure-button-primary" %>
+<%= f.submit "Agreed exchange", class: "pure-button pure-button-primary deals_form_button" %>
 <% end %>
 <% elsif (current_user.id == @deal.buyer_id && !@deal.agreement_achieved && @deal.proposed_price_accepted) %>
 <h4>Exchange agreed, waiting for seller to accept exchange.</h4>

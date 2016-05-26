@@ -54,12 +54,14 @@ $(document).ready(function() {
 
     $(document).on('click', '.guide_button', function() {
 	$('.selection').hide();
+	$('.methods_submission').remove();
 	$('.guide_selection').show();
     });
 
     
     $(document).on('click', '.selling_button', function() {
 	$('.selection').hide();
+	$('.methods_submission').remove();
 	$('.selling_method_selection').show();
     });
 
@@ -71,16 +73,19 @@ $(document).ready(function() {
 
     $(document).on('click', '.exchange_button', function() {
 	$('.selection').hide();
+	$('.methods_submission').remove();
 	$('.exchange_method_selection').show();
     });
 
     $(document).on('click', '.payment_button', function() {
 	$('.selection').hide();
+	$('.methods_submission').remove();
 	$('.payment_method_selection').show();
     });
 
     $(document).on('click', '.completed_button', function() {
 	$('.selection').hide();
+	$('.methods_submission').remove();
 	$('.completed_selection').show();
     });
 

@@ -47,7 +47,9 @@
         <h3>Communicate with the seller to determine where you would like to meet up for the transaction, and accept the exchange when you are satisfied.</h3>
       <% end %>
       <% if @deal.exchange_method.method == "Pickup" %>
-        <h3>Pick up the product from the seller. Communicate with the seller to determine where.</h3>
+        <% if @deal.product.store.nil? %>
+          <h3>Pick up the product from the seller. Communicate with the seller to determine where.</h3>
+        <% end %>
       <% end %>
     <% end %>
 

@@ -79,7 +79,6 @@
 <% end %>
 <% if exchange_method.id == 3 %>
 <% if !@deal.product.store.nil? %>
-<h4>The buyer needs to go to the user's store and pick up the product.</h4>
 <h5>Location of pickup: <%= @deal.product.store.full_street_address %></h5>
 <h5>Business days to pickup: <%= @deal.product.store.business_days_pickup %></h5>
 <h5>The pickup will have to correspond to the <%= link_to "store's hours of operation.", @store %></h5>

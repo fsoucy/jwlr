@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160501020945) do
+ActiveRecord::Schema.define(version: 20160526051118) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -413,6 +413,7 @@ ActiveRecord::Schema.define(version: 20160501020945) do
     t.string   "profile_picture_content_type"
     t.integer  "profile_picture_file_size"
     t.datetime "profile_picture_updated_at"
+    t.decimal  "acceptance_percentage"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

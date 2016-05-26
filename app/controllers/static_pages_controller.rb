@@ -67,7 +67,7 @@ class StaticPagesController < ApplicationController
 
       @feed_items = @feed_items.sort_by(&:updated_at).reverse.paginate(:page => page, :per_page => per_page)
     
-      @conversations = current_user.conversations
+      @conversations = Conversation.where("first_user_id = ? OR second_user_id = ?", current_user.id, current_user.id).order(updated_at: :desc)
     end
     @for_you = [] if @for_you.nil?
     @featured = [] if @featured.nil?

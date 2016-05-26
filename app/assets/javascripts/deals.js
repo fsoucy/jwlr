@@ -89,6 +89,8 @@ $(document).ready(function() {
 	$('.completed_selection').show();
     });
 
+
+    
     $(document).on('click', '.methods_form_button', function(e) {
 	e.preventDefault();
 
@@ -109,6 +111,22 @@ $(document).ready(function() {
 	$('.guide_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
 	    redirectToPage();
 	});
+    });
+
+    $(document).on('submit', '.price_submission', function(e) {
+	e.preventDefault();
+	debugger;
+	if (parseFloat($('#price_proposal').val()) < parseFloat($('#minimum_price').val()))
+	{
+	    $('#price_proposal').addClass('price_warning');
+	    $('.instructions_price_warning').remove();
+	    $('.instructions').append("<h3 class='instructions_price_warning'>Price offer too low.</h3");
+	}
+	else
+	{
+	    $('.instructions_price_warning').remove();
+	    $('#price_proposal').removeClass('price_warning');
+	}
     });
     
     $(document).on('click', '.deals_form_button', function(e) {

@@ -68,6 +68,8 @@ class ProductsController < ApplicationController
         @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
       end
     end
+    @product.min_accepted_price = 0.0
+    @product.min_accepted_price = @product.price * @product.user.acceptance_percentage unless @product.user.acceptance_percentage.nil?
     has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links.count > 0 && @product.payment_method_links.count > 0
     if @product.save and has_methods
       flash[:success] = "You have successfully uploaded a new product!"

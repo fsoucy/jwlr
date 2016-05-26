@@ -27,6 +27,10 @@ class DealsController < ApplicationController
         @deal.user_proposed_price = @deal.product.price
         @deal.proposed_price_accepted = true
       end
+      if @deal.selling_method.method == "Negotiation"
+        @deal.user_proposed_price = 0.0
+        @deal.proposed_price_accepted = false
+      end
       @deal.save
       new_notification("A user has initiated a deal on your product " + @deal.product.title, @deal.product.user, deal_url(@deal))
       redirect_to @deal
@@ -95,9 +99,15 @@ class DealsController < ApplicationController
       @deal.product.sold = true
     end
     @deal.product.save
-    if @deal.selling_method.id == 2
+    if @deal.selling_method.method == "Static Price"
       @deal.proposed_price_accepted = true
+      @deal.user_proposed_price = @deal.product.price
     end
+    if @deal.selling_method.method == "Negotiation"
+      @deal.proposed_price_accepted = false
+      @deal.user_proposed_price = 0.0
+    end
+    
     if @deal.dropoff_changed?
       location = Geocoder.search @deal.dropoff
       if location[0].street_address.nil? || location[0].street_address == ""

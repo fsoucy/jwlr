@@ -57,3 +57,8 @@
 {
     margin-top: 0px;
 }
+
+.price_warning
+{
+    border: 2px solid red;
+}

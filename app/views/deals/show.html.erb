@@ -3,25 +3,49 @@
     <h1 class="deals_welcome">Welcome to the deal between <%= @deal.seller.name %> and <%= @deal.buyer.name %></h1>
     <div class="pure-menu pure-menu-horizontal pure-menu-scrollable deals_menu">
       <ul class="pure-menu-list">
-	<li class="pure-menu-item methods_button pure-menu-link">Methods</li>
-	<li class="pure-menu-item selling_button pure-menu-link">Selling Method</li>
-	<li class="pure-menu-item exchange_button pure-menu-link">Exchange Method</li>
-	<li class="pure-menu-item completed_button pure-menu-link">Deal Completion</li>
+	      <li class="pure-menu-item methods_button pure-menu-link">Methods</li>
+	      <li class="pure-menu-item selling_button pure-menu-link">Selling Method</li>
+	      <li class="pure-menu-item exchange_button pure-menu-link">Exchange Method</li>
+	      <li class="pure-menu-item completed_button pure-menu-link">Deal Completion</li>
+	      <li class="pure-menu-item complaint_button pure-menu-link">File Complaint</li>
       </ul>
     </div>
     <div class="log-in-form marg deals_form">
-      <%= render 'instructions' %>
-      <div class="method_selection selection">
-	<%= render 'method_selection' %>
-      </div>
-      <div class="selling_method_selection selection">
-	<%= render 'selling_methods_selection' %>
-      </div>
-      <div class="exchange_method_selection selection">
-	<%= render 'exchange_methods_selection' %>
-      </div>
-      <div class="completed_selection selection">
-	<%= render 'completed_selection' %>
+      <div class="large_deals_form">
+        <% if !@deal.complaint_buyer && !@deal.complaint_seller %>      
+          <%= render 'instructions' %>
+          <div class="method_selection selection">
+	          <%= render 'method_selection' %>
+          </div>
+          <div class="selling_method_selection selection">
+	          <%= render 'selling_methods_selection' %>
+          </div>
+          <div class="exchange_method_selection selection">
+	          <%= render 'exchange_methods_selection' %>
+          </div>
+          <div class="completed_selection selection">
+	          <%= render 'completed_selection' %>
+          </div>
+          <div class="complaint_selection selection">
+	          <%= render 'file_complaint' %>
+          </div>
+        <% else %>
+          <% if @deal.complaint_buyer && @deal.complaint_seller %>
+            <%= render 'both_complained' %>
+          <% elsif @deal.complaint_buyer %>
+            <% if current_user.id == @deal.buyer_id %>
+              <%= render 'self_complained' %>
+            <% elsif current_user.id == @deal.seller_id %>
+              <%= render 'other_complained' %>
+            <% end %>
+          <% elsif @deal.complaint_seller %>
+            <% if current_user.id == @deal.buyer_id %>
+              <%= render 'other_complained' %>
+            <% elsif current_user.id == @deal.seller_id %>
+              <%= render 'self-complained' %>
+            <% end %>
+          <% end %>
+        <% end %>
       </div>
     </div>
   </div>

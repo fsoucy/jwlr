@@ -57,3 +57,18 @@
 {
     margin-top: 0px;
 }
+
+.price_warning
+{
+    border: 2px solid red;
+}
+
+.button-error {
+    background: rgb(202, 60, 60) !important; /* this is a maroon */
+}
+
+
+.full_width_text
+{
+    width: 100%;
+}

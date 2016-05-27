@@ -1,0 +1,56 @@
+<!-- First, must select methods -->
+<!-- Second, must agree on a price -->
+<!-- Third, must agree on an exchange method -->
+<!-- Fourth, completion -->
+
+
+<% buyer = (current_user.id == @deal.buyer_id) %>
+<% seller = (current_user.id == @deal.seller_id) %>
+
+<% if @deal.selling_method_id.nil? || @deal.exchange_method_id.nil? || @deal.payment_method_id.nil? %>
+  <%= hidden_field_tag :page, 1 %>
+  <% if buyer %>
+    <h3>You need to select the methods of transaction.</h3>
+  <% end %>
+  <% if seller %>
+    <h3>The buyer needs to select the methods of transaction.</h3>
+  <% end %>
+
+
+<% elsif @deal.proposed_price_accepted == false %>
+  <%= hidden_field_tag :page, 2 %>
+  <% if buyer %>
+    <% if @deal.user_proposed_price.nil? %>
+      <h3>You need to propose a price.</h3>
+    <% else %>
+      <h3>The seller has not accepted your proposed price. Feel free to communicate with the seller with messaging.</h3>
+    <% end %>
+  <% end %>
+
+  <% if seller %>
+    <% if @deal.user_proposed_price.nil? %>
+      <h3>The user still needs to propose a price.</h3>
+    <% else %>
+      <h3>You still need to agree on a price with the buyer. Feel free to communicate with the seller with messaging.</h3>
+    <% end %>
+  <% end %>
+
+<% elsif !@deal.agreement_achieved %>
+  <%= hidden_field_tag :page, 3 %>
+  <% if buyer %>
+    <h3>You need to agree on an exchange method with the buyer.</h3>
+  <% end %>
+
+  <% if seller %>
+    <h3>You need to agree on an exchange method with the seller.</h3>
+  <% end %>
+
+
+<% else %>
+  <%= hidden_field_tag :page, 4 %>
+  <% if buyer %>
+  <% end %>
+  <% if seller %>
+  <% end %>
+
+<% end %>

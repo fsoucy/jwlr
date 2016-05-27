@@ -11,9 +11,12 @@
 <% if current_user.id == @deal.buyer_id %>
 <h3>Delivery cost: <%= number_to_currency(@deal.product.delivery_cost) %></h3>
 <% if !@deal.agreement_achieved %>
+<h3>Your location for delivery: <%= @deal.dropoff %></h3>
+<p>
 <%= form_for(@deal) do |f| %>
-<h3>Your location for delivery: <%= f.text_field :dropoff %>  <%= f.submit "Save", class: "pure-button pure-button-primary deals_form_button" %></h3>
+<%= f.text_field :dropoff %>  <%= f.submit "Change", class: "pure-button pure-button-primary dropoff_button" %>
 <% end %>
+</p>
 <% else %>
 <h3>Your location for delivery: <%= @deal.dropoff %></h3>
 <% end %>
@@ -76,7 +79,6 @@
 <% end %>
 <% if exchange_method.id == 3 %>
 <% if !@deal.product.store.nil? %>
-<h4>The buyer needs to go to the user's store and pick up the product.</h4>
 <h5>Location of pickup: <%= @deal.product.store.full_street_address %></h5>
 <h5>Business days to pickup: <%= @deal.product.store.business_days_pickup %></h5>
 <h5>The pickup will have to correspond to the <%= link_to "store's hours of operation.", @store %></h5>

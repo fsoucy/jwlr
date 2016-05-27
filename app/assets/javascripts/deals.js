@@ -54,6 +54,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.guide_button', function() {
 	$('.selection').hide();
+	$('.instructions').show();
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.guide_selection').show();
@@ -62,6 +63,7 @@ $(document).ready(function() {
     
     $(document).on('click', '.selling_button', function() {
 	$('.selection').hide();
+	$('.instructions').show();
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.selling_method_selection').show();
@@ -69,6 +71,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.methods_button', function() {
 	$('.selection').hide();
+	$('.instructions').show();
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.method_selection').show();
@@ -76,6 +79,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.exchange_button', function() {
 	$('.selection').hide();
+	$('.instructions').show();
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.exchange_method_selection').show();
@@ -83,6 +87,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.payment_button', function() {
 	$('.selection').hide();
+	$('.instructions').show();
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.payment_method_selection').show();
@@ -90,12 +95,19 @@ $(document).ready(function() {
 
     $(document).on('click', '.completed_button', function() {
 	$('.selection').hide();
+	$('.instructions').show();
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.completed_selection').show();
     });
 
-
+    $(document).on('click', '.complaint_button', function() {
+	$('.selection').hide();
+	$('.instructions').hide();
+	$('.instructions_price_warning').remove();
+	$('.methods_submittion').remove();
+	$('.complaint_selection').show();
+    });
     
     $(document).on('click', '.methods_form_button', function(e) {
 	e.preventDefault();
@@ -157,6 +169,18 @@ $(document).ready(function() {
 	});
     });
 
+    $(document).on('click', '.file_complaint_button', function(e) {
+	e.preventDefault();
+	var str = window.location.href;
+	var beginIndex = str.indexOf("deals/");
+	var id = str.substring(beginIndex + 6);
+	var postLoc = '/deals/' + id.toString();
+	debugger;
+	$.post(postLoc, $(this).parent('form').serialize());
+	$('.large_deals_form').load("http://" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function() {
+	});
+    });
+    
     $(document).on('click', '.dropoff_button', function(e) {
 	e.preventDefault();
 	if (isValidAddress($('#deal_dropoff').val()))

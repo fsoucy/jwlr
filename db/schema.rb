@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526051118) do
+ActiveRecord::Schema.define(version: 20160527004251) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -94,6 +94,10 @@ ActiveRecord::Schema.define(version: 20160526051118) do
     t.boolean  "buyer_satisfied"
     t.boolean  "seller_satisfied"
     t.boolean  "product_dispatched"
+    t.boolean  "complaint_buyer"
+    t.boolean  "complaint_seller"
+    t.text     "reason_complaint_seller"
+    t.text     "reason_complaint_buyer"
   end
 
   add_index "deals", ["buyer_id"], name: "index_deals_on_buyer_id"

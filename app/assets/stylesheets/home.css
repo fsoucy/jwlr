@@ -1,3 +1,13 @@
+.likes_list {
+  display: none;
+  position: absolute;
+  list-style-position: inside;
+  list-style-type: none;
+  background: #003459;
+  color: #FFFFFF;
+  padding: 1em;
+}
+
 .full-width {
   width: 100%;
 }

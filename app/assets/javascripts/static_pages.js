@@ -1,3 +1,4 @@
+//Like a post
 $(document).on('click', 'a[id*=like_]', function(event) {
   event.preventDefault();
   $.ajax({url: '/users/' + this.id.split("_")[3] + '/like', type: 'POST', context: this, data: {post_id: this.id.split("_")[2], post_type: this.id.split("_")[1]}, success: function() {
@@ -9,9 +10,39 @@ $(document).on('click', 'a[id*=like_]', function(event) {
     {
       $(this).text("Like");
     }
+    $.ajax({url: "/api/getLikes", type: 'GET', data: {post_id: this.id.split("_")[2], post_type: this.id.split("_")[1]}, context: this, success: function(data) {
+      $(this).siblings("a[id*=likes_]").text(data.length + " " + ((data.length == 1) ? "Like" : "Likes"));
+    }});
   }});  
 });
 
+//Hover like list
+$(document).on('mouseenter', 'a[id*=likes_]', function(event) {
+  $.ajax({url: "/api/getLikes", type: 'GET', data: {post_id: this.id.split("_")[2], post_type: this.id.split("_")[1]}, context: this, success: function(data) {
+    $(this).parent().siblings("ul[id*=likesList_]").empty();
+    if(data.length > 0)
+    {
+      for(i in data)
+      {
+        $(this).parent().siblings("ul[id*=likesList_]").append("<li>" + data[i].name  + "</li>");
+      }
+      $(this).parent().siblings("ul[id*=likesList_]").css({left: event.pageX, top: event.pageY});
+      $(this).parent().siblings("ul[id*=likesList_]").show();
+    }
+  }});
+});
+
+$(document).on('mouseleave', 'a[id*=likes_]', function() {
+  $(this).parent().siblings("ul[id*=likesList_]").hide();
+});
+
+//Click like list
+$(document).on('click', 'a[id*=likes_]', function(event) { 
+  event.preventDefault();
+  
+});
+
+//Edit Microposts
 $(document).on('click', 'a[id*=delete_micropost_]', function(event) {
   event.preventDefault();
   $.ajax({url: '/microposts/' + this.id.split("_")[2], type: 'DELETE', context: this, success: function() {    
@@ -19,6 +50,7 @@ $(document).on('click', 'a[id*=delete_micropost_]', function(event) {
   }});
 });
 
+//Delete Microposts
 $(document).on('click', 'a[id*=edit_micropost_]', function(event) {
   event.preventDefault();
   var old_text = $(this).siblings('#main_text').text().trim();
@@ -38,8 +70,9 @@ $(document).on('click', 'a[id*=edit_micropost_]', function(event) {
 $(window).scroll(function() {
   if($('.feed_item').length)
   {
-    if($(window).scrollTop() + $(window).height() > $(document).height() - 30)
+    if(($(window).scrollTop() + $(window).height() > $(document).height() - 200) && (window.feed_scrolling == false || typeof window.feed_page == 'undefined'))
     {
+      window.feed_scrolling = true;
       if(typeof window.feed_page != 'undefined')
       {
         window.feed_page += 1;
@@ -50,6 +83,7 @@ $(window).scroll(function() {
       }
       $.get('http://' + window.location.host + '/?page=' + window.feed_page, function(result) {
         $('#feed').append($(result).find('#feed').children());      
+        window.feed_scrolling = false;
       });
     }
   }

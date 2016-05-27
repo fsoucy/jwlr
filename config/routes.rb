@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'api/getToggleOptions'
   get 'api/getMicropost'
   get 'api/isStreetAddress'
+  get 'api/getLikes'
+
   
   root 'static_pages#home'
   get 'help' =>  'static_pages#help'

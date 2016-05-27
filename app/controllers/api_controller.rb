@@ -50,4 +50,22 @@ class ApiController < ApplicationController
     end
   end
 
+  def getLikes
+    post = Like.new(post_id: params[:post_id], post_type: params[:post_type]).post
+    if !post.nil?
+      returning = Array.new
+      post.likes.each do |like|
+        values = {}
+        values["name"] = like.user.name
+        values["id"] = like.user.id
+        values["profile_picture"] = like.user.profile_picture(:thumbnail)
+        returning.append(values)
+      end
+
+      render json: returning.to_json, status: 200
+    else
+      render json: nil, status: 400
+    end
+  end
+
 end

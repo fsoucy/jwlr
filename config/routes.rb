@@ -20,12 +20,6 @@ Rails.application.routes.draw do
   get 'search' => 'search#new'
   get 'test' => 'products#test'
   get 'search_suggestions' => 'search#suggestions'
-  # option 'search_suggestions' => 'search#suggestions'
-  #post 'signin' => 'api#signin'
-  #post 'signup' => 'api#signup'
-  #get 'localusers' => 'api#localusers'
-  #post 'newstatus' => 'api#newstatus'  
-  #get 'users' => 'api#users'
 
   get 'conversations/conversations_index'
 
@@ -43,7 +37,7 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :edit_description, :user_stores, :selling, :buying, :edit_default_preferences
-      post :follow
+      post :follow, :like
       get 'reviews' => 'reviews#index'
       resources :notifications, only: [:update, :index] 
     end

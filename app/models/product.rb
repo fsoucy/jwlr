@@ -17,6 +17,7 @@ class Product < ActiveRecord::Base
   has_many :selling_method_links, dependent: :destroy
   has_many :pictures, dependent: :destroy  
   has_many :deals
+  has_many :likes, as: :post, dependent: :destroy
   before_save :activate 
  
   def to_json(options = {})

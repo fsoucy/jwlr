@@ -208,6 +208,15 @@
             <p>
               <%= time_ago_in_words(item.updated_at) %> ago        
             </p>
+            <% if item.class.name == "Blogpost" or item.class.name == "Micropost" %>
+              <p>
+                <% if current_user.likes?(item) %>
+                  <%= link_to "Unlike", '', id: "like_#{item.class}_#{item.id}_#{current_user.id}" %>
+                <% else %>
+                  <%= link_to "Like", '', id: "like_#{item.class}_#{item.id}_#{current_user.id}" %>
+                <% end %>
+              </p>
+            <% end %>
           </div> 
         </div>
         <% if item_number % 10 == 0 and item_number % 20 != 0 %>

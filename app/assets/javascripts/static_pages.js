@@ -1,3 +1,17 @@
+$(document).on('click', 'a[id*=like_]', function(event) {
+  event.preventDefault();
+  $.ajax({url: '/users/' + this.id.split("_")[3] + '/like', type: 'POST', context: this, data: {post_id: this.id.split("_")[2], post_type: this.id.split("_")[1]}, success: function() {
+    if($(this).text().trim() == "Like")
+    {
+      $(this).text("Unike");
+    }
+    else
+    {
+      $(this).text("Like");
+    }
+  }});  
+});
+
 $(document).on('click', 'a[id*=delete_micropost_]', function(event) {
   event.preventDefault();
   $.ajax({url: '/microposts/' + this.id.split("_")[2], type: 'DELETE', context: this, success: function() {    

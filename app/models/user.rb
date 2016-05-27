@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :followers, through: :passive_relationships, source: :follower   
 
+  has_many :likes, dependent: :destroy
+
   def score
     reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("user_id != ? and deals.seller_id = ? or deals.buyer_id = ?", self.id, self.id, self.id)
     if reviews.count > 0
@@ -116,6 +118,19 @@ class User < ActiveRecord::Base
 
   def following?(other_user)
     following.include?(other_user)
+  end
+
+  def like(post)
+    new_like = post.likes.find_or_initialize_by(user_id: self.id)
+    new_like.save
+  end
+
+  def unlike(post)
+    post.likes.find_by(user_id: self.id).destroy
+  end
+
+  def likes?(post)
+    !post.likes.find_by(user_id: self.id).nil?
   end
 
   private

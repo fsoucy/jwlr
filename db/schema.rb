@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525191359) do
+ActiveRecord::Schema.define(version: 20160527003827) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -167,6 +167,18 @@ ActiveRecord::Schema.define(version: 20160525191359) do
   end
 
   add_index "key_stores", ["key"], name: "index_key_stores_on_key", unique: true
+
+  create_table "likes", force: :cascade do |t|
+    t.integer  "post_id"
+    t.string   "post_type"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "likes", ["post_id", "post_type", "user_id"], name: "index_likes_on_post_id_and_post_type_and_user_id", unique: true
+  add_index "likes", ["post_id"], name: "index_likes_on_post_id"
+  add_index "likes", ["user_id"], name: "index_likes_on_user_id"
 
   create_table "messages", force: :cascade do |t|
     t.datetime "created_at",      null: false

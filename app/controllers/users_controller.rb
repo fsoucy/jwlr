@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow]
-  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like]
+  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like]
   before_action :admin_user, only: :destroy  
   
   def new
@@ -124,6 +124,17 @@ class UsersController < ApplicationController
     else
       render json: nil, status: 400
     end
+  end
+
+  def like
+    post = Like.new(post_id: params[:post_id], post_type: params[:post_type]).post
+    if current_user.likes?(post)
+      current_user.unlike(post)
+    else
+      current_user.like(post)
+    end
+
+    render json: nil, status: 200
   end
 
   private

@@ -65,11 +65,87 @@
   <% end %>
 
 
-<% else %>
+<% elsif @deal.agreement_achieved %>
   <%= hidden_field_tag :page, 4 %>
-  <% if buyer %>
-  <% end %>
-  <% if seller %>
-  <% end %>
+  <% if !@deal.deal_complete %>
 
+    <% if @deal.exchange_method.method == "Delivery" %>
+      <% if @deal.product_received && seller %>
+        <h3>The buyer has received the product.</h3>
+      <% end %>
+      <% if @deal.product_dispatched && !@deal.product_received %>
+        <% if buyer %> 
+          <h3>Product has been dispatched to you.</h3>
+        <% elsif seller %>
+          <h3>You have dispatched the product but the buyer has not yet received it.</h3> 
+        <% end %>
+      <% elsif !@deal.product_received  %>
+        <% if buyer %>
+          <h3>The product has not yet been dispatched to you.</h3>
+        <% elsif seller %>
+          <h3>You have not yet dispatched the product to the buyer.</h3>
+        <% end %>
+      <% end %>
+      <% if @deal.payment_complete %>
+        <% if buyer %>
+          <h3>You have fully paid for the product.</h3>
+        <% elsif seller %>
+          <h3>The buyer has fully paid for the product.</h3>
+        <% end %>
+      <% else %>
+        <% if buyer %>
+          <h3>You have not yet paid for the product.</h3>
+        <% elsif seller %>
+          <h3>The buyer has not yet paid for the product.</h3>
+        <% end %>
+      <% end %>
+    <% else %>
+      <% if @deal.payment_method.method == "Paypal" %> <!-- case 2 --> <!-- what about hours of operation and stuff is that in exchange -->
+        <% if buyer %>
+          <% if @deal.payment_complete %>
+            <% if @deal.product_received %>
+              <h3>You have completed the payment and received your product. Waiting for the seller to click satisifed and complete the deal.</h3> 
+            <% else %>
+              <h3>You have made your payment. Go meet the seller to receive your product.</h3>
+            <% end %>
+          <% else %>
+            <h3>Now complete your payment using Paypal and meet the seller to receive your product.</h3>
+          <% end %>
+        <% elsif seller %>
+          <% if @deal.payment_complete %>
+            <% if @deal.product_received %>
+              <h3>The user has completed his payment and received his product. Let us know when the deal is completed.</h3>
+            <% else %>  <!-- what type of meet up? also provide pickup information here if necessary -->
+              <h3>The user has completed his payment. He will meet you to receive the product.</h3>
+            <% end %>
+          <% else %>
+            <h3>The user has not yet completed his payment.</h3>
+          <% end %>
+        <% end %>
+
+      <% else %> <!-- case 3 -->
+        <% if buyer %>
+          <% if @deal.exchange_method.method == "Meetup" %>
+            <h3>Meet up with the seller to pay for and receive the product.</h3>
+          <% elsif @deal.exchange_method.method == "Pickup" %>
+            <h3>Go to the seller to pay for and receive the product.</h3>
+          <% end %>
+        <% elsif seller %>
+          <% if @deal.exchange_method.method == "Meetup" %>
+            <h3>Meet up with the buyer to receive your payment and transfer the product.</h3>
+          <% elsif @deal.exchange_method.method == "Pickup" %>
+            <h3>The buyer will come to you to pay for and receive the product.</h3>
+        <% end %>
+      <% end %>
+
+    <% end %>
+  <% else %> <!-- deal complete -->
+    <% review = @deal.reviews.where("user_id = ?", current_user.id).first %>
+    <% if review.nil? %>
+      <h3>Please fill out a review to indicate your satisfaction on this completed deal.</h3> 
+    <% else %>
+      <h3>Congrats on your successfully completed deal.</h3>
+    <% end %>      
+    
+  <% end %>    
 <% end %>

@@ -76,7 +76,7 @@ $(document).ready(function() {
 	$('.methods_submission').remove();
 	$('.method_selection').show();
     });
-
+    
     $(document).on('click', '.exchange_button', function() {
 	$('.selection').hide();
 	$('.instructions').show();
@@ -111,12 +111,11 @@ $(document).ready(function() {
     
     $(document).on('click', '.methods_form_button', function(e) {
 	e.preventDefault();
-
+	debugger;
 	var str = window.location.href;
 	var beginIndex = str.indexOf("deals/");
 	var id = str.substring(beginIndex + 6);
 	var postLoc = '/deals/' + id.toString();
-	$('.instructions').append("<h3 class='methods_submission'>Congrats! You've successfully updated the methods of transaction.</h3>");
 	$.post(postLoc, $(this).parent('form').serialize());
 	$('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .exchange_method_selection", function() {
 	});
@@ -127,6 +126,10 @@ $(document).ready(function() {
 	$('.completed_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .completed_selection", function() {
 	});
 	$('.guide_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
+	});
+	$('.instructions').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
+	    debugger;
+	    $('.instructions').append("<h3 class='methods_submission'>Congrats! You've successfully updated the methods of transaction.</h3>");
 	    redirectToPage();
 	});
     });
@@ -165,6 +168,8 @@ $(document).ready(function() {
 	$('.completed_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .completed_selection", function() {
 	});
 	$('.guide_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
+	});
+	$('.instructions').load("http://" + window.location.host + '/deals/' + id.toString() + " .instructions", function() {
 	    redirectToPage();
 	});
     });
@@ -179,6 +184,19 @@ $(document).ready(function() {
 	$.post(postLoc, $(this).parent('form').serialize());
 	$('.large_deals_form').load("http://" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function() {
 	});
+    });
+
+    $(document).on('click', '.remove_complaint_button', function(e) {
+	e.preventDefault();
+	var str = window.location.href;
+	var beginIndex = str.indexOf("deals/");
+	var id = str.substring(beginIndex + 6);
+	var postLoc = '/deals/' + id.toString();
+	$.post(postLoc, $(this).parent('form').serialize());
+	$('.large_deals_form').load("http://" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function() {
+	    redirectToPage();
+	});
+
     });
     
     $(document).on('click', '.dropoff_button', function(e) {

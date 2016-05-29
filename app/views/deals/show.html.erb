@@ -12,8 +12,10 @@
     </div>
     <div class="log-in-form marg deals_form">
       <div class="large_deals_form">
-        <% if !@deal.complaint_buyer && !@deal.complaint_seller %>      
-          <%= render 'instructions' %>
+        <% if !@deal.complaint_buyer && !@deal.complaint_seller %>
+	  <div class="instructions">
+            <%= render 'instructions' %>
+	  </div>
           <div class="method_selection selection">
 	          <%= render 'method_selection' %>
           </div>

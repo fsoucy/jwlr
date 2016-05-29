@@ -3,10 +3,9 @@
 <!-- Third, must agree on an exchange method -->
 <!-- Fourth, completion -->
 
-<% buyer = (current_user.id == @deal.buyer_id) %>
-<% seller = (current_user.id == @deal.seller_id) %>
-
-<div class="instructions">
+<div class="inner_instructions">
+  <% buyer = (current_user.id == @deal.buyer_id) %>
+  <% seller = (current_user.id == @deal.seller_id) %>
   <% if @deal.selling_method_id.nil? || @deal.exchange_method_id.nil? || @deal.payment_method_id.nil? %>
     <%= hidden_field_tag :page, 1 %>
     <% if buyer %>
@@ -39,7 +38,7 @@
     <%= hidden_field_tag :page, 3 %>
   
     <% if buyer %>
-      <h3>You need to agree on an exchange method with the buyer.</h3>
+      <h3>You need to agree on an exchange method with the seller.</h3>
       <% if @deal.exchange_method.method == "Delivery" %>
         <h3>Notify the seller where you would like the product to be delivered, and accept the exchange if you are satisfied.</h3>
       <% end %>

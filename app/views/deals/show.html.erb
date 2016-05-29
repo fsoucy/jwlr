@@ -13,20 +13,30 @@
     <div class="log-in-form marg deals_form">
       <div class="large_deals_form">
         <% if !@deal.complaint_buyer && !@deal.complaint_seller %>
-	  <div class="instructions">
-            <%= render 'instructions' %>
-	  </div>
+	        <div class="instructions">
+            <div class="inner_instructions">
+              <%= render 'instructions' %>
+            </div>
+	        </div>
           <div class="method_selection selection">
-	          <%= render 'method_selection' %>
+            <div class="inner_method_selection">
+	            <%= render 'method_selection' %>
+            </div>
           </div>
           <div class="selling_method_selection selection">
-	          <%= render 'selling_methods_selection' %>
+            <div class="inner_selling_method_selection">
+	            <%= render 'selling_methods_selection' %>
+            </div>
           </div>
           <div class="exchange_method_selection selection">
-	          <%= render 'exchange_methods_selection' %>
+            <div class="inner_exchange_method_selection">
+	            <%= render 'exchange_methods_selection' %>
+            </div>
           </div>
           <div class="completed_selection selection">
-	          <%= render 'completed_selection' %>
+            <div class="inner_completed_selection">
+	            <%= render 'completed_selection' %>
+            </div>
           </div>
           <div class="complaint_selection selection">
 	          <%= render 'file_complaint' %>

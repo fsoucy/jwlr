@@ -217,6 +217,8 @@ $(document).ready(function() {
     });
 
     $('#selling_methods_button').click(function() {
+	$('.log-in-form fieldset').hide();
+	$('#selling_methods_form').show();
 	evaluateSelling();
     });
 
@@ -225,6 +227,8 @@ $(document).ready(function() {
     });
 
     $('#exchange_methods_button').click(function() {
+	$('.log-in-form fieldset').hide();
+	$('#exchange_methods_form').show();
 	evaluateExchange();
     });
 
@@ -233,9 +237,25 @@ $(document).ready(function() {
     });
 
     $('#payment_methods_button').click(function() {
+	$('.log-in-form fieldset').hide();
+	$('#payment_methods_form').show();
 	evaluatePayment();
     });
 
+    $('#main_form_button').click(function() {
+	$('.log-in-form fieldset').hide();
+	$('#product_form').show();
+    });
+
+    $('#toggle_options_button').click(function() {
+	$('.log-in-form fieldset').hide();
+	$('#toggle_options_form').show();
+    });
+
+    $('#dropper_button').click(function() {
+	$('.log-in-form fieldset').hide();
+	$('#dropper').show();
+    });
 
     $('.product_next_main').click(function() {
 	$('#product_form').hide();

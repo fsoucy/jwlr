@@ -1,7 +1,7 @@
 <div class="dropper" id="dropper">
   <%= form_for @picture, url: product_path(@product) + "/pictures", html: { multipart: true, class: "dropzone"} do |f|  %>
   <% end %>
-  <button class="pure-button pure-button-primary product_previous_picture">Previous</button>
+  <button class="pure-button pure-button-primary product_previous_picture" type="button">Previous</button>
   <br>
   <button class="pure-button pure-button-primary submit_the_form submit_product_picture">Done</button>
 </div>

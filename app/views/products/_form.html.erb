@@ -31,6 +31,8 @@
         $ <%= f.number_field :delivery_cost %>
       <% end %>
       <br>
+      <button class="pure-button pure-button-primary product_next_main">Next</button>
+      <br>
       <%= f.submit "Submit product", class: "pure-button pure-button-primary submit_product" %>
 
     </fieldset>
@@ -64,6 +66,9 @@
       <% end %>
       <% end %>
       <br class="toggle_br">
+      <button class="pure-button pure-button-primary product_previous_toggle">Previous</button>
+      <button class="pure-button pure-button-primary product_next_toggle">Next</button>
+      <br>
       <%= f.submit "Submit Toggle Options", class: "pure-button pure-button-primary submit_product submit_toggles" %>
     </fieldset>
     <fieldset id="selling_methods_form">
@@ -81,6 +86,10 @@
       </label>
       <% end %>
       <% end %>
+      <br>
+      <button class="pure-button pure-button-primary product_previous_selling">Previous</button>
+      <button class="pure-button pure-button-primary product_next_selling">Next</button>
+      <br>
       <%= f.submit "Submit product", class: "pure-button pure-button-primary submit_product" %>
     </fieldset>
     <fieldset id="exchange_methods_form">
@@ -97,6 +106,10 @@
       </label>
       <% end %>
       <% end %>
+      <br>
+      <button class="pure-button pure-button-primary product_previous_exchange">Previous</button>
+      <button class="pure-button pure-button-primary product_next_exchange">Next</button>
+      <br>
       <%= f.submit "Submit product", class: "pure-button pure-button-primary submit_product" %>
     </fieldset>
     <fieldset id="payment_methods_form">
@@ -113,6 +126,10 @@
       </label>
       <% end %>
       <% end %>
+      <br>
+      <button class="pure-button pure-button-primary product_previous_payment">Previous</button>
+      <button class="pure-button pure-button-primary product_next_payment">Next</button>
+      <br>
       <%= f.submit "Submit product", class: "submit_the_form pure-button pure-button-primary submit_product" %>
     </fieldset>
     

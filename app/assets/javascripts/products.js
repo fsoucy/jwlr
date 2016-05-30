@@ -237,6 +237,56 @@ $(document).ready(function() {
     });
 
 
+    $('.product_next_main').click(function() {
+	$('#product_form').hide();
+	$('#toggle_options_form').show();
+    });
+
+    $('.product_previous_toggle').click(function() {
+	$('#toggle_options_form').hide();
+	$('#product_form').show();
+    });
+
+    $('.product_next_toggle').click(function() {
+	$('#toggle_options_form').hide();
+	$('#selling_methods_form').show();
+    });
+
+    $('.product_previous_selling').click(function() {
+	$('#selling_methods_form').hide();
+	$('#toggle_options_form').show();
+    });
+
+    $('.product_next_selling').click(function() {
+	$('#selling_methods_form').hide();
+	$('#exchange_methods_form').show();
+    });
+
+    $('.product_previous_exchange').click(function() {
+	$('#exchange_methods_form').hide();
+	$('#selling_methods_form').show();
+    });
+
+    $('.product_next_exchange').click(function() {
+	$('#exchange_methods_form').hide();
+	$('#payment_methods_form').show();
+    });
+
+    $('.product_previous_payment').click(function() {
+	$('#payment_methods_form').hide();
+	$('#exchange_methods_form').show();
+    });
+
+    $('.product_next_payment').click(function() {
+	$('#payment_methods_form').hide();
+	$('#dropper').show();
+    });
+
+    $('.product_previous_picture').click(function() {
+	$('#dropper').hide();
+	$('#payment_methods_form').show();
+    });
+
     $('.submit_product').click(function(e) {
 	var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods() && productPicture();
 	if (!forms)

@@ -251,8 +251,6 @@
                         </p>
                         <p>
                           <%= time_ago_in_words(comment.updated_at) %> ago
-                        </p>
-                        <p>
                           <% if current_user.likes?(comment) %>
                             <%= link_to "Unlike", '', id: "like_#{comment.class}_#{comment.id}_#{current_user.id}" %>
                           <% else %>

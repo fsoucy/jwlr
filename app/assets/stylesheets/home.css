@@ -1,7 +1,6 @@
 .large_likes_list {
   display: none;
   width: 100%;
-  height: 6em;
   padding: 1em;  
   overflow-y: scroll;
   overflow-x: none;
@@ -25,7 +24,6 @@
 
 .comments_list {
   width: 100%;
-  height: 8em;
   padding: 1em;  
   overflow-y: scroll;
   overflow-x: none;

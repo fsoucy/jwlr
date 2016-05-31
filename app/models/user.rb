@@ -40,6 +40,7 @@ class User < ActiveRecord::Base
   has_many :followers, through: :passive_relationships, source: :follower   
 
   has_many :likes, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   def score
     reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("user_id != ? and deals.seller_id = ? or deals.buyer_id = ?", self.id, self.id, self.id)
@@ -131,6 +132,15 @@ class User < ActiveRecord::Base
 
   def likes?(post)
     !post.likes.find_by(user_id: self.id).nil?
+  end
+
+  def comment(post, comment_string)
+    new_comment = post.comments.find_or_initialialize_by(user_id: self.id, comment: comment_string)
+    new_comment.save
+  end
+
+  def uncomment(post, comment_id)
+    post.comments.find_by(id: comment_id).destroy
   end
 
   private

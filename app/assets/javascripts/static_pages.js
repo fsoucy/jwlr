@@ -39,7 +39,34 @@ $(document).on('mouseleave', 'a[id*=likes_]', function() {
 //Click like list
 $(document).on('click', 'a[id*=likes_]', function(event) { 
   event.preventDefault();
+  $(this).parent().siblings("div[id*=commentsBox_]").children("#likesListLarge").show();
+  $(this).parent().siblings("div[id*=commentsBox_]").children("#commentsList").hide();  
+});
+
+//Click comment list
+$(document).on('click', 'a[id*=comments_]', function(event) { 
+  event.preventDefault();
+  $(this).parent().siblings("div[id*=commentsBox_]").children("#likesListLarge").hide();
+  $(this).parent().siblings("div[id*=commentsBox_]").children("#commentsList").show();  
+});
+
+//Submit comment
+$(document).on('click', 'button[id*=commentForm_]', function(event) {
+  event.preventDefault();
+  var form_data = {};
+  form_data["comment_string"] = $(this).siblings("input[type=text]").val();
+  form_data["post_id"] = this.id.split("_")[2];
+  form_data["post_type"] = this.id.split("_")[1];
+  form_data["user_id"] = this.id.split("_")[3];
   
+  $.ajax({ 
+    type: "POST",
+    url: "/users/" + form_data["user_id"] + "/comment",
+    data: form_data,
+    success: function (data) {
+      location.reload();
+    }   
+  });
 });
 
 //Edit Microposts

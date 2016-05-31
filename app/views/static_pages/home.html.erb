@@ -216,7 +216,58 @@
                   <%= link_to "Like", '', id: "like_#{item.class}_#{item.id}_#{current_user.id}" %>
                 <% end %>
                 <%= link_to pluralize(item.likes.count, "Like"), '', id: "likes_#{item.class}_#{item.id}_#{current_user.id}" %>
+                <%= link_to pluralize(item.comments.count, "Comment"), '', id: "comments_#{item.class}_#{item.id}_#{current_user.id}" %>
               </p>
+              <div id="commentsBox_#{item.class}_#{item.id}_#{current_user.id}" class="comments_box">
+                <div id="likesListLarge" class="large_likes_list">
+                  <% item.likes.each do |like| %>
+                    <div class="like">
+                      <%= image_tag like.user.profile_picture(:thumbnail), class: "pure-img" %>
+                      <a href="<%= user_path(like.user) %>"><h4><%= like.user.name %></h4></a>
+                      <button class="pure-button" id="follow_<%= like.user.id %>">
+                        <% if current_user.following?(like.user) %>
+                          Unfollow
+                        <% else %>
+                          Follow
+                        <% end %>
+                      </button>
+                    </div>
+                  <% end %>
+                </div>
+                  <div id="commentsList" class="comments_list">
+                    <% item.comments.each do |comment| %>
+                      <div class="comment">
+                        <%= image_tag comment.user.profile_picture(:thumbnail), class: "pure-img" %>
+                        <a href="<%= user_path(comment.user) %>"><h4><%= comment.user.name %></h4></a>
+                        <button class="pure-button" id="follow_<%= comment.user.id %>">
+                          <% if current_user.following?(comment.user) %>
+                            Unfollow
+                          <% else %>
+                            Follow
+                          <% end %>
+                        </button>
+                        <p>
+                          <%= comment.comment %>
+                        </p>
+                        <p>
+                          <%= time_ago_in_words(comment.updated_at) %> ago
+                        </p>
+                        <p>
+                          <% if current_user.likes?(comment) %>
+                            <%= link_to "Unlike", '', id: "like_#{comment.class}_#{comment.id}_#{current_user.id}" %>
+                          <% else %>
+                            <%= link_to "Like", '', id: "like_#{comment.class}_#{comment.id}_#{current_user.id}" %>
+                          <% end %>
+                          <%= link_to pluralize(comment.likes.count, "Like"), '', id: "likes_#{comment.class}_#{comment.id}_#{current_user.id}" %>
+                        </p>                      
+                      </div>
+                    <% end %>
+                      <fieldset class="pure-form pure-form-stacked">
+                      <%= text_field_tag name: "comment", placeholder: "Comment on this", class: "full-width" %>
+                      <button id="<%= "commentForm_" + item.class.to_s + "_" + item.id.to_s + "_" + current_user.id.to_s %>" class="align-right pure-button pure-button-primary">Comment</button>
+                      </fieldset>
+                  </div>
+              </div>
               <ul id="likesList_#{item.class}_#{item.id}_#{current_user.id}" class="likes_list">
                 <% item.likes.each do |like| %>
                   <li><%= like.user.name %></li>

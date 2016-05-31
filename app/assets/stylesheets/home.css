@@ -1,3 +1,36 @@
+.large_likes_list {
+  display: none;
+  width: 100%;
+  height: 6em;
+  padding: 1em;  
+  overflow-y: scroll;
+  overflow-x: none;
+}
+
+.comment img, .comment h4, .comment span {
+  display: inline-block;
+}
+
+.like * {
+  display: inline-block;
+}
+
+.like button, .comment button {
+  float: right;
+}
+
+.like img, .comment img {
+  margin-right: 2%;
+}
+
+.comments_list {
+  width: 100%;
+  height: 8em;
+  padding: 1em;  
+  overflow-y: scroll;
+  overflow-x: none;
+}
+
 .likes_list {
   display: none;
   position: absolute;

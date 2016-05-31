@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :edit_description, :user_stores, :selling, :buying, :edit_default_preferences
-      post :follow, :like
+      post :follow, :like, :comment
       get 'reviews' => 'reviews#index'
       resources :notifications, only: [:update, :index] 
     end

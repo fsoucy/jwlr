@@ -1,3 +1,4 @@
+<%= hidden_field_tag :location, value: 2 %>
 <% selling_method = @deal.selling_method unless @deal.selling_method_id.nil? %>
 <% if !selling_method.nil? %>
 <h2>Selling Method: <%= selling_method.method %></h2>

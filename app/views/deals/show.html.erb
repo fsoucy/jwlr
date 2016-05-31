@@ -41,6 +41,7 @@
           <div class="complaint_selection selection">
 	          <%= render 'file_complaint' %>
           </div>
+          <button class="pure-button pure-button-primary" id="redirect_button">Lost?</button>
         <% else %>
           <% if @deal.complaint_buyer && @deal.complaint_seller %>
             <%= render 'both_complained' %>

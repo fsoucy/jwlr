@@ -50,6 +50,10 @@ $(document).on('click', 'a[id*=comments_]', function(event) {
   $(this).parent().siblings("div[id*=commentsBox_]").children("#commentsList").show();  
 });
 
+$(document).ready(function () {
+  $("#commentsList").scrollTop(10000000);
+});
+
 //Submit comment
 $(document).on('click', 'button[id*=commentForm_]', function(event) {
   event.preventDefault();

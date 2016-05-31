@@ -262,7 +262,7 @@
                         </p>                      
                       </div>
                     <% end %>
-                      <fieldset class="pure-form pure-form-stacked">
+                      <fieldset class="pure-form">
                       <%= text_field_tag name: "comment", placeholder: "Comment on this", class: "full-width" %>
                       <button id="<%= "commentForm_" + item.class.to_s + "_" + item.id.to_s + "_" + current_user.id.to_s %>" class="align-right pure-button pure-button-primary">Comment</button>
                       </fieldset>

@@ -107,16 +107,41 @@
               <h3>You have completed the payment and received your product. Waiting for the seller to click satisifed and complete the deal.</h3> 
             <% else %>
               <h3>You have made your payment. Go meet the seller to receive your product.</h3>
+              <% if @deal.exchange_method.method == "Meetup" %>
+                <h3>Meet up with the seller at the location you agreed upon in messaging.</h3>
+              <% elsif @deal.exchange_method.method == "Pickup" %>
+                <h3>Do this at <%= @deal.product.full_street_address %></h3>
+                <% if @deal.product.store_id.nil? %>
+                  <h3>Make sure you and the seller have agreed upon a proper time.</h3>
+                <% else %>
+                  <h3>The store's hours of operation can be found <%= link_to "Here", @deal.product.store %></h3>
+                <% end %>
+              <% end %>
             <% end %>
           <% else %>
             <h3>Now complete your payment using Paypal and meet the seller to receive your product.</h3>
+            <% if @deal.exchange_method.method == "Meetup" %>
+              <h3>Meet up with the seller at the location you agreed upon in messaging.</h3>
+            <% elsif @deal.exchange_method.method == "Pickup" %>
+              <h3>Do this at <%= @deal.product.full_street_address %></h3>
+              <% if @deal.product.store_id.nil? %>
+                <h3>Make sure you and the seller have agreed upon a proper time.</h3>
+              <% else %>
+                <h3>The store's hours of operation can be found <%= link_to "Here", @deal.product.store %></h3>
+              <% end %>
+            <% end %>
           <% end %>
         <% elsif seller %>
           <% if @deal.payment_complete %>
             <% if @deal.product_received %>
               <h3>The user has completed his payment and received his product. Let us know when the deal is completed.</h3>
             <% else %>  <!-- what type of meet up? also provide pickup information here if necessary -->
-              <h3>The user has completed his payment. He will meet you to receive the product.</h3>
+              <h3>The user has completed his payment.</h3>
+              <% if @deal.exchange_method.method == "Meetup" %>
+                <h3>Meet the buyer at the location you agreed upon in messaging so he can receive the product.</h3>
+              <% elsif @deal.exchange_method.method == "Pickup" %>
+                <h3>The user will pick up the product at your specified location. If you don't have a store, make sure to let your buyer know what times are acceptable for pickup.</h3>
+              <% end %>
             <% end %>
           <% else %>
             <h3>The user has not yet completed his payment.</h3>

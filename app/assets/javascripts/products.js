@@ -118,6 +118,25 @@ function paymentMethods()
     return thing;
 }
 
+function ready()
+{
+    return mainDetails() && sellingMethods() && exchangeMethods() && paymentMethods() && productPicture();
+}
+
+function evaluateSubmit()
+{
+    if (ready())
+    {
+	$('.submit_product').removeClass('not_ready');
+	$('.submit_product_picture').removeClass('not_ready');
+    }
+    else
+    {
+	$('.submit_product').addClass('not_ready');
+	$('.submit_product_picture').addClass('not_ready');
+    }
+}
+
 function evaluateMain()
 {
     if(mainDetails())
@@ -130,6 +149,7 @@ function evaluateMain()
 	$('#main_form_button').addClass('incomplete').removeClass('complete');
 	$('.product_next_main').addClass('not_ready');
     }
+    evaluateSubmit();
 }
 
 function evaluateSelling()
@@ -144,6 +164,7 @@ function evaluateSelling()
 	$('#selling_methods_button').removeClass('complete').addClass('incomplete');
 	$('.product_next_selling').addClass('not_ready');
     }
+    evaluateSubmit();
 }
 
 function evaluateExchange()
@@ -158,6 +179,7 @@ function evaluateExchange()
 	$('#exchange_methods_button').removeClass('complete').addClass('incomplete');
 	$('.product_next_exchange').addClass('not_ready');
     }
+    evaluateSubmit();
 }
 
 function evaluatePayment()
@@ -172,6 +194,7 @@ function evaluatePayment()
 	$('#payment_methods_button').removeClass('complete').addClass('incomplete');
 	$('.product_next_payment').addClass('not_ready');
     }
+    evaluateSubmit();
 }
 function evaluateAll()
 {
@@ -180,6 +203,7 @@ function evaluateAll()
     evaluateExchange();
     evaluatePayment();
     evaluatePicture();
+    evaluateSubmit();
     $('#toggle_options_button').addClass('complete');
 }
 

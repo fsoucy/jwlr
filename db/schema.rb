@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531184347) do
+ActiveRecord::Schema.define(version: 20160601193412) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(version: 20160531184347) do
 
   create_table "key_stores", force: :cascade do |t|
     t.string   "key"
-    t.string   "value"
+    t.text     "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

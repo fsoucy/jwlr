@@ -3,7 +3,7 @@ class StaticPagesController < ApplicationController
   def home
     @top_products = Product.joins(:productviews).order('productviews.views DESC').limit(9)
     if logged_in?
-      searches = current_user.searches.order('"search_relationships"."frequency" DESC').limit(9).pluck(:search_text)
+      searches = current_user.searches.order('`search_relationships`.`frequency` DESC').limit(9).pluck(:search_text)
       results = Array.new
       searches.each do |search_text|
         search = Product.search do

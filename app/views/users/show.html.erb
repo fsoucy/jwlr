@@ -6,8 +6,10 @@
       <button class="pure-button" id="follow_<%= @user.id %>">
         <% if current_user.following?(@user) %>
           Unfollow
+        <% elsif current_user.id == @user.id %>
+          Me
         <% else %>
-          Follow
+          Follow 
         <% end %>
       </button>
     </p>

@@ -227,6 +227,8 @@
                       <button class="pure-button" id="follow_<%= like.user.id %>">
                         <% if current_user.following?(like.user) %>
                           Unfollow
+                        <% elsif current_user.id == like.user.id %>
+                          Me
                         <% else %>
                           Follow
                         <% end %>
@@ -242,8 +244,10 @@
                         <button class="pure-button" id="follow_<%= comment.user.id %>">
                           <% if current_user.following?(comment.user) %>
                             Unfollow
+                          <% elsif current_user.id == comment.user.id %>
+                            Me
                           <% else %>
-                            Follow
+                            Follow 
                           <% end %>
                         </button>
                         <p>

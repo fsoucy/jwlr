@@ -110,7 +110,9 @@ class User < ActiveRecord::Base
   end
 
   def follow(other_user)
-    active_relationships.create(followed_id: other_user.id)
+    if other_user != self
+      active_relationships.create(followed_id: other_user.id)
+    end
   end
 
   def unfollow(other_user)

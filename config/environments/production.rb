@@ -77,23 +77,20 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :sendmail
+  #config.action_mailer.raise_delivery_errors = true
+  #config.action_mailer.delivery_method = :sendmail
   host = 'igold.com'
-  config.action_mailer.default_url_options = { host: host }
-
-  #config.action_mailer.delivery_method = :smtp
-  #host = 'limitless-earth-5876.herokuapp.com'
   #config.action_mailer.default_url_options = { host: host }
-  #ActionMailer::Base.smtp_settings = {
-  #  :address        => 'smtp.sendgrid.net',
-  #  :port           => '587',
-  #  :authentication => :plain,
-  #  :user_name      => ENV['SENDGRID_USERNAME'],
-  #  :password       => ENV['SENDGRID_PASSWORD'],
-  #  :domain         => 'limitless-earth-5876.heroku.com',
-  #  :enable_starttls_auto => true
-  #}
-  
+
+  config.action_mailer.delivery_method = :smtp
+  #host = 'limitless-earth-5876.herokuapp.com'
+  config.action_mailer.default_url_options = { host: host }
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'mail.igold.com',
+    :port           => '587',
+    :user_name      => "noreply@igold.com",
+    :password       => "Con10t$d",
+    :domain         => 'igold.com',
+}  
 
 end

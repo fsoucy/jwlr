@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed]
-  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment]
+  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment]
   before_action :admin_user, only: :destroy  
   
   def new
@@ -109,7 +109,45 @@ class UsersController < ApplicationController
   def buying
     @buying = Deal.where("buyer_id=?", params[:id])
   end
-  
+
+  def follow
+    user = User.find(params[:id])
+    if !user.nil?
+      if current_user.following?(user)
+        current_user.unfollow(user)
+      else
+        current_user.follow(user)
+      end
+      
+      render json: nil, status: 200
+
+    else
+      render json: nil, status: 400
+    end
+  end
+
+  def like
+    post = Like.new(post_id: params[:post_id], post_type: params[:post_type]).post
+    if current_user.likes?(post)
+      current_user.unlike(post)
+    else
+      current_user.like(post)
+    end
+
+    render json: nil, status: 200
+  end
+
+  def comment
+    comment = Comment.find_or_initialize_by(post_id: params[:post_id], post_type: params[:post_type], comment: params[:comment_string], user_id: current_user.id)
+    if comment.new_record?
+      comment.save
+    else
+      comment.destroy
+    end
+
+    render json: nil, status: 200
+  end
+
   private
 
     def user_params

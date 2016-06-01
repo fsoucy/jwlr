@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160527004251) do
+ActiveRecord::Schema.define(version: 20160601193412) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -61,6 +61,18 @@ ActiveRecord::Schema.define(version: 20160527004251) do
   end
 
   add_index "category_options", ["category_id"], name: "index_category_options_on_category_id"
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.string   "post_type"
+    t.string   "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "comments", ["post_type", "post_id"], name: "index_comments_on_post_type_and_post_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "conversations", force: :cascade do |t|
     t.datetime "created_at",     null: false
@@ -165,12 +177,24 @@ ActiveRecord::Schema.define(version: 20160527004251) do
 
   create_table "key_stores", force: :cascade do |t|
     t.string   "key"
-    t.string   "value"
+    t.text     "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   add_index "key_stores", ["key"], name: "index_key_stores_on_key", unique: true
+
+  create_table "likes", force: :cascade do |t|
+    t.integer  "post_id"
+    t.string   "post_type"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "likes", ["post_id", "post_type", "user_id"], name: "index_likes_on_post_id_and_post_type_and_user_id", unique: true
+  add_index "likes", ["post_id"], name: "index_likes_on_post_id"
+  add_index "likes", ["user_id"], name: "index_likes_on_user_id"
 
   create_table "messages", force: :cascade do |t|
     t.datetime "created_at",      null: false
@@ -182,6 +206,15 @@ ActiveRecord::Schema.define(version: 20160527004251) do
 
   add_index "messages", ["conversation_id"], name: "index_messages_on_conversation_id"
   add_index "messages", ["sender_id"], name: "index_messages_on_sender_id"
+
+  create_table "microposts", force: :cascade do |t|
+    t.string   "content"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "microposts", ["user_id"], name: "index_microposts_on_user_id"
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id"
@@ -260,6 +293,17 @@ ActiveRecord::Schema.define(version: 20160527004251) do
   add_index "productviews", ["user_id", "product_id"], name: "index_productviews_on_user_id_and_product_id", unique: true
   add_index "productviews", ["user_id"], name: "index_productviews_on_user_id"
 
+  create_table "relationships", force: :cascade do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id"
+  add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
+  add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id"
+
   create_table "reviews", force: :cascade do |t|
     t.integer  "deal_id"
     t.string   "verdict"
@@ -308,6 +352,15 @@ ActiveRecord::Schema.define(version: 20160527004251) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "settings", force: :cascade do |t|
+    t.string   "attribute"
+    t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "settings", ["attribute"], name: "index_settings_on_attribute", unique: true
 
   create_table "stores", force: :cascade do |t|
     t.string   "full_street_address"
@@ -407,12 +460,12 @@ ActiveRecord::Schema.define(version: 20160527004251) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "full_street_address"
-    t.integer  "business_days_pickup"
-    t.decimal  "default_delivery_cost"
     t.text     "interests"
     t.integer  "products_bought"
     t.integer  "products_sold"
     t.text     "identifies_as"
+    t.integer  "business_days_pickup"
+    t.decimal  "default_delivery_cost"
     t.string   "profile_picture_file_name"
     t.string   "profile_picture_content_type"
     t.integer  "profile_picture_file_size"

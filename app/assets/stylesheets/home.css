@@ -1,3 +1,64 @@
+#feed {
+  min-height: 30em;
+}
+
+.large_likes_list {
+  display: none;
+  width: 100%;
+  padding: 1em;  
+  overflow-y: scroll;
+  overflow-x: none;
+}
+
+.comment img, .comment h4, .comment span {
+  display: inline-block;
+}
+
+.like * {
+  display: inline-block;
+}
+
+.like button, .comment button {
+  float: right;
+}
+
+.like img, .comment img {
+  margin-right: 2%;
+}
+
+.comments_list {
+  width: 100%;
+  padding: 1em;  
+  overflow-y: scroll;
+  overflow-x: none;
+}
+
+.likes_list {
+  display: none;
+  position: absolute;
+  list-style-position: inside;
+  list-style-type: none;
+  background: #003459;
+  color: #FFFFFF;
+  padding: 1em;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.align-right {
+  float: right;
+}
+
+.pure-button {
+  padding: 0.5em !important;
+}
+
+.restrict-width {
+  display: inline-block;
+}
+
 .sign-up {
     background: #00A8E8;
     z-index: 1;
@@ -99,6 +160,14 @@ h3 {
     .no-fees-subheader {
       font-size: 250%;
     }
+
+    .fixed {
+      position: fixed;
+    }
+
+    .restrict-width {
+      display: table-cell;
+    }
 }
 
 
@@ -108,6 +177,3 @@ html, button, input, select, textarea,
     font-family: 'Droid Sans', sans-serif !important;
 }
 
-.fixed {
-  position: fixed;
-}

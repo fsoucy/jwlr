@@ -3,7 +3,7 @@ class StaticPagesController < ApplicationController
   def home
     @top_products = Product.joins(:productviews).order('productviews.views DESC').limit(9)
     if logged_in?
-      searches = current_user.searches.all.sort_by(&:frequency).take(9).map(&:search_text)
+      searches = current_user.searches.order('`search_relationships`.`frequency` DESC').limit(9).pluck(:search_text)
       results = Array.new
       searches.each do |search_text|
         search = Product.search do
@@ -22,7 +22,7 @@ class StaticPagesController < ApplicationController
         results += search.results
       end
       if results.count < 9
-        product = current_user.productviews.all.sort_by(&:views).take(1).map(&:product_id)
+        product = current_user.productviews.order(views: :desc).limit(1).pluck(:product_id)
         unless product.empty?
           search = Sunspot.more_like_this(Product.find(product.first)) do
             fields :description, :title
@@ -38,21 +38,36 @@ class StaticPagesController < ApplicationController
       @for_you = results
       @feed_items = Array.new
       
-      notifications = current_user.notifications.order(updated_at: :desc).limit(50)
+      page = params[:page].to_i     
+      page = 1 if page < 1
+      per_page = 15
+
+      notifications = current_user.notifications.order(updated_at: :desc).limit(per_page * page)
       @feed_items += notifications
       
-      deals = current_user.buying_deals.order(updated_at: :desc).limit(50)
+      deals = current_user.buying_deals.order(updated_at: :desc).limit(per_page * page)
       @feed_items += deals
 
-      deals = current_user.selling_deals.order(updated_at: :desc).limit(50)
+      deals = current_user.selling_deals.order(updated_at: :desc).limit(per_page * page)
       @feed_items += deals      
 
-      blogposts = current_user.blogposts.order(created_at: :desc).limit(50)
+      blogposts = current_user.blogposts.order(created_at: :desc).limit(per_page * page)
       @feed_items += blogposts
 
-      @feed_items = @feed_items.sort_by(&:updated_at).reverse
+      microposts = current_user.microposts.order(created_at: :desc).limit(per_page * page)
+      @feed_items += microposts
+
+      current_user.following.each do |user|
+        microposts = user.microposts.order(created_at: :desc).limit(per_page * page)
+        @feed_items += microposts
+
+        blogposts = user.blogposts.order(created_at: :desc).limit(per_page * page)
+        @feed_items += blogposts
+      end
+
+      @feed_items = @feed_items.sort_by(&:updated_at).reverse.paginate(:page => page, :per_page => per_page)
     
-      @conversations = current_user.conversations
+      @conversations = Conversation.where("first_user_id = ? OR second_user_id = ?", current_user.id, current_user.id).order(updated_at: :desc)
     end
     @for_you = [] if @for_you.nil?
     @featured = [] if @featured.nil?

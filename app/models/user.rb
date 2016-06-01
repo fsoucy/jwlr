@@ -32,6 +32,15 @@ class User < ActiveRecord::Base
   has_many :selling_deals, class_name: "Deal", foreign_key: "seller_id", dependent: :destroy
   has_attached_file :profile_picture, :styles => { :medium => ["300x300>", :png], :thumb => ["200x200>", :png], :thumbnail => ["50x50>", :png] }, default_url: "/assets/missing_:style.jpg"
   validates_attachment :profile_picture, :storage => :filesystem, :presence => true, :content_type => { :content_type => /\Aimage\/.*\Z/ }, :size => { :less_than => 10.megabyte }
+  has_many :microposts, dependent: :destroy
+  
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :followers, through: :passive_relationships, source: :follower   
+
+  has_many :likes, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   def score
     reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("user_id != ? and deals.seller_id = ? or deals.buyer_id = ?", self.id, self.id, self.id)
@@ -94,15 +103,48 @@ class User < ActiveRecord::Base
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end
-
-
   
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at, :password_digest, :remember_digest, :activation_digest, :activated_at, :reset_digest, :reset_sent_at]
     super(options)
   end
 
-    #hi
+  def follow(other_user)
+    if other_user != self
+      active_relationships.create(followed_id: other_user.id)
+    end
+  end
+
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  def following?(other_user)
+    following.include?(other_user)
+  end
+
+  def like(post)
+    new_like = post.likes.find_or_initialize_by(user_id: self.id)
+    new_like.save
+  end
+
+  def unlike(post)
+    post.likes.find_by(user_id: self.id).destroy
+  end
+
+  def likes?(post)
+    !post.likes.find_by(user_id: self.id).nil?
+  end
+
+  def comment(post, comment_string)
+    new_comment = post.comments.find_or_initialialize_by(user_id: self.id, comment: comment_string)
+    new_comment.save
+  end
+
+  def uncomment(post, comment_id)
+    post.comments.find_by(id: comment_id).destroy
+  end
+
   private
   
   def create_activation_digest

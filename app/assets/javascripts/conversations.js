@@ -106,7 +106,7 @@ function refreshIndex()
           e.preventDefault();
           $('.convo_thing').remove();
           var id = $(this).children('a').children('.conversation_id').val();
-          var myname = $(this).children('a').children('.myname').val();
+          var myname = $('#myname').val();
           clearInterval(window.interval);
           $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
             loadOnIndex(parseInt(id), myname.toString());
@@ -124,7 +124,7 @@ function refreshIndex()
 $(document).ready(function()
 {   
   window.interval2 = setInterval(refreshIndex, 10000);
-    window.myname = $('.convo_index_page').children('a').children('.myname').val();
+    window.myname = $('#myname').val();
     $('#messages').bind('scroll', function(event) {
       if ($('#messages').scrollTop() < 10)
   {
@@ -231,7 +231,7 @@ $(document).ready(function()
         e.preventDefault();
 	  $('.convo_thing').remove();
 	  var id = $(this).children('a').children('.conversation_id').val();
-        var myname = $(this).children('a').children('.myname').val();
+        var myname = $('#myname').val();
         clearInterval(window.interval);
         $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
 	        loadOnIndex(parseInt(id), myname.toString());

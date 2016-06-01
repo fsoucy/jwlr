@@ -14,3 +14,12 @@
   vertical-align: middle;
   margin-left: 0.25em;
 }
+
+.followers img {
+  padding: 0.25em;
+}
+
+.followers {
+  overflow-y: scroll;
+  overflow-x: none;
+}

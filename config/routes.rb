@@ -3,9 +3,13 @@ Rails.application.routes.draw do
   get 'category_options/create'
 
   get 'attribute_options/create'
-
-  get 'api/get_status'
+  
+  #api
+  get 'api/getToggleOptions'
+  get 'api/getMicropost'
   get 'api/isStreetAddress'
+  get 'api/getLikes'
+
   
   root 'static_pages#home'
   get 'help' =>  'static_pages#help'
@@ -19,12 +23,6 @@ Rails.application.routes.draw do
   get 'search' => 'search#new'
   get 'test' => 'products#test'
   get 'search_suggestions' => 'search#suggestions'
-  # option 'search_suggestions' => 'search#suggestions'
-  #post 'signin' => 'api#signin'
-  #post 'signup' => 'api#signup'
-  #get 'localusers' => 'api#localusers'
-  #post 'newstatus' => 'api#newstatus'  
-  #get 'users' => 'api#users'
 
   get 'conversations/conversations_index'
 
@@ -34,8 +32,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'api/getToggleOptions'
-
   resources :messages
   resources :attribute_options, only: [:create, :destroy]
   resources :category_options, only: [:create, :destroy]
@@ -44,9 +40,10 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :edit_description, :user_stores, :selling, :buying, :edit_default_preferences
+      post :follow, :like, :comment
       get 'reviews' => 'reviews#index'
-      resources :notifications, only: [:update, :index]
-     end
+      resources :notifications, only: [:update, :index] 
+    end
   end  
 
   resources :blogposts, only: [:new, :create, :destroy, :edit, :update]
@@ -75,7 +72,9 @@ Rails.application.routes.draw do
     end
   end
   resources :payments, only: [:create]  
-    
+  
+  resources :microposts, only: [:create, :update, :destroy]
+  
   resources :account_activations, only: [:edit]
   resources :categories
   

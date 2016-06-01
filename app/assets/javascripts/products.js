@@ -16,8 +16,14 @@ function getToggleOptions(category_id)
 		addToggle(result[i]);
 				    
 	    }
+	    $('.product_previous_toggle').remove();
+	    $('.product_next_toggle').remove();
 	    $('.toggle_br').remove();
+	    $('#toggle_options_form').append("<br class='toggle_br'>");
+	    $('#toggle_options_form').append("<button class='pure-button pure-button-primary product_previous_toggle' type='button'>Previous</button>");
+	    $('#toggle_options_form').append("<button class='pure-button pure-button-primary product_next_toggle' type='button'>Next</button>");
 	    $('#toggle_options_form').append("<br class='toggle_br'><input type='submit' name='commit' value='Submit Toggle Options' class='pure-button pure-button-primary submit_product submit_toggles'>");
+	    evaluateSubmit();
 	},
 	error: function (e){
 	}

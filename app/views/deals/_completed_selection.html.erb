@@ -74,8 +74,8 @@
         <% end %>
         <% if @deal.product_received && @deal.payment_complete %>
           <%= form_for @deal do |f| %>
-            <%= f.hidden_field :seller_satisfied, value: false %>
-            <%= f.submit "The deal is not complete and I am not satisfied.", class: "pure-button pure-button-primary deals_form_button" %>
+            <%= f.hidden_field :seller_satisfied, value: true %>
+            <%= f.submit "The deal is complete and I am satisfied.", class: "pure-button pure-button-primary deals_form_button" %>
           <% end %>
         <% end  %>
       <% else %>

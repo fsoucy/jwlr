@@ -106,9 +106,8 @@
           <% end %>
             <p>
               <%= time_ago_in_words(item.updated_at) %> ago        
-            </p>
             <% if item.class.name == "Blogpost" or item.class.name == "Micropost" %>
-              <p>
+              
                 <% if current_user.likes?(item) %>
                   <%= link_to "Unlike", '', id: "like_#{item.class}_#{item.id}_#{current_user.id}" %>
                 <% else %>
@@ -117,6 +116,10 @@
                 <%= link_to pluralize(item.likes.count, "Like"), '', id: "likes_#{item.class}_#{item.id}_#{current_user.id}" %>
                 <%= link_to pluralize(item.comments.count, "Comment"), '', id: "comments_#{item.class}_#{item.id}_#{current_user.id}" %>
               </p>
+              <fieldset class="pure-form">
+                <%= text_field_tag name: "comment", placeholder: "Comment on this", class: "full-width" %>
+                <button id="<%= "commentForm_" + item.class.to_s + "_" + item.id.to_s + "_" + current_user.id.to_s %>" class="align-right pure-button pure-button-primary">Comment</button>
+              </fieldset>
               <div id="commentsBox_#{item.class}_#{item.id}_#{current_user.id}" class="comments_box">
                 <div id="likesListLarge" class="large_likes_list">
                   <% item.likes.each do |like| %>
@@ -163,10 +166,6 @@
                         </p>                      
                       </div>
                     <% end %>
-                      <fieldset class="pure-form">
-                      <%= text_field_tag name: "comment", placeholder: "Comment on this", class: "full-width" %>
-                      <button id="<%= "commentForm_" + item.class.to_s + "_" + item.id.to_s + "_" + current_user.id.to_s %>" class="align-right pure-button pure-button-primary">Comment</button>
-                      </fieldset>
                   </div>
               </div>
               <ul id="likesList_#{item.class}_#{item.id}_#{current_user.id}" class="likes_list">
@@ -174,7 +173,9 @@
                   <li><%= like.user.name %></li>
                 <% end %>
               </ul>
-            <% end %>
+          <% else %>
+            </p>  
+          <% end %>
           </div> 
         </div>
         <% if item_number % 10 == 0 and item_number % 20 != 0 %>

@@ -22,6 +22,7 @@ $(document).ready(function(){
       // add the dz-success class (the green tick sign)
 	$(file.previewElement).addClass("dz-success");
 	evaluatePicture();
+	evaluateSubmit();
     },
     //when the remove button is clicked
     removedfile: function(file){
@@ -35,6 +36,7 @@ $(document).ready(function(){
         success: function(data){
             console.log(data.message);
 	    evaluatePicture();
+	    evaluateSubmit();
         }
       });
     }

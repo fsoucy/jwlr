@@ -27,30 +27,89 @@ function isValidAddress(dropoff)
 
 function redirectToPage()
 {
+    $('#redirect_button').hide();
     var page = parseInt($('#page').val());
     $('.selection').hide();
     if (page == 1)
     {
+	$('.instructions').show();
 	$('.method_selection').show();
     }
     else if (page == 2)
     {
+	$('.instructions').show();
 	$('.selling_method_selection').show();
     }
     else if (page == 3)
     {
+	$('.instructions').show();
 	$('.exchange_method_selection').show();
     }
     else if (page == 4)
     {
+	$('.instructions').show();
 	$('.completed_selection').show();
     }
 }
+
+function getCurrentPage()
+{
+    var page = 0;
+    if ($(".method_selection").is(":visible"))
+    {
+	page = 1;
+    }
+    if ($(".selling_method_selection").is(":visible"))
+    {
+	page = 2;
+    }
+    if ($(".exchange_method_selection").is(":visible"))
+    {
+	page = 3;
+    }
+    if ($(".completed_selection").is(":visible"))
+    {
+	page = 4;
+    }
+    if ($(".complaint_selection").is(":visible"))
+    {
+	page = 5;
+    }
+    // if none are visible, then a complaint has been filed and page = 0
+    // if page is 0, don't render button
+    return page;
+}
+
+function isRightPage()
+{
+    var actionPage = parseInt($('#page').val());
+    var currentPage = getCurrentPage();
+    return (currentPage == 0) || (actionPage == currentPage);
+}
+
+function addRedirectButton() //if necessary of course
+{
+    if (isRightPage())
+    {
+	$('#redirect_button').hide();
+    }
+    else
+    {
+	$('#redirect_button').show();
+    }
+    
+}
+
+// if not right page, add special button "Lost?"
+// all that button does is call redirectToPage()
 
 $(document).ready(function() {
     $('.selection').hide();
     $('.method_selection').show();
 
+    $(document).on('click', '#redirect_button', function() {
+	redirectToPage();
+    });
 
     $(document).on('click', '.guide_button', function() {
 	$('.selection').hide();
@@ -58,6 +117,7 @@ $(document).ready(function() {
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.guide_selection').show();
+	addRedirectButton();
     });
 
     
@@ -67,6 +127,7 @@ $(document).ready(function() {
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.selling_method_selection').show();
+	addRedirectButton();
     });
 
     $(document).on('click', '.methods_button', function() {
@@ -75,14 +136,16 @@ $(document).ready(function() {
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.method_selection').show();
+	addRedirectButton();
     });
-
+    
     $(document).on('click', '.exchange_button', function() {
 	$('.selection').hide();
 	$('.instructions').show();
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.exchange_method_selection').show();
+	addRedirectButton();
     });
 
     $(document).on('click', '.payment_button', function() {
@@ -91,6 +154,7 @@ $(document).ready(function() {
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.payment_method_selection').show();
+	addRedirectButton();
     });
 
     $(document).on('click', '.completed_button', function() {
@@ -99,6 +163,7 @@ $(document).ready(function() {
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.completed_selection').show();
+	addRedirectButton();
     });
 
     $(document).on('click', '.complaint_button', function() {
@@ -107,26 +172,30 @@ $(document).ready(function() {
 	$('.instructions_price_warning').remove();
 	$('.methods_submittion').remove();
 	$('.complaint_selection').show();
+	addRedirectButton();
     });
     
     $(document).on('click', '.methods_form_button', function(e) {
 	e.preventDefault();
-
+	debugger;
 	var str = window.location.href;
 	var beginIndex = str.indexOf("deals/");
 	var id = str.substring(beginIndex + 6);
 	var postLoc = '/deals/' + id.toString();
-	$('.instructions').append("<h3 class='methods_submission'>Congrats! You've successfully updated the methods of transaction.</h3>");
 	$.post(postLoc, $(this).parent('form').serialize());
-	$('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .exchange_method_selection", function() {
+	$('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 	});
-	$('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .selling_method_selection", function() {
+	$('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
 	});
-	$('.payment_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .payment_method_selection", function() {
+	$('.payment_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
 	});
-	$('.completed_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .completed_selection", function() {
+	$('.completed_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
 	});
 	$('.guide_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
+	});
+	$('.instructions').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
+	    debugger;
+	    $('.instructions').append("<h3 class='methods_submission'>Congrats! You've successfully updated the methods of transaction.</h3>");
 	    redirectToPage();
 	});
     });
@@ -156,15 +225,17 @@ $(document).ready(function() {
 	debugger;
 	var postLoc = '/deals/' + id.toString();
 	$.post(postLoc, $(this).parent('form').serialize());
-	$('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .exchange_method_selection", function() {
+	$('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 	});
-	$('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .selling_method_selection", function() {
+	$('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
 	});
-	$('.payment_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .payment_method_selection", function() {
+	$('.payment_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
 	});
-	$('.completed_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .completed_selection", function() {
+	$('.completed_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
 	});
 	$('.guide_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
+	});
+	$('.instructions').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
 	    redirectToPage();
 	});
     });
@@ -177,8 +248,22 @@ $(document).ready(function() {
 	var postLoc = '/deals/' + id.toString();
 	debugger;
 	$.post(postLoc, $(this).parent('form').serialize());
-	$('.large_deals_form').load("http://" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function() {
+	$('.deals_form').load("http://" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function() {
 	});
+    });
+
+    $(document).on('click', '.remove_complaint_button', function(e) {
+	e.preventDefault();
+	var str = window.location.href;
+	var beginIndex = str.indexOf("deals/");
+	var id = str.substring(beginIndex + 6);
+	var postLoc = '/deals/' + id.toString();
+	$.post(postLoc, $(this).parent('form').serialize());
+	$('.deals_form').load("http://" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function() {
+	    debugger;
+	    redirectToPage();
+	});
+
     });
     
     $(document).on('click', '.dropoff_button', function(e) {
@@ -190,7 +275,7 @@ $(document).ready(function() {
 	    var id = str.substring(beginIndex + 6);
 	    var postLoc = '/deals/' + id.toString();
 	    $.post(postLoc, $(this).parent('form').serialize());
-	    $('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .exchange_method_selection", function() {
+	    $('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 	    });
 	    $('.valid_address').remove();
 	}

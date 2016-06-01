@@ -2,12 +2,12 @@
 <% if current_user.id == @deal.buyer_id %>
   <%= form for @deal do |f| %>
     <%= f.hidden_field :complaint_buyer, value: false %>
-    <%= f.submit "Complaint resolved", class: "pure-button pure-button-primary" %>    
+    <%= f.submit "Complaint resolved", class: "pure-button pure-button-primary remove_complaint_button" %>    
   <% end %>
 <% elsif current_user.id == @deal.seller_id %>
   <%= form for @deal do |f| %>
     <%= f.hidden_field :complaint_seller, value: false %>
-    <%= f.submit "Complaint resolved", class: "pure-button pure-button-primary" %>
+    <%= f.submit "Complaint resolved", class: "pure-button pure-button-primary remove_complaint_button" %>
   <% end %>
 
 <% end %>

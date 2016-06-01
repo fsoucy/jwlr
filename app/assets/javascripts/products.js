@@ -118,16 +118,38 @@ function paymentMethods()
     return thing;
 }
 
+function ready()
+{
+    return mainDetails() && sellingMethods() && exchangeMethods() && paymentMethods() && productPicture();
+}
+
+function evaluateSubmit()
+{
+    if (ready())
+    {
+	$('.submit_product').removeClass('not_ready');
+	$('.submit_product_picture').removeClass('not_ready');
+    }
+    else
+    {
+	$('.submit_product').addClass('not_ready');
+	$('.submit_product_picture').addClass('not_ready');
+    }
+}
+
 function evaluateMain()
 {
     if(mainDetails())
     {
 	$('#main_form_button').removeClass('incomplete').addClass('complete');
+	$('.product_next_main').removeClass('not_ready');
     }
     else
     {
 	$('#main_form_button').addClass('incomplete').removeClass('complete');
+	$('.product_next_main').addClass('not_ready');
     }
+    evaluateSubmit();
 }
 
 function evaluateSelling()
@@ -135,11 +157,14 @@ function evaluateSelling()
     if (sellingMethods())
     {
 	$('#selling_methods_button').removeClass('incomplete').addClass('complete');
+	$('.product_next_selling').removeClass('not_ready');
     }
     else
     {
 	$('#selling_methods_button').removeClass('complete').addClass('incomplete');
+	$('.product_next_selling').addClass('not_ready');
     }
+    evaluateSubmit();
 }
 
 function evaluateExchange()
@@ -147,11 +172,14 @@ function evaluateExchange()
     if (exchangeMethods())
     {
 	$('#exchange_methods_button').removeClass('incomplete').addClass('complete');
+	$('.product_next_exchange').removeClass('not_ready');
     }
     else
     {
 	$('#exchange_methods_button').removeClass('complete').addClass('incomplete');
+	$('.product_next_exchange').addClass('not_ready');
     }
+    evaluateSubmit();
 }
 
 function evaluatePayment()
@@ -159,11 +187,14 @@ function evaluatePayment()
     if (paymentMethods())
     {
 	$('#payment_methods_button').removeClass('incomplete').addClass('complete');
+	$('.product_next_payment').removeClass('not_ready');
     }
     else
     {
 	$('#payment_methods_button').removeClass('complete').addClass('incomplete');
+	$('.product_next_payment').addClass('not_ready');
     }
+    evaluateSubmit();
 }
 function evaluateAll()
 {
@@ -172,6 +203,7 @@ function evaluateAll()
     evaluateExchange();
     evaluatePayment();
     evaluatePicture();
+    evaluateSubmit();
     $('#toggle_options_button').addClass('complete');
 }
 
@@ -217,6 +249,8 @@ $(document).ready(function() {
     });
 
     $('#selling_methods_button').click(function() {
+	$('.log-in-form fieldset').hide();
+	$('#selling_methods_form').show();
 	evaluateSelling();
     });
 
@@ -225,6 +259,8 @@ $(document).ready(function() {
     });
 
     $('#exchange_methods_button').click(function() {
+	$('.log-in-form fieldset').hide();
+	$('#exchange_methods_form').show();
 	evaluateExchange();
     });
 
@@ -233,9 +269,91 @@ $(document).ready(function() {
     });
 
     $('#payment_methods_button').click(function() {
+	$('.log-in-form fieldset').hide();
+	$('#payment_methods_form').show();
 	evaluatePayment();
     });
 
+    $('#main_form_button').click(function() {
+	$('.log-in-form fieldset').hide();
+	$('#product_form').show();
+    });
+
+    $('#toggle_options_button').click(function() {
+	$('.log-in-form fieldset').hide();
+	$('#toggle_options_form').show();
+    });
+
+    $('#dropper_button').click(function() {
+	$('.log-in-form fieldset').hide();
+	$('#dropper').show();
+    });
+
+    $('.product_next_main').click(function() {
+	if (mainDetails())
+	{
+	    $('#product_form').hide();
+	    $('#toggle_options_form').show();
+	}
+    });
+
+    $('.product_previous_toggle').click(function() {
+	$('#toggle_options_form').hide();
+	$('#product_form').show();
+    });
+
+    $('.product_next_toggle').click(function() {
+	if (toggleOptions())
+	{
+	    $('#toggle_options_form').hide();
+	    $('#selling_methods_form').show();
+	}
+    });
+
+    $('.product_previous_selling').click(function() {
+	$('#selling_methods_form').hide();
+	$('#toggle_options_form').show();
+
+    });
+
+    $('.product_next_selling').click(function() {
+	if (sellingMethods())
+	{
+	    $('#selling_methods_form').hide();
+	    $('#exchange_methods_form').show();
+	}
+    });
+
+    $('.product_previous_exchange').click(function() {
+	$('#exchange_methods_form').hide();
+	$('#selling_methods_form').show();
+    });
+
+    $('.product_next_exchange').click(function() {
+	if (exchangeMethods())
+	{
+	    $('#exchange_methods_form').hide();
+	    $('#payment_methods_form').show();
+	}
+    });
+
+    $('.product_previous_payment').click(function() {
+	$('#payment_methods_form').hide();
+	$('#exchange_methods_form').show();
+    });
+
+    $('.product_next_payment').click(function() {
+	if (paymentMethods())
+	{
+	    $('#payment_methods_form').hide();
+	    $('#dropper').show();
+	}
+    });
+
+    $('.product_previous_picture').click(function() {
+	$('#dropper').hide();
+	$('#payment_methods_form').show();
+    });
 
     $('.submit_product').click(function(e) {
 	var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods() && productPicture();

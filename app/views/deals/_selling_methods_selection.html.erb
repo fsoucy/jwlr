@@ -10,8 +10,9 @@
 <h3>Listed price: <%= number_to_currency(@deal.product.price) %></h3>
 <!--<h3>iGold's suggested value for premium users</h3>-->
 <%= form_for @deal, html: {class: 'price_submission' }  do |f| %>
-<%= f.hidden_field :min_price, value: @deal.product.min_accepted_price, id: "minimum_price" %>
-<h3>Your price: <%= f.number_field :user_proposed_price, value: @deal.user_proposed_price, id: "price_proposal" %>  <%= f.submit "Change offer", class: "propose_price pure-button pure-button-primary" %></h3>
+<%= hidden_field_tag :min_price, value: @deal.product.min_accepted_price, id: "minimum_price" %>
+<h3>Offered price: <%= number_to_currency(@deal.user_proposed_price) %></h3> 
+<h3><%= f.number_field :user_proposed_price, value: @deal.user_proposed_price, id: "price_proposal" %>  <%= f.submit "Change offer", class: "propose_price pure-button pure-button-primary" %></h3>
 <% end %>
 <% if !@deal.user_proposed_price.nil? && !@deal.proposed_price_accepted %>
 <h4>Offer made, waiting for seller to accept.</h4>
@@ -23,7 +24,7 @@
 <h3>Listed price: <%= number_to_currency(@deal.product.price) %></h3>
 <%= form_for @deal do |f| %>
 <%= f.hidden_field :proposed_price_accepted, value: !@deal.proposed_price_accepted %>
-<h3>Offered price: <%= number_to_currency(@deal.user_proposed_price) %>  <%= f.submit "Set offer accepted to #{!@deal.proposed_price_accepted}", class: "pure-button pure-button-primary deals_form_button" %></h3>
+<h3>Offered price: <%= number_to_currency(@deal.user_proposed_price) %>  <%= f.submit "Set offer accepted to #{!@deal.proposed_price_accepted}", class: "pure-button pure-button-primary deals_form_button_accept_price" %></h3>
 <% end %>
 <% if !@deal.user_proposed_price.nil? && !@deal.proposed_price_accepted %>
 <h4>The buyer has made an offer, either accept it here or discuss with the buyer.</h4>

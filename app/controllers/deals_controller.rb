@@ -50,6 +50,7 @@ class DealsController < ApplicationController
 
   def update
     @deal = Deal.find(params[:id])
+    old_selling_method = @deal.selling_method.method
     if !@deal.product.sold
       @deal.assign_attributes(deals_params)
       if @deal.changed?
@@ -70,6 +71,7 @@ class DealsController < ApplicationController
         if current_user == @deal.seller
           @deal.assign_attributes(seller_params_unaccepted)
         else
+          params[:deal][:user_proposed_price] = params[:deal][:user_proposed_price].to_i unless params[:deal][:user_proposed_price].nil?
           @deal.assign_attributes(buyer_params_unaccepted)
         end
       end
@@ -105,7 +107,7 @@ class DealsController < ApplicationController
         @deal.proposed_price_accepted = true
         @deal.user_proposed_price = @deal.product.price
       end
-      if @deal.selling_method.method == "Negotiation"
+      if @deal.selling_method.method == "Negotiation" and old_selling_method == "Static Price"
         @deal.proposed_price_accepted = false
         @deal.user_proposed_price = 0.0
       end
@@ -123,7 +125,7 @@ class DealsController < ApplicationController
       end
       @deal.save
     end
-    redirect_to @deal
+    render json: nil, status: 200
   end
   
   def show
@@ -154,7 +156,7 @@ class DealsController < ApplicationController
 
   private
   def deals_params
-    params.require(:deal).permit(:seller_id, :buyer_id, :product_id, :selling_method_id, :exchange_method_id, :payment_method_id, :user_proposed_price) 
+    params.require(:deal).permit(:seller_id, :buyer_id, :product_id, :selling_method_id, :exchange_method_id, :payment_method_id) 
   end
 
   def seller_params_unaccepted

@@ -155,10 +155,9 @@ $(document).ready(function()
 	    window.page = 1;
 	    var urlString = window.location.href;
 	window.conversation = parseInt($('#conversation_id').val());
-	debugger;
+
 	if (urlString.includes("conversations?id="))
 	{
-	    debugger;
 	    var index = urlString.indexOf("id=");
 	    var realIndex = index + 3;
 	    var convo = parseInt(urlString.substring(realIndex));
@@ -227,7 +226,6 @@ $(document).ready(function()
     });
     
     $('.convo_index_page').click(function(e){
-	    debugger;
       if($('.convo_thing').length > 0)
       {
         e.preventDefault();

@@ -55,7 +55,7 @@
             <% if current_user.id == @deal.buyer_id %>
               <%= render 'other_complained' %>
             <% elsif current_user.id == @deal.seller_id %>
-              <%= render 'self-complained' %>
+              <%= render 'self_complained' %>
             <% end %>
           <% end %>
         <% end %>

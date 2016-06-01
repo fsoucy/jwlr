@@ -38,7 +38,7 @@
           <%= render 'paypal_form' %>
         <% end %>
         
-        <% if @deal.product_recieved && @deal.payment_complete %>
+        <% if @deal.product_received && @deal.payment_complete %>
           <%= form_for @deal do |f| %>
             <%= f.hidden_field :buyer_satisfied, value: true %>
             <%= f.submit "The deal is complete and I am satisfied.", class: "pure-button pure-button-primary deals_form_button" %>
@@ -152,7 +152,7 @@
       <% end %>
       
       <% if current_user.id == @deal.seller_id %>
-        <% if !@deal.buyer_satisfied %>
+        <% if !@deal.seller_satisfied %>
           <% if @deal.exchange_method.method == "Meetup" %>
           <% end %>
           <% if @deal.exchange_method.method == "Pickup" %>

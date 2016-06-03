@@ -1,7 +1,7 @@
 function isValidAddress(dropoff)
 {
     var bool = false;
-    debugger;
+
     $.ajax({
 	type: "GET",// GET in place of POST
 	contentType: "application/json; charset=utf-8",
@@ -9,10 +9,8 @@ function isValidAddress(dropoff)
 	data: {},
 	dataType: "json",
 	success: function (result) {
-	    debugger;
 	    if (parseInt(result[0]["valid"]) == 1)
 	    {
-		debugger;
 		bool = true;
 	    }
 	    else
@@ -27,9 +25,11 @@ function isValidAddress(dropoff)
 function updateDeals(location, form, completion)
 {
     formData = {}
-    debugger;
     $(form).find(':input').each(function() {
-	formData[$(this).attr('name')] = $(this).val();
+	if ($(this).attr('type') != "radio" || $(this).prop("checked"))
+	{
+	    formData[$(this).attr('name')] = $(this).val();
+	}
     });
     $.ajax({
 	type: "PATCH",// GET in place of POST
@@ -209,7 +209,6 @@ $(document).ready(function() {
 	var beginIndex = str.indexOf("deals/");
 	var id = str.substring(beginIndex + 6);
 	var postLoc = '/deals/' + id.toString();
-	debugger;
 	updateDeals(postLoc, $(this).parent('form'), function() {
 	    $('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 	    });

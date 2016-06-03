@@ -52,6 +52,13 @@ class DealsController < ApplicationController
     @deal = Deal.find(params[:id])
     old_selling_method = @deal.selling_method.method
     old_exchange_method = @deal.exchange_method.method
+    if current_user == @deal.seller
+      @deal.assign_attributes(seller_params_always)
+      @deal.save
+    elsif current_user == @deal.buyer
+      @deal.assign_attributes(buyer_params_always)
+      @deal.save
+    end
     if !@deal.product.sold
       @deal.assign_attributes(deals_params)
       if @deal.changed?
@@ -178,6 +185,14 @@ class DealsController < ApplicationController
 
   def buyer_params_accepted
     params.require(:deal).permit(:product_received, :buyer_satisfied, :complaint_buyer, :reason_complaint_buyer)
+  end
+
+  def seller_params_always
+    params.require(:deal).permit(:complaint_seller, :reason_complaint_seller)
+  end
+
+  def buyer_params_always
+    params.require(:deal).permit(:complaint_buyer, :reason_complaint_buyer)
   end
 
   def correct_user

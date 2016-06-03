@@ -5,7 +5,7 @@ function isValidAddress(dropoff)
     $.ajax({
 	type: "GET",// GET in place of POST
 	contentType: "application/json; charset=utf-8",
-	url: "http://" + window.location.host + "/api/isStreetAddress?dropoff=" + dropoff,
+	url: "https://" + window.location.host + "/api/isStreetAddress?dropoff=" + dropoff,
 	data: {},
 	dataType: "json",
 	success: function (result) {
@@ -202,17 +202,17 @@ $(document).ready(function() {
 	var postLoc = '/deals/' + id.toString();
 	debugger;
 	updateDeals(postLoc, $(this).parent('form'), function() {
-	    $('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
+	    $('.exchange_method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 	    });
-	    $('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
+	    $('.selling_method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
 	    });
-	    $('.payment_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
+	    $('.payment_method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
 	    });
-	    $('.completed_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
+	    $('.completed_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
 	    });
-	    $('.guide_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
+	    $('.guide_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
 	    });
-	    $('.instructions').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
+	    $('.instructions').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
 		$('.instructions').append("<h3 class='methods_submission'>Congrats! You've successfully updated the methods of transaction.</h3>");
 		redirectToPage();
 	    });
@@ -236,7 +236,7 @@ $(document).ready(function() {
 	    var id = str.substring(beginIndex + 6);
 	    var postLoc = '/deals/' + id.toString();
 	    updateDeals(postLoc, $(this), function() {
-		$('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
+		$('.selling_method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
 		});
 	    });
 	}
@@ -249,17 +249,17 @@ $(document).ready(function() {
 	var id = str.substring(beginIndex + 6);
 	var postLoc = '/deals/' + id.toString();
 	updateDeals(postLoc, $(this).parent('form'), function() {
-	    $('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
+	    $('.exchange_method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 	    });
-	    $('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
+	    $('.selling_method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
 	    });
-	    $('.payment_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
+	    $('.payment_method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
 	    });
-	    $('.completed_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
+	    $('.completed_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
 	    });
-	    $('.guide_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
+	    $('.guide_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
 	    });
-	    $('.instructions').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
+	    $('.instructions').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
 		redirectToPage();
 	    });
 	});
@@ -272,17 +272,17 @@ $(document).ready(function() {
 	var id = str.substring(beginIndex + 6);
 	var postLoc = '/deals/' + id.toString();
 	updateDeals(postLoc, $(this).parent('h3').parent('form'), function() {
-	    $('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
+	    $('.exchange_method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 	    });
-	    $('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
+	    $('.selling_method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
 	    });
-	    $('.payment_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
+	    $('.payment_method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
 	    });
-	    $('.completed_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
+	    $('.completed_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
 	    });
-	    $('.guide_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
+	    $('.guide_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
 	    });
-	    $('.instructions').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
+	    $('.instructions').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
 		redirectToPage();
 	    });
 	});
@@ -295,7 +295,7 @@ $(document).ready(function() {
 	var id = str.substring(beginIndex + 6);
 	var postLoc = '/deals/' + id.toString();
 	updateDeals(postLoc, $(this).parent('form'), function() {
-	    $('.deals_form').load("http://" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function() {
+	    $('.deals_form').load("https://" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function() {
 	    });
 	});
     });
@@ -307,7 +307,7 @@ $(document).ready(function() {
 	var id = str.substring(beginIndex + 6);
 	var postLoc = '/deals/' + id.toString();
 	updateDeals(postLoc, $(this).parent('form'), function() {
-	    $('.deals_form').load("http://" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function() {
+	    $('.deals_form').load("https://" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function() {
 		redirectToPage();
 	    });
 	});
@@ -323,7 +323,7 @@ $(document).ready(function() {
 	    var id = str.substring(beginIndex + 6);
 	    var postLoc = '/deals/' + id.toString();
 	    updateDeals(postLoc, $(this).parent('form'), function() {
-		$('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
+		$('.exchange_method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 		});
 		$('.valid_address').remove();
 	    });

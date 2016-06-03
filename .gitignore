@@ -32,3 +32,5 @@ Gemfile.lock
 .*
 .byebug_history
 #*#
+
+/shared

@@ -354,7 +354,7 @@ $(document).ready(function () {
 		$.ajax({
 			type : "GET", // GET in place of POST
 			contentType : "application/json; charset=utf-8",
-			url : "http://" + window.location.host + "/search_suggestions",
+			url : "https://" + window.location.host + "/search_suggestions",
 			data : {
 				search_string : thing
 			},

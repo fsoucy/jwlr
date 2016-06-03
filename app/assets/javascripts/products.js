@@ -4,7 +4,7 @@ function getToggleOptions(category_id)
     $.ajax({
 	type: "GET",// GET in place of POST
 	contentType: "application/json; charset=utf-8",
-	url: "http://" + window.location.host + "/api/getToggleOptions?id=" + category_id.toString(),
+	url: "https://" + window.location.host + "/api/getToggleOptions?id=" + category_id.toString(),
 	data: {},
 	dataType: "json",
 	success: function (result) {

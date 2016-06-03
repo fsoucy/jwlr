@@ -22,20 +22,9 @@ test:
 
 production:
   <<: *default
-  adapter: 'mysql2_makara'
-  password: 'cwYHuShPVTS9xrsurXB4HMTE'
+  adapter: 'mysql2'
+  password: 'jfumkEQkJRaqhmY9Xs8jtYCy'
   database: 'igold'
   username: 'igold'
+  host: 'igold.cskmooh2lg23.us-east-1.rds.amazonaws.com'
 
-  makara:
-
-    blacklist_duration: 5
-    master_ttl: 5
-    master_strategy: round_robin
-    sticky: true
-
-    connections:
-      - role: master
-        host: 10.6.93.6
-      - role: master
-        host: 10.6.93.7

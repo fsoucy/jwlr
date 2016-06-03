@@ -156,7 +156,12 @@
                             <%= link_to "Like", '', id: "like_#{comment.class}_#{comment.id}_#{current_user.id}" %>
                           <% end %>
                           <%= link_to pluralize(comment.likes.count, "Like"), '', id: "likes_#{comment.class}_#{comment.id}_#{current_user.id}" %>
-                        </p>                      
+                        </p>
+                        <ul id="likesList_#{item.class}_#{item.id}_#{current_user.id}" class="likes_list">
+                          <% comment.likes.each do |like| %>
+                            <li><%= like.user.name %></li>
+                          <% end %>
+                        </ul>                
                       </div>
                     <% end %>
                   </div>

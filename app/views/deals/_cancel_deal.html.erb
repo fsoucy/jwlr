@@ -1,0 +1,7 @@
+<% if !@deal.agreement_achieved %>
+  <%= link_to "Cancel deal", @deal, confirm: "You sure?", :method => :delete %>
+<% else %>
+  <h3>Agreement achieved, so you can't cancel the deal now.</h3>
+
+
+<% end %>

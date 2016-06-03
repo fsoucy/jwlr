@@ -9,6 +9,10 @@
             <%= f.submit "Confirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
           <% end %>
         <% else %>
+          <%= form_for @deal do |f| %>
+            <%= f.hidden_field :seller_satisfied, value: false %>
+            <%= f.submit "Unconfirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
+          <% end %>
         <% end %>
       <% elsif current_user.id == @deal.buyer_id %>
         <% if !@deal.buyer_satisfied %>
@@ -17,6 +21,10 @@
             <%= f.submit "Confirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
           <% end %>
         <% else %>
+          <%= form_for @deal do |f| %>
+            <%= f.hidden_field :seller_satisfied, value: false %>
+            <%= f.submit "Unconfirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
+          <% end %>
         <% end %>
       <% end %>
     <% else %>

@@ -64,6 +64,12 @@
   <%= hidden_field_tag :page, 4 %>
   <% if !@deal.deal_complete %>
     <% if @deal.payment_complete && @deal.product_received %> <!-- Confirm successful deal. -->
+      <% if current_user.id == @deal.seller_id && @deal.seller_satisfied %>
+        <h3>You are satisfied with the deal. Waiting for buyer for completion.</h3>
+      <% end %>
+      <% if current_user.id == @deal.buyer_id && @deal.buyer_satisfied %>
+        <h3>You are satisfied with the deal.Waiting for seller for completion.</h3>
+      <% end %>
     <% else %>
       <% if @deal.exchange_method.method == "Delivery" %>
         <% if current_user.id == @deal.seller_id %>

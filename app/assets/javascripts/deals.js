@@ -189,8 +189,17 @@ $(document).ready(function() {
 	$('.selection').hide();
 	$('.instructions').hide();
 	$('.instructions_price_warning').remove();
-	$('.methods_submittion').remove();
+	$('.methods_submission').remove();
 	$('.complaint_selection').show();
+	addRedirectButton();
+    });
+
+    $(document).on('click', '.cancel_button', function() {
+	$('.selection').hide();
+	$('.instructions').hide();
+	$('.instructions_price_warning').remove();
+	$('.methods_submission').remove();
+	$('.cancel_selection').show();
 	addRedirectButton();
     });
     

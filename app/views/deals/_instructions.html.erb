@@ -2,7 +2,6 @@
 <!-- Second, must agree on a price -->
 <!-- Third, must agree on an exchange method -->
 <!-- Fourth, completion -->
-
 <% buyer = (current_user.id == @deal.buyer_id) %>
 <% seller = (current_user.id == @deal.seller_id) %>
 <% if @deal.selling_method_id.nil? || @deal.exchange_method_id.nil? || @deal.payment_method_id.nil? %>
@@ -40,7 +39,7 @@
       <h3>Waiting for the the buyer to confirm the agreement.</h3>
     <% elsif current_user.id == @deal.buyer_id %>
       <h3>You will need to pick up the product from the seller at <%= @deal.product.full_street_address %>.</h3>
-      <h3>The store's hours of operation and other relevant information can be found <%= "here", @deal.product.store %></h3>
+      <h3>The store's hours of operation and other relevant information can be found <%= link_to "here", @deal.product.store %></h3>
     <% end %>
   <% elsif @deal.exchange_method.method == "Delivery" %>
     <% if current_user.id == @deal.seller_id %>

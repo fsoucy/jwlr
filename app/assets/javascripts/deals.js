@@ -288,6 +288,29 @@ $(document).ready(function() {
 	});
     });
 
+    $(document).on('click', '.deals_form_button_in_header', function(e) {
+	e.preventDefault();
+	var str = window.location.href;
+	var beginIndex = str.indexOf("deals/");
+	var id = str.substring(beginIndex + 6);
+	var postLoc = '/deals/' + id.toString();
+	updateDeals(postLoc, $(this).parent('h3').parent('form'), function() {
+	    $('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
+	    });
+	    $('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
+	    });
+	    $('.payment_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
+	    });
+	    $('.completed_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
+	    });
+	    $('.guide_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
+	    });
+	    $('.instructions').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
+		redirectToPage();
+	    });
+	});
+    });
+
     $(document).on('click', '.file_complaint_button', function(e) {
 	e.preventDefault();
 	var str = window.location.href;

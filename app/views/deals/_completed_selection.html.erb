@@ -3,14 +3,20 @@
   <% if !@deal.deal_complete %>
     <% if @deal.payment_complete && @deal.product_received %> <!-- Confirm successful deal. -->
       <% if current_user.id == @deal.seller_id %>
-        <%= form_for @deal do |f| %>
-          <%= f.hidden_field :seller_satisfied, value: true %>
-          <%= f.submit "Confirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
+        <% if !@deal.seller_satisfied %>
+          <%= form_for @deal do |f| %>
+            <%= f.hidden_field :seller_satisfied, value: true %>
+            <%= f.submit "Confirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
+          <% end %>
+        <% else %>
         <% end %>
       <% elsif current_user.id == @deal.buyer_id %>
-        <%= form_for @deal do |f| %>
-          <%= f.hidden_field :buyer_satisfied, value: true %>
-          <%= f.submit "Confirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
+        <% if !@deal.buyer_satisfied %>
+          <%= form_for @deal do |f| %>
+            <%= f.hidden_field :buyer_satisfied, value: true %>
+            <%= f.submit "Confirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
+          <% end %>
+        <% else %>
         <% end %>
       <% end %>
     <% else %>
@@ -41,8 +47,8 @@
           <% else %>
           <% end %>
           <% if @deal.payment_complete %>
-            <%= render 'paypal_form' %>
           <% else %>
+            <%= render 'paypal_form' %>
           <% end %>
         <% end %>        
       <% elsif (@deal.exchange_method.method == "Pickup" || @deal.exchange_method.method == "Meetup") %>

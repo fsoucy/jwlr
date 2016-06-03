@@ -110,7 +110,7 @@
                 <%= link_to pluralize(item.comments.count, "Comment"), '', id: "comments_#{item.class}_#{item.id}_#{current_user.id}" %>
               </p>
               <fieldset class="pure-form">
-                <%= text_field_tag name: "comment", placeholder: "Comment on this", class: "full-width" %>
+                <%= text_field_tag "comment", nil, placeholder: "Comment on this", class: "full-width" %>
                 <button id="<%= "commentForm_" + item.class.to_s + "_" + item.id.to_s + "_" + current_user.id.to_s %>" class="align-right pure-button pure-button-primary">Comment</button>
               </fieldset>
               <div id="commentsBox_#{item.class}_#{item.id}_#{current_user.id}" class="comments_box">

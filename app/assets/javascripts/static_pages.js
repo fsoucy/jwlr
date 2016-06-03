@@ -73,6 +73,16 @@ $(document).on('click', 'button[id*=commentForm_]', function(event) {
   });
 });
 
+$(document).on('focus', '#comment', function(event) {
+  $(this).keydown(function(event){ 
+    var keyCode = (event.keyCode ? event.keyCode : event.which);   
+    if(keyCode == 13) 
+    {
+      $(this).siblings('button[id*=commentForm_]').trigger('click');
+    }
+  });
+});
+
 //Edit Microposts
 $(document).on('click', 'a[id*=delete_micropost_]', function(event) {
   event.preventDefault();

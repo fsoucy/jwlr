@@ -1,0 +1,44 @@
+<!-- this is where it's at -->
+<% if @deal.agreement_achieved %>
+  <% if !@deal.deal_complete %>
+    <% if @deal.payment_complete && @deal.product_received %> <!-- Confirm successful deal. -->
+      <% if current_user.id == @deal.seller_id %>
+        <%= form_for @deal do |f| %>
+          <%= f.hidden_field :seller_satisfied, value: true %>
+          <%= f.submit "Confirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
+        <% end %>
+      <% elsif current_user.id == @deal.buyer_id %>
+        <%= form_for @deal do |f| %>
+          <%= f.hidden_field :buyer_satisfied, value: true %>
+          <%= f.submit "Confirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <% if @deal.exchange_method.method == "Delivery" %>
+        
+      <% elsif @deal.exchange_method.method == "Pickup" %>
+        <% if @deal.payment_method.method == "Paypal" %>
+          <% if current_user.id == @deal.seller_id %>
+          <% elsif current_user.id == @deal.buyer_id %>
+          <% end %>
+        <% else %>
+          
+        <% end %>
+      <% elsif @deal.exchange_method.method == "Meetup" %>
+        <% if @deal.payment_method == "Paypal" %>
+          <% if current_user.id == @deal.seller_id %>
+          <% elsif current_user.id == @deal.buyer_id %>
+          <% end %>
+        <% else %>
+          <% if current_user.id == @deal.seller_id %>
+          <% elsif current_user.id == @deal.buyer_id %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+  <% else %>
+  <!-- Review stuff -->
+  <% end %>
+
+<% end %>

@@ -1,0 +1,56 @@
+<!-- Migrate all text information to instructions page -->
+
+
+<% if !@deal.proposed_price_accepted && @deal.selling_method.method == "Negotiation" %>
+
+<% elsif @deal.agreement_achieved %>
+
+<% else %> <!-- We're on exchange methods -->
+  <% if @deal.exchange_method.method == "Pickup" %>
+    <% if current_user.id == @deal.seller_id %>
+      <h3>Waiting for the the buyer to confirm the agreement.</h3>
+    <% elsif current_user.id == @deal.buyer_id %>
+      <h3>You will need to pick up the product from the seller at <%= @deal.product.full_street_address %>.</h3>
+      <h3>The store's hours of operation and other relevant information can be found <%= "here", @deal.product.store %></h3>
+      <%= form_for @deal do |f| %>
+        <%= f.hidden_field :exchange_agreement_buyer, value: true %>
+        <%= f.submit "Confirm agreement", class: "pure-button pure-button-primary deals_form_button" %>
+      <% end %>
+    <% end %>
+  <% elsif @deal.exchange_method.method == "Delivery" %>
+    <% if current_user.id == @deal.seller_id %>
+      <% if !@deal.dropoff.nil? %>
+        <h3>The current dropoff location is <%= @deal.dropoff %>, but the seller has not confirmed the agreement</h3>
+      <% else %>
+        <h3>Waiting for the seller to list a dropoff location.</h3>
+      <% end %>
+      <!-- Should sellers be able to change delivery cost here? -->
+    <% elsif current_user.id == @deal.buyer_id %>
+      <h3>The product will be delivered to you for <%= number_to_currency(@deal.product.delivery_cost) %></h3>
+      <% if !@deal.dropoff.nil %>
+        <h3>Your location for delivery: <%= @deal.dropoff %></h3>
+      <% end %>
+      <%= form_for @deal do |f| %>
+        <h3>Dropoff location: <%= f.text_field :dropoff %> <%= f.submit "Change delivery location", class: "pure-button pure-button-primary deals_form_button" %></h3>
+      <% end %>
+      <%= form_for @deal do |f| %>
+        <%= f.hidden_field :exchange_agreement_buyer, value: true %>
+        <%= f.submit "Confirm delivery agreement", class: "pure-button pure-button-primary" %>
+      <% end %>
+    <% end %>
+  <% elsif @deal.exchange_method.method == "Meetup" %>
+    <% if current_user.id == @deal.seller_id %>
+      <h3>Agree with the buyer on a transaction location and time in messaging.</h3>
+      <%= form_for @deal do |f| %>
+        <%= f.hidden_field :exchange_agreement_seller, value: true %>
+        <%= f.submit "Confirm meetup agreement", class: "pure-button pure-button-primary deals_form_button" %>
+      <% end %>
+    <% elsif current_user.id == @deal.buyer_id %>
+      <h3>Agree with the seller on a transaction location and time in messaging.</h3>
+      <%= form_for @deal do |f| %>
+        <%= f.hidden_field :exchange_agreement_buyer, value: true %>
+        <%= f.submit "Confirm meetup agreement", class: "pure-button pure-button-primary deals_form_button" %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

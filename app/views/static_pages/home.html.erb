@@ -59,13 +59,6 @@
                 <% if item.user.id == current_user.id %>
                   <%= link_to "Edit", '', id: "edit_micropost_#{item.id}" %> <%= link_to "Delete", '', id: "delete_micropost_#{item.id}" %>
                 <% end %>
-            <% when "Notification" %>
-              <div class="feed_notification">
-                <%= image_tag item.user.profile_picture(:thumbnail) %>
-                <a href="<%= user_path(item.user) %>"><h2><%= item.user.name %></h2></a>
-                <h3>
-                  <%= item.message.html_safe %>
-                </h3>
             <% when "Deal" %>
               <div class="feed_deal">
                 <% if item.seller_id == current_user.id %>

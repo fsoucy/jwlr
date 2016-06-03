@@ -42,9 +42,6 @@ class StaticPagesController < ApplicationController
       page = 1 if page < 1
       per_page = 15
 
-      notifications = current_user.notifications.order(updated_at: :desc).limit(per_page * page)
-      @feed_items += notifications
-      
       deals = current_user.buying_deals.order(updated_at: :desc).limit(per_page * page)
       @feed_items += deals
 

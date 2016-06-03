@@ -51,6 +51,7 @@ class DealsController < ApplicationController
   def update
     @deal = Deal.find(params[:id])
     old_selling_method = @deal.selling_method.method
+    old_exchange_method = @deal.exchange_method.method
     if !@deal.product.sold
       @deal.assign_attributes(deals_params)
       if @deal.changed?
@@ -90,11 +91,15 @@ class DealsController < ApplicationController
       end
       if @deal.selling_method.id == 2
         @deal.user_proposed_price = @deal.product.price
-      end 
+      end
+      if @deal.exchange_method.method == "Pickup" || @deal.exchange_method.method == "Delivery"
+        @deal.exchange_agreement_seller = true
+      end
       exchange_agreement = false
       if (@deal.exchange_agreement_buyer and @deal.exchange_agreement_seller)
         exchange_agreement = true
       end
+      
       @deal.product.hold = @deal.exchange_agreement_buyer
       exchange_agreement = ((@deal.exchange_agreement_buyer and @deal.exchange_agreement_seller) or (!@deal.product.store.nil? and @deal.exchange_method == 3))
       @deal.agreement_achieved = (selling_agreement and exchange_agreement)

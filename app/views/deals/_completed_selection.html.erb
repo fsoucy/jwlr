@@ -15,24 +15,80 @@
       <% end %>
     <% else %>
       <% if @deal.exchange_method.method == "Delivery" %>
-        
-      <% elsif @deal.exchange_method.method == "Pickup" %>
+        <% if current_user.id == @deal.seller_id %>
+          <% if @deal.product_dispatched %>
+            <% if @deal.product_received %>
+              <h3>The buyer has received the product but has not yet completed the payment.</h3>
+            <% else %>
+              <h3>You have dispatched the product but the buyer has not yet received it.</h3>
+            <% end %>
+          <% else %>
+            <h3>You have not yet dispatched the product to the buyer.</h3>
+            <%= form_for @deal do |f| %>
+              <%= f.hidden_field :product_dispatched, value: true %>
+              <%= f.submit "Product dispatched", class: "pure-button pure-button-primary deals_form_button" %>
+            <% end %>
+          <% end %>
+          <% if @deal.payment_complete %>
+            <h3>The user has completed his payment for the product.</h3>
+          <% else %>
+            <h3>The user has not completed his payment for the product.</h3>
+          <% end %>
+        <% elsif current_user.id == @deal.buyer_id %>
+          <% if @deal.product_dispatched %>
+          <% else %>
+          <% end %>
+          <% if @deal.payment_complete %>
+          <% else %>
+          <% end %>
+        <% end %>        
+      <% elsif (@deal.exchange_method.method == "Pickup" || @deal.exchange_method.method == "Meetup") %>
         <% if @deal.payment_method.method == "Paypal" %>
           <% if current_user.id == @deal.seller_id %>
+            <% if @deal.payment_complete %>
+              <h3>The buyer has completed his payment but has not picked up the product.</h3>
+            <% else %>
+              <h3>The buyer has completed has not completed the payment.</h3>
+              <% if @deal.product_received %>
+                <h3>The buyer has picked up the product.</h3>
+              <% else %>
+                <h3>The buyer has not picked up the product.</h3>
+              <% end %>
+            <% end %>
           <% elsif current_user.id == @deal.buyer_id %>
+            <% if @deal.payment_complete %>
+              <h3>You have completed your payment but you have not received your product.</h3>
+              <%= form_for @deal do |f| %>
+                <%= f.hidden_field :product_received, value: true %>
+                <%= f.submit "Product received", class: "pure-button pure-button-primary deals_form_button" %>
+              <% end %>
+            <% else %>
+              <h3>You have not completed your payment.</h3>
+              <%= render 'paypal_form' %>
+              <% if @deal.product_received %>
+                <h3>You have received your product.</h3>
+              <% else %>
+                <h3>You have not received your product.</h3>
+                <%= form_for @deal do |f| %>
+                  <%= f.hidden_field :product_received, value: true %>
+                  <%= f.submit "Product received", class: "pure-button pure-button-primary deals_form_button" %>
+                <% end %>
+              <% end %>
+            <% end %>
           <% end %>
         <% else %>
+          <% if current_user.id == @deal.seller_id %>
+            <%= form_for @deal do |f| %>
+              <%= f.hidden_field :payment_complete, value: true %>
+              <%= f.submit "Payment received", class: "pure-button pure-button-primary deals_form_button" %>
+            <% end %>
+          <% elsif current_user.id == @deal.buyer_id %>
+            <%= form_for @deal do |f| %>
+              <%= f.hidden_field :product_received, value: true %>
+              <%= f.submit "Product received", class: "pure-button pure-button-primary deals_form_button" %>
+            <% end %>
+          <% end %>
           
-        <% end %>
-      <% elsif @deal.exchange_method.method == "Meetup" %>
-        <% if @deal.payment_method == "Paypal" %>
-          <% if current_user.id == @deal.seller_id %>
-          <% elsif current_user.id == @deal.buyer_id %>
-          <% end %>
-        <% else %>
-          <% if current_user.id == @deal.seller_id %>
-          <% elsif current_user.id == @deal.buyer_id %>
-          <% end %>
         <% end %>
       <% end %>
     <% end %>

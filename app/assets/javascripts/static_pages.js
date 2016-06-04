@@ -17,6 +17,32 @@ $(document).on('click', 'a[id*=like_]', function(event) {
   }});  
 });
 
+//Share a post
+$(document).on('click', 'a[id*=shares_]', function(event) {
+  event.preventDefault();
+  var item = $(this).parent().siblings("div[id*=commentsBox_]");
+  if($(".product_view").length)
+  {
+    var item = $(this).parent();
+  }
+
+  item.children("#likesListLarge").hide();
+  item.children("#commentsList").hide();
+  if(!item.children('#new_share').length)
+  {
+    item.append($('#new_share').clone());
+  }
+  var share = this;
+  item.children('#new_share').show();
+  item.children('#new_share').bind("submit", function (event) {
+    event.preventDefault();
+    var new_text = $(this).children('input[type=text]').val();
+    $.ajax({url: '/users/' + share.id.split("_")[3] + '/share', type: 'POST', context: this, data: {post_id: share.id.split("_")[2], post_type: share.id.split("_")[1], share_string: new_text}, success: function() {
+      location.reload();
+    }});
+  });
+});
+
 //Hover like list
 $(document).on('mouseenter', 'a[id*=likes_]', function(event) {
   $.ajax({url: "/api/getLikes", type: 'GET', data: {post_id: this.id.split("_")[2], post_type: this.id.split("_")[1]}, context: this, success: function(data) {
@@ -42,11 +68,13 @@ $(document).on('click', 'a[id*=likes_]', function(event) {
   event.preventDefault();
   $(this).parent().siblings("div[id*=commentsBox_]").children("#likesListLarge").show();
   $(this).parent().siblings("div[id*=commentsBox_]").children("#commentsList").hide();  
+  $(this).parent().siblings("div[id*=commentsBox_]").children("#new_share").hide();
 });
 
 //Click comment list
 $(document).on('click', 'a[id*=comments_]', function(event) { 
   event.preventDefault();
+  $(this).parent().siblings("div[id*=commentsBox_]").children("#new_share").hide();
   $(this).parent().siblings("div[id*=commentsBox_]").children("#likesListLarge").hide();
   $(this).parent().siblings("div[id*=commentsBox_]").children("#commentsList").show();  
 });

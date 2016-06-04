@@ -1,3 +1,15 @@
+.no-border {
+  border: none !important;
+}
+
+#new_share {
+  display: none;
+}
+
+#new_share input {
+  display: inline-block;
+}
+
 #feed {
   min-height: 30em;
 }

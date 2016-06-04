@@ -1,4 +1,11 @@
-<% title = "Product by " + @product.user.name %>
+<div id="share-form">
+<%= form_for(Share.new, url: '', html: { class: "pure-form pure-form-stacked" }) do |f| %>
+        <fieldset>
+          <%= f.text_field :comment, placeholder: "Share something with your followers", class: "full-width", maxlength: 140 %>
+          <%= f.submit "Share", class: "align-right pure-button pure-button-primary" %>
+        </fieldset>
+      <% end %>
+</div>
 <div class="pure-g pad-box">
 	<div class="pure-u-1 pure-u-md-1-5 product_view pad-box">
   
@@ -25,6 +32,9 @@
   		<% end %>
 	</div>
   	<% end %>
+  <p>
+  <%= link_to pluralize(@product.shares.count, "Share"), '', id: "shares_#{@product.class}_#{@product.id}_#{current_user.id}" %>  
+  </p>
 
 	</div>
 	<div class="pure-u-1 pure-u-md-2-5 product_view pad-box">

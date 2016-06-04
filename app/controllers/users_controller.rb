@@ -148,6 +148,17 @@ class UsersController < ApplicationController
     render json: nil, status: 200
   end
 
+  def share
+    if !params[:share_id].nil?
+      current_user.shares.find_by(id: params[:share_id].to_i).destroy
+    else
+      share = Share.find_or_initialize_by(post_id: params[:post_id], post_type: params[:post_type], comment: params[:share_string], user_id: current_user.id)
+      share.save
+    end
+
+    render json: nil, status: 200
+  end
+
   private
 
     def user_params

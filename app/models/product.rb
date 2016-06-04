@@ -19,6 +19,8 @@ class Product < ActiveRecord::Base
   has_many :deals
   has_many :likes, as: :post, dependent: :destroy
   before_save :activate 
+
+  has_many :shares, as: :post, dependent: :destroy
  
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at]

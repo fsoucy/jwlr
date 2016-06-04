@@ -58,6 +58,34 @@ function removeInactiveDelivery()
     $('#deal_exchange_method_id_1').prev().removeClass("inactive_form_element");
 }
 
+
+function countMethods(className)
+{
+    var count = 0;
+    $(className).each(function() {
+	count += 1;
+    });
+    return count;
+}
+
+function defaultSelected()
+{
+    if (countMethods('.deal_selling') == 1)
+    {
+	$('.deal_selling').prop('checked', true);
+    }
+    if (countMethod('.deal_exchange') == 1)
+    {
+	$('.deal_exchange').prop('checked', true);
+    }
+    if (countMethod('.deal_payment') == 1)
+    {
+	$('deal_payment').prop('checked', true);
+    }
+}
+
+
+
 function checkDelivery()
 {
     var any_checked = false;
@@ -463,5 +491,5 @@ $(document).ready(function() {
     validDelivery();
     checkDelivery();
     checkPaypal();
-
+    defaultSelected();
 });

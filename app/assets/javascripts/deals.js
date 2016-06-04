@@ -74,11 +74,11 @@ function defaultSelected()
     {
 	$('.deal_selling').prop('checked', true);
     }
-    if (countMethod('.deal_exchange') == 1)
+    if (countMethods('.deal_exchange') == 1)
     {
 	$('.deal_exchange').prop('checked', true);
     }
-    if (countMethod('.deal_payment') == 1)
+    if (countMethods('.deal_payment') == 1)
     {
 	$('deal_payment').prop('checked', true);
     }
@@ -230,7 +230,7 @@ $(document).ready(function() {
 	redirectToPage();
     });
 
-    $('.methods :input').click(function() {
+    $(document).on('click', '.methods :input', function() {
 	if (!($(this).hasClass("inactive_form_element")))  //don't execute graying out if the clicked is grayed out
 	{
 	    checkDelivery();
@@ -486,10 +486,14 @@ $(document).ready(function() {
     });
 
     
+    // if on deals page
 
-    redirectToPage();
-    validDelivery();
-    checkDelivery();
-    checkPaypal();
-    defaultSelected();
+    if ($('.deals_menu').length > 0)
+    {
+	redirectToPage();
+	validDelivery();
+	checkDelivery();
+	checkPaypal();
+	defaultSelected();
+    }
 });

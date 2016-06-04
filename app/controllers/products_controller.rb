@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :logged_in_user, only: [:new, :create, :destroy]
-  before_action :correct_user, only: [:destroy]  
+  before_action :correct_user, only: [:destroy]
+  after_action :pickup, only: [:create, :update]
   
   def new
     @edit = false
@@ -189,6 +190,24 @@ class ProductsController < ApplicationController
   def edit_exchange_methods
     @product = Product.find(params[:id])
     @exchange_methods = ExchangeMethod.all
+  end
+
+  def pickup
+    @product = Product.find(params[:id])
+    has = false
+    if @product.store_id.nil?
+      for link in @product.exchange_method_links
+        if link.exchange_method.method == "Pickup"
+          has = true
+        end
+      end
+    end
+    if has
+      exchange_method_link = ExchangeMethodLink.where("product_id=? AND exchange_method_id=?", @product.id, 3).first
+      exchange_method_link.destroy
+      flash[:warning] = "Can't have pick up without a store!"
+    end
+      
   end
 
   def update

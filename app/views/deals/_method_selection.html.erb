@@ -1,4 +1,5 @@
 
+<%= hidden_field_tag :need_exchange, @need_exchange %>
 <% if @deal.buyer.id == current_user.id && !@deal.agreement_achieved %>
 <% if @deal.product.selling_method_links.count > 1 or @deal.product.exchange_method_links.count > 1 or @deal.product.payment_method_links.count > 1 %>
 <%= form_for(@deal) do |f| %>

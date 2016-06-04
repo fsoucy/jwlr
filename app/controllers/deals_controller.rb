@@ -1,7 +1,7 @@
 class DealsController < ApplicationController
   before_action :logged_in_user
   before_action :correct_user, only: [:update, :show, :destroy]
-
+  
   def create
     @deal = current_user.buying_deals.build(deals_params)
     active_deal = Deal.where("product_id = ? and buyer_id = ?", @deal.product.id, current_user.id).first
@@ -147,6 +147,14 @@ class DealsController < ApplicationController
       @conversation = Conversation.new(first_user_id: @deal.seller.id, second_user_id: @deal.buyer.id)
       @conversation.save
     end
+    @need_exchange = 0
+    if @deal.exchange_method.method == "Delivery" && @deal.payment_method.method != "Paypal"
+      @deal.payment_method_id = 1
+      @deal.save
+      flash[:warning] = "You can't get a product delivered and pay upon transaction. You must use Paypal for delivery."
+      @need_exchange = 1
+    end
+      
     last = @conversation.messages.count
     start = last - 50
     start = 0 if start < 0

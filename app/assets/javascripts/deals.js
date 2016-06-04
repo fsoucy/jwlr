@@ -32,16 +32,18 @@ function validDelivery()
     }
 }
 
-function addInactivePaypal()
+function addInactivePayment()
 {
-    $('#deal_payment_method_id_1').addClass("inactive_form_element");
-    $('#deal_payment_method_id_1').prev().addClass("inactive_form_element");
-}
-
-function removeInactivePaypal()
-{
+    $('.deal_payment').addClass("inactive_form_element");
+    $('.deal_payment_label').addClass("inactive_form_element");
     $('#deal_payment_method_id_1').removeClass("inactive_form_element");
     $('#deal_payment_method_id_1').prev().removeClass("inactive_form_element");
+}
+
+function removeInactivePayment()
+{
+    $('.deal_payment').removeClass("inactive_form_element");
+    $('.deal_payment_label').removeClass("inactive_form_element");
 }
 
 function addInactiveDelivery()
@@ -58,7 +60,14 @@ function removeInactiveDelivery()
 
 function checkDelivery()
 {
-    if ($('#deal_payment_method_id_1').prop('checked'))
+    var any_checked = false;
+    $('.deal_payment').each(function() {
+	if ($(this).prop('checked'))
+	{
+	    any_checked = true;
+	}
+    });
+    if (!($('#deal_payment_method_id_1').prop('checked')) && any_checked)
     {
 	addInactiveDelivery();
     }
@@ -72,11 +81,11 @@ function checkPaypal()
 {
     if ($('#deal_exchange_method_id_1').prop('checked'))
     {
-	addInactivePaypal();
+	addInactivePayment();
     }
     else
     {
-	removeInactivePaypal();
+	removeInactivePayment();
     }
 }
 
@@ -188,9 +197,17 @@ $(document).ready(function() {
     $(document).on('click', '.inactive_form_element', function(e) {
 	e.preventDefault();
     });
-    
+
     $(document).on('click', '#redirect_button', function() {
 	redirectToPage();
+    });
+
+    $('.methods :input').click(function() {
+	if (!($(this).hasClass("inactive_form_element")))  //don't execute graying out if the clicked is grayed out
+	{
+	    checkDelivery();
+	    checkPaypal();
+	}
     });
 
     $(document).on('click', '.guide_button', function() {
@@ -444,5 +461,7 @@ $(document).ready(function() {
 
     redirectToPage();
     validDelivery();
+    checkDelivery();
+    checkPaypal();
 
 });

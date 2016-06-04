@@ -138,11 +138,11 @@ class UsersController < ApplicationController
   end
 
   def comment
-    comment = Comment.find_or_initialize_by(post_id: params[:post_id], post_type: params[:post_type], comment: params[:comment_string], user_id: current_user.id)
-    if comment.new_record?
-      comment.save
+    if !params[:comment_id].nil?
+      current_user.comments.find_by(id: params[:comment_id].to_i).destroy
     else
-      comment.destroy
+      comment = Comment.find_or_initialize_by(post_id: params[:post_id], post_type: params[:post_type], comment: params[:comment_string], user_id: current_user.id)
+      comment.save
     end
 
     render json: nil, status: 200

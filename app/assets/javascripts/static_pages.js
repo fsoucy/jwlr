@@ -1,3 +1,4 @@
+
 //Like a post
 $(document).on('click', 'a[id*=like_]', function(event) {
   event.preventDefault();
@@ -83,7 +84,15 @@ $(document).on('focus', '#comment', function(event) {
   });
 });
 
-//Edit Microposts
+//Delete comments
+$(document).on('click', 'a[id*=delete_comment_]', function(event) {
+  event.preventDefault();
+  $.ajax({url: '/users/' + this.id.split("_")[3] + '/comment', type: 'POST', data: {comment_id: this.id.split("_")[2]}, context: this, success: function() {
+    $(this).parent().fadeOut(500, function() { $(this).remove(); });
+  }});
+});
+
+//Delete Microposts
 $(document).on('click', 'a[id*=delete_micropost_]', function(event) {
   event.preventDefault();
   $.ajax({url: '/microposts/' + this.id.split("_")[2], type: 'DELETE', context: this, success: function() {    
@@ -91,7 +100,7 @@ $(document).on('click', 'a[id*=delete_micropost_]', function(event) {
   }});
 });
 
-//Delete Microposts
+//Edit Micropost
 $(document).on('click', 'a[id*=edit_micropost_]', function(event) {
   event.preventDefault();
   var old_text = $(this).siblings('#main_text').text().trim();

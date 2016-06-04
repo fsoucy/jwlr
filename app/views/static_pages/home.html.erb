@@ -109,10 +109,12 @@
                 <%= link_to pluralize(item.likes.count, "Like"), '', id: "likes_#{item.class}_#{item.id}_#{current_user.id}" %>
                 <%= link_to pluralize(item.comments.count, "Comment"), '', id: "comments_#{item.class}_#{item.id}_#{current_user.id}" %>
               </p>
-              <fieldset class="pure-form">
+              <form class="pure-form" id="new_comment">
+              <fieldset>
                 <%= text_field_tag "comment", nil, placeholder: "Comment on this", class: "full-width" %>
                 <button id="<%= "commentForm_" + item.class.to_s + "_" + item.id.to_s + "_" + current_user.id.to_s %>" class="align-right pure-button pure-button-primary">Comment</button>
               </fieldset>
+              </form>
               <div id="commentsBox_#{item.class}_#{item.id}_#{current_user.id}" class="comments_box">
                 <div id="likesListLarge" class="large_likes_list">
                   <% item.likes.each do |like| %>
@@ -145,9 +147,12 @@
                             Follow 
                           <% end %>
                         </button>
-                        <p>
+                        <p id="maintext">
                           <%= comment.comment %>
                         </p>
+                        <% if comment.user.id == current_user.id %>
+                          <%= link_to "Delete", '', id: "delete_comment_#{comment.id}_#{current_user.id}" %>
+                        <% end %>
                         <p>
                           <%= time_ago_in_words(comment.updated_at) %> ago
                           <% if current_user.likes?(comment) %>

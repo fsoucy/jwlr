@@ -138,10 +138,14 @@ class UsersController < ApplicationController
   end
 
   def comment
-    if !params[:comment_id].nil?
+    if !params[:comment_id].nil? and params[:comment_string].nil?
       current_user.comments.find_by(id: params[:comment_id].to_i).destroy
-    else
+    elsif params[:comment_id].nil?
       comment = Comment.find_or_initialize_by(post_id: params[:post_id], post_type: params[:post_type], comment: params[:comment_string], user_id: current_user.id)
+      comment.save
+    else
+      comment = Comment.find_by(id: params[:comment_id], user_id: current_user.id)
+      comment.comment = params[:commment_string]
       comment.save
     end
 

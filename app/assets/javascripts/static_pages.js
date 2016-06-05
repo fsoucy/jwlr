@@ -1,4 +1,3 @@
-
 //Like a post
 $(document).on('click', 'a[id*=like_]', function(event) {
   event.preventDefault();
@@ -118,6 +117,25 @@ $(document).on('click', 'a[id*=delete_comment_]', function(event) {
   $.ajax({url: '/users/' + this.id.split("_")[3] + '/comment', type: 'POST', data: {comment_id: this.id.split("_")[2]}, context: this, success: function() {
     $(this).parent().fadeOut(500, function() { $(this).remove(); });
   }});
+});
+
+//Edit comment
+$(document).on('click', 'a[id*=edit_comment_]', function(event) {
+  event.preventDefault();
+  var old_text = $(this).siblings('#main_text').text().trim();
+  var comment_id = this.id.split("_")[2];
+  var user_id = this.id.split("_")[3];
+  $(this).siblings('#main_text').replaceWith($('#new_comment').clone());
+  $(this).siblings('form').children('fieldset').children('button').text("Save");
+  $(this).siblings('form').children('fieldset').children('input[type=text]').val(old_text);
+  $(this).siblings('form').children('fieldset').children('button').attr("id", "");
+  $(this).siblings('form').children('fieldset').children('button').bind("click", function (event) {
+    event.preventDefault();
+    var new_text = $(this).siblings('input[type=text]').val();
+    $.ajax({url: '/users/' + user_id + '/comment', type: 'POST', context: this, data: {comment_id: comment_id, comment_string: new_text}, success: function() {
+      $(this).parent().parent().fadeOut(500, function() { $(this).replaceWith('<p id="main_text">' + new_text + '</p>'); });
+    }});
+  });
 });
 
 //Delete Microposts

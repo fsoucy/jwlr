@@ -22,7 +22,8 @@
             <% when "Share" %>
               <div class="feed_share">
                 <%= image_tag item.user.profile_picture(:thumbnail) %>
-                <a href="<%= user_path(item.user) %>"><h2><%= item.user.name %></h2>                <p id="main_text">
+                <a href="<%= user_path(item.user) %>"><h2><%= item.user.name %></h2></a>                
+                <p id="main_text">
                   <%= item.comment %>
                 </p>
                 <%= render partial: "item", object: item.post %>
@@ -74,10 +75,16 @@
                   <%= item.content %>
                 </p>
           <% end %>
-            <p>
+          <% if item.class.name == "Share" %>
+            <% if item.user.id == current_user.id %>                                 
+              <p>  
+                <%= link_to "Edit", '', id: "edit_share_#{item.id}_#{current_user.id}" %> <%= link_to "Delete", '', id: "delete_share_#{item.id}_#{current_user.id}" %>
+              </p> 
+            <% end %>
+          <% end %>
+          <p>
               <%= time_ago_in_words(item.updated_at) %> ago        
             <% if item.class.name == "Blogpost" or item.class.name == "Micropost" or item.class.name == "Share" %>
-              
                 <% if current_user.likes?(item) %>
                   <%= link_to "Unlike", '', id: "like_#{item.class}_#{item.id}_#{current_user.id}" %>
                 <% else %>

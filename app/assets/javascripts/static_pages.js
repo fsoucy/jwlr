@@ -35,7 +35,7 @@ $(document).on('click', 'a[id*=shares_]', function(event) {
   item.children('#new_share').show();
   item.children('#new_share').bind("submit", function (event) {
     event.preventDefault();
-    var new_text = $(this).children('input[type=text]').val();
+    var new_text = $(this).children('fieldset').children('input[type=text]').val();
     $.ajax({url: '/users/' + share.id.split("_")[3] + '/share', type: 'POST', context: this, data: {post_id: share.id.split("_")[2], post_type: share.id.split("_")[1], share_string: new_text}, success: function() {
       location.reload();
     }});
@@ -108,6 +108,33 @@ $(document).on('focus', '#comment', function(event) {
     {
       $(this).siblings('button[id*=commentForm_]').trigger('click');
     }
+  });
+});
+
+//Delete shares
+$(document).on('click', 'a[id*=delete_share_]', function(event) {
+  event.preventDefault();
+  $.ajax({url: '/users/' + this.id.split("_")[3] + '/share', type: 'POST', data: {share_id: this.id.split("_")[2]}, context: this, success: function() {
+    $(this).parent().parent().parent().fadeOut(500, function() { $(this).remove(); });
+  }});
+});
+
+//Edit share
+$(document).on('click', 'a[id*=edit_share_]', function(event) {
+  event.preventDefault();
+  var old_text = $(this).parent().siblings('#main_text').text().trim();
+  var share_id = this.id.split("_")[2];
+  var user_id = this.id.split("_")[3];
+  $(this).parent().siblings('#main_text').replaceWith($('#new_share').clone());
+  $(this).parent().siblings('#new_share').children('fieldset').children('input[type=submit]').val("Save");
+  $(this).parent().siblings('#new_share').children('fieldset').children('input[type=text]').val(old_text);
+  $(this).parent().siblings('#new_share').show();
+  $(this).parent().siblings('#new_share').bind("submit", function (event) {
+    event.preventDefault();
+    var new_text = $(this).children('fieldset').children('input[type=text]').val();
+    $.ajax({url: '/users/' + user_id + '/share', type: 'POST', context: this, data: {share_id: share_id, share_string: new_text}, success: function() {
+      $(this).fadeOut(500, function() { $(this).replaceWith('<p id="main_text">' + new_text + '</p>'); });
+    }});
   });
 });
 

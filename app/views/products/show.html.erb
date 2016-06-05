@@ -98,12 +98,10 @@
       	  <% active_deal = Deal.where("product_id = ? and buyer_id = ?", @product.id, current_user).first %>
           <% if active_deal.nil? %>
             <% if @product.buy_now %>
-              <h2>hi</h2>
               <%= render 'buy_now' %>
             <% end %>
             <% if @product.only_buy_now %>
             <% else %>
-              <h2>Hi</h2>
               <%= form_for(@deal, html: { class: "pure-form pure-form-stacked log-in-form methods"}) do |f| %>
                 <h3>Selling Methods (choose one)</h3>
                 <% @deal.product.selling_method_links.each do |s| %>

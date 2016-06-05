@@ -29,6 +29,52 @@ class Product < ActiveRecord::Base
     productviews.sum(:views)
   end
 
+  def buy_now
+    static_price = false
+    delivery = false
+    pickup = false
+    selling_method_links.each do |l|
+      if l.selling_method.method == "Static Price"
+        static_price = true
+      end
+    end
+    exchange_method_links.each do |l|
+      if l.exchange_method.method == "Delivery"
+        delivery = true
+      end
+      if l.exchange_method.method == "Pickup"
+        pickup = true
+      end
+    end
+    return (static_price && (delivery || pickup))
+    
+  end
+
+  def only_buy_now
+    #must be buy now, not have negotiation or meetup
+    if buy_now
+      negotiation = false
+      meetup = false
+      selling_method_links.each do |l|
+        if l.selling_method.method == "Negotiation"
+          negotiation = true
+        end
+      end
+      exchange_method_links.each do |l|
+        if l.exchange_method.method == "Meetup"
+          meetup = true
+        end
+      end
+      if (meetup || negotiation)
+        return false
+      else
+        return true
+      end
+    else
+      return false
+    end
+  end
+
   searchable do
     text :description, :more_like_this => true
     text :title, :more_like_this => true

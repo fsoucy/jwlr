@@ -102,7 +102,7 @@
             <% end %>
             <% if @product.only_buy_now %>
             <% else %>
-              <%= form_for(@deal, html: { class: "pure-form pure-form-stacked log-in-form methods"}) do |f| %>
+              <%= form_for(@deal, html: { class: "pure-form pure-form-stacked log-in-form methods deal_extended"}) do |f| %>
                 <h3>Selling Methods (choose one)</h3>
                 <% @deal.product.selling_method_links.each do |s| %>
                   <% if s.selling_method.method == "Static Price" %>

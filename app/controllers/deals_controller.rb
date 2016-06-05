@@ -148,7 +148,7 @@ class DealsController < ApplicationController
       @conversation.save
     end
     @need_exchange = 0
-    if @deal.exchange_method.method == "Delivery" && @deal.payment_method.method != "Paypal"
+    if !@deal.exchange_method_id.nil? && @deal.exchange_method.method == "Delivery" && !@deal.payment_method_id.nil? && @deal.payment_method.method != "Paypal"
       @deal.payment_method_id = 1
       @deal.save
       flash[:warning] = "You can't get a product delivered and pay upon transaction. You must use Paypal for delivery."
@@ -165,6 +165,8 @@ class DealsController < ApplicationController
   def destroy
     deal = Deal.find(params[:id])
     deal.product.hold = false
+    deal.product.sold = false
+    deal.product.save
     deal.destroy
     if deal.seller == current_user
       new_notification("Your deal on " + deal.product.title + " has been cancelled by the seller.", deal.buyer, deal_url(deal))

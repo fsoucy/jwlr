@@ -6,7 +6,7 @@
 <% elsif @deal.agreement_achieved %>
 
 <% else %> <!-- We're on exchange methods -->
-  <% if @deal.exchange_method.method == "Pickup" %>
+  <% if !@deal.exchange_method_id.nil? && @deal.exchange_method.method == "Pickup" %>
     <% if current_user.id == @deal.seller_id %>
     <% elsif current_user.id == @deal.buyer_id %>
       <%= form_for @deal do |f| %>
@@ -14,7 +14,7 @@
         <%= f.submit "Confirm agreement", class: "pure-button pure-button-primary deals_form_button" %>
       <% end %>
     <% end %>
-  <% elsif @deal.exchange_method.method == "Delivery" %>
+  <% elsif !@deal.exchange_method_id.nil? && @deal.exchange_method.method == "Delivery" %>
     <% if current_user.id == @deal.seller_id %>
       <% if !@deal.dropoff.nil? %>
       <% else %>
@@ -32,7 +32,7 @@
         <%= f.submit "Confirm delivery agreement", class: "pure-button pure-button-primary deals_form_button" %>
       <% end %>
     <% end %>
-  <% elsif @deal.exchange_method.method == "Meetup" %>
+  <% elsif !@deal.exchange_method_id.nil? && @deal.exchange_method.method == "Meetup" %>
     <% if current_user.id == @deal.seller_id %>
       <% if !@deal.exchange_agreement_seller %>
         <%= form_for @deal do |f| %>

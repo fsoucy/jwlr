@@ -370,6 +370,25 @@ $(document).ready(function() {
 	$('#payment_methods_form').show();
     });
 
+    $('.quick_buy_information').hide();
+    $(document).on('click', '.quick_buy', function(e) {
+	if ($('.buy_now_radio').length > 0)
+	{
+	    e.preventDefault();
+	    $('.quick_buy_information').show();
+	    $(this).removeClass("quick_buy");
+	    $('.deal_extended').hide();
+	    $(this).addClass("in_quick_buy");
+	}
+    });
+
+    $(document).on('click', '.leave_quick_buy', function() {
+	$('.quick_buy_information').hide();
+	$('.in_quick_buy').addClass("quick_buy").removeClass("in_quick_buy");
+	$('.deal_extended').show();
+    });
+
+
     $('.submit_product').click(function(e) {
 	var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods() && productPicture() && deliveryAndPaypal();
 	if (!forms)
@@ -403,6 +422,7 @@ $(document).ready(function() {
 	    $('.alert').remove();
 	    $('.content').prepend("<div class='alert alert-warning'><h4>" + msg + "</h4></div>");
 	}
+	
     });
 
 $('#magnifier').loupe({

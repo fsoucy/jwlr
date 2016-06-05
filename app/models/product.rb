@@ -15,6 +15,9 @@ class Product < ActiveRecord::Base
   has_many :exchange_method_links, dependent: :destroy
   has_many :payment_method_links, dependent: :destroy
   has_many :selling_method_links, dependent: :destroy
+  has_many :selling_methods, through: :selling_method_links
+  has_many :exchange_methods, through: :exchange_method_links
+  has_many :payment_methods, through: :payment_method_links
   has_many :pictures, dependent: :destroy  
   has_many :deals
   has_many :likes, as: :post, dependent: :destroy
@@ -48,6 +51,68 @@ class Product < ActiveRecord::Base
     end
     return (static_price && (delivery || pickup))
     
+  end
+
+  def delivery
+    exchange_methods.each do |m|
+      if m.method == "Delivery"
+        return true
+      end
+    end
+    return false
+  end
+
+  def pickup
+    exchange_methods.each do |m|
+      if m.method == "Pickup"
+        return true
+      end
+    end
+    return false
+  end
+
+  def meetup
+    exchange_methods.each do |m|
+      if m.method == "Meetup"
+        return true
+      end
+    end
+    return false
+  end
+
+  def negotiation
+    selling_methods.each do |m|
+      if m.method == "Negotiation"
+        return true
+      end
+    end
+    return false
+  end
+
+  def static_price
+    selling_methods.each do |m|
+      if m.method == "Static Price"
+        return true
+      end
+    end
+    return false
+  end
+
+  def paypal
+    payment_methods.each do |m|
+      if m.method == "Payment"
+        return true
+      end
+    end
+    return false
+  end
+
+  def upon_transaction
+    if paypal
+      return payment_methods > 1
+    else
+      return true
+    end
   end
 
   def only_buy_now

@@ -104,6 +104,11 @@ class ProductsController < ApplicationController
       redirect_to edit_toggle_options_product_path(@product)
       return
     end
+
+    @buy_now = @product.buy_now
+    @only_buy_now = @product.only_buy_now
+    @delivery = false
+    
     
     if logged_in?
       @deal = current_user.buying_deals.build(seller_id: @product.user.id, product_id: @product.id)

@@ -1,0 +1,4 @@
+<%= form_for @product do |f| %>
+  <%= f.hidden_field :sold, value: false %>
+  <%= f.submit "Quick buy", class: "pure-button pure-button-primary quick_buy" %>
+<% end %>

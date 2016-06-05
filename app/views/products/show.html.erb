@@ -95,8 +95,15 @@
 
       <% if !@product.sold and !@product.hold %>
         <% if logged_in? %>
-	  <% active_deal = Deal.where("product_id = ? and buyer_id = ?", @product.id, current_user).first %>
+      	  <% active_deal = Deal.where("product_id = ? and buyer_id = ?", @product.id, current_user).first %>
           <% if active_deal.nil? %>
+            <% if @product.buy_now %>
+              <h2>hi</h2>
+              <%= render 'buy_now' %>
+            <% end %>
+            <% if @product.only_buy_now %>
+            <% else %>
+              <h2>Hi</h2>
               <%= form_for(@deal, html: { class: "pure-form pure-form-stacked log-in-form methods"}) do |f| %>
                 <h3>Selling Methods (choose one)</h3>
                 <% @deal.product.selling_method_links.each do |s| %>
@@ -113,7 +120,7 @@
                 <% end %>
                 <h3>Exchange Methods (choose one) </h3>
                 <% @deal.product.exchange_method_links.each do |e| %>
-                    <%= f.label :exchange_method, "#{e.exchange_method.method}", class: "pure-radio deal_exchange_label" %>
+                  <%= f.label :exchange_method, "#{e.exchange_method.method}", class: "pure-radio deal_exchange_label" %>
                     <%= f.radio_button :exchange_method_id, e.exchange_method.id, class: "deal_exchange" %>
 		              <br>
                 <% end %>
@@ -129,6 +136,7 @@
 		            <%= f.hidden_field :buyer_id, value: current_user.id %>
                 <%= f.submit "Buy this product", class: "pure-button pure-button-primary" %>
               <% end %>
+            <% end %>
           <% else %>
             <%= link_to "Go to your deal", active_deal %>
           <% end %>

@@ -1,6 +1,3 @@
 id,method
 1,Paypal
-2,Credit Card upon transaction
-3,Debit Card upon transaction
-4,Check upon transction
-5,Cash upon transaction
+2,Upon Transaction

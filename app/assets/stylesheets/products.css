@@ -104,3 +104,7 @@
     background-color: gray !important;
     color: black !important;
 }
+
+.pickers {
+  display: table-row;
+}

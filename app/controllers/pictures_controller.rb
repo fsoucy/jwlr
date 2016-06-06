@@ -80,7 +80,7 @@ class PicturesController < ApplicationController
     img.write(@picture.photo_cropped.path)
     @picture.photo_cropped.reprocess!
     @picture.save
-    redirect_to @picture.product
+    redirect_to @picture.post
   end
 
   private
@@ -102,7 +102,7 @@ class PicturesController < ApplicationController
 
     def correct_user_picture
       picture = Picture.find(params[:id])
-      redirect_to root_url if picture.product.user != current_user
+      redirect_to root_url if picture.post.user != current_user
     end
 
 end

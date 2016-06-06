@@ -19,6 +19,13 @@
                     <% end %>
                   </div>
                 </div>
+            <% when "Store" %>
+              <div class="feed_store">
+                <%= image_tag item.profile_picture(:thumbnail) %>
+                <a href="<%= user_path(item.user) %>"><h2><%= item.name %></h2></a>
+                <p id="main_text">
+                  <%= item.description %>
+                </p>
             <% when "Share" %>
               <div class="feed_share">
                 <%= image_tag item.user.profile_picture(:thumbnail) %>

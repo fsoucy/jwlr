@@ -1,4 +1,11 @@
-<% provide(:title, @store.name) %>
+<div id="share-form">
+<%= form_for(Share.new, url: '', html: { class: "pure-form pure-form-stacked" }) do |f| %>
+        <fieldset>
+          <%= f.text_field :comment, placeholder: "Share something with your followers", class: "full-width", maxlength: 140 %>
+          <%= f.submit "Share", class: "align-right pure-button pure-button-primary" %>
+        </fieldset>
+      <% end %>
+</div>
 <div class="storefront_gallery">
   <div class="pure-menu pure-menu-horizontal store-menu">
     <ul class="pure-menu-list">
@@ -9,7 +16,9 @@
     </ul>
   </div>
   <h1 class="store_header"><%= @store.name %> <%= link_to "Edit", edit_store_url(@store) if current_user?(@store.user) %></h1>
-  
+<div class="shares">
+  <%= link_to pluralize(@store.shares.count, "Share"), '', id: "shares_#{@store.class}_#{@store.id}_#{current_user.id}" %>
+  </div>  
   <!--GALLERY--->
   <div class="store_within store_gallery_within store_active">
     <div class="pure-g log-in">

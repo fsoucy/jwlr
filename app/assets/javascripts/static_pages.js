@@ -24,6 +24,10 @@ $(document).on('click', 'a[id*=shares_]', function(event) {
   {
     var item = $(this).parent();
   }
+  if($(".store_header").length)
+  {
+    var item = $(this).parent();
+  }
 
   item.children("#likesListLarge").hide();
   item.children("#commentsList").hide();

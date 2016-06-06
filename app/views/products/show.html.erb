@@ -37,6 +37,7 @@
   <a href="https://pinterest.com/pin/create/button/?url=<%= URI.encode(request.original_url) %>&media=<%= URI.join(request.url, @product.pictures.first.photo_cropped(:large)).to_s.split("?")[0] %>&description=<%= URI.encode(@product.title) %>" data-pin-do="buttonPin" data-pin-count="above" data-pin-save="true">
   </a>
   <div class="fb-share-button" data-href="<%= URI.encode(request.original_url) %>" data-layout="box_count" data-mobile-iframe="true"></div>
+  <a class="twitter-share-button" href="https://twitter.com/intent/tweet?url=<%= URI.encode(request.original_url) %>" data-size="large">Tweet</a>
   </div>
 
 	</div>

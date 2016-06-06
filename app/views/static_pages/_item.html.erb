@@ -41,6 +41,15 @@
                 <p id="main_text">
                   <%= item.content %>
                 </p>
+                <% if item.pictures.any? %>
+                  <div class="pure-g">
+                    <% item.pictures.each do |picture| %>
+                      <div class="pure-u-1 pure-u-md-1-3">
+                        <%= image_tag picture.photo_cropped(:thumb), class: "pure-img" %>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
                 <% if item.user.id == current_user.id %>
                   <%= link_to "Edit", '', id: "edit_micropost_#{item.id}" %> <%= link_to "Delete", '', id: "delete_micropost_#{item.id}" %>
                 <% end %>

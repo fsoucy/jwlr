@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160604161039) do
+ActiveRecord::Schema.define(version: 20160606175533) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -241,7 +241,7 @@ ActiveRecord::Schema.define(version: 20160604161039) do
   end
 
   create_table "pictures", force: :cascade do |t|
-    t.integer  "product_id"
+    t.integer  "post_id"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
@@ -252,9 +252,10 @@ ActiveRecord::Schema.define(version: 20160604161039) do
     t.string   "photo_cropped_content_type"
     t.integer  "photo_cropped_file_size"
     t.datetime "photo_cropped_updated_at"
+    t.string   "post_type"
   end
 
-  add_index "pictures", ["product_id"], name: "index_pictures_on_product_id"
+  add_index "pictures", ["post_id"], name: "index_pictures_on_post_id"
 
   create_table "products", force: :cascade do |t|
     t.float    "price"

@@ -1,3 +1,51 @@
+$(document).ready(function(){
+  // disable auto discover
+  Dropzone.autoDiscover = false;
+  $("#new_micropost_picture").dropzone({
+    // restrict image size to a maximum 1MB
+    maxFilesize: 10,
+    // changed the passed param to one accepted by
+    // our rails app
+    paramName: "picture[photo]",
+      // show remove links on each image upload
+    autoProcessQueue: false,
+    dictDefaultMessage: "Upload here",
+    addRemoveLinks: false,
+    maxFiles: 8,
+    acceptedFiles: "image/*",
+    // if the upload was successful
+    success: function(file, response){
+      // find the remove button link of the uploaded file and give it an id
+      // based of the fileID response from the server
+      $(file.previewTemplate).find('.dz-remove').attr('id', response.fileID);
+      // add the dz-success class (the green tick sign)
+      $(file.previewElement).addClass("dz-success");
+    },
+    init: function() {
+      var dropzone = this;
+      $('#new_micropost').submit(function(event) {
+        event.preventDefault();
+        $.ajax({url: '/microposts', type: 'POST', context: this, data: $(this).serialize(), success: function(data) {
+          debugger;
+          dropzone.options.url = '/microposts/' + data.id + '/pictures';
+          dropzone.options.params = {post_type: "Micropost"};
+          dropzone.options.autoProcessQueue = true;
+          dropzone.processQueue();
+        }});
+      });
+      dropzone.on('queuecomplete', function() {
+        location.reload();
+      });
+    }
+  });
+});
+
+//Show picture form
+$(document).on('click', '#show_new_picture', function(event) {
+  event.preventDefault();
+  $('#dropper').toggle();
+});
+
 //Like a post
 $(document).on('click', 'a[id*=like_]', function(event) {
   event.preventDefault();

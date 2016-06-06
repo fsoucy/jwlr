@@ -73,7 +73,12 @@ Rails.application.routes.draw do
   end
   resources :payments, only: [:create]  
   
-  resources :microposts, only: [:create, :update, :destroy]
+  resources :microposts, only: [:create, :update, :destroy] do
+    member do
+      resources :pictures
+    end
+  end
+  
   
   resources :account_activations, only: [:edit]
   resources :categories

@@ -4,5 +4,6 @@ class Micropost < ActiveRecord::Base
   has_many :likes, as: :post, dependent: :destroy
   has_many :comments, as: :post, dependent: :destroy  
   has_many :shares, as: :post, dependent: :destroy
+  has_many :pictures, as: :post, dependent: :destroy
 
 end

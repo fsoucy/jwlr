@@ -35,7 +35,7 @@
       </div>
     </div>
     <div id="share-form">
-      <%= form_for(Share.new, url: '', html: { class: "pure-form pure-form-stacked" }) do |f| %>
+      <%= form_for(Share.new, url: '', html: { class: "pure-form" }) do |f| %>
         <fieldset>
           <%= f.text_field :comment, placeholder: "Share something with your followers", class: "full-width", maxlength: 140 %>
           <%= f.submit "Share", class: "align-right pure-button pure-button-primary" %>
@@ -45,12 +45,17 @@
     <div class="pure-u-1 pure-u-md-1-4"></div>
     <div class="pure-u-1 pure-u-md-1-2">
       <div class="log-in log-in-form">
-        <%= form_for(Micropost.new, html: { class: "pure-form pure-form-stacked" }) do |f| %>
+        <%= form_for(Micropost.new, html: { class: "pure-form" }) do |f| %>
           <fieldset>
             <%= f.text_field :content, placeholder: "Share something with your followers", class: "full-width", maxlength: 140 %>
             <%= f.submit "Post", class: "align-right pure-button pure-button-primary" %>
           </fieldset>
         <% end %>
+        <div class="dropper" id="dropper">
+          <%= form_for Picture.new, url: "#", html: { id: "new_micropost_picture", multipart: true, class: "dropzone"} do |f|  %>
+          <% end %>
+        </div>
+        <%= link_to "Add Images", '', id: "show_new_picture" %>
       </div>
       <div id="feed">
       <% item_number = 1 %>

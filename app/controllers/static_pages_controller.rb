@@ -38,6 +38,9 @@ class StaticPagesController < ApplicationController
       end
       @for_you = results
       @feed_items = Array.new
+
+      @micropost = current_user.microposts.find_or_initialize_by(content: " ")
+      @micropost.save      
       
       page = params[:page].to_i     
       page = 1 if page < 1

@@ -15,7 +15,7 @@ class Product < ActiveRecord::Base
   has_many :exchange_method_links, dependent: :destroy
   has_many :payment_method_links, dependent: :destroy
   has_many :selling_method_links, dependent: :destroy
-  has_many :pictures, dependent: :destroy  
+  has_many :pictures, as: :post, dependent: :destroy  
   has_many :deals
   has_many :likes, as: :post, dependent: :destroy
   has_many :comments, as: :post, dependent: :destroy  

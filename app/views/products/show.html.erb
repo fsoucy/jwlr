@@ -34,6 +34,8 @@
   	<% end %> 
   <div class="shares">
   <%= link_to pluralize(@product.shares.count, "Share"), '', id: "shares_#{@product.class}_#{@product.id}_#{current_user.id}" %>  
+  <a href="https://pinterest.com/pin/create/button/?url=<%= URI.encode(request.original_url) %>&media=<%= URI.join(request.url, @product.pictures.first.photo_cropped(:large)).to_s.split("?")[0] %>&description=<%= URI.encode(@product.title) %>" data-pin-do="buttonPin" data-pin-count="above" data-pin-save="true">
+  </a>
   </div>
 
 	</div>

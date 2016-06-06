@@ -1,21 +1,21 @@
-<% provide(:title, 'Reset password') %>
+<div class="pure-g log-in">
+  <div class="pure-u-1 pure-u-md-1-3"></div>
+    <div class="pure-u-1 pure-u-md-1-3 log-in-form">
+      <%= form_for(@user, url: password_reset_path(params[:id]), html: {class: "pure-form pure-form-stacked"}) do |f| %>
+      <fieldset>
+        <legend>Reset password</legend>
 
-<h1>Reset password</h1>
+          <%= render 'shared/error_messages', object: f.object %>
+      
+          <%= hidden_field_tag :email, @user.email %>
+      
+          <%= f.password_field :password, placeholder: 'Password' %>
+       
+          <%= f.password_field :password_confirmation, placeholder: 'Password confirmation' %>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@user, url: password_reset_path(params[:id])) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
-      
-      <%= hidden_field_tag :email, @user.email %>
-      
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
-      
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
-
-      <%= f.submit "Update password", class: "btn btn-primary" %>
-    <% end %>
+          <%= f.submit "Update password", class: "pure-button pure-button-primary" %>
+        </fieldset>
+      <% end %>
+    </div>
   </div>
 </div>

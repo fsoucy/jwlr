@@ -334,7 +334,7 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title, :min_accepted_price, :delivery_cost)
+    params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title, :min_accepted_price, :delivery_cost, :hold, :sold)
   end
   
   def correct_user

@@ -64,13 +64,32 @@
       <h1><%= @product.user.name %></h1>
     <% end %>
     <p>
+
     <% if !@product.sold && !@product.hold %>
-  		<% if @product.user == current_user %><%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
+  		<% if @product.user == current_user %>
+        <%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
 					    data: { confirm: "Are you sure you wish to delete this?" } %>
   		  <br>
         <%= link_to "Edit product", edit_product_path(@product.id) %>
+        <%= form_for @product do |f| %>
+          <%= f.hidden_field :hold, value: true %>
+          <%= f.submit "Put product on hold", class: "pure-button pure-button-primary" %>
+        <% end %>
+
+        <%= form_for @product do |f| %>
+          <%= f.hidden_field :sold, value: true %>
+          <%= f.submit "Mark product as sold", class: "pure-button pure-button-primary" %>
+        <% end %>
       <% end %>
-    <% end %>      
+    <% end %>
+  
+    <% active_deal = Deal.where("product_id=?", @product.id).first %>
+    <% if @product.hold && active_deal.nil? && current_user == @product.user %>
+      <%= form_for @product do |f| %>
+        <%= f.hidden_field :hold, value: false %>
+        <%= f.submit "Product no longer on hold", class: "pure-button pure-button-primary" %>
+      <% end %>
+    <% end %>    
   
     <% if @product.user == current_user %>
     <div class="log-in-form">
@@ -92,6 +111,8 @@
       <% end %>
       </div>
     <% else %>
+      
+      
 
       <% if !@product.sold and !@product.hold %>
         <% if logged_in? %>

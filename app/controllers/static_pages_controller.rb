@@ -57,6 +57,9 @@ class StaticPagesController < ApplicationController
       shares = current_user.shares.order(created_at: :desc).limit(per_page * page)
       @feed_items += shares
 
+      products = current_user.products.where(activated: true).order(created_at: :desc).limit(per_page * page)
+      @feed_items += products
+
       current_user.following.each do |user|
         microposts = user.microposts.order(created_at: :desc).limit(per_page * page)
         @feed_items += microposts
@@ -66,6 +69,9 @@ class StaticPagesController < ApplicationController
 
         shares = user.shares.order(created_at: :desc).limit(per_page * page)
         @feed_items += shares
+
+        products = user.products.where(activated: true).order(created_at: :desc).limit(per_page * page)
+        @feed_items += products
       end
 
       @feed_items = @feed_items.sort_by(&:updated_at).reverse.paginate(:page => page, :per_page => per_page)

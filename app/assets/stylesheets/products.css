@@ -1,3 +1,7 @@
+.shares * {
+  vertical-align: bottom;
+}
+
 .pad-down {
   padding-top: 1em;
 }
@@ -112,6 +116,8 @@
 .pickers {
   display: table-row;
 }
+
+
 
 .quick_buy
 {

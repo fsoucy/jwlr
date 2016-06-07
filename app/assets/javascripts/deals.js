@@ -1,7 +1,7 @@
 function isValidAddress(dropoff)
 {
     var bool = false;
-    debugger;
+
     $.ajax({
 	type: "GET",// GET in place of POST
 	contentType: "application/json; charset=utf-8",
@@ -9,10 +9,8 @@ function isValidAddress(dropoff)
 	data: {},
 	dataType: "json",
 	success: function (result) {
-	    debugger;
 	    if (parseInt(result[0]["valid"]) == 1)
 	    {
-		debugger;
 		bool = true;
 	    }
 	    else
@@ -24,12 +22,109 @@ function isValidAddress(dropoff)
     return bool;
 }
 
+function validDelivery()
+{
+    if (parseInt($('#need_exchange').val()) == 1)
+    {
+	$('.selection').hide();
+	$('.method_selection').show();
+	$('.instructions').append("<h3 class='valid_delivery'>However, you can't get a product delivered without Paypal.</h3>");
+    }
+}
+
+function addInactivePayment()
+{
+    $('.deal_payment').addClass("inactive_form_element");
+    $('.deal_payment_label').addClass("inactive_form_element");
+    $('#deal_payment_method_id_1').removeClass("inactive_form_element");
+    $('#deal_payment_method_id_1').prev().removeClass("inactive_form_element");
+}
+
+function removeInactivePayment()
+{
+    $('.deal_payment').removeClass("inactive_form_element");
+    $('.deal_payment_label').removeClass("inactive_form_element");
+}
+
+function addInactiveDelivery()
+{
+    $('#deal_exchange_method_id_1').addClass("inactive_form_element");
+    $('#deal_exchange_method_id_1').prev().addClass("inactive_form_element");
+}
+
+function removeInactiveDelivery()
+{
+    $('#deal_exchange_method_id_1').removeClass("inactive_form_element");
+    $('#deal_exchange_method_id_1').prev().removeClass("inactive_form_element");
+}
+
+
+function countMethods(className)
+{
+    var count = 0;
+    $(className).each(function() {
+	count += 1;
+    });
+    return count;
+}
+
+function defaultSelected()
+{
+    if (countMethods('.deal_selling') == 1)
+    {
+	$('.deal_selling').prop('checked', true);
+    }
+    if (countMethods('.deal_exchange') == 1)
+    {
+	$('.deal_exchange').prop('checked', true);
+    }
+    if (countMethods('.deal_payment') == 1)
+    {
+	$('deal_payment').prop('checked', true);
+    }
+}
+
+
+
+function checkDelivery()
+{
+    var any_checked = false;
+    $('.deal_payment').each(function() {
+	if ($(this).prop('checked'))
+	{
+	    any_checked = true;
+	}
+    });
+    if (!($('#deal_payment_method_id_1').prop('checked')) && any_checked)
+    {
+	addInactiveDelivery();
+    }
+    else
+    {
+	removeInactiveDelivery();
+    }
+}
+
+function checkPaypal()
+{
+    if ($('#deal_exchange_method_id_1').prop('checked'))
+    {
+	addInactivePayment();
+    }
+    else
+    {
+	removeInactivePayment();
+    }
+}
+
 function updateDeals(location, form, completion)
 {
     formData = {}
-    debugger;
     $(form).find(':input').each(function() {
-	formData[$(this).attr('name')] = $(this).val();
+	if ($(this).attr('type') != "radio" || $(this).prop("checked"))
+	{
+	    formData[$(this).attr('name')] = $(this).val();
+	}
     });
     $.ajax({
 	type: "PATCH",// GET in place of POST
@@ -47,6 +142,7 @@ function updateDeals(location, form, completion)
 function redirectToPage()
 {
     $('#redirect_button').hide();
+    $('.valid_delivery').remove();
     var page = parseInt($('#page').val());
     $('.selection').hide();
     if (page == 1)
@@ -126,8 +222,20 @@ $(document).ready(function() {
     $('.selection').hide();
     $('.method_selection').show();
 
+    $(document).on('click', '.inactive_form_element', function(e) {
+	e.preventDefault();
+    });
+
     $(document).on('click', '#redirect_button', function() {
 	redirectToPage();
+    });
+
+    $(document).on('click', '.methods :input', function() {
+	if (!($(this).hasClass("inactive_form_element")))  //don't execute graying out if the clicked is grayed out
+	{
+	    checkDelivery();
+	    checkPaypal();
+	}
     });
 
     $(document).on('click', '.guide_button', function() {
@@ -136,6 +244,7 @@ $(document).ready(function() {
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.guide_selection').show();
+	$('.valid_delivery').remove();
 	addRedirectButton();
     });
 
@@ -146,6 +255,7 @@ $(document).ready(function() {
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.selling_method_selection').show();
+	$('.valid_delivery').remove();
 	addRedirectButton();
     });
 
@@ -155,6 +265,7 @@ $(document).ready(function() {
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.method_selection').show();
+	$('.valid_delivery').remove();
 	addRedirectButton();
     });
     
@@ -164,6 +275,7 @@ $(document).ready(function() {
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.exchange_method_selection').show();
+	$('.valid_delivery').remove();
 	addRedirectButton();
     });
 
@@ -173,6 +285,7 @@ $(document).ready(function() {
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.payment_method_selection').show();
+	$('.valid_delivery').remove();
 	addRedirectButton();
     });
 
@@ -182,6 +295,7 @@ $(document).ready(function() {
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.completed_selection').show();
+	$('.valid_delivery').remove();
 	addRedirectButton();
     });
 
@@ -189,8 +303,19 @@ $(document).ready(function() {
 	$('.selection').hide();
 	$('.instructions').hide();
 	$('.instructions_price_warning').remove();
-	$('.methods_submittion').remove();
+	$('.methods_submission').remove();
 	$('.complaint_selection').show();
+	$('.valid_delivery').remove();
+	addRedirectButton();
+    });
+
+    $(document).on('click', '.cancel_button', function() {
+	$('.selection').hide();
+	$('.instructions').hide();
+	$('.instructions_price_warning').remove();
+	$('.methods_submission').remove();
+	$('.cancel_selection').show();
+	$('.valid_delivery').remove();
 	addRedirectButton();
     });
     
@@ -200,8 +325,9 @@ $(document).ready(function() {
 	var beginIndex = str.indexOf("deals/");
 	var id = str.substring(beginIndex + 6);
 	var postLoc = '/deals/' + id.toString();
-	debugger;
 	updateDeals(postLoc, $(this).parent('form'), function() {
+	    $('.method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_method_selection", function() {
+	    });
 	    $('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 	    });
 	    $('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
@@ -215,6 +341,7 @@ $(document).ready(function() {
 	    $('.instructions').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
 		$('.instructions').append("<h3 class='methods_submission'>Congrats! You've successfully updated the methods of transaction.</h3>");
 		redirectToPage();
+		validDelivery();
 	    });
 	});
     });
@@ -288,6 +415,29 @@ $(document).ready(function() {
 	});
     });
 
+    $(document).on('click', '.deals_form_button_in_header', function(e) {
+	e.preventDefault();
+	var str = window.location.href;
+	var beginIndex = str.indexOf("deals/");
+	var id = str.substring(beginIndex + 6);
+	var postLoc = '/deals/' + id.toString();
+	updateDeals(postLoc, $(this).parent('h3').parent('form'), function() {
+	    $('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
+	    });
+	    $('.selling_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
+	    });
+	    $('.payment_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
+	    });
+	    $('.completed_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
+	    });
+	    $('.guide_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
+	    });
+	    $('.instructions').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
+		redirectToPage();
+	    });
+	});
+    });
+
     $(document).on('click', '.file_complaint_button', function(e) {
 	e.preventDefault();
 	var str = window.location.href;
@@ -336,8 +486,14 @@ $(document).ready(function() {
     });
 
     
+    // if on deals page
 
-    redirectToPage();
-    
-
+    if ($('.deals_menu').length > 0)
+    {
+	redirectToPage();
+	validDelivery();
+	checkDelivery();
+	checkPaypal();
+	defaultSelected();
+    }
 });

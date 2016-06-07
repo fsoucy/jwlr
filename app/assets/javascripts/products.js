@@ -73,6 +73,16 @@ function productPicture()
     return $('.dz-success').length > 0 || $('.edit').val() === "true" ;
 }
 
+function deliveryAndPaypal()
+{
+    var correct = true;
+    if ($('#exchange_method_links_1_id').prop('checked') && !($('#payment_method_links_1_id').prop('checked')))
+    {
+	correct = false;
+    }
+    return correct;
+}
+
 function evaluatePicture()
 {
     if (productPicture())
@@ -126,7 +136,7 @@ function paymentMethods()
 
 function ready()
 {
-    return mainDetails() && sellingMethods() && exchangeMethods() && paymentMethods() && productPicture();
+    return mainDetails() && sellingMethods() && exchangeMethods() && paymentMethods() && productPicture() && deliveryAndPaypal();
 }
 
 function evaluateSubmit()
@@ -360,8 +370,27 @@ $(document).ready(function() {
 	$('#payment_methods_form').show();
     });
 
+    $('.quick_buy_information').hide();
+    $(document).on('click', '.quick_buy', function(e) {
+	if ($('.buy_now_radio').length > 0)
+	{
+	    e.preventDefault();
+	    $('.quick_buy_information').show();
+	    $(this).removeClass("quick_buy");
+	    $('.deal_extended').hide();
+	    $(this).addClass("in_quick_buy");
+	}
+    });
+
+    $(document).on('click', '.leave_quick_buy', function() {
+	$('.quick_buy_information').hide();
+	$('.in_quick_buy').addClass("quick_buy").removeClass("in_quick_buy");
+	$('.deal_extended').show();
+    });
+
+
     $('.submit_product').click(function(e) {
-	var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods() && productPicture();
+	var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods() && productPicture() && deliveryAndPaypal();
 	if (!forms)
 	{
 	    e.preventDefault();
@@ -386,9 +415,14 @@ $(document).ready(function() {
 	    {
 		msg += "<br>Picture";
 	    }
+	    if (!deliveryAndPaypal())
+	    {
+		msg += "<br>Paypal must be a payment option if you're allowing delivery";
+	    }
 	    $('.alert').remove();
 	    $('.content').prepend("<div class='alert alert-warning'><h4>" + msg + "</h4></div>");
 	}
+	
     });
 
 $('#magnifier').loupe({

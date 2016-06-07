@@ -1,7 +1,7 @@
 class DealsController < ApplicationController
   before_action :logged_in_user
   before_action :correct_user, only: [:update, :show, :destroy]
-
+  
   def create
     @deal = current_user.buying_deals.build(deals_params)
     active_deal = Deal.where("product_id = ? and buyer_id = ?", @deal.product.id, current_user.id).first
@@ -51,6 +51,14 @@ class DealsController < ApplicationController
   def update
     @deal = Deal.find(params[:id])
     old_selling_method = @deal.selling_method.method
+    old_exchange_method = @deal.exchange_method.method
+    if current_user == @deal.seller
+      @deal.assign_attributes(seller_params_always)
+      @deal.save
+    elsif current_user == @deal.buyer
+      @deal.assign_attributes(buyer_params_always)
+      @deal.save
+    end
     if !@deal.product.sold
       @deal.assign_attributes(deals_params)
       if @deal.changed?
@@ -90,11 +98,15 @@ class DealsController < ApplicationController
       end
       if @deal.selling_method.id == 2
         @deal.user_proposed_price = @deal.product.price
-      end 
+      end
+      if @deal.exchange_method.method == "Pickup" || @deal.exchange_method.method == "Delivery"
+        @deal.exchange_agreement_seller = true
+      end
       exchange_agreement = false
       if (@deal.exchange_agreement_buyer and @deal.exchange_agreement_seller)
         exchange_agreement = true
       end
+      
       @deal.product.hold = @deal.exchange_agreement_buyer
       exchange_agreement = ((@deal.exchange_agreement_buyer and @deal.exchange_agreement_seller) or (!@deal.product.store.nil? and @deal.exchange_method == 3))
       @deal.agreement_achieved = (selling_agreement and exchange_agreement)
@@ -135,6 +147,14 @@ class DealsController < ApplicationController
       @conversation = Conversation.new(first_user_id: @deal.seller.id, second_user_id: @deal.buyer.id)
       @conversation.save
     end
+    @need_exchange = 0
+    if !@deal.exchange_method_id.nil? && @deal.exchange_method.method == "Delivery" && !@deal.payment_method_id.nil? && @deal.payment_method.method != "Paypal"
+      @deal.payment_method_id = 1
+      @deal.save
+      flash[:warning] = "You can't get a product delivered and pay upon transaction. You must use Paypal for delivery."
+      @need_exchange = 1
+    end
+      
     last = @conversation.messages.count
     start = last - 50
     start = 0 if start < 0
@@ -145,6 +165,8 @@ class DealsController < ApplicationController
   def destroy
     deal = Deal.find(params[:id])
     deal.product.hold = false
+    deal.product.sold = false
+    deal.product.save
     deal.destroy
     if deal.seller == current_user
       new_notification("Your deal on " + deal.product.title + " has been cancelled by the seller.", deal.buyer, deal_url(deal))
@@ -173,6 +195,14 @@ class DealsController < ApplicationController
 
   def buyer_params_accepted
     params.require(:deal).permit(:product_received, :buyer_satisfied, :complaint_buyer, :reason_complaint_buyer)
+  end
+
+  def seller_params_always
+    params.require(:deal).permit(:complaint_seller, :reason_complaint_seller)
+  end
+
+  def buyer_params_always
+    params.require(:deal).permit(:complaint_buyer, :reason_complaint_buyer)
   end
 
   def correct_user

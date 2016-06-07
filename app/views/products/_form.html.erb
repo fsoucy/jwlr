@@ -95,16 +95,18 @@
     <fieldset id="exchange_methods_form">
       <legend>Exchange Methods</legend>
       <% @exchange_methods.each do |exchange_method| %>
-      <%= fields_for "exchange_method_links[#{exchange_method.id}]", exchange_method do |link| %>
-      <% if !@edit %>
-      <% boo = !DefaultExchangeMethodLink.where("user_id=? AND exchange_method_id=?", @product.user.id, exchange_method.id).first.nil? %>
-      <% else %>
-      <% boo = !ExchangeMethodLink.where("product_id=? AND exchange_method_id=?", @product.id, exchange_method.id).first.nil? %>
-      <% end %>
-      <label class="pure-checkbox" for="exchange_method">
-	<%= link.check_box :id, checked: boo, class: "pure-checkbox exchange_method" %> <%= exchange_method.method %>
-      </label>
-      <% end %>
+        <%= fields_for "exchange_method_links[#{exchange_method.id}]", exchange_method do |link| %>
+          <% unless (exchange_method.method == "Pickup" && current_user.stores.count == 0) %>
+            <% if !@edit %>
+              <% boo = !DefaultExchangeMethodLink.where("user_id=? AND exchange_method_id=?", @product.user.id, exchange_method.id).first.nil? %>
+            <% else %>
+              <% boo = !ExchangeMethodLink.where("product_id=? AND exchange_method_id=?", @product.id, exchange_method.id).first.nil? %>
+            <% end %>
+            <label class="pure-checkbox" for="exchange_method">
+	            <%= link.check_box :id, checked: boo, class: "pure-checkbox exchange_method" %> <%= exchange_method.method %>
+            </label>
+          <% end %>
+        <% end %>
       <% end %>
       <br>
       <button class="pure-button pure-button-primary product_previous_exchange" type="button">Previous</button>

@@ -1,186 +1,114 @@
-<!-- Idea: -->
-
-<!-- (CASE 1) Delivery and paypal: -->
-<!-- Buyer knows if product is dispatched or not -->
-<!-- Seller knows if buyer has paid for product or not -->
-<!-- Buyer can pay, or set product received to true -->
-<!-- After all this, set satifised to true -->
-
-
-<!-- (CASE 2) Paypal and meetup/pickup -->
-<!-- buyer has to pay -->
-<!-- then they notify us when the other stuff is done -->
-
-<!-- (CASE 3) Meetup/pickup without paypall -->
-<!-- They notify us when they're done -->
-
-<% if @deal.agreement_achieved && !@deal.deal_complete %>
-  <!-- CASE 1 -->
-  <% if @deal.exchange_method.method == "Delivery" %>
-    <% if current_user.id == @deal.buyer_id %>
-      <% if !@deal.buyer_satisfied %>
-        <% if @deal.product_dispatched %>         
-          <% if !@deal.product_received %>
-            <%= form_for @deal do |f| %>
-              <%= f.hidden_field :product_received, value: true %>
-              <%= f.submit "I have received the product.", class: "pure-button pure-button-primary deals_form_button" %>
-            <% end %>   
-          <% else %>
-            <%= form_for @deal do |f| %>
-              <%= f.hidden_field :product_received, value: false %>
-              <%= f.submit "I have not received the product.", class: "pure-button pure-button-primary deals_form_button" %>
-            <% end %>
-          <% end %>     
-
-        <% else %>
-        <% end %>
-        <% if !@deal.payment_complete %>
-          <%= render 'paypal_form' %>
-        <% end %>
-        
-        <% if @deal.product_received && @deal.payment_complete %>
-          <%= form_for @deal do |f| %>
-            <%= f.hidden_field :buyer_satisfied, value: true %>
-            <%= f.submit "The deal is complete and I am satisfied.", class: "pure-button pure-button-primary deals_form_button" %>
-          <% end %>
-        <% end %>
-      <% else %>
-        <%= form_for @deal do |f| %>
-          <%= f.hidden_field :buyer_satisfied, value: false %>
-          <%= f.submit "The deal is not complete and I am not yet satisfied.", class: "pure-button pure-button-primary deals_form_button" %>
-        <% end %>  
-      <% end %>
-    <% end %>
-  
-    <% if current_user.id == @deal.seller_id %>
-      <% if !@deal.seller_satisfied %>
-        <% if @deal.payment_complete %>
-        <% else %>
-        <% end %>
-        <% if !@deal.product_dispatched %>
-          <%= form_for @deal do |f| %>
-            <%= f.hidden_field :product_dispatched, value: true %>
-            <%= f.submit "Mark product as dispatched.", class: "pure-button pure-button-primary deals_form_button" %>
-          <% end %>
-        <% else %>
-          <% if @deal.product_received %>
-          <% else %>
-          <% end %>
-          <!-- Has the buyer received the product? -->
-          <%= form_for @deal do |f| %>
-            <%= f.hidden_field :product_dispatched, value: false %>
-            <%= f.submit "Unmark product as dispatched.", class: "pure-button pure-button-primary deals_form_button" %>
-          <% end %>
-        <% end %>
-        <% if @deal.product_received && @deal.payment_complete %>
-          <%= form_for @deal do |f| %>
-            <%= f.hidden_field :seller_satisfied, value: true %>
-            <%= f.submit "The deal is complete and I am satisfied.", class: "pure-button pure-button-primary deals_form_button" %>
-          <% end %>
-        <% end  %>
-      <% else %>
-        <%= form_for @deal do |f| %>
-          <%= f.hidden_field :seller_satisfied, value: false %>
-          <%= f.submit "The deal is not complete and I am not satisfied.", class: "pure-button pure-button-primary deals_form_button" %>  
-        <% end %>
-      <% end %>
-    <% end %>
-  <% else %> <!-- End of case 1 -->
-    <% if @deal.payment_method.method == "Paypal" %> <!-- Case 2 -->
-      <% if current_user.id == @deal.buyer_id %>
-        <% if @deal.payment_complete %>
-          <% if @deal.buyer_satisfied %>
-            <%= form_for @deal do |f| %>
-              <%= f.hidden_field :buyer_satisfied, value: false %>
-              <%= f.hidden_field :product_received, value: false %>
-              <%= f.submit "The deal is not complete and I am not satisfied.", class: "pure-button pure-button-primary deals_form_button" %>
-            <% end %>
-          <% else %>
-            <%= form_for @deal do |f| %>
-              <%= f.hidden_field :buyer_satisfied, value: true %>
-              <%= f.hidden_field :product_received, value: true %>
-              <%= f.submit "The deal is complete and I am satisfied", class: "pure-button pure-button-primary deals_form_button" %>
-            <% end %>  
-          <% end %>
-        <% else %>
-          <%= render 'paypal_form' %>
-          <%= form_for @deal do |f| %>
-            <%= f.hidden_field :product_received, value: true %>
-            <%= f.hidden_field :buyer_satisfied, value: true %>
-            <%= f.submit "I have received the product and I am satisfied with it", class: "pure-button pure-button-primary deals_form_button" %>
-          <% end %>
-        <% end %>
-      <% end %>
-
+<!-- this is where it's at -->
+<% if @deal.agreement_achieved %>
+  <% if !@deal.deal_complete %>
+    <% if @deal.payment_complete && @deal.product_received %> <!-- Confirm successful deal. -->
       <% if current_user.id == @deal.seller_id %>
-        <% if @deal.payment_complete %>
-        <% else %>
-        <% end %>
-        
         <% if !@deal.seller_satisfied %>
           <%= form_for @deal do |f| %>
             <%= f.hidden_field :seller_satisfied, value: true %>
-            <%= f.submit "I am satisfied with the completed deal", class: "pure-button pure-button-primary deals_form_button" %>
+            <%= f.submit "Confirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
           <% end %>
         <% else %>
-          <% form_for @deal do |f| %>
+          <%= form_for @deal do |f| %>
             <%= f.hidden_field :seller_satisfied, value: false %>
-            <%= f.submit "I am not satisfied with the deal", class: "pure-button pure-button primary deals_form_button" %>
-          <% end %>  
+            <%= f.submit "Unconfirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
+          <% end %>
         <% end %>
-      <% end %>
-      
-    <% else %> <!-- End of case 2, beginning of case 3 -->
-      <% if current_user.id == @deal.buyer_id %>
+      <% elsif current_user.id == @deal.buyer_id %>
         <% if !@deal.buyer_satisfied %>
-          <% if @deal.exchange_method.method == "Meetup" %>
-          <% end %>
-          <% if @deal.exchange_method.method == "Pickup" %>
-          <% end %>
           <%= form_for @deal do |f| %>
-            <%= f.hidden_field :product_received, value: true %>
             <%= f.hidden_field :buyer_satisfied, value: true %>
-            <%= f.submit "I have received the product and the transaction is completed", class: "pure-button pure-button-primary deals_form_button" %>
+            <%= f.submit "Confirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
           <% end %>
         <% else %>
           <%= form_for @deal do |f| %>
-            <%= f.hidden_field :product_received, value: false %>
-            <%= f.hidden_field :buyer_satisfied, value: false %>
-            <%= f.submit "The transaction is not complete", class: "pure-button pure-button-primary deals_form_button" %>
-          <% end %>
-        <% end %>    
-      <% end %>
-      
-      <% if current_user.id == @deal.seller_id %>
-        <% if !@deal.seller_satisfied %>
-          <% if @deal.exchange_method.method == "Meetup" %>
-          <% end %>
-          <% if @deal.exchange_method.method == "Pickup" %>
-          <% end %>
-          <%= form_for @deal do |f| %>
-            <%= f.hidden_field :payment_complete, value: true %>
-            <%= f.hidden_field :seller_satisfied, value: true %>
-            <%= f.submit "I have been paid and the transaction is completed", class: "pure-button pure-button-primary deals_form_button" %>
-          <% end %>
-        <% else %>
-          <%= form_for @deal do |f| %>
-            <%= f.hidden_field :payment_complete, value: false %>
             <%= f.hidden_field :seller_satisfied, value: false %>
-            <%= f.submit "The transaction is not complete", class: "pure-button pure-button-primary deals_form_button" %>
+            <%= f.submit "Unconfirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
           <% end %>
         <% end %>
       <% end %>
-    
+    <% else %>
+      <% if @deal.exchange_method.method == "Delivery" %>
+        <% if current_user.id == @deal.seller_id %>
+          <% if @deal.product_dispatched %>
+            <% if @deal.product_received %>
+            <% else %>
+            <% end %>
+          <% else %>
+            <%= form_for @deal do |f| %>
+              <%= f.hidden_field :product_dispatched, value: true %>
+              <%= f.submit "Product dispatched", class: "pure-button pure-button-primary deals_form_button" %>
+            <% end %>
+          <% end %>
+          <% if @deal.payment_complete %>
+          <% else %>
+          <% end %>
+        <% elsif current_user.id == @deal.buyer_id %>
+          <% if @deal.product_dispatched %>
+            <% if !@deal.product_received %>
+              <%= form_for @deal do |f| %>
+                <%= f.hidden_field :product_received, value: true %>
+                <%= f.submit "Product recieved", class: "pure-button pure-button-primary deals_form_button" %>
+              <% end %>
+            <% else %>
+            <% end %>
+          <% else %>
+          <% end %>
+          <% if @deal.payment_complete %>
+          <% else %>
+            <%= render 'paypal_form' %>
+          <% end %>
+        <% end %>        
+      <% elsif (@deal.exchange_method.method == "Pickup" || @deal.exchange_method.method == "Meetup") %>
+        <% if @deal.payment_method.method == "Paypal" %>
+          <% if current_user.id == @deal.seller_id %>
+            <% if @deal.payment_complete %>
+            <% else %>
+              <% if @deal.product_received %>
+              <% else %>
+              <% end %>
+            <% end %>
+          <% elsif current_user.id == @deal.buyer_id %>
+            <% if @deal.payment_complete %>
+              <%= form_for @deal do |f| %>
+                <%= f.hidden_field :product_received, value: true %>
+                <%= f.submit "Product received", class: "pure-button pure-button-primary deals_form_button" %>
+              <% end %>
+            <% else %>
+              <%= render 'paypal_form' %>
+              <% if @deal.product_received %>
+              <% else %>
+                <%= form_for @deal do |f| %>
+                  <%= f.hidden_field :product_received, value: true %>
+                  <%= f.submit "Product received", class: "pure-button pure-button-primary deals_form_button" %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <% if current_user.id == @deal.seller_id %>
+            <%= form_for @deal do |f| %>
+              <%= f.hidden_field :payment_complete, value: true %>
+              <%= f.submit "Payment received", class: "pure-button pure-button-primary deals_form_button" %>
+            <% end %>
+          <% elsif current_user.id == @deal.buyer_id %>
+            <%= form_for @deal do |f| %>
+              <%= f.hidden_field :product_received, value: true %>
+              <%= f.submit "Product received", class: "pure-button pure-button-primary deals_form_button" %>
+            <% end %>
+          <% end %>
+          
+        <% end %>
+      <% end %>
     <% end %>
+
+  <% else %>
+  <!-- Review stuff -->
+    <% review = @deal.reviews.where("user_id = ?", current_user.id).first %>
+    <% if review.nil? && @deal.deal_complete %>
+      <%= link_to "Leave a review of this deal", new_review_url(@deal) %>
+    <% end %>
+
   <% end %>
 
-<% end %>
-
-<% review = @deal.reviews.where("user_id = ?", current_user.id).first %>
-<% if review.nil? && @deal.deal_complete %>
-  <%= link_to "Leave a review of this deal", new_review_url(@deal) %>
-<% end %>
-
-
-<% if (!review.nil? && @deal.product_received && @deal.payment_complete && @deal.deal_complete) %>
 <% end %>

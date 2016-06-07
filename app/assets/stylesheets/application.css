@@ -86,3 +86,9 @@ a.pure-button-primary {
 .pad-header {
   padding: 0.5em;
 }
+
+
+.inactive_form_element
+{
+    opacity: 0.5;
+}

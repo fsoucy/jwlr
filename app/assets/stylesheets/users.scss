@@ -37,3 +37,17 @@
   width: 200px;
   height: 200px;
 }
+
+.reviews_list {
+  max-height: 30em;
+  overflow-y: scroll;
+  background-color: white;
+}
+
+.reviews_list p {
+  color: #00171F;
+}
+
+.reviewa_list h1 {
+  color: #00171f;
+}

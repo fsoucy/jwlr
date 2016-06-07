@@ -22,6 +22,8 @@ class UsersController < ApplicationController
       convo = conversation.first
     end
     @message = convo.messages.build(sender_id: current_user.id)
+    @selling_reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("deals.seller_id = ? and user_id != ?", @user.id, @user.id).order(created_at: :desc).limit(5)
+    @buying_reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("deals.buyer_id = ? and user_id != ?", @user.id, @user.id).order(created_at: :desc).limit(5)
   end
   
   def create

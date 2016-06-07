@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment]
-  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment, :share]
+  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment, :share]
   before_action :admin_user, only: :destroy  
   
   def new
@@ -22,6 +22,8 @@ class UsersController < ApplicationController
       convo = conversation.first
     end
     @message = convo.messages.build(sender_id: current_user.id)
+    @selling_reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("deals.seller_id = ? and user_id != ?", @user.id, @user.id).order(created_at: :desc).limit(5)
+    @buying_reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("deals.buyer_id = ? and user_id != ?", @user.id, @user.id).order(created_at: :desc).limit(5)
   end
   
   def create
@@ -138,11 +140,30 @@ class UsersController < ApplicationController
   end
 
   def comment
-    comment = Comment.find_or_initialize_by(post_id: params[:post_id], post_type: params[:post_type], comment: params[:comment_string], user_id: current_user.id)
-    if comment.new_record?
+    if !params[:comment_id].nil? and params[:comment_string].nil?
+      current_user.comments.find_by(id: params[:comment_id].to_i).destroy
+    elsif params[:comment_id].nil?
+      comment = Comment.find_or_initialize_by(post_id: params[:post_id], post_type: params[:post_type], comment: params[:comment_string], user_id: current_user.id)
       comment.save
     else
-      comment.destroy
+      comment = Comment.find_by(id: params[:comment_id], user_id: current_user.id)
+      comment.comment = params[:commment_string]
+      comment.save
+    end
+
+    render json: nil, status: 200
+  end
+
+  def share
+    if !params[:share_id].nil? and params[:share_string].nil?
+      current_user.shares.find_by(id: params[:share_id].to_i).destroy
+    elsif params[:share_id].nil?
+      share = Share.find_or_initialize_by(post_id: params[:post_id], post_type: params[:post_type], comment: params[:share_string], user_id: current_user.id)
+      share.save
+    else
+      share = Share.find_by(id: params[:share_id], user_id: current_user.id)
+      share.comment = params[:share_string]
+      share.save
     end
 
     render json: nil, status: 200

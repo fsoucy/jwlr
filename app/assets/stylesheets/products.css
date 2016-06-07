@@ -105,6 +105,10 @@
     color: black !important;
 }
 
+.pickers {
+  display: table-row;
+}
+
 .quick_buy
 {
     margin-bottom: 1em;

@@ -1,4 +1,11 @@
-<% title = "Product by " + @product.user.name %>
+<div id="share-form">
+<%= form_for(Share.new, url: '', html: { class: "pure-form pure-form-stacked" }) do |f| %>
+        <fieldset>
+          <%= f.text_field :comment, placeholder: "Share something with your followers", class: "full-width", maxlength: 140 %>
+          <%= f.submit "Share", class: "align-right pure-button pure-button-primary" %>
+        </fieldset>
+      <% end %>
+</div>
 <div class="pure-g pad-box">
 	<div class="pure-u-1 pure-u-md-1-5 product_view pad-box">
   
@@ -24,12 +31,70 @@
   		<%= hidden_field_tag :pathway, edit_picture_path(picture), { class: 'pathway' } %>
   		<% end %>
 	</div>
-  	<% end %>
+  	<% end %> 
+  <div class="shares">
+  <script src="//assets.pinterest.com/js/pinit.js"></script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+<script src="//assets.pinterest.com/js/pinit.js"></script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
+  <%= link_to pluralize(@product.shares.count, "Share"), '', id: "shares_#{@product.class}_#{@product.id}_#{current_user.id}" unless !logged_in? %>  
+  <a href="https://pinterest.com/pin/create/button/?url=<%= URI.encode(request.original_url) %>&media=<%= URI.join(request.url, @product.pictures.first.photo_cropped(:large)).to_s.split("?")[0] %>&description=<%= URI.encode(@product.title) %>" data-pin-do="buttonPin" data-pin-count="above" data-pin-save="true">
+  </a>
+  <div class="fb-share-button" data-href="<%= URI.encode(request.original_url) %>" data-layout="box_count" data-mobile-iframe="true"></div>
+  <a class="twitter-share-button" href="https://twitter.com/intent/tweet?url=<%= URI.encode(request.original_url) %>" data-size="default">Tweet</a>
+  </div>
 
 	</div>
 	<div class="pure-u-1 pure-u-md-2-5 product_view pad-box">
     	<h1 class="no-margin"><%= @product.title %></h1>
-      <%= @product.user.name %> - <%= @distance_away.round(1) %> miles from you - <%= @product.user.score %>% rating
+      <a href="<%= user_url(@product.user) %>"><%= @product.user.name %></a> - <%= @distance_away.round(1) %> miles from you - <a href="<%= user_url(@product.user) %>"><%= @product.user.score %>% rating</a>
       <p>
         <h3 class="inline-header">Price:</h3> 
         <%= number_to_currency(@product.price) %>

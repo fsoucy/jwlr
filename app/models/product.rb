@@ -15,13 +15,17 @@ class Product < ActiveRecord::Base
   has_many :exchange_method_links, dependent: :destroy
   has_many :payment_method_links, dependent: :destroy
   has_many :selling_method_links, dependent: :destroy
+  has_many :pictures, as: :post, dependent: :destroy  
   has_many :selling_methods, through: :selling_method_links
   has_many :exchange_methods, through: :exchange_method_links
   has_many :payment_methods, through: :payment_method_links
-  has_many :pictures, dependent: :destroy  
   has_many :deals
   has_many :likes, as: :post, dependent: :destroy
+  has_many :comments, as: :post, dependent: :destroy  
+
   before_save :activate 
+
+  has_many :shares, as: :post, dependent: :destroy
  
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at]

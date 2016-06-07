@@ -45,7 +45,8 @@ class BlogpostsController < ApplicationController
     @blogpost = Blogpost.find(params[:id])
     if @blogpost.update_attributes(blogpost_params)
       flash[:success] = "Blogpost updated!"
-      redirect_to @blogpost.store
+      redirect_to @blogpost.store if !@blogpost.store.nil?
+      redirect_to @blogpost.user
     else
       render 'edit'
     end

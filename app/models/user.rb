@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
 
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :shares, dependent: :destroy
 
   def score
     reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("user_id != ? and deals.seller_id = ? or deals.buyer_id = ?", self.id, self.id, self.id)

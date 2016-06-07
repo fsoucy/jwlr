@@ -5,7 +5,8 @@ class MicropostsController < ApplicationController
   def create
     micropost = current_user.microposts.build(micropost_params)
     micropost.save
-    redirect_to root_url
+    result = {id: micropost.id}
+    render json: result.to_json, status: 200
   end
 
   def destroy

@@ -1,6 +1,6 @@
 class PicturesController < ApplicationController
   before_action :logged_in_user
-  before_action :correct_user_product, only: [:new, :create, :index]
+  before_action :correct_user, only: [:new, :create, :index]
   before_action :correct_user_picture, only: [:edit, :update, :destroy]
   
   def new
@@ -8,13 +8,19 @@ class PicturesController < ApplicationController
   end
 
   def create
-    if current_user.products.find(params[:id]).pictures.count < 8
-    @picture = current_user.products.find(params[:id]).pictures.build(picture_params)
+    if params[:post_type] == "Micropost"
+      post = current_user.microposts
+    else
+      post = current_user.products
+    end
+
+    if post.find(params[:id]).pictures.count < 8
+    @picture = post.find(params[:id]).pictures.build(picture_params)
       if @picture.save
         render json: { message: "success", fileID: @picture.id }, :status => 200
         @picture.photo_cropped = @picture.photo
         @picture.save
-        @picture.product.save
+        @picture.post.save
       else
         render json: { error: @picture.errors.full_messages.join(',')}, :status => 400
       end
@@ -74,7 +80,7 @@ class PicturesController < ApplicationController
     img.write(@picture.photo_cropped.path)
     @picture.photo_cropped.reprocess!
     @picture.save
-    redirect_to @picture.product
+    redirect_to @picture.post
   end
 
   private
@@ -83,14 +89,20 @@ class PicturesController < ApplicationController
       params.require(:picture).permit(:photo)
     end
 
-    def correct_user_product
-      product = current_user.products.exists?(params[:id])
-      redirect_to root_url if !product
+    def correct_user
+      if params[:post_type] == "Micropost"
+        post = current_user.microposts
+      else
+        post = current_user.products
+      end
+
+      post = post.exists?(params[:id])
+      redirect_to root_url if !post
     end
 
     def correct_user_picture
       picture = Picture.find(params[:id])
-      redirect_to root_url if picture.product.user != current_user
+      redirect_to root_url if picture.post.user != current_user
     end
 
 end

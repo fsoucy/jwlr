@@ -34,150 +34,33 @@
         </div>
       </div>
     </div>
+    <div id="share-form">
+      <%= form_for(Share.new, url: '', html: { class: "pure-form" }) do |f| %>
+        <fieldset>
+          <%= f.text_field :comment, placeholder: "Share something with your followers", class: "full-width", maxlength: 140 %>
+          <%= f.submit "Share", class: "align-right pure-button pure-button-primary" %>
+        </fieldset>
+      <% end %>
+    </div>
     <div class="pure-u-1 pure-u-md-1-4"></div>
     <div class="pure-u-1 pure-u-md-1-2">
       <div class="log-in log-in-form">
-        <%= form_for(Micropost.new, html: { class: "pure-form pure-form-stacked" }) do |f| %>
+        <%= form_for(Micropost.new, html: { class: "pure-form" }) do |f| %>
           <fieldset>
             <%= f.text_field :content, placeholder: "Share something with your followers", class: "full-width", maxlength: 140 %>
             <%= f.submit "Post", class: "align-right pure-button pure-button-primary" %>
           </fieldset>
         <% end %>
+        <div class="dropper" id="dropper">
+          <%= form_for Picture.new, url: "#", html: { id: "new_micropost_picture", multipart: true, class: "dropzone"} do |f|  %>
+          <% end %>
+        </div>
+        <%= link_to "Add Images", '', id: "show_new_picture" %>
       </div>
       <div id="feed">
       <% item_number = 1 %>
       <% @feed_items.each do |item| %>
-        <div class="feed_item">
-          <% case item.class.name %>
-            <% when "Micropost" %>
-              <div class="feed_micropost">
-                <%= image_tag item.user.profile_picture(:thumbnail) %>
-                <a href="<%= user_path(item.user) %>"><h2><%= item.user.name %></h2></a>
-                <p id="main_text">
-                  <%= item.content %>
-                </p>
-                <% if item.user.id == current_user.id %>
-                  <%= link_to "Edit", '', id: "edit_micropost_#{item.id}" %> <%= link_to "Delete", '', id: "delete_micropost_#{item.id}" %>
-                <% end %>
-            <% when "Notification" %>
-              <div class="feed_notification">
-                <%= image_tag item.user.profile_picture(:thumbnail) %>
-                <a href="<%= user_path(item.user) %>"><h2><%= item.user.name %></h2></a>
-                <h3>
-                  <%= item.message.html_safe %>
-                </h3>
-            <% when "Deal" %>
-              <div class="feed_deal">
-                <% if item.seller_id == current_user.id %>
-                  <%= image_tag item.buyer.profile_picture(:thumbnail) %>
-                  <a href="<%= user_path(item.buyer) %>"><h2><%= item.buyer.name %></h2></a>
-                <% else %>
-                  <%= image_tag item.seller.profile_picture(:thumbnail) %>
-                  <a href="<%= user_path(item.seller) %>"><h2><%= item.seller.name %></h2></a>
-                <% end %>
-                <h3>
-                  <%= link_to "Your deal on #{item.product.title}", item %>
-                </h3>
-                <%= image_tag item.product.pictures.first.photo_cropped(:thumb) %>
-                <p>
-                  Current status: 
-                  <% if item.deal_complete %>
-                    Complete
-                  <% elsif item.product_received %>
-                    Product Received
-                  <% elsif item.payment_complete %>
-                    Payment Complete
-                  <% elsif item.agreement_achieved %>
-                    Sale Agreed
-                  <% else %>
-                    This deal is still under negotiation
-                  <% end %>
-                </p>
-            <% when "Blogpost" %>
-              <div class="feed_blogpost">
-                <%= image_tag item.user.profile_picture(:thumbnail) %>
-                <a href="<%= user_path(item.user) %>"><h2><%= item.user.name %></h2></a>
-                <h3>
-                  <%= item.title %>
-                </h3> 
-                <p>
-                  <%= item.content %>
-                </p>
-          <% end %>
-            <p>
-              <%= time_ago_in_words(item.updated_at) %> ago        
-            <% if item.class.name == "Blogpost" or item.class.name == "Micropost" %>
-              
-                <% if current_user.likes?(item) %>
-                  <%= link_to "Unlike", '', id: "like_#{item.class}_#{item.id}_#{current_user.id}" %>
-                <% else %>
-                  <%= link_to "Like", '', id: "like_#{item.class}_#{item.id}_#{current_user.id}" %>
-                <% end %>
-                <%= link_to pluralize(item.likes.count, "Like"), '', id: "likes_#{item.class}_#{item.id}_#{current_user.id}" %>
-                <%= link_to pluralize(item.comments.count, "Comment"), '', id: "comments_#{item.class}_#{item.id}_#{current_user.id}" %>
-              </p>
-              <fieldset class="pure-form">
-                <%= text_field_tag name: "comment", placeholder: "Comment on this", class: "full-width" %>
-                <button id="<%= "commentForm_" + item.class.to_s + "_" + item.id.to_s + "_" + current_user.id.to_s %>" class="align-right pure-button pure-button-primary">Comment</button>
-              </fieldset>
-              <div id="commentsBox_#{item.class}_#{item.id}_#{current_user.id}" class="comments_box">
-                <div id="likesListLarge" class="large_likes_list">
-                  <% item.likes.each do |like| %>
-                    <div class="like">
-                      <%= image_tag like.user.profile_picture(:thumbnail), class: "pure-img" %>
-                      <a href="<%= user_path(like.user) %>"><h4><%= like.user.name %></h4></a>
-                      <button class="pure-button" id="follow_<%= like.user.id %>">
-                        <% if current_user.following?(like.user) %>
-                          Unfollow
-                        <% elsif current_user.id == like.user.id %>
-                          Me
-                        <% else %>
-                          Follow
-                        <% end %>
-                      </button>
-                    </div>
-                  <% end %>
-                </div>
-                  <div id="commentsList" class="comments_list">
-                    <% item.comments.each do |comment| %>
-                      <div class="comment">
-                        <%= image_tag comment.user.profile_picture(:thumbnail), class: "pure-img" %>
-                        <a href="<%= user_path(comment.user) %>"><h4><%= comment.user.name %></h4></a>
-                        <button class="pure-button" id="follow_<%= comment.user.id %>">
-                          <% if current_user.following?(comment.user) %>
-                            Unfollow
-                          <% elsif current_user.id == comment.user.id %>
-                            Me
-                          <% else %>
-                            Follow 
-                          <% end %>
-                        </button>
-                        <p>
-                          <%= comment.comment %>
-                        </p>
-                        <p>
-                          <%= time_ago_in_words(comment.updated_at) %> ago
-                          <% if current_user.likes?(comment) %>
-                            <%= link_to "Unlike", '', id: "like_#{comment.class}_#{comment.id}_#{current_user.id}" %>
-                          <% else %>
-                            <%= link_to "Like", '', id: "like_#{comment.class}_#{comment.id}_#{current_user.id}" %>
-                          <% end %>
-                          <%= link_to pluralize(comment.likes.count, "Like"), '', id: "likes_#{comment.class}_#{comment.id}_#{current_user.id}" %>
-                        </p>                      
-                      </div>
-                    <% end %>
-                  </div>
-              </div>
-              <ul id="likesList_#{item.class}_#{item.id}_#{current_user.id}" class="likes_list">
-                <% item.likes.each do |like| %>
-                  <li><%= like.user.name %></li>
-                <% end %>
-              </ul>
-          <% else %>
-            </p>  
-          <% end %>
-          </div> 
-        </div>
+        <%= render partial: "item", object: item %>
         <% if item_number % 10 == 0 and item_number % 20 != 0 %>
           <div class="feed_item">
             <h3>For You</h3>

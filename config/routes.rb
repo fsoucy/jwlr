@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :edit_description, :user_stores, :selling, :buying, :edit_default_preferences
-      post :follow, :like, :comment
+      post :follow, :like, :comment, :share
       get 'reviews' => 'reviews#index'
       resources :notifications, only: [:update, :index] 
     end
@@ -73,7 +73,12 @@ Rails.application.routes.draw do
   end
   resources :payments, only: [:create]  
   
-  resources :microposts, only: [:create, :update, :destroy]
+  resources :microposts, only: [:create, :update, :destroy] do
+    member do
+      resources :pictures
+    end
+  end
+  
   
   resources :account_activations, only: [:edit]
   resources :categories

@@ -106,19 +106,19 @@
   
     <% if @product.user == current_user %>
     <div class="log-in-form">
-      <a href="<%= edit_selling_methods_product_path(@product) %>"><h1 class = "method_alert">Selling Methods</h1></a>
+      <a href="<%= edit_product_path(@product) %>"><h1 class = "method_alert">Selling Methods</h1></a>
       <% @product.selling_method_links.each do |s| %>
         <h3><%= s.selling_method.method %></h3>
       <% end %>
   
-      <a href="<%= edit_exchange_methods_product_path(@product) %>"><h1 class = "method_alert">Exchange Methods</h1></a>
+      <a href="<%= edit_product_path(@product) %>"><h1 class = "method_alert">Exchange Methods</h1></a>
       <% @product.exchange_method_links.each do |s| %>
         <h3><%= s.exchange_method.method %></h3>
         <% if s.exchange_method.method == "Delivery" %>
           <h4>Delivery cost: <%= number_to_currency(@product.delivery_cost) %></h4>
         <% end %>
       <% end %>
-      <a href="<%= edit_selling_methods_product_path(@product) %>"><h1 class = "method_alert">Payment Methods</h1></a>
+      <a href="<%= edit_product_path(@product) %>"><h1 class = "method_alert">Payment Methods</h1></a>
       <% @product.payment_method_links.each do |s| %>
         <h3><%= s.payment_method.method %></h3>
       <% end %>

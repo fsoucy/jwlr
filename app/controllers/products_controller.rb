@@ -191,7 +191,7 @@ class ProductsController < ApplicationController
       end
       
       has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links.count > 0 && @product.payment_method_links.count > 0
-      if @product.store_id != nil
+      if !@product.store.nil?
         @product.full_street_address = @product.store.full_street_address
       elsif @product.full_street_address.nil?
         @product.full_street_address = @product.user.full_street_address

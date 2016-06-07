@@ -194,7 +194,7 @@ class DealsController < ApplicationController
   end
 
   def buyer_params_accepted
-    params.require(:deal).permit(:product_received, :buyer_satisfied, :complaint_buyer, :reason_complaint_buyer)
+    params.require(:deal).permit(:product_received, :buyer_satisfied, :complaint_buyer, :reason_complaint_buyer, :exchange_agreement_buyer)
   end
 
   def seller_params_always

@@ -4,6 +4,12 @@
 <% if !@deal.proposed_price_accepted && @deal.selling_method.method == "Negotiation" %>
 
 <% elsif @deal.agreement_achieved %>
+  <% if (@deal.exchange_method.method == "Delivery" || @deal.exchange_method.method == "Pickup") && current_user == @deal.buyer && !@deal.deal_complete %>
+    <%= form_for @deal do |f| %>
+      <%= f.hidden_field :exchange_agreement_buyer, value: false %>
+      <%= f.submit "Unconfirm exchange agreement", class: "pure-button pure-button-primary deals_form_button" %>
+    <% end %>
+  <% end %> 
 
 <% else %> <!-- We're on exchange methods -->
   <% if !@deal.exchange_method_id.nil? && @deal.exchange_method.method == "Pickup" %>

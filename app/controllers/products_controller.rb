@@ -99,9 +99,9 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find_by(id: params[:id])
-    if (@product.toggle_options.count < 1 and @product.user.id == current_user.id)
+    if (!@product.activated and @product.user.id == current_user.id)
       flash[:warning] = "You need toggle options"
-      redirect_to edit_toggle_options_product_path(@product)
+      redirect_to edit_product_path(@product)
       return
     end
 
@@ -163,7 +163,11 @@ class ProductsController < ApplicationController
     @exchange_methods = ExchangeMethod.all
     @product = Product.find(params[:id])
     if @product.hold
-      redirect_to @product.deal
+      if @product.deals.count == 0
+        redirect_to @product
+      else
+        redirect_to @product.deal
+      end
     end
     if current_user.stores.length > 0
       @has = true

@@ -4,11 +4,24 @@
               <div class="feed_product">
                 <%= image_tag item.user.profile_picture(:thumbnail) %>
                 <a href="<%= user_path(item.user) %>"><h2><%= item.user.name %></h2>
-                <div class="result no-border">
-                  <a class="magnifier" href="<%= item.pictures.first.photo_cropped(:large) %>">
-                    <%= image_tag item.pictures.first.photo_cropped(:thumb), class: "product_image_search" %>
-                  </a>
-                  <div class="result_info">
+                <div class="product_view pad-box pure-g">
+                  <div class="pure-u-1 pure-u-md-1-3">
+                    <a class="magnifier" href="<%= item.pictures.first.photo_cropped(:large) %>">
+                      <%= image_tag item.pictures.first.photo_cropped(:thumb), class: "pad-box product_image pure-img" %>
+                    </a>
+                    <br>
+                    <% item.pictures.each do |picture| %>
+                      <div class="pickers">
+                        <% if picture == item.pictures.first %>
+                          <%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show pic_active pure-img" %>
+                        <% else %>
+                          <%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show pure-img" %>
+                        <% end %>
+                        <%= hidden_field_tag :mag, picture.photo_cropped(:large), { class: 'mag_link' } %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <div class="product-inline pure-u-1 pure-u-md-2-3">
                     <a href="<%= product_url(item) %>"><h2><%= item.title %></h2></a>
                     <h3><%= number_to_currency(item.price) %></h3>
                     <h4>Location: <%= item.location_string %></h4>
@@ -17,6 +30,22 @@
                     <% else %>
                       <h4>Distance from me: <%= item.distance_to([request.location.latitude, request.location.longitude], :mi).round(1) %> Miles</h4>
                     <% end %>
+                    <table class="pure-table pure-table-bordered pure-table-striped product_attributes">
+                      <tbody>
+                        <tr>
+                          <td>Type</td>
+                          <td><%= item.category.name %></td>
+                        </tr>
+                        <% item.toggle_options.each do |opt| %>
+                          <% if opt.attribute_option.value != "Not Specified" %>
+                            <tr>
+                              <td><%= opt.attribute_option.category_option.name %></td>
+                              <td><%= opt.attribute_option.value %></td>
+                            </tr>
+                          <% end %>
+                        <% end %>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
             <% when "Store" %>

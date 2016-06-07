@@ -326,8 +326,8 @@ $(document).ready(function() {
 	var id = str.substring(beginIndex + 6);
 	var postLoc = '/deals/' + id.toString();
 	updateDeals(postLoc, $(this).parent('form'), function() {
-	    $('.method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_method_selection", function() {
-	    $('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
+	    $('.method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_method_selection", function() {
+	    )};
 	    $('.exchange_method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 	    });
 	    $('.selling_method_selection').load("https://" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {

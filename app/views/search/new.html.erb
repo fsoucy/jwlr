@@ -111,7 +111,7 @@
 	<div class="result_info">
 	<a href = "<%= product_url(prod) %>"><h2><%= prod.title %></h2></a>
         <h3><%= number_to_currency(prod.price) %></h3>
-        <h4>Location: <%= Geocoder.address([prod.latitude, prod.longitude]) %></h4>
+        <h4>Location: <%= prod.location_string %></h4>
         <% if logged_in? %>
         <h4>Distance from me: <%= prod.distance_to(current_user, :mi).round(1) %> Miles</h4>
         <% else %>

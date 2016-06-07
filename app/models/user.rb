@@ -43,6 +43,11 @@ class User < ActiveRecord::Base
   has_many :comments, dependent: :destroy
   has_many :shares, dependent: :destroy
 
+  def location_string
+    address = Geocoder.search([self.latitude, self.longitude])
+    address[0].city + ", " + address[0].state_code
+  end
+
   def score
     reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("user_id != ? and deals.seller_id = ? or deals.buyer_id = ?", self.id, self.id, self.id)
     if reviews.count > 0

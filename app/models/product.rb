@@ -27,6 +27,11 @@ class Product < ActiveRecord::Base
 
   has_many :shares, as: :post, dependent: :destroy
  
+  def location_string
+    address = Geocoder.search([self.latitude, self.longitude])
+    address[0].city + ", " + address[0].state_code
+  end
+
   def to_json(options = {})
     options[:except] ||= [:created_at, :updated_at]
     super(options)

@@ -17,6 +17,7 @@ class ProductsController < ApplicationController
       @product.user.stores.each do |s|
         stos.push([s.name, s.id])
       end
+      stos.push(["None", "nil"])
       @stos = stos
       @default = @product.user.stores.first
     else
@@ -85,6 +86,7 @@ class ProductsController < ApplicationController
         @product.user.stores.each do |s|
           stos.push([s.name, s.id])
         end
+        stos.push(["None", "nil"])
         @stos = stos
         @default = @product.user.stores.first
       else
@@ -171,10 +173,11 @@ class ProductsController < ApplicationController
     if current_user.stores.length > 0
       @has = true
       stos = Array.new
-      @stos = stos
       @product.user.stores.each do |s|
         stos.push([s.name, s.id])
       end
+      stos.push(["None", nil])
+      @stos = stos
       @default = @product.user.stores.first
     else
       @has = false
@@ -223,7 +226,6 @@ class ProductsController < ApplicationController
     if !@product.sold
       if params[:store_id] && store = Store.find_by(id: params[:store_id]) and store.id != @product.store.id
         @product.store.id = store.id
-        @product.save
       end
       
       toggle_options = params[:toggle_options]
@@ -254,7 +256,6 @@ class ProductsController < ApplicationController
       end
       
       @product.update_attributes(product_params)
-      @product.save
       if !toggle_options.nil?
       toggle_options.each do |attr|
         toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
@@ -285,7 +286,10 @@ class ProductsController < ApplicationController
       has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links.count > 0 && @product.payment_method_links.count > 0
       if @product.store_id != nil
         @product.full_street_address = @product.store.full_street_address
+      elsif @product.full_street_address.nil?
+        @product.full_street_address = @product.user.full_street_address
       end
+      debugger
       if @product.save
         if params[:product][:on_deals]
           deal = Deal.find(params[:product][:deal_id])
@@ -312,6 +316,7 @@ class ProductsController < ApplicationController
           @product.user.stores.each do |s|
             stos.push([s.name, s.id])
           end
+          stos.push(["None", nil])
           @stos = stos
           @default = @product.user.stores.first
         else

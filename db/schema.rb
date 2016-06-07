@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160606175533) do
+ActiveRecord::Schema.define(version: 20160607210912) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -177,11 +177,7 @@ ActiveRecord::Schema.define(version: 20160606175533) do
 
   create_table "key_stores", force: :cascade do |t|
     t.string   "key"
-<<<<<<< HEAD
-    t.text   "value"
-=======
     t.text     "value"
->>>>>>> 926a3d1cfac04ff9fd62731dfebbae62a5205e90
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -444,6 +440,8 @@ ActiveRecord::Schema.define(version: 20160606175533) do
     t.string   "profile_picture_content_type"
     t.integer  "profile_picture_file_size"
     t.datetime "profile_picture_updated_at"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "stores", ["user_id"], name: "index_stores_on_user_id"

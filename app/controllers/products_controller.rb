@@ -100,7 +100,6 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find_by(id: params[:id])
     if (!@product.activated and @product.user.id == current_user.id)
-      flash[:warning] = "You need toggle options"
       redirect_to edit_product_path(@product)
       return
     end
@@ -162,7 +161,7 @@ class ProductsController < ApplicationController
     @payment_methods = PaymentMethod.all
     @exchange_methods = ExchangeMethod.all
     @product = Product.find(params[:id])
-    if @product.hold
+    if @product.hold && @product.activated
       if @product.deals.count == 0
         redirect_to @product
       else
@@ -221,45 +220,68 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-    if !@product.hold && !@product.sold
+    if !@product.sold
       if params[:store_id] && store = Store.find_by(id: params[:store_id]) and store.id != @product.store.id
         @product.store.id = store.id
         @product.save
       end
       
-      @product.selling_method_links.each do |l|
-        l.destroy
-      end
-      @product.exchange_method_links.each do |l|
-        l.destroy
-      end
-      @product.payment_method_links.each do |l|
-        l.destroy
-      end
       toggle_options = params[:toggle_options]
       selling_methods = params[:selling_method_links]
       exchange_methods = params[:exchange_method_links]
       payment_methods = params[:payment_method_links]
 
-      @product.toggle_options.destroy_all
+      if !selling_methods.nil? && selling_methods.count != 0
+        @product.selling_method_links.each do |l|
+          l.destroy
+        end
+      end
+
+      if !exchange_methods.nil? && exchange_methods.count != 0
+        @product.exchange_method_links.each do |l|
+          l.destroy
+        end
+      end
+
+      if !payment_methods.nil? && payment_methods.count != 0
+        @product.payment_method_links.each do |l|
+          l.destroy
+        end
+      end
+
+      if !toggle_options.nil? && toggle_options.count != 0
+        @product.toggle_options.destroy_all
+      end
       
       @product.update_attributes(product_params)
       @product.save
+      if !toggle_options.nil?
       toggle_options.each do |attr|
         toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
         toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
         toggle_option.save
         @product.save
       end
+      end
+
+      if !payment_methods.nil?
       payment_methods.each do |id, selected|
         @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
       end
+      end
+
+      if !exchange_methods.nil?
       exchange_methods.each do |id, selected|
         @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
       end
+      end
+
+      if !selling_methods.nil?
       selling_methods.each do |id, selected|
         @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
       end
+      end
+      
       has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links.count > 0 && @product.payment_method_links.count > 0
       if @product.store_id != nil
         @product.full_street_address = @product.store.full_street_address
@@ -299,6 +321,7 @@ class ProductsController < ApplicationController
         flash.now[:warning] = "Product edit failed."
         redirect_to edit_product_path(@product)
       end
+
     end
       """
     if !pictewure.nil?

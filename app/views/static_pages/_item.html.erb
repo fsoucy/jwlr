@@ -60,7 +60,7 @@
                 <%= image_tag item.user.profile_picture(:thumbnail) %>
                 <a href="<%= user_path(item.user) %>"><h2><%= item.user.name %></h2></a>                
                 <p id="main_text">
-                  <%= item.comment %>
+                  <%= auto_link(item.comment) %>
                 </p>
                 <%= render partial: "item", object: item.post %>
             <% when "Micropost" %>
@@ -68,7 +68,7 @@
                 <%= image_tag item.user.profile_picture(:thumbnail) %>
                 <a href="<%= user_path(item.user) %>"><h2><%= item.user.name %></h2></a>
                 <p id="main_text">
-                  <%= item.content %>
+                  <%= auto_link(item.content) %>
                 </p>
                 <% if item.pictures.any? %>
                   <div class="pure-g">
@@ -117,7 +117,7 @@
                   <%= item.title %>
                 </h3> 
                 <p>
-                  <%= item.content %>
+                  <%= auto_link(item.content) %>
                 </p>
           <% end %>
           <% if item.class.name == "Share" %>
@@ -177,7 +177,7 @@
                           <% end %>
                         </button>
                         <p id="main_text">
-                          <%= comment.comment %>
+                          <%= auto_link(comment.comment) %>
                         </p>
                         <% if comment.user.id == current_user.id %>
                           <%= link_to "Edit", '', id: "edit_comment_#{comment.id}_#{current_user.id}" %>

@@ -1,8 +1,9 @@
 function setMessages(message_data, append)
 {
   var thing = message_data;
-  var mine = '<div class="message_list_mine">' + '<span class="message_text">' + thing[0] + '</span><img class="message_image" src="' + thing[3] + '"></div>';
-  var theirs = '<div class="message_list_theirs">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[0] + '</span></div>';
+  debugger;
+  var mine = '<div class="message_list_mine">' + '<span class="message_text">' + urlify(thing[0]) + '</span><img class="message_image" src="' + thing[3] + '"></div>';
+  var theirs = '<div class="message_list_theirs">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + urlify(thing[0]) + '</span></div>';
   if(append)
   {
     if(window.myname == thing[1])

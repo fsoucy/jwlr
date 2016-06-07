@@ -94,7 +94,7 @@
 	</div>
 	<div class="pure-u-1 pure-u-md-2-5 product_view pad-box">
     	<h1 class="no-margin"><%= @product.title %></h1>
-      <%= @product.user.name %> - <%= @distance_away.round(1) %> miles from you - <%= @product.user.score %>% rating
+      <a href="<%= user_url(@product.user) %>"><%= @product.user.name %></a> - <%= @distance_away.round(1) %> miles from you - <a href="<%= user_url(@product.user) %>"><%= @product.user.score %>% rating</a>
       <p>
         <h3 class="inline-header">Price:</h3> 
         <%= number_to_currency(@product.price) %>

@@ -177,7 +177,11 @@ ActiveRecord::Schema.define(version: 20160606175533) do
 
   create_table "key_stores", force: :cascade do |t|
     t.string   "key"
+<<<<<<< HEAD
+    t.text   "value"
+=======
     t.text     "value"
+>>>>>>> 926a3d1cfac04ff9fd62731dfebbae62a5205e90
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

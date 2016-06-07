@@ -256,7 +256,7 @@ $(window).scroll(function() {
       {
         window.feed_page = 2;
       }
-      $.get('http://' + window.location.host + '/?page=' + window.feed_page, function(result) {
+      $.get('https://' + window.location.host + '/?page=' + window.feed_page, function(result) {
         $('#feed').append($(result).find('#feed').children());      
         window.feed_scrolling = false;
       });

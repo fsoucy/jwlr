@@ -79,7 +79,7 @@ Rails.application.configure do
 
   #config.action_mailer.raise_delivery_errors = true
   #config.action_mailer.delivery_method = :sendmail
-  host = 'igold.com'
+  host = 'aws.igold.com'
   #config.action_mailer.default_url_options = { host: host }
 
   config.action_mailer.delivery_method = :smtp
@@ -92,5 +92,15 @@ Rails.application.configure do
     :password       => "Con10t$d",
     :domain         => 'igold.com',
 }  
+
+  config.paperclip_defaults = {
+  storage: :s3,
+  s3_protocol: :https,
+  s3_credentials: {
+    bucket: "igoldstorage",
+    access_key_id: "AKIAISZUVDB4O5PVVNOQ",
+    secret_access_key: "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",
+  }
+}
 
 end

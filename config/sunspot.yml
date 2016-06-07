@@ -1,18 +1,11 @@
 production:
   solr:
-    hostname: 10.6.93.8
+    hostname: 172.31.62.238
     port: 8983
     log_level: WARNING
-    path: /solr/sunspot
+    path: /solr/igoldsolr
     # read_timeout: 2
     # open_timeout: 0.5
-    master_hostname: 10.6.93.10
-    master_port: 8983
-  master_solr:
-    hostname: 10.6.93.10
-    port: 8983
-    log_level: WARNING
-
 
 development:
   solr:

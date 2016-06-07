@@ -100,7 +100,6 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find_by(id: params[:id])
     if (!@product.activated and @product.user.id == current_user.id)
-      flash[:warning] = "You need toggle options"
       redirect_to edit_product_path(@product)
       return
     end

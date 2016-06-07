@@ -322,41 +322,10 @@ class ProductsController < ApplicationController
         redirect_to edit_product_path(@product)
       end
 
-    end
-      """
-    if !pictewure.nil?
-      if @product.pictures.count < 1
-        flash[:warning] = your product must have bla
-        redirect_to new_picture_url
-        return
-      end
-      if @product.min_accepted_price.nil?
-        @product.min_accepted_price = 0.0
-      end
-      @product.save
-    end
-    end
-    unless product_params.nil?
-      @product.assign_attributes(product_params)
-      if params[:product][:on_deals]
-        deal = Deal.find(params[:product][:deal_id])
-        if @product.changed?
-          deal.exchange_agreement_buyer = false
-          deal.exchange_agreement_seller = false
-          deal.agreement_achieved = false
-          deal.save
-        end
-        @product.save
-        redirect_to deal
-        return
-      end
-      @product.save
-      redirect_to edit_toggle_options_product_path(@product.id)
-    end
     else
+      @product.update_attributes(product_params) if !@product.agreement_achieved
       redirect_to @product
     end
-"""
   end
 
   private

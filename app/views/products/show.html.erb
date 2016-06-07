@@ -136,16 +136,37 @@
 					    data: { confirm: "Are you sure you wish to delete this?" } %>
   		  <br>
         <%= link_to "Edit product", edit_product_path(@product.id) %>
-        <%= form_for @product do |f| %>
-          <%= f.hidden_field :hold, value: true %>
-          <%= f.submit "Put product on hold", class: "pure-button pure-button-primary" %>
+        <% if !@product.agreement_achieved %>
+          <%= form_for @product do |f| %>
+            <%= f.hidden_field :hold, value: true %>
+            <%= f.submit "Put product on hold", class: "pure-button pure-button-primary" %>
+          <% end %>
         <% end %>
 
-        <%= form_for @product do |f| %>
-          <%= f.hidden_field :sold, value: true %>
-          <%= f.submit "Mark product as sold", class: "pure-button pure-button-primary" %>
+        <% if !@product.agreement_achieved %>
+          <%= form_for @product do |f| %>
+            <%= f.hidden_field :sold, value: true %>
+            <%= f.submit "Mark product as sold", class: "pure-button pure-button-primary" %>
+          <% end %>
         <% end %>
       <% end %>
+    <% end %>
+
+    <% if current_user == @product.user %>
+      <% if !@product.agreement_achieved %>
+        <% if @product.sold %>
+          <%= form_for @product do |f| %>
+            <%= f.hidden_field :sold, value: false %>
+            <%= f.submit "Unmark product as sold", class: "pure-button pure-button-primary" %>
+          <% end %>  
+        <% end %>
+        <% if @product.hold %>
+          <%= form_for @product do |f| %>
+            <%= f.hidden_field :hold, value: false %>
+            <%= f.submit "Take product off hold", class: "pure-button pure-button-primary" %>
+          <% end %>
+        <% end %>
+      <% end %>  
     <% end %>
   
     <% active_deal = Deal.where("product_id=?", @product.id).first %>

@@ -36,6 +36,15 @@ class Product < ActiveRecord::Base
     productviews.sum(:views)
   end
 
+  def agreement_achieved
+    deals.each do |deal|
+      if deal.agreement_achieved
+        return true
+      end
+    end
+    return false
+  end
+
   def buy_now
     return (static_price && (delivery || pickup))
   end

@@ -6,4 +6,8 @@ class Group < ActiveRecord::Base
     member = self.members.build(user_id: user.id)
     member.save
   end
+
+  def member?(member)
+    self.members.include?(member)
+  end
 end

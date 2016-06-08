@@ -48,6 +48,15 @@ class User < ActiveRecord::Base
   has_many :groupings, class_name: "Groupmember", foreign_key: "user_id", dependent: :destroy
   has_many :groups, through: :groupings
 
+  searchable do
+    text :name
+    text :email
+    text :full_street_address
+    boolean :admin
+    integer :id
+    latlon(:location) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
+  end
+
   def location_string
     address = Geocoder.search([self.latitude, self.longitude])
     address[0].city + ", " + address[0].state_code

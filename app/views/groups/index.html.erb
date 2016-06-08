@@ -1,14 +1,25 @@
-<div class="pure-g">
-  <div class="pure-u-1 pure-u-md-1-3">
+<h1 class="pad-header">Groups</h1>
+<div class="pure-g log-in log-in-form margin-box">
+  <div class="pure-u-1 pure-u-md-1-3 pad-box groups-list">
+    <a href="<%= new_group_path %>"><h3>New group</h3></a>
     <% @groups.each do |group| %>
-      <div class="group">
+      <div id="group_<%= group.id %>" class="group">
         <h3><%= group.name %></h3>
+        <%= link_to "Edit", edit_group_path(group) unless !current_user?(group.user) %>
+        <%= link_to "Delete", group, method: :delete, data: { confirm: "Are you sure?" } unless !current_user?(group.user) %>
       </div>
     <% end %>
   </div>
-  <div class="pure-u-1 pure-u-md-2-3">
+  <div class="pure-u-1 pure-u-md-2-3 users-list pad-box">
     <% if !@groups.first.nil? %>
       <%= render @groups.first %>
     <% end %>
+  </div>
+  <div class="pure-u-md-1-3"></div>
+  <div class="pure-u-1 pure-u-md-2-3 pad-box users-list pure-form">
+    <input type="text" id="user_name" class="users-list" placeholder="Search for a user"></input>
+    <div id="user_list" class="user_list pad-box">
+
+    </div>
   </div>
 </div>

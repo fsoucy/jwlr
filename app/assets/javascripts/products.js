@@ -202,6 +202,19 @@ function evaluateSelling()
     evaluateSubmit();
 }
 
+function evaluateDelivery()
+{
+    if (!deliveryAndPaypal())
+    {
+	$('#deliveryAndPaypal').remove();
+	$('.content').prepend('<div class="alert alert-warning" id="deliveryAndPaypal"><h4>Delivery must be accompanied by Paypal. Please, either remove delivery or add Paypal as a payment method.</h4></div>');
+    }
+    else
+    {
+	$('#deliveryAndPaypal').remove();
+    }
+}
+
 function evaluateExchange()
 {
     if (exchangeMethods())
@@ -214,6 +227,7 @@ function evaluateExchange()
 	$('#exchange_methods_button').removeClass('complete').addClass('incomplete');
 	$('.product_next_exchange').addClass('not_ready');
     }
+    evaluateDelivery();
     evaluateSubmit();
 }
 
@@ -229,6 +243,7 @@ function evaluatePayment()
 	$('#payment_methods_button').removeClass('complete').addClass('incomplete');
 	$('.product_next_payment').addClass('not_ready');
     }
+    evaluateDelivery();
     evaluateSubmit();
 }
 function evaluateAll()

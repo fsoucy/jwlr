@@ -1,6 +1,15 @@
+.pickers {
+  display: inline;
+  float: left;
+}
+
 .product-inline {
   text-align: left;
   padding-left: 1em;
+}
+
+.product-inline h2 {
+  margin-left: 0 !important;
 }
 
 .no-border {

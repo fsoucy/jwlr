@@ -88,7 +88,7 @@
 
 .pic_active
 {
-    border: 2px solid gold;
+  outline: 2px solid gold;
 }
 
 .no-margin {
@@ -101,9 +101,10 @@
 
 .cropped_show
 {
-    display: block;
-    float: left;
-    clear: none;
+  display: block;
+  float: left;
+  clear: none;
+  margin: 0.1em;
 }
 
 

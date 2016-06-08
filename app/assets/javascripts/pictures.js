@@ -52,6 +52,7 @@ $(document).ready(function(){
 	zoomable: false,
 	toggleDragModeOnDblClick: false,
 	cropBoxResizable: true,
+	rotatable: true,
 	aspectRatio: 1.00,
 	built: function () {
 	    $image.cropper('setCanvasData', canvasData);
@@ -72,6 +73,7 @@ $(document).ready(function(){
 
     });
     
+    //$('#image').cropper('rotate', -90)
     
     $('.modal-body').mouseup(function () {
 	cropBoxData = $image.cropper('getCropBoxData');
@@ -88,5 +90,16 @@ $(document).ready(function(){
 	$('#height').val(cropBoxData.height * factor);
     });
 
+    $('#rotate_ccw').click(function() {
+	$('#image').cropper('rotate', -90);
+	var angle = parseInt($('#rotate').val()) - 90;
+	$('#rotate').val(angle);
+    });
+
+    $('#rotate_cw').click(function() {
+	$('#image').cropper('rotate', 90);
+	var angle =  parseInt($('#rotate').val()) + 90;
+	$('#rotate').val(angle);
+    })
 
 });

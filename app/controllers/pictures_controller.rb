@@ -74,9 +74,11 @@ class PicturesController < ApplicationController
     scale = maxDim / 600.0
     toCropX = params[:x].to_f * scale
     toCropY = params[:y].to_f * scale
+    rotation = params[:rotate].to_f
     size = "" + params[:width] + "x" + params[:height] + "+"
     cropString = size + toCropX.to_s + "+" + toCropY.to_s
     img.crop(cropString)
+    img.rotate(rotation)
     img.write(@picture.photo_cropped.path)
     @picture.photo_cropped.reprocess!
     @picture.save

@@ -162,6 +162,12 @@
 	<% else %>
 	<p>Store hasn't updated their hours of operation</p>
 	<% end %>
+  <h3 class="hoursofoperation">Allowed upon transaction payment methods</h3>
+  <p>
+    <% @store.user.payment_upon_transactions.each do |transaction| %>
+      <%= transaction.method %><br>
+    <% end %>
+  </p>
 	</div>
      </div>
 </div>

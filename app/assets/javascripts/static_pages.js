@@ -1,3 +1,10 @@
+function urlify(text) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, function(url) {
+        return '<a href="' + url + '">' + url + '</a>';
+    })
+}
+
 $(document).ready(function(){
   // disable auto discover
   Dropzone.autoDiscover = false;
@@ -185,7 +192,7 @@ $(document).on('click', 'a[id*=edit_share_]', function(event) {
     event.preventDefault();
     var new_text = $(this).children('fieldset').children('input[type=text]').val();
     $.ajax({url: '/users/' + user_id + '/share', type: 'POST', context: this, data: {share_id: share_id, share_string: new_text}, success: function() {
-      $(this).fadeOut(500, function() { $(this).replaceWith('<p id="main_text">' + new_text + '</p>'); });
+      $(this).fadeOut(500, function() { $(this).replaceWith('<p id="main_text">' + urlify(new_text) + '</p>'); });
     }});
   });
 });
@@ -212,7 +219,7 @@ $(document).on('click', 'a[id*=edit_comment_]', function(event) {
     event.preventDefault();
     var new_text = $(this).siblings('input[type=text]').val();
     $.ajax({url: '/users/' + user_id + '/comment', type: 'POST', context: this, data: {comment_id: comment_id, comment_string: new_text}, success: function() {
-      $(this).parent().parent().fadeOut(500, function() { $(this).replaceWith('<p id="main_text">' + new_text + '</p>'); });
+      $(this).parent().parent().fadeOut(500, function() { $(this).replaceWith('<p id="main_text">' + urlify(new_text) + '</p>'); });
     }});
   });
 });
@@ -237,7 +244,7 @@ $(document).on('click', 'a[id*=edit_micropost_]', function(event) {
     event.preventDefault();
     var new_text = $(this).children('fieldset').children('input[type=text]').val();
     $.ajax({url: '/microposts/' + micropost_id, type: 'PATCH', context: this, data: $(this).serialize(), success: function() {
-      $(this).fadeOut(500, function() { $(this).replaceWith('<p id="main_text">' + new_text + '</p>'); });
+      $(this).fadeOut(500, function() { $(this).replaceWith('<p id="main_text">' + urlify(new_text) + '</p>'); });
     }});
   });
 });
@@ -245,7 +252,7 @@ $(document).on('click', 'a[id*=edit_micropost_]', function(event) {
 $(window).scroll(function() {
   if($('.feed_item').length)
   {
-    if(($(window).scrollTop() + $(window).height() > $(document).height() - 200) && (window.feed_scrolling == false || typeof window.feed_page == 'undefined'))
+    if(($(window).scrollTop() + $(window).height() > $(document).height() - 400) && (window.feed_scrolling == false || typeof window.feed_page == 'undefined'))
     {
       window.feed_scrolling = true;
       if(typeof window.feed_page != 'undefined')
@@ -256,7 +263,7 @@ $(window).scroll(function() {
       {
         window.feed_page = 2;
       }
-      $.get('http://' + window.location.host + '/?page=' + window.feed_page, function(result) {
+      $.get(window.location.protocol + "//" + window.location.host + '/?page=' + window.feed_page, function(result) {
         $('#feed').append($(result).find('#feed').children());      
         window.feed_scrolling = false;
       });

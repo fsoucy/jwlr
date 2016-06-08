@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160608024626) do
+=======
+ActiveRecord::Schema.define(version: 20160607223414) do
+>>>>>>> 524899cfd835ddb9e5c61c7532bc9bc3247b8698
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -174,6 +178,26 @@ ActiveRecord::Schema.define(version: 20160608024626) do
   end
 
   add_index "faqs", ["store_id"], name: "index_faqs_on_store_id"
+
+  create_table "groupmembers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "groupmembers", ["group_id"], name: "index_groupmembers_on_group_id"
+  add_index "groupmembers", ["user_id", "group_id"], name: "index_groupmembers_on_user_id_and_group_id", unique: true
+  add_index "groupmembers", ["user_id"], name: "index_groupmembers_on_user_id"
+
+  create_table "groups", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "groups", ["user_id"], name: "index_groups_on_user_id"
 
   create_table "key_stores", force: :cascade do |t|
     t.string   "key"
@@ -448,6 +472,8 @@ ActiveRecord::Schema.define(version: 20160608024626) do
     t.string   "profile_picture_content_type"
     t.integer  "profile_picture_file_size"
     t.datetime "profile_picture_updated_at"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "stores", ["user_id"], name: "index_stores_on_user_id"

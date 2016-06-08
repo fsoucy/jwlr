@@ -1,0 +1,21 @@
+<% if group.members.any? %>
+<div class="users_list">
+  <% group.members.each do |member| %>
+    <div clas="like">   
+      <%= image_tag member.user.profile_picture(:thumbnail), class: "pure-img" %>
+      <a href="<%= user_path(member.user) %>"><h4><%= member.user.name %></h4></a>
+      <button class="pure-button" id="follow_<%= member.user.id %>">
+        <% if current_user.following?(member.user) %>
+          Unfollow
+        <% elsif current_user.id == member.user.id %>
+          Me
+        <% else %>
+          Follow
+        <% end %>
+      </button>
+    </div>
+  <% end %>
+</div>
+<% else %>
+  <h3>This group has no users</h3>
+<% end %>

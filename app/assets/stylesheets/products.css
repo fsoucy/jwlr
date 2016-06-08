@@ -1,3 +1,11 @@
+.shares * {
+  vertical-align: bottom;
+}
+
+.pad-down {
+  padding-top: 1em;
+}
+
 .dz-message span
 {
     color: #00A8E8;
@@ -80,7 +88,7 @@
 
 .pic_active
 {
-    border: 2px solid gold;
+  outline: 2px solid gold;
 }
 
 .no-margin {
@@ -93,9 +101,10 @@
 
 .cropped_show
 {
-    display: block;
-    float: left;
-    clear: none;
+  display: block;
+  float: left;
+  clear: none;
+  margin: 0.1em;
 }
 
 
@@ -108,6 +117,8 @@
 .pickers {
   display: table-row;
 }
+
+
 
 .quick_buy
 {

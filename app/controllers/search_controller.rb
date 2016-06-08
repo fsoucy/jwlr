@@ -44,22 +44,42 @@ class SearchController < ApplicationController
 
       if !params[:attribute_option_id].nil?
         ids = params[:attribute_option_id].split(',')
-        with(:attribute_option_id).all_of(ids)
+        ids = ids.map(&:to_i)
+        all_of do
+          ids.each do |id|
+            with(:attribute_option_id, id)
+          end
+        end
       end
 
       if !params[:selling_method_id].nil?
         methods = params[:selling_method_id].split(',')
-        with(:selling_method_id).any_of(methods)
+        methods = methods.map(&:to_i)
+        all_of do
+          methods.each do |method|
+            with(:selling_method_id, method)
+          end
+        end
       end
 
       if !params[:exchange_method_id].nil?
         methods = params[:exchange_method_id].split(',')
-        with(:exchange_method_id).any_of(methods)
+        methods = methods.map(&:to_i)
+        all_of do
+          methods.each do |method|
+            with(:exchange_method_id, method)
+          end
+        end  
       end
 
       if !params[:payment_method_id].nil?
         methods = params[:payment_method_id].split(',')
-        with(:payment_method_id).any_of(methods)
+        methods = methods.map(&:to_i)
+        all_of do
+          methods.each do |method|
+            with(:payment_method_id, method)
+          end
+        end
       end
 
       facet :category_id, :exclude => category

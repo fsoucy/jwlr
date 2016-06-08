@@ -26,6 +26,7 @@ gem 'dropzonejs-rails'
 gem 'paperclip'
 gem 'purecss-rails'
 gem 'fog'
+gem 'rails_autolink'
 
 group :development, :test do
   gem 'sqlite3'
@@ -42,8 +43,9 @@ end
 
 group :production do
   gem 'mysql2'
-  gem 'makara'
+  gem 'puma'
   gem 'rails_12factor'
+  gem 'aws-sdk', '< 2.0'
 end
 
 

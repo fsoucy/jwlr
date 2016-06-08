@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   has_many :buying_deals, class_name: "Deal", foreign_key: "buyer_id", dependent: :destroy
   has_many :selling_deals, class_name: "Deal", foreign_key: "seller_id", dependent: :destroy
   has_attached_file :profile_picture, :styles => { :medium => ["300x300>", :png], :thumb => ["200x200>", :png], :thumbnail => ["50x50>", :png] }, default_url: "/assets/missing_:style.jpg"
-  validates_attachment :profile_picture, :storage => :filesystem, :presence => true, :content_type => { :content_type => /\Aimage\/.*\Z/ }, :size => { :less_than => 10.megabyte }
+  validates_attachment :profile_picture, :presence => true, :content_type => { :content_type => /\Aimage\/.*\Z/ }, :size => { :less_than => 10.megabyte }
   has_many :microposts, dependent: :destroy
   
   has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
@@ -44,6 +44,14 @@ class User < ActiveRecord::Base
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :shares, dependent: :destroy
+
+  has_many :groupings, class_name: "Groupmember", foreign_key: "user_id", dependent: :destroy
+  has_many :groups, through: :groupings
+
+  def location_string
+    address = Geocoder.search([self.latitude, self.longitude])
+    address[0].city + ", " + address[0].state_code
+  end
 
   def score
     reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("user_id != ? and deals.seller_id = ? or deals.buyer_id = ?", self.id, self.id, self.id)

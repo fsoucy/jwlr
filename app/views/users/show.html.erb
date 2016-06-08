@@ -26,7 +26,7 @@
     <p>Products sold: <%= Deal.where("deal_complete = ? and seller_id = ?", true, @user.id).count %></p>
     <p>Products bought: <%= Deal.where("deal_complete = ? and buyer_id = ?", true, @user.id).count %></p>
     <p>Identifies as: <%= @user.identifies_as %></p>
-    <p>Location: <%= @user.full_street_address %></p>
+    <p>Location: <%= @user.location_string %></p>
   </div>
   <div class="pure-u-md-1-3 pure-u-1 pad-box">
     <div class="stores">

@@ -1,10 +1,12 @@
 function setMessages(message_data, append)
 {
     var thing = message_data;
+    debugger;
+
     if (thing[4] == 0)
     {
-	var mine = '<div class="message_list_mine">' + '<span class="message_text">' + thing[0] + '</span><img class="message_image" src="' + thing[3] + '"></div>';
-	var theirs = '<div class="message_list_theirs">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[0] + '</span></div>';
+	var mine = '<div class="message_list_mine">' + '<span class="message_text">' + urlify(thing[0]) + '</span><img class="message_image" src="' + thing[3] + '"></div>';
+	var theirs = '<div class="message_list_theirs">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + urlify(thing[0]) + '</span></div>';
     }
     else
     {
@@ -36,7 +38,6 @@ function setMessages(message_data, append)
     }
 }
 
-
 function loadOnIndex(num_conversation, myname)
 {
 
@@ -47,7 +48,7 @@ function loadOnIndex(num_conversation, myname)
     $.ajax({
 	type: "GET",// GET in place of POST
 	contentType: "application/json; charset=utf-8",
-	url: "http://" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
+	url: window.location.protocol + "//" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
 	data: {},
 	dataType: "json",
 	success: function (result) {
@@ -82,7 +83,7 @@ function refreshMessages()
     $.ajax({
 	type: "GET",// GET in place of POST
 	contentType: "application/json; charset=utf-8",
-	url: "http://" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=1",
+	url: window.location.protocol + "//" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=1",
 	data: {},
 	dataType: "json",
 	success: function (result) {
@@ -107,7 +108,7 @@ function refreshIndex()
 {
   if($('.convo_index_page').length)
   {
-    $.get("http://" + window.location.host + '/conversations/conversations_index', function(data) {
+    $.get(window.location.protocol + "//" + window.location.host + '/conversations/conversations_index', function(data) {
       $(".conversations_indexing").replaceWith($(data).find(".conversations_indexing"));
       $('.convo_index_page').click(function(e){
         if($('.convo_thing').length)
@@ -117,7 +118,7 @@ function refreshIndex()
           var id = $(this).children('a').children('.conversation_id').val();
           var myname = $('#myname').val();
           clearInterval(window.interval);
-          $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
+          $('.conversation_window').load(window.location.protocol + "//" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
             loadOnIndex(parseInt(id), myname.toString());
           });
         }
@@ -141,7 +142,7 @@ $(document).ready(function()
       $.ajax({
     type: "GET",// GET in place of POST
     contentType: "application/json; charset=utf-8",
-    url: "http://" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
+    url: window.location.protocol + "//" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
     data: {},
     dataType: "json",
     success: function (result) {
@@ -177,7 +178,7 @@ $(document).ready(function()
 	    $.ajax({
 	      type: "GET",// GET in place of POST
 	      contentType: "application/json; charset=utf-8",
-	      url: "http://" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
+	      url: window.location.protocol + "//" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
 	      data: {},
 	      dataType: "json",
 	      success: function (result) {
@@ -242,7 +243,7 @@ $(document).ready(function()
 	  var id = $(this).children('a').children('.conversation_id').val();
         var myname = $('#myname').val();
         clearInterval(window.interval);
-        $('.conversation_window').load("http://" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
+        $('.conversation_window').load(window.location.protocol + "//" + window.location.host + '/conversations/' + id + " .convo_thing", function() {
 	        loadOnIndex(parseInt(id), myname.toString());
 	        $('#messages').bind('scroll', function(event) {
             if ($('#messages').scrollTop() < 10)
@@ -251,7 +252,7 @@ $(document).ready(function()
               $.ajax({
                 type: "GET",// GET in place of POST
                 contentType: "application/json; charset=utf-8",
-                url: "http://" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
+                url: window.location.protocol + "//" + window.location.host + "/conversations/" + window.conversation + "/pull_messages?page=" + window.page.toString(),
                 data: {},
                 dataType: "json",
                 success: function (result) {

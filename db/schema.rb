@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608012443) do
+ActiveRecord::Schema.define(version: 20160608024626) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -240,6 +240,21 @@ ActiveRecord::Schema.define(version: 20160608012443) do
     t.string   "method"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "payment_upon_transaction_links", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "payment_upon_transaction_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "payment_upon_transaction_links", ["user_id"], name: "index_payment_upon_transaction_links_on_user_id"
+
+  create_table "payment_upon_transactions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "method"
   end
 
   create_table "pictures", force: :cascade do |t|

@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   has_many :default_selling_method_links, dependent: :destroy
   has_many :default_exchange_method_links, dependent: :destroy
   has_many :default_payment_method_links, dependent: :destroy
+  has_many :payment_upon_transaction_links
+  has_many :payment_upon_transactions, through: :payment_upon_transaction_links
   
   has_many :stores, dependent: :destroy
   has_many :productviews, dependent: :destroy

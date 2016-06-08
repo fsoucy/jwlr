@@ -42,6 +42,10 @@
           <% end %>
           <% if @deal.payment_complete %>
           <% else %>
+            <%= form_for @deal do |f| %>
+              <%= f.hidden_field :payment_complete, value: true %>
+              <%= f.submit "Payment completed", class: "pure-button pure-button-primary deals_form_button" %>
+            <% end %>
           <% end %>
         <% elsif current_user.id == @deal.buyer_id %>
           <% if @deal.product_dispatched %>
@@ -64,6 +68,10 @@
           <% if current_user.id == @deal.seller_id %>
             <% if @deal.payment_complete %>
             <% else %>
+              <%= form_for @deal do |f| %>
+                <%= f.hidden_field :payment_complete, value: true %>
+                <%= f.submit "Payment complete", class: "pure-button pure-button-primary deals_form_button" %>
+              <% end %>
               <% if @deal.product_received %>
               <% else %>
               <% end %>

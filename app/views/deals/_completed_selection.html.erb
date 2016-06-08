@@ -33,6 +33,10 @@
           <% if @deal.product_dispatched %>
             <% if @deal.product_received %>
             <% else %>
+              <%= form_for @deal do |f| %>
+                <%= f.hidden_field :product_dispatched, value: false %>
+                <%= f.submit "Unmark product as dispatched", class: "pure-button pure-button-primary deals_form_button" %>
+              <% end %>
             <% end %>
           <% else %>
             <%= form_for @deal do |f| %>
@@ -41,7 +45,15 @@
             <% end %>
           <% end %>
           <% if @deal.payment_complete %>
+            <%= form_for @deal do |f| %>
+              <%= f.hidden_field :payment_complete, value: false %>
+              <%= f.submit "Payment incomplete", class: "pure-button pure-button-primary deals_form_button" %>
+            <% end %>
           <% else %>
+            <%= form_for @deal do |f| %>
+              <%= f.hidden_field :payment_complete, value: true %>
+              <%= f.submit "Payment completed", class: "pure-button pure-button-primary deals_form_button" %>
+            <% end %>
           <% end %>
         <% elsif current_user.id == @deal.buyer_id %>
           <% if @deal.product_dispatched %>
@@ -51,6 +63,10 @@
                 <%= f.submit "Product recieved", class: "pure-button pure-button-primary deals_form_button" %>
               <% end %>
             <% else %>
+              <%= form_for @deal do |f| %>
+                <%= f.hidden_field :product_received, value: false %>
+                <%= f.submit "Product not received", class: "pure-button pure-button-primary deals_form_button" %>
+              <% end %>
             <% end %>
           <% else %>
           <% end %>
@@ -63,7 +79,15 @@
         <% if @deal.payment_method.method == "Paypal" %>
           <% if current_user.id == @deal.seller_id %>
             <% if @deal.payment_complete %>
+              <%= form_for @deal do |f| %>
+                <%= f.hidden_field :payment_complete, value: false %>
+                <%= f.submit "Payment incomplete", class: "pure-button pure-button-primary deals_form_button" %>
+              <% end %>
             <% else %>
+              <%= form_for @deal do |f| %>
+                <%= f.hidden_field :payment_complete, value: true %>
+                <%= f.submit "Payment complete", class: "pure-button pure-button-primary deals_form_button" %>
+              <% end %>
               <% if @deal.product_received %>
               <% else %>
               <% end %>
@@ -77,6 +101,10 @@
             <% else %>
               <%= render 'paypal_form' %>
               <% if @deal.product_received %>
+                <%= form_for @deal do |f| %>
+                  <%= f.hidden_field :product_received, value: false %>
+                  <%= f.submit "Product not received", class: "pure-button pure-button-primary deals_form_button" %>
+                <% end %>
               <% else %>
                 <%= form_for @deal do |f| %>
                   <%= f.hidden_field :product_received, value: true %>
@@ -87,14 +115,28 @@
           <% end %>
         <% else %>
           <% if current_user.id == @deal.seller_id %>
-            <%= form_for @deal do |f| %>
-              <%= f.hidden_field :payment_complete, value: true %>
-              <%= f.submit "Payment received", class: "pure-button pure-button-primary deals_form_button" %>
+            <% if @product.payment_complete %>
+              <%= form_for @deal do |f| %>
+                <%= f.hidden_field :payment_complete, value: false %>
+                <%= f.submit "Payment incomplete", class: "pure-button pure-button-primary deals_form_button" %>
+              <% end %>
+            <% else %>
+              <%= form_for @deal do |f| %>
+                <%= f.hidden_field :payment_complete, value: true %>
+                <%= f.submit "Payment complete", class: "pure-button pure-button-primary deals_form_button" %>
+              <% end %>
             <% end %>
           <% elsif current_user.id == @deal.buyer_id %>
-            <%= form_for @deal do |f| %>
-              <%= f.hidden_field :product_received, value: true %>
-              <%= f.submit "Product received", class: "pure-button pure-button-primary deals_form_button" %>
+            <% if @deal.product_received %>
+              <%= form_for @deal do |f| %>  
+                <%= f.hidden_field :product_received, value: false %>
+                <%= f.submit "Product not received", class: "pure-button pure-button-primary deals_form_button" %>
+              <% end %>
+            <% else %>
+              <%= form_for @deal do |f| %>
+                <%= f.hidden_field :product_received, value: true %>
+                <%= f.submit "Product received", class: "pure-button pure-button-primary deals_form_button" %>
+              <% end %>
             <% end %>
           <% end %>
           

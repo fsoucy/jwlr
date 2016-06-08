@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   has_many :default_selling_method_links, dependent: :destroy
   has_many :default_exchange_method_links, dependent: :destroy
   has_many :default_payment_method_links, dependent: :destroy
+  has_many :payment_upon_transaction_links
+  has_many :payment_upon_transactions, through: :payment_upon_transaction_links
   
   has_many :stores, dependent: :destroy
   has_many :productviews, dependent: :destroy
@@ -42,6 +44,23 @@ class User < ActiveRecord::Base
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :shares, dependent: :destroy
+
+  has_many :groupings, class_name: "Groupmember", foreign_key: "user_id", dependent: :destroy
+  has_many :groups, through: :groupings
+
+  searchable do
+    text :name
+    text :email
+    text :full_street_address
+    boolean :admin
+    integer :id
+    latlon(:location) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
+  end
+
+  def location_string
+    address = Geocoder.search([self.latitude, self.longitude])
+    address[0].city + ", " + address[0].state_code
+  end
 
   def score
     reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("user_id != ? and deals.seller_id = ? or deals.buyer_id = ?", self.id, self.id, self.id)

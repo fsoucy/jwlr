@@ -17,6 +17,7 @@ class ProductsController < ApplicationController
       @product.user.stores.each do |s|
         stos.push([s.name, s.id])
       end
+      stos.push(["None", "nil"])
       @stos = stos
       @default = @product.user.stores.first
     else
@@ -25,78 +26,6 @@ class ProductsController < ApplicationController
     @product.save(validate: false)
   end
   
-  def create
-    toggle_options = params[:toggle_options]
-    selling_methods = params[:selling_method_links]
-    exchange_methods = params[:exchange_method_links]
-    payment_methods = params[:payment_method_links]
-    if params[:store_id] != nil && store = Store.find_by(params[:store_id])
-      @product = store.products.build(product_params)
-      @product.full_street_address = store.full_street_address
-      @product.save
-      toggle_options.each do |attr|
-        toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
-        toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
-        toggle_option.save
-      end
-      payment_methods.each do |id, selected|
-        @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
-      end
-      exchange_methods.each do |id, selected|
-        @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
-      end
-      selling_methods.each do |id, selected|
-        @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
-      end
-    else
-      @product = current_user.products.build(product_params)
-      @product.full_street_address = current_user.full_street_address
-      @product.save
-      toggle_options.each do |attr|
-        toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
-        toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
-        toggle_option.save
-        @product.save
-      end
-      payment_methods.each do |id, selected|
-        @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
-      end
-      exchange_methods.each do |id, selected|
-        @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
-      end
-      selling_methods.each do |id, selected|
-        @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
-      end
-    end
-    @product.min_accepted_price = 0.0
-    @product.min_accepted_price = @product.price * @product.user.acceptance_percentage unless @product.user.acceptance_percentage.nil?
-    has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links.count > 0 && @product.payment_method_links.count > 0
-    if @product.save and has_methods
-      flash[:success] = "You have successfully uploaded a new product!"
-      redirect_to @product
-    else
-      if current_user.stores.length > 0
-        @has = true
-        stos = Array.new
-        @selling_methods = SellingMethod.all
-        @payment_methods = PaymentMethod.all
-        @exchange_methods = ExchangeMethod.all
-        @product = current_user.products.build
-        @product.user.stores.each do |s|
-          stos.push([s.name, s.id])
-        end
-        @stos = stos
-        @default = @product.user.stores.first
-      else
-        @product = current_user.products.build
-        @has = false
-      end
-      @edit = false
-      flash.now[:warning] = "Product upload failed."
-      render 'new'
-    end
-  end
-
   def show
     @product = Product.find_by(id: params[:id])
     if (!@product.activated and @product.user.id == current_user.id)
@@ -131,7 +60,17 @@ class ProductsController < ApplicationController
     unless geocode.nil?
       @distance_away = @product.distance_from(geocode)
     end
-        
+
+    if !(current_user == @product.user)
+      conversation = Conversation.where("first_user_id=? or first_user_id=? AND second_user_id=? or second_user_id=?", current_user.id, @product.user.id, current_user.id, @product.user.id)
+      if conversation.first.nil?
+        convo = Conversation.new(first_user_id: @product.user.id, second_user_id: current_user.id)
+      else
+        convo = conversation.first
+      end
+      @message = convo.messages.build(sender_id: current_user.id, product_id: @product.id)
+    end
+    
     if logged_in?
       productview = current_user.productviews.find_by(product: @product)
       if productview.nil?
@@ -171,33 +110,15 @@ class ProductsController < ApplicationController
     if current_user.stores.length > 0
       @has = true
       stos = Array.new
-      @stos = stos
       @product.user.stores.each do |s|
         stos.push([s.name, s.id])
       end
-      @default = @product.user.stores.first
+      stos.push(["None", nil])
+      @stos = stos
+      @default = @product.store
     else
       @has = false
     end
-  end
-
-  def edit_toggle_options
-    @product = Product.find(params[:id])
-  end
-
-  def edit_selling_methods
-    @product = Product.find(params[:id])
-    @selling_methods = SellingMethod.all
-  end
-
-  def edit_payment_methods
-    @product = Product.find(params[:id])
-    @payment_methods = PaymentMethod.all
-  end
-
-  def edit_exchange_methods
-    @product = Product.find(params[:id])
-    @exchange_methods = ExchangeMethod.all
   end
 
   def pickup
@@ -214,8 +135,7 @@ class ProductsController < ApplicationController
       exchange_method_link = ExchangeMethodLink.where("product_id=? AND exchange_method_id=?", @product.id, 3).first
       exchange_method_link.destroy
       flash[:warning] = "Can't have pick up without a store!"
-    end
-      
+    end      
   end
 
   def update
@@ -223,7 +143,6 @@ class ProductsController < ApplicationController
     if !@product.sold
       if params[:store_id] && store = Store.find_by(id: params[:store_id]) and store.id != @product.store.id
         @product.store.id = store.id
-        @product.save
       end
       
       toggle_options = params[:toggle_options]
@@ -254,37 +173,38 @@ class ProductsController < ApplicationController
       end
       
       @product.update_attributes(product_params)
-      @product.save
       if !toggle_options.nil?
-      toggle_options.each do |attr|
-        toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
-        toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
-        toggle_option.save
-        @product.save
-      end
+        toggle_options.each do |attr|
+          toggle_option = ToggleOption.joins('INNER JOIN `attribute_options` ON `attribute_options`.`id` = `toggle_options`.`attribute_option_id`').where("product_id = ? AND attribute_options.category_option_id = ?", @product.id, attr[0]).first_or_initialize
+          toggle_option.update(attribute_option_id: attr[1]["name"], product_id: @product.id)
+          toggle_option.save
+          @product.save
+        end
       end
 
       if !payment_methods.nil?
-      payment_methods.each do |id, selected|
-        @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
-      end
+        payment_methods.each do |id, selected|
+          @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
+        end
       end
 
       if !exchange_methods.nil?
-      exchange_methods.each do |id, selected|
-        @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
-      end
+        exchange_methods.each do |id, selected|
+          @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
+        end
       end
 
       if !selling_methods.nil?
-      selling_methods.each do |id, selected|
-        @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
-      end
+        selling_methods.each do |id, selected|
+          @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
+        end
       end
       
       has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links.count > 0 && @product.payment_method_links.count > 0
-      if @product.store_id != nil
+      if !@product.store.nil?
         @product.full_street_address = @product.store.full_street_address
+      elsif @product.full_street_address.nil?
+        @product.full_street_address = @product.user.full_street_address
       end
       if @product.save
         if params[:product][:on_deals]
@@ -312,6 +232,7 @@ class ProductsController < ApplicationController
           @product.user.stores.each do |s|
             stos.push([s.name, s.id])
           end
+          stos.push(["None", nil])
           @stos = stos
           @default = @product.user.stores.first
         else
@@ -322,41 +243,10 @@ class ProductsController < ApplicationController
         redirect_to edit_product_path(@product)
       end
 
-    end
-      """
-    if !pictewure.nil?
-      if @product.pictures.count < 1
-        flash[:warning] = your product must have bla
-        redirect_to new_picture_url
-        return
-      end
-      if @product.min_accepted_price.nil?
-        @product.min_accepted_price = 0.0
-      end
-      @product.save
-    end
-    end
-    unless product_params.nil?
-      @product.assign_attributes(product_params)
-      if params[:product][:on_deals]
-        deal = Deal.find(params[:product][:deal_id])
-        if @product.changed?
-          deal.exchange_agreement_buyer = false
-          deal.exchange_agreement_seller = false
-          deal.agreement_achieved = false
-          deal.save
-        end
-        @product.save
-        redirect_to deal
-        return
-      end
-      @product.save
-      redirect_to edit_toggle_options_product_path(@product.id)
-    end
     else
+      @product.update_attributes(product_params) if !@product.agreement_achieved
       redirect_to @product
     end
-"""
   end
 
   private
@@ -370,7 +260,4 @@ class ProductsController < ApplicationController
       redirect_to root_url
     end
   end
-
-  
-
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160606175533) do
+ActiveRecord::Schema.define(version: 20160608024626) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -175,13 +175,29 @@ ActiveRecord::Schema.define(version: 20160606175533) do
 
   add_index "faqs", ["store_id"], name: "index_faqs_on_store_id"
 
+  create_table "groupmembers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "groupmembers", ["group_id"], name: "index_groupmembers_on_group_id"
+  add_index "groupmembers", ["user_id", "group_id"], name: "index_groupmembers_on_user_id_and_group_id", unique: true
+  add_index "groupmembers", ["user_id"], name: "index_groupmembers_on_user_id"
+
+  create_table "groups", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "groups", ["user_id"], name: "index_groups_on_user_id"
+
   create_table "key_stores", force: :cascade do |t|
     t.string   "key"
-<<<<<<< HEAD
-    t.text   "value"
-=======
     t.text     "value"
->>>>>>> 926a3d1cfac04ff9fd62731dfebbae62a5205e90
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -206,9 +222,11 @@ ActiveRecord::Schema.define(version: 20160606175533) do
     t.integer  "conversation_id"
     t.integer  "sender_id"
     t.text     "content"
+    t.integer  "product_id"
   end
 
   add_index "messages", ["conversation_id"], name: "index_messages_on_conversation_id"
+  add_index "messages", ["product_id"], name: "index_messages_on_product_id"
   add_index "messages", ["sender_id"], name: "index_messages_on_sender_id"
 
   create_table "microposts", force: :cascade do |t|
@@ -242,6 +260,21 @@ ActiveRecord::Schema.define(version: 20160606175533) do
     t.string   "method"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "payment_upon_transaction_links", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "payment_upon_transaction_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "payment_upon_transaction_links", ["user_id"], name: "index_payment_upon_transaction_links_on_user_id"
+
+  create_table "payment_upon_transactions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "method"
   end
 
   create_table "pictures", force: :cascade do |t|
@@ -444,6 +477,8 @@ ActiveRecord::Schema.define(version: 20160606175533) do
     t.string   "profile_picture_content_type"
     t.integer  "profile_picture_file_size"
     t.datetime "profile_picture_updated_at"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "stores", ["user_id"], name: "index_stores_on_user_id"

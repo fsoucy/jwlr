@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment, :share]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment, :share, :show]
   before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment, :share]
   before_action :admin_user, only: :destroy  
   
@@ -77,6 +77,11 @@ class UsersController < ApplicationController
           DefaultPaymentMethodLink.create(payment_method_id: method.to_i, user_id: @user.id)
         end
       end
+      params[:payment_upon_transaction_links].each do |method, value|
+        if value["id"].to_i == 1
+          PaymentUponTransactionLink.create(payment_upon_transaction_id: method.to_i, user_id: @user.id)
+        end
+      end
       flash[:success] = "Methods updated"
       redirect_to @user
     end
@@ -93,8 +98,9 @@ class UsersController < ApplicationController
     @selling_methods = SellingMethod.all
     @payment_methods = PaymentMethod.all
     @exchange_methods = ExchangeMethod.all
+    @transactions = PaymentUponTransaction.all
   end
-
+  
   def user_stores
     user = User.find(params[:id])
     @has = false

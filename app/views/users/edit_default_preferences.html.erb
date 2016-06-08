@@ -30,6 +30,15 @@
       </label>
       <% end %>
       <% end %>
+      <legend>Upon Transaction Payment Methods</legend>
+      <% @transactions.each do |transaction| %>
+        <%= fields_for "payment_upon_transaction_links[#{transaction.id}]", transaction do |link| %>
+          <% boo = !PaymentUponTransactionLink.where("user_id=? AND payment_upon_transaction_id=?", @user.id, transaction.id).first.nil? %>
+          <label class="pure-checkbox for=payment_method">
+            <%= link.check_box :id, checked: boo, class: "pure-checkbox" %> <%= transaction.method %>
+          </label>
+        <% end %>
+      <% end %>
       <%= f.submit "Save changes", class: "pure-button pure-button-primary" %>
     </fieldset>
     <% end %>

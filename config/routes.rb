@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get 'api/getMicropost'
   get 'api/isStreetAddress'
   get 'api/getLikes'
-
+  get 'api/getUsers'
   
   root 'static_pages#home'
   get 'help' =>  'static_pages#help'
@@ -29,6 +29,12 @@ Rails.application.routes.draw do
   resources :conversations do
     member do
       get :pull_messages
+    end
+  end
+
+  resources :groups do
+    member do
+      post :add_user
     end
   end
 
@@ -55,9 +61,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :products, only: [:new, :create, :show, :destroy, :edit, :update] do
+  resources :products, only: [:new, :show, :destroy, :edit, :update] do
     member do
-      get :edit_toggle_options, :edit_exchange_methods, :edit_payment_methods, :edit_selling_methods
       resources :pictures do
         member do
           post :add_cropped

@@ -26,6 +26,7 @@ gem 'dropzonejs-rails'
 gem 'paperclip'
 gem 'purecss-rails'
 gem 'fog'
+gem 'rails_autolink'
 
 group :development, :test do
   gem 'sqlite3'

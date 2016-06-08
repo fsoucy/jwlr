@@ -22,14 +22,7 @@
       <% end %>         
     
       <%= f.text_area :description, placeholder: 'Description of product', id: 'product_description', class: 'main_field' %>
-
-      <%= f.label :delivery_cost, "Planning on adding a delivery cost? Specify that here. If not, just leave this unchanged." %>
       
-      <% if @product.delivery_cost.nil? %>
-        $ <%= f.number_field :delivery_cost, value: current_user.default_delivery_cost %>
-      <% else %>
-        $ <%= f.number_field :delivery_cost %>
-      <% end %>
       <br>
       <button class="pure-button pure-button-primary product_next_main" type="button">Next</button>
       <br>
@@ -108,6 +101,14 @@
           <% end %>
         <% end %>
       <% end %>
+      <div class="delivery_cost">
+      <%= f.label :delivery_cost, "Delivery Cost" %>
+      <% if @product.delivery_cost.nil? %>
+        $ <%= f.number_field :delivery_cost, value: current_user.default_delivery_cost, id: "delivery_cost" %>
+      <% else %>
+        $ <%= f.number_field :delivery_cost, id: "delivery_cost" %>
+      <% end %>
+      </div>
       <br>
       <button class="pure-button pure-button-primary product_previous_exchange" type="button">Previous</button>
       <button class="pure-button pure-button-primary product_next_exchange" type="button">Next</button>

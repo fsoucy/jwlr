@@ -47,7 +47,16 @@ namespace :import_categories do
       PaymentMethod.create!(row.to_hash) unless !PaymentMethod.find_by(id: row.to_hash["id"]).nil?
     end
   end
-end 
+
+  task :create_payment_upon_transactions => :environment do
+    csv_text = File.read("paymentupontransactions.csv")
+    csv = CSV.parse(csv_text, :headers => true)
+    csv.each do |row|
+      PaymentUponTransaction.create!(row.to_hash) unless !PaymentUponTransaction.find_by(id: row.to_hash["id"]).nil?
+    end
+  end
+  
+end
 
 task :import_all => :environment do
   Rake.application.tasks.each do |task|

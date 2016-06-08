@@ -1,32 +1,42 @@
 function setMessages(message_data, append)
 {
-  var thing = message_data;
-  var mine = '<div class="message_list_mine">' + '<span class="message_text">' + thing[0] + '</span><img class="message_image" src="' + thing[3] + '"></div>';
-  var theirs = '<div class="message_list_theirs">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[0] + '</span></div>';
-  if(append)
-  {
-    if(window.myname == thing[1])
-    {
-      $('#messages').append(mine);
-    }
-    else
-    {
-      $('#messages').append(theirs);
-    }
-  }
-  else
-  {
-    if(window.myname == thing[1])
-    {
-      $('#messages').prepend(mine);
-    }
-    else
-    {
-      $('#messages').prepend(theirs);
-    }
-  }
-}
+    var thing = message_data;
+    debugger;
 
+    if (thing[4] == 0)
+    {
+	var mine = '<div class="message_list_mine">' + '<span class="message_text">' + urlify(thing[0]) + '</span><img class="message_image" src="' + thing[3] + '"></div>';
+	var theirs = '<div class="message_list_theirs">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + urlify(thing[0]) + '</span></div>';
+    }
+    else
+    {
+	var link = 'products/' + thing[4].toString();
+	var mine = '<div class="message_list_mine">' + '<span class="message_text">' + '<a href="' + link + '">' + thing[0] + '</a>' + '</span>' + '<img class="message_image" src="' + thing[3] + '"></div>';
+	var theirs = '<div class="message_list_theirs">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + '<a href="' + link + '">' + thing[0] + '</a></span>' + '</div>';
+    }
+    if(append)
+    {
+	if(window.myname == thing[1])
+	{
+	    $('#messages').append(mine);
+	}
+	else
+	{
+	    $('#messages').append(theirs);
+	}
+    }
+    else
+    {
+	if(window.myname == thing[1])
+	{
+	    $('#messages').prepend(mine);
+	}
+	else
+	{
+	    $('#messages').prepend(theirs);
+	}
+    }
+}
 
 function loadOnIndex(num_conversation, myname)
 {

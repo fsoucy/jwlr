@@ -20,7 +20,7 @@
   <%= link_to pluralize(@store.shares.count, "Share"), '', id: "shares_#{@store.class}_#{@store.id}_#{current_user.id}" %>
   </div>  
   <!--GALLERY--->
-  <div class="store_within store_gallery_within store_active">
+  <div class="store_within store_gallery_within">
     <div class="pure-g log-in">
       <div class="pure-u-1 store-divider">
 	<div class="inner">
@@ -162,6 +162,14 @@
 	<% else %>
 	<p>Store hasn't updated their hours of operation</p>
 	<% end %>
+  <h3 class="hoursofoperation">Allowed upon transaction payment methods</h3>
+  <% if @store.user.payment_upon_transactions.count > 0 %>
+    <p>
+      <% @store.user.payment_upon_transactions.each do |transaction| %>
+        <%= transaction.method %><br>
+      <% end %>
+    </p>
+  <% end %>
 	</div>
      </div>
 </div>

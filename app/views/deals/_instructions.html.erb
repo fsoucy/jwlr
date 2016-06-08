@@ -39,7 +39,7 @@
       <h3>Waiting for the the buyer to confirm the agreement.</h3>
     <% elsif current_user.id == @deal.buyer_id %>
       <h3>You will need to pick up the product from the seller at <%= @deal.product.full_street_address %>.</h3>
-      <h3>The store's hours of operation and other relevant information can be found <%= link_to "here", @deal.product.store %></h3>
+      <h3>The store's hours of operation and other relevant information can be found <%= link_to "here", store_path(@deal.product.store, :anchor => "about") %></h3>
     <% end %>
   <% elsif @deal.exchange_method.method == "Delivery" %>
     <% if current_user.id == @deal.seller_id %>
@@ -125,6 +125,10 @@
                 <h3>You have received your product.</h3>
               <% else %>
                 <h3>You have not received your product.</h3>
+                <% if @deal.exchange_method.method == "Pickup" %>
+                  <h3>You will need to pick up the product from the seller at <%= @deal.product.full_street_address %>.</h3>
+                  <h3>The store's hours of operation and other relevant information can be found <%= link_to "here", store_path(@deal.product.store, :anchor => "about") %></h3>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
@@ -133,6 +137,10 @@
             <h3>Let us know when you receive your payment.</h3>
           <% elsif current_user.id == @deal.buyer_id %>
             <h3>Let us know when you receive your product.</h3>
+            <% if @deal.exchange_method.method == "Pickup" && !@deal.product_received %>
+              <h3>You will need to pick up the product from the seller at <%= @deal.product.full_street_address %>.</h3>
+              <h3>The store's hours of operation and other relevant information can be found <%= link_to "here", store_path(@deal.product.store, :anchor => "about") %></h3>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>

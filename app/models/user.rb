@@ -43,6 +43,9 @@ class User < ActiveRecord::Base
   has_many :comments, dependent: :destroy
   has_many :shares, dependent: :destroy
 
+  has_many :groupings, class_name: "Groupmember", foreign_key: "user_id", dependent: :destroy
+  has_many :groups, through: :groupings
+
   def location_string
     address = Geocoder.search([self.latitude, self.longitude])
     address[0].city + ", " + address[0].state_code

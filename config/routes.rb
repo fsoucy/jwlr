@@ -32,6 +32,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :groups do
+    member do
+      post :add_user
+    end
+  end
+
   resources :messages
   resources :attribute_options, only: [:create, :destroy]
   resources :category_options, only: [:create, :destroy]

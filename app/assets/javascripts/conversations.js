@@ -1,30 +1,39 @@
 function setMessages(message_data, append)
 {
-  var thing = message_data;
-  var mine = '<div class="message_list_mine">' + '<span class="message_text">' + thing[0] + '</span><img class="message_image" src="' + thing[3] + '"></div>';
-  var theirs = '<div class="message_list_theirs">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[0] + '</span></div>';
-  if(append)
-  {
-    if(window.myname == thing[1])
+    var thing = message_data;
+    if (thing[4] == 0)
     {
-      $('#messages').append(mine);
+	var mine = '<div class="message_list_mine">' + '<span class="message_text">' + thing[0] + '</span><img class="message_image" src="' + thing[3] + '"></div>';
+	var theirs = '<div class="message_list_theirs">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + thing[0] + '</span></div>';
     }
     else
     {
-      $('#messages').append(theirs);
+	var link = 'products/' + thing[4].toString();
+	var mine = '<div class="message_list_mine">' + '<span class="message_text">' + '<a href="' + link + '">' + thing[0] + '</a>' + '</span>' + '<img class="message_image" src="' + thing[3] + '"></div>';
+	var theirs = '<div class="message_list_theirs">' + '<img class="message_image" src="' + thing[3] + '">' +  '<span class="message_text">' + '<a href="' + link + '">' + thing[0] + '</a></span>' + '</div>';
     }
-  }
-  else
-  {
-    if(window.myname == thing[1])
+    if(append)
     {
-      $('#messages').prepend(mine);
+	if(window.myname == thing[1])
+	{
+	    $('#messages').append(mine);
+	}
+	else
+	{
+	    $('#messages').append(theirs);
+	}
     }
     else
     {
-      $('#messages').prepend(theirs);
+	if(window.myname == thing[1])
+	{
+	    $('#messages').prepend(mine);
+	}
+	else
+	{
+	    $('#messages').prepend(theirs);
+	}
     }
-  }
 }
 
 

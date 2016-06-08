@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160606175533) do
+ActiveRecord::Schema.define(version: 20160608012443) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -202,9 +202,11 @@ ActiveRecord::Schema.define(version: 20160606175533) do
     t.integer  "conversation_id"
     t.integer  "sender_id"
     t.text     "content"
+    t.integer  "product_id"
   end
 
   add_index "messages", ["conversation_id"], name: "index_messages_on_conversation_id"
+  add_index "messages", ["product_id"], name: "index_messages_on_product_id"
   add_index "messages", ["sender_id"], name: "index_messages_on_sender_id"
 
   create_table "microposts", force: :cascade do |t|

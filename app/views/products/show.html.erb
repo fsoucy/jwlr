@@ -256,6 +256,18 @@
       <% end %>  
     <% end %>
     </p>
+    <% if !current_user?(@product.user) %>
+      <h2>Message this user</h2>
+      <%= form_for @message do |f| %>
+        <%= f.hidden_field :sender_id, value: current_user.id %>
+        <%= f.hidden_field :other_id, value: @product.user.id %>
+        <%= f.hidden_field :product_id, value: @product.id %>
+        <%= f.text_area :content, class: "message_input", placeholder: "Send a message" %>
+        <br>
+        <%= f.submit "Send message", class: "form_submit pure-button pure-button-primary" %>
+      <% end %>
+    <% end %>
+    
   </div>
 </div>
 

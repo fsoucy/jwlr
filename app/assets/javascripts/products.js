@@ -83,6 +83,18 @@ function deliveryAndPaypal()
     return correct;
 }
 
+function showDeliveryCost()
+{
+    if ($('#exchange_method_links_1_id').prop('checked'))
+    {
+	$('.delivery_cost').show();
+    }
+    else
+    {
+	$('.delivery_cost').hide();
+    }
+}
+
 function evaluatePicture()
 {
     if (productPicture())
@@ -118,7 +130,14 @@ function exchangeMethods()
 	    thing = true;
 	}
     });
-    return thing;
+    if ($('#exchange_method_links_1_id').prop('checked') && $('#delivery_cost').val().length == 0)
+    {
+	return false;
+    }
+    else
+    {
+	return thing;
+    }
 }
 
 function paymentMethods()
@@ -183,6 +202,19 @@ function evaluateSelling()
     evaluateSubmit();
 }
 
+function evaluateDelivery()
+{
+    if (!deliveryAndPaypal())
+    {
+	$('#deliveryAndPaypal').remove();
+	$('.content').prepend('<div class="alert alert-warning" id="deliveryAndPaypal"><h4>Delivery must be accompanied by Paypal. Please, either remove delivery or add Paypal as a payment method.</h4></div>');
+    }
+    else
+    {
+	$('#deliveryAndPaypal').remove();
+    }
+}
+
 function evaluateExchange()
 {
     if (exchangeMethods())
@@ -195,6 +227,7 @@ function evaluateExchange()
 	$('#exchange_methods_button').removeClass('complete').addClass('incomplete');
 	$('.product_next_exchange').addClass('not_ready');
     }
+    evaluateDelivery();
     evaluateSubmit();
 }
 
@@ -210,6 +243,7 @@ function evaluatePayment()
 	$('#payment_methods_button').removeClass('complete').addClass('incomplete');
 	$('.product_next_payment').addClass('not_ready');
     }
+    evaluateDelivery();
     evaluateSubmit();
 }
 function evaluateAll()
@@ -271,6 +305,7 @@ $(document).ready(function() {
     });
 
     $('.exchange_method').click(function() {
+	showDeliveryCost();
 	evaluateExchange();
     });
 
@@ -303,6 +338,10 @@ $(document).ready(function() {
     $('#dropper_button').click(function() {
 	$('.log-in-form fieldset').hide();
 	$('#dropper').show();
+    });
+
+    $(document).on('keyup', '#delivery_cost', function() {
+	evaluateExchange();
     });
 
     $(document).on('click', '.product_next_main', function() {
@@ -441,6 +480,7 @@ $('.magnifier').loupe({
     $('#selling_methods_form').hide();
     $('#exchange_methods_form').hide();
     $('#payment_methods_form').hide();
+    showDeliveryCost();
     $('#toggle_options_button').click(function() {
 	$('fieldset').hide();
 	$('#dropper').hide();

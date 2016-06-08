@@ -15,6 +15,7 @@
             <li class="pure-menu-item"><%= link_to "My Buying Deals", buying_user_path(current_user), class: 'pure-menu-link' %></li>
             <li class="pure-menu-item"><%= link_to "Notifications", notifications_path(current_user), class: 'pure-menu-link' %></li>
             <li class="pure-menu-item"><%= link_to "Messages", conversations_path, class: 'pure-menu-link' %></li>
+            <li class="pure-menu-item"><%= link_to "Groups", groups_path, class: 'pure-menu-link' %></li>
             <li class="pure-menu-item"><%= link_to "Log out", logout_path, method: "delete", class: 'pure-menu-link' %></li>
           <% else %>
             <li class="pure-menu-item"><%= link_to "Log in", login_path, class: 'pure-menu-link' %></li>

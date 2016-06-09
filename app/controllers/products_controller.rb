@@ -41,6 +41,16 @@ class ProductsController < ApplicationController
     if logged_in?
       @deal = current_user.buying_deals.build(seller_id: @product.user.id, product_id: @product.id)
       @current_user = current_user
+
+      if !current_user?(@product.user)
+        conversation = Conversation.where("first_user_id=? or first_user_id=? AND second_user_id=? or second_user_id=?", current_user.id, @product.user.id, current_user.id, @product.user.id)
+        if conversation.first.nil?
+          convo = Conversation.new(first_user_id: @product.user.id, second_user_id: current_user.id)
+        else
+          convo = conversation.first
+        end
+        @message = convo.messages.build(sender_id: current_user.id, product_id: @product.id)
+      end
     end
     @toggle_options = @product.toggle_options
     search = Sunspot.more_like_this(@product) do
@@ -61,16 +71,6 @@ class ProductsController < ApplicationController
       @distance_away = @product.distance_from(geocode)
     end
 
-    if !(current_user == @product.user)
-      conversation = Conversation.where("first_user_id=? or first_user_id=? AND second_user_id=? or second_user_id=?", current_user.id, @product.user.id, current_user.id, @product.user.id)
-      if conversation.first.nil?
-        convo = Conversation.new(first_user_id: @product.user.id, second_user_id: current_user.id)
-      else
-        convo = conversation.first
-      end
-      @message = convo.messages.build(sender_id: current_user.id, product_id: @product.id)
-    end
-    
     if logged_in?
       productview = current_user.productviews.find_by(product: @product)
       if productview.nil?

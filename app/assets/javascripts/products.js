@@ -1,3 +1,10 @@
+$(document).ready(function() {
+  if($(".shares").length)
+  {
+    $.getScript("//platform.twitter.com/widgets.js");
+    $.getScript("//assets.pinterest.com/js/pinit_main.js");
+  }
+});
 
 function getToggleOptions(category_id)
 {

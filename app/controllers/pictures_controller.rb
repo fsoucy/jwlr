@@ -31,7 +31,7 @@ class PicturesController < ApplicationController
 
   def destroy
     @picture = Picture.find(params[:id])
-    product = @picture.product
+    product = @picture.post
     if request.xhr?
       if @picture.destroy    
         render json: { message: "File deleted from server" }

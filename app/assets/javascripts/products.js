@@ -158,17 +158,43 @@ function ready()
     return mainDetails() && sellingMethods() && exchangeMethods() && paymentMethods() && productPicture() && deliveryAndPaypal();
 }
 
+function readyToSave()
+{
+    if (ready())
+    {
+	return true;
+    }
+    else
+    {
+	return mainDetails();
+    }
+}
+
 function evaluateSubmit()
 {
     if (ready())
     {
 	$('.submit_product').removeClass('not_ready');
 	$('.submit_product_picture').removeClass('not_ready');
+	$('.submit_product').prop('value', 'Submit product');
+	$('.submit_product_piture').prop('value', 'Submit product');
     }
     else
     {
-	$('.submit_product').addClass('not_ready');
-	$('.submit_product_picture').addClass('not_ready');
+	if (readyToSave())
+	{
+	    $('.submit_product').removeClass('not_ready');
+	    $('.submit_product_picture').removeClass('not_ready');
+	    $('.submit_product').prop('value', 'Save product');
+	    $('.submit_product_piture').prop('value', 'Save product');
+	}
+	else
+	{
+	    $('.submit_product').addClass('not_ready');
+	    $('.submit_product_picture').addClass('not_ready');
+	    $('.submit_product').prop('value', 'Save product');
+	    $('.submit_product_piture').prop('value', 'Save product');
+	}
     }
 }
 
@@ -429,7 +455,8 @@ $(document).ready(function() {
 
 
     $('.submit_product').click(function(e) {
-	var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods() && productPicture() && deliveryAndPaypal();
+	//var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods() && productPicture() && deliveryAndPaypal();
+	var forms = readyToSave();
 	if (!forms)
 	{
 	    e.preventDefault();

@@ -29,7 +29,13 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find_by(id: params[:id])
     if (!@product.activated and @product.user.id == current_user.id)
+      flash[:warning] = "Product not yet activated; you have remaining fields to fill out"
       redirect_to edit_product_path(@product)
+      return
+    end
+
+    if (!@product.activated and @product.user.id != current_user.id)
+      redirect_to @product.user
       return
     end
 

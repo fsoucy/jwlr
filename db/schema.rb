@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160608024626) do
-=======
-ActiveRecord::Schema.define(version: 20160607223414) do
->>>>>>> 524899cfd835ddb9e5c61c7532bc9bc3247b8698
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"

@@ -16,6 +16,7 @@ function getToggleOptions(category_id)
 	dataType: "json",
 	success: function (result) {
 	    $('.toggle_option_option').remove();
+	    $('.save_toggles').remove();
 	    $('.submit_toggles').remove();
 	    $('.toggle_option_select').remove();
 	    for(var i = 0; i < result.length; i++)
@@ -29,7 +30,8 @@ function getToggleOptions(category_id)
 	    $('#toggle_options_form').append("<br class='toggle_br'>");
 	    $('#toggle_options_form').append("<button class='pure-button pure-button-primary product_previous_toggle' type='button'>Previous</button>");
 	    $('#toggle_options_form').append("<button class='pure-button pure-button-primary product_next_toggle' type='button'>Next</button>");
-	    $('#toggle_options_form').append("<br class='toggle_br'><input type='submit' name='commit' value='Submit Toggle Options' class='pure-button pure-button-primary submit_product submit_toggles'>");
+	    $('#toggle_options_form').append("<br class='toggle_br'><input type='submit' name='commit' value='Save product' class='pure-button pure-button-primary save save_toggles'>"); 
+	    $('#toggle_options_form').append("<input type='submit' name='commit' value='Submit product' class='pure-button pure-button-primary submit_product submit_toggles'>");
 	    evaluateSubmit();
 	},
 	error: function (e){

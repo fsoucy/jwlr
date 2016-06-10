@@ -119,6 +119,12 @@
           <% elsif current_user.id == @deal.buyer_id %>
             <% if @deal.payment_complete %>
               <h3>You have completed your payment but you have not received your product.</h3>
+              <% if @deal.exchange_method.method == "Pickup" && !@deal.product_received %>
+                <h3>You will need to pick up the product from the seller at <%= @deal.product.full_street_address %>.</h3>
+                <h3>The store's hours of operation and other relevant information can be found <%= link_to "here", store_path(@deal.product.store, :anchor => "about") %></h3>
+              <% elsif @deal.exchange_method.method == "Meetup" && !@deal.product_received %>
+                <h3>Meet the seller at the location you agreed upon.</h3>
+              <% end %>
             <% else %>
               <h3>You have not completed your payment.</h3>
               <% if @deal.product_received %>

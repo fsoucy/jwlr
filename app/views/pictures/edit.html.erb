@@ -15,6 +15,7 @@
     <%= submit_tag "Done cropping", class: 'pure-button pure-button-primary' %>
     <%= link_to "Delete", @picture, method: :delete,
                                        data: { confirm: "Are you sure?" } %>
+    <%= link_to "Cancel", @picture.post %>
     <br>
     <button id="rotate_ccw" class= "pure-button pure-button-primary" type="button">Rotate counterclockwise</button>
     <button id="rotate_cw" class= "pure-button pure-button-primary" type="button">Rotate clockwise</button>

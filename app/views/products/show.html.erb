@@ -10,10 +10,10 @@
 	<div class="pure-u-1 pure-u-md-1-5 product_view pad-box">
   
   	<% if !@product.pictures.first.nil? %>
-  	  <a id="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
+  	  <a class="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
    		  <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "pad-box product_image pure-img" %>
   	  </a>
-  		<% if @product.user == current_user %>
+  		<% if current_user?(@product.user) and logged_in? %>
   		<%= link_to("Edit Picture", edit_picture_path(@product.pictures.first), class: 'product_edit' ) %>
   		<% end %>
   	<% end %>
@@ -26,8 +26,7 @@
   			<%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show" %>
   		<% end %>
 		<%= hidden_field_tag :mag, picture.photo_cropped(:large), { class: 'mag_link' } %>
-		<% if @product.user == current_user %>
-		
+		<% if current_user?(@product.user) %>
   		<%= hidden_field_tag :pathway, edit_picture_path(picture), { class: 'pathway' } %>
   		<% end %>
 	</div>
@@ -79,7 +78,7 @@
     <p>
 
     <% if !@product.sold && !@product.hold %>
-  		<% if @product.user == current_user %>
+  		<% if current_user?(@product.user) %>
         <%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
 					    data: { confirm: "Are you sure you wish to delete this?" } %>
   		  <br>
@@ -204,7 +203,7 @@
       <% end %>  
     <% end %>
     </p>
-    <% if !current_user?(@product.user) %>
+    <% if !current_user?(@product.user) and logged_in? %>
       <h2>Message this user</h2>
       <%= form_for @message do |f| %>
         <%= f.hidden_field :sender_id, value: current_user.id %>

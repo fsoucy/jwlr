@@ -30,7 +30,6 @@ class DealsController < ApplicationController
         @deal.proposed_price_accepted = true
       end
       if @deal.selling_method.method == "Negotiation"
-        @deal.user_proposed_price = 0.0
         @deal.proposed_price_accepted = false
       end
       @deal.save
@@ -178,7 +177,7 @@ class DealsController < ApplicationController
 
   private
   def deals_params
-    params.require(:deal).permit(:seller_id, :buyer_id, :product_id, :selling_method_id, :exchange_method_id, :payment_method_id) 
+    params.require(:deal).permit(:seller_id, :buyer_id, :product_id, :selling_method_id, :exchange_method_id, :payment_method_id, :user_proposed_price) 
   end
 
   def seller_params_unaccepted

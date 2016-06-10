@@ -9,6 +9,14 @@ class ProductsController < ApplicationController
     @payment_methods = PaymentMethod.all
     @exchange_methods = ExchangeMethod.all
     @product = current_user.products.build
+    @categories = []
+    Category.all.each do |cat|
+      if cat.children.count == 0
+        # do nothing
+      else
+        @categories.append(cat)
+      end
+    end
     @picture = Picture.new
     @product_activated = 0
     @has_picture = @product.pictures.count
@@ -108,6 +116,14 @@ class ProductsController < ApplicationController
     @exchange_methods = ExchangeMethod.all
     @product = Product.find(params[:id])
     @has_picture = @product.pictures.count
+    @categories = []
+    Category.all.each do |cat|
+      if cat.children.count == 0
+        # do nothing
+      else
+        @categories.append(cat)
+      end
+    end
     if @product.activated
       @product_activated = 1
     else

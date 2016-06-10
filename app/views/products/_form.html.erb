@@ -12,9 +12,15 @@
 
       $ <%= f.number_field :price, placeholder: 'Price', id: 'product_price', class: 'main_field' %>
 
-      <%= f.label :category_id, "Product Type" %>
-      <%= f.select :category_id, nested_dropdown(Category.where(:parent_id => nil), true), {}, { class: 'category_name' } %>
-      
+      <label for="parent_category_id">Category</label>
+      <select class="parent_category_name" name="parent_category_id">
+        <% @categories.each do |cat| %>
+          <option value="<%= cat.id %>"><%= cat.name %></option>
+        <% end %>
+      </select>
+
+      <label for="product_category_id">Product Type</label>
+      <select class="category_name" name="product[category_id]" id="product_category_id"></select>      
 
       <% if @has %>
         <%= f.label :store_id, "Store of Product" %>

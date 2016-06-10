@@ -29,6 +29,33 @@ function getToggleOptions(category_id)
     });
 }
 
+function reloadProductType(category_id)
+{
+    $.ajax({
+	type: "GET",// GET in place of POST
+	contentType: "application/json; charset=utf-8",
+	url: window.location.protocol + "//" + window.location.host + "/api/getChildrenCategories?id=" + category_id.toString(),
+	data: {},
+	dataType: "json",
+	success: function (result) {
+	    $('.category_name option').remove();
+	    for (var i = 0; i < result.length; i++)
+	    {
+		var thing = result[i];
+		var html = "<option value='" + thing["id"] + "'>" + thing["name"] + "</option>";
+		$('.category_name').append(html);
+	    }
+	},
+	error: function (e){
+	}
+    });
+}
+
+function getCategoryDropdown()
+{
+    reloadProductType(parseInt($('.parent_category_name').val()));
+}
+
 function addToggle(toggle_option)
 {
     var id = toggle_option["id"];
@@ -546,6 +573,10 @@ $(document).ready(function() {
 	$('#dropper').show();
     });
 
+    $(document).on('change', '.parent_category_name', function() {
+	getCategoryDropdown();
+    });
+
     $(document).on('click', '.deal_radio', function() {
 	checkDelivery();
 	checkPaypal();
@@ -711,6 +742,7 @@ $('.magnifier').loupe({
     defaultSelectedQuick();
     evaluateDealSubmit();
     evaluateDealSubmitQuick();
+    getCategoryDropdown();
     $('#toggle_options_button').click(function() {
 	$('fieldset').hide();
 	$('#dropper').hide();

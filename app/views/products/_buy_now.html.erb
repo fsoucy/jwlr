@@ -5,17 +5,23 @@
     <%= f.hidden_field :instant, value: 1 %>
     <%= f.hidden_field :selling_method_id, value: 2 %> <!-- Needs to be changed depending upon different selling methods -->
     <h3>Exchange Methods (choose one)</h3>
+    <% num_exchange = 1 %>
     <% @deal.product.exchange_method_links.each do |e| %>
       <% unless e.exchange_method.method == "Meetup" %>
-        <%= f.label :exchange_method, "#{e.exchange_method.method}", class: "pure-radio deal_exchange_label buy_now_radio" %>
-        <%= f.radio_button :exchange_method_id, e.exchange_method.id, class: "deal_exchange buy_now_radio" %>
+        <% str = "exchange_method_" + num_exchange.to_s %>
+        <% num_exchange += 1 %>
+        <%= f.label :exchange_method, "#{e.exchange_method.method}", class: "pure-radio deal_exchange_label_quick buy_now_radio" %>
+        <%= f.radio_button :exchange_method_id, e.exchange_method.id, class: "deal_exchange_quick buy_now_radio", id: str %>
         <br>
       <% end%>
     <% end %>
     <h3>Payment Methods (choose one)</h3>
+    <% num_payment = 1 %>
     <% @deal.product.payment_method_links.each do |p| %>
-      <%= f.label :payment_method, "#{p.payment_method.method}", class: "pure-radio deal_payment_label buy_now_radio" %>
-      <%= f.radio_button :payment_method_id, p.payment_method.id, class: "deal_payment buy_now_radio" %>
+      <% num_exchange += 1 %>
+      <% str = "payment_method_" + num_payment.to_s %>
+      <%= f.label :payment_method, "#{p.payment_method.method}", class: "pure-radio deal_payment_label_quick buy_now_radio" %>
+      <%= f.radio_button :payment_method_id, p.payment_method.id, class: "deal_payment_quick buy_now_radio", id: str %>
       <br>
     <% end %> 
     <%= f.hidden_field :product_id, value: @product.id %>

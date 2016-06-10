@@ -80,7 +80,7 @@ function defaultSelected()
     }
     if (countMethods('.deal_payment') == 1)
     {
-	$('deal_payment').prop('checked', true);
+	$('.deal_payment').prop('checked', true);
     }
 }
 
@@ -89,7 +89,7 @@ function defaultSelected()
 function checkDelivery()
 {
     var any_checked = false;
-    $('.deal_payment').each(function() {
+    $('.deal_payment_quick').each(function() {
 	if ($(this).prop('checked'))
 	{
 	    any_checked = true;

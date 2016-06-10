@@ -22,6 +22,8 @@ class GroupsController < ApplicationController
     @group = current_user.groups.build(user_id: current_user.id, name: params[:group][:name])
     if @group.save
       @group.add_user(current_user)
+      conversation = @group.conversations.new
+      conversation.save
       redirect_to groups_path
     else
      render 'new'

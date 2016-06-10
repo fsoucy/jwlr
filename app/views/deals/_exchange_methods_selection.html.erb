@@ -1,13 +1,11 @@
 <!-- Migrate all text information to instructions page -->
-
-
 <% if !@deal.proposed_price_accepted && @deal.selling_method.method == "Negotiation" %>
 
 <% elsif @deal.agreement_achieved %>
   <% if (@deal.exchange_method.method == "Delivery" || @deal.exchange_method.method == "Pickup") && current_user == @deal.buyer && !@deal.deal_complete %>
     <%= form_for @deal do |f| %>
       <%= f.hidden_field :exchange_agreement_buyer, value: false %>
-      <%= f.submit "Unconfirm exchange agreement", class: "pure-button pure-button-primary deals_form_button" %>
+      <%= f.submit "Unconfirm exchange agreement", class: "pure-button button-error deals_form_button" %>
     <% end %>
   <% end %> 
 
@@ -48,19 +46,19 @@
       <% else %>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_seller, value: false %>
-          <%= f.submit "Unconfirm meetup agreement", class: "pure-button pure-button-primary deals_form_button" %>
+          <%= f.submit "Unconfirm meetup agreement", class: "pure-button button-error deals_form_button" %>
         <% end %>
       <% end %>
     <% elsif current_user.id == @deal.buyer_id %>
-      <% if @deal.exchange_agreement_buyer %>
+      <% if !@deal.exchange_agreement_buyer %>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_buyer, value: true %>
           <%= f.submit "Confirm meetup agreement", class: "pure-button pure-button-primary deals_form_button" %>
         <% end %>
       <% else %>
-        <% form_for @deal do |f| %>
+        <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_buyer, value: false %>
-          <%= f.submit "Unconfirm meetup agreement", class: "pure-button pure-button-primary deals_form_button" %>
+          <%= f.submit "Unconfirm meetup agreement", class: "pure-button button-error deals_form_button" %>
         <% end %>
       <% end %>
     <% end %>

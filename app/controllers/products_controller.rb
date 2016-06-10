@@ -9,8 +9,17 @@ class ProductsController < ApplicationController
     @payment_methods = PaymentMethod.all
     @exchange_methods = ExchangeMethod.all
     @product = current_user.products.build
+    @categories = []
+    Category.all.each do |cat|
+      if cat.children.count == 0
+        # do nothing
+      else
+        @categories.append(cat)
+      end
+    end
     @picture = Picture.new
-
+    @product_activated = 0
+    @has_picture = @product.pictures.count
     if current_user.stores.length > 0
       @has = true
       stos = Array.new
@@ -29,7 +38,13 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find_by(id: params[:id])
     if (!@product.activated and @product.user.id == current_user.id)
+      flash[:warning] = "Product not yet activated; you have remaining fields to fill out"
       redirect_to edit_product_path(@product)
+      return
+    end
+
+    if (!@product.activated and @product.user.id != current_user.id)
+      redirect_to @product.user
       return
     end
 
@@ -100,6 +115,20 @@ class ProductsController < ApplicationController
     @payment_methods = PaymentMethod.all
     @exchange_methods = ExchangeMethod.all
     @product = Product.find(params[:id])
+    @has_picture = @product.pictures.count
+    @categories = []
+    Category.all.each do |cat|
+      if cat.children.count == 0
+        # do nothing
+      else
+        @categories.append(cat)
+      end
+    end
+    if @product.activated
+      @product_activated = 1
+    else
+      @product_activated = 0
+    end
     if @product.hold && @product.activated
       if @product.deals.count == 0
         redirect_to @product

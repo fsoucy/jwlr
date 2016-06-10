@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'api/getMicropost'
   get 'api/isStreetAddress'
   get 'api/getLikes'
+  get 'api/getChildrenCategories'
   get 'api/getUsers'
   
   root 'static_pages#home'

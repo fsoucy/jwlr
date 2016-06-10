@@ -16,6 +16,7 @@ function getToggleOptions(category_id)
 	dataType: "json",
 	success: function (result) {
 	    $('.toggle_option_option').remove();
+	    $('.save_toggles').remove();
 	    $('.submit_toggles').remove();
 	    $('.toggle_option_select').remove();
 	    for(var i = 0; i < result.length; i++)
@@ -29,12 +30,40 @@ function getToggleOptions(category_id)
 	    $('#toggle_options_form').append("<br class='toggle_br'>");
 	    $('#toggle_options_form').append("<button class='pure-button pure-button-primary product_previous_toggle' type='button'>Previous</button>");
 	    $('#toggle_options_form').append("<button class='pure-button pure-button-primary product_next_toggle' type='button'>Next</button>");
-	    $('#toggle_options_form').append("<br class='toggle_br'><input type='submit' name='commit' value='Submit Toggle Options' class='pure-button pure-button-primary submit_product submit_toggles'>");
+	    $('#toggle_options_form').append("<br class='toggle_br'><input type='submit' name='commit' value='Save product' class='pure-button pure-button-primary save save_toggles'>"); 
+	    $('#toggle_options_form').append("<input type='submit' name='commit' value='Submit product' class='pure-button pure-button-primary submit_product submit_toggles'>");
 	    evaluateSubmit();
 	},
 	error: function (e){
 	}
     });
+}
+
+function reloadProductType(category_id)
+{
+    $.ajax({
+	type: "GET",// GET in place of POST
+	contentType: "application/json; charset=utf-8",
+	url: window.location.protocol + "//" + window.location.host + "/api/getChildrenCategories?id=" + category_id.toString(),
+	data: {},
+	dataType: "json",
+	success: function (result) {
+	    $('.category_name option').remove();
+	    for (var i = 0; i < result.length; i++)
+	    {
+		var thing = result[i];
+		var html = "<option value='" + thing["id"] + "'>" + thing["name"] + "</option>";
+		$('.category_name').append(html);
+	    }
+	},
+	error: function (e){
+	}
+    });
+}
+
+function getCategoryDropdown()
+{
+    reloadProductType(parseInt($('.parent_category_name').val()));
 }
 
 function addToggle(toggle_option)
@@ -77,7 +106,7 @@ function toggleOptions()
 
 function productPicture()
 {
-    return $('.dz-success').length > 0 || $('.edit').val() === "true" ;
+    return $('.dz-success').length > 0 || parseInt($('#has_picture').val()) > 0;
 }
 
 function deliveryAndPaypal()
@@ -160,13 +189,27 @@ function paymentMethods()
     return thing;
 }
 
+
 function ready()
 {
     return mainDetails() && sellingMethods() && exchangeMethods() && paymentMethods() && productPicture() && deliveryAndPaypal();
 }
 
+function readyToSave()
+{
+    if (ready())
+    {
+	return true;
+    }
+    else
+    {
+	return mainDetails();
+    }
+}
+
 function evaluateSubmit()
 {
+    evaluateSave();
     if (ready())
     {
 	$('.submit_product').removeClass('not_ready');
@@ -264,6 +307,194 @@ function evaluateAll()
     $('#toggle_options_button').addClass('complete');
 }
 
+function evaluateDealSubmitQuick()
+{
+    if ((evaluateDealSellingQuick() && evaluateDealExchangeQuick() && evaluateDealPaymentQuick()))
+    {
+	$('.in_quick_buy').removeClass("not_ready");
+    }
+    else
+    {
+	$('.in_quick_buy').addClass("not_ready");
+    }
+}
+
+function evaluateDealSellingQuick()
+{
+    return true;
+}
+
+function evaluateDealExchangeQuick()
+{
+    var filled = false;
+    $('.deal_exchange_quick').each(function() {
+	if ($(this).prop('checked'))
+	{
+	    filled = true;
+	}
+    });
+    return filled;
+}
+
+function evaluateDealPaymentQuick()
+{
+    var filled = false;
+    $('.deal_payment_quick').each(function() {
+	if ($(this).prop('checked'))
+	{
+	    filled = true;
+	}
+    });
+    return filled;
+}
+
+function evaluateDealSubmit()
+{
+    if (evaluateDealSelling() && evaluateDealExchange() && evaluateDealPayment())
+    {
+	$('.product_show_initiate_deal').removeClass('not_ready');
+    }
+    else
+    {
+	$('.product_show_initiate_deal').addClass('not_ready');
+    }
+}
+
+function evaluateDealSelling()
+{
+    var filled = false;
+    $('.deal_selling').each(function() {
+	if ($(this).prop('checked'))
+	{
+	    filled = true;
+	}
+    });
+    if ($('#deal_selling_method_id_3').prop('checked') && $('#deal_user_proposed_price').val().length == 0)
+    {
+	filled = false;
+    }
+    return filled;
+}
+
+function evaluateDealExchange()
+{
+    var filled = false;
+    $('.deal_exchange').each(function() {
+	if ($(this).prop('checked'))
+	{
+	    filled = true;
+	}
+    });
+    return filled;
+}
+
+function evaluateDealPayment()
+{
+    var filled = false;
+    $('.deal_payment').each(function() {
+	if ($(this).prop('checked'))
+	{
+	    filled = true;
+	}
+    });
+    return filled;
+}
+
+function addInactivePaymentQuick()
+{
+    $('.deal_payment_quick').addClass("inactive_form_element");
+    $('.deal_payment_label_quick').addClass("inactive_form_element");
+    $('#payment_method_1').removeClass("inactive_form_element");
+    $('#payment_method_1').prev().removeClass("inactive_form_element");
+}
+
+function removeInactivePaymentQuick()
+{
+    $('.deal_payment_quick').removeClass("inactive_form_element");
+    $('.deal_payment_label_quick').removeClass("inactive_form_element");
+}
+
+function addInactiveDeliveryQuick()
+{
+    $('#exchange_method_1').addClass("inactive_form_element");
+    $('#exchange_method_1').prev().addClass("inactive_form_element");
+}
+
+function removeInactiveDeliveryQuick()
+{
+    $('#exchange_method_1').removeClass("inactive_form_element");
+    $('#exchange_method_1').prev().removeClass("inactive_form_element");
+}
+
+function defaultSelectedQuick()
+{
+    if (countMethods('.deal_selling_quick') == 1)
+    {
+	$('.deal_selling_quick').prop('checked', true);
+    }
+    if (countMethods('.deal_exchange_quick') == 1)
+    {
+	$('.deal_exchange_quick').prop('checked', true);
+    }
+    if (countMethods('.deal_payment_quick') == 1)
+    {
+	$('.deal_payment_quick').prop('checked', true);
+    }
+}
+
+function checkPaypalQuick()
+{
+    if ($('#exchange_method_1').prop('checked'))
+    {
+	addInactivePaymentQuick();
+    }
+    else
+    {
+	removeInactivePaymentQuick();
+    }
+}
+
+function checkDeliveryQuick()
+{
+    console.log('triggered');
+    var any_checked = false;
+    $('.deal_payment_quick').each(function() {
+	if ($(this).prop('checked'))
+	{
+	    any_checked = true;
+	}
+    });
+    if (!($('#payment_method_1').prop('checked')) && any_checked)
+    {
+	addInactiveDeliveryQuick();
+    }
+    else
+    {
+	removeInactiveDeliveryQuick();
+    }
+}
+
+function evaluateSave()
+{
+    console.log('happened');
+    if (ready() || parseInt($('#activated').val()) > 0)
+    {
+	$('.save').hide();
+    }
+    else
+    {
+	$('.save').show();
+    }
+    if (readyToSave())
+    {
+	$('.save').removeClass("not_ready");
+    }
+    else
+    {
+	$('.save').addClass("not_ready");
+    }
+}
+
 $(document).ready(function() {
     $('.cropped_show').click(function() {
 	    smallImage = $(this).attr('src');
@@ -293,6 +524,11 @@ $(document).ready(function() {
     });
 
     $('.submit_product_picture').click(function(e) {
+	e.preventDefault();
+	$('.submit_product').trigger('click');
+    });
+
+    $('.submit_prod_picture').click(function(e) {
 	e.preventDefault();
 	$('.submit_product').trigger('click');
     });
@@ -351,6 +587,28 @@ $(document).ready(function() {
 	$('.log-in-form fieldset').hide();
 	$('#dropper').show();
     });
+
+    $(document).on('change', '.parent_category_name', function() {
+	getCategoryDropdown();
+    });
+
+    $(document).on('click', '.deal_radio', function() {
+	checkDelivery();
+	checkPaypal();
+	evaluateDealSubmit();
+    });
+
+    $(document).on('keyup', '#deal_user_proposed_price', function() {
+	evaluateDealSubmit();
+    });
+
+    $(document).on('click', '.buy_now_radio', function() {
+	checkDeliveryQuick();
+	checkPaypalQuick();
+	evaluateDealSubmitQuick();
+    });
+
+    
 
     $(document).on('keyup', '#delivery_cost', function() {
 	evaluateExchange();
@@ -431,14 +689,16 @@ $(document).ready(function() {
 	    $('.deal_extended').hide();
 	    $(this).addClass("in_quick_buy");
 	}
+	evaluateDealSubmitQuick();
     });
 
     $(document).on('click', '.leave_quick_buy', function() {
 	$('.quick_buy_information').hide();
 	$('.in_quick_buy').addClass("quick_buy").removeClass("in_quick_buy");
 	$('.deal_extended').show();
+	evaluateDealSubmitQuick();
     });
-
+    
 
     $('.submit_product').click(function(e) {
 	var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods() && productPicture() && deliveryAndPaypal();
@@ -487,6 +747,11 @@ $('.magnifier').loupe({
     $('#exchange_methods_form').hide();
     $('#payment_methods_form').hide();
     showDeliveryCost();
+    defaultSelected();
+    defaultSelectedQuick();
+    evaluateDealSubmit();
+    evaluateDealSubmitQuick();
+    getCategoryDropdown();
     $('#toggle_options_button').click(function() {
 	$('fieldset').hide();
 	$('#dropper').hide();

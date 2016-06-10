@@ -79,8 +79,14 @@ class StaticPagesController < ApplicationController
       end
 
       @feed_items = @feed_items.sort_by(&:updated_at).reverse.paginate(:page => page, :per_page => per_page)
-    
-      @conversations = Conversation.where("first_user_id = ? OR second_user_id = ?", current_user.id, current_user.id).order(updated_at: :desc)
+
+      conversations_group = Array.new
+      current_user.groups.each do |group|
+        conversations_group.append(group.conversations.first)
+      end
+      conversations_normal = Conversation.where('second_user_id = ? OR first_user_id = ?', current_user.id, current_user.id).order(updated_at: :desc).all
+      @conversations = conversations_group + conversations_normal
+      @conversations = @conversations.sort_by{ |convo| -convo.updated_at.to_time.to_i }
     end
     @for_you = [] if @for_you.nil?
     @featured = [] if @featured.nil?

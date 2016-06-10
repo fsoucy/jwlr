@@ -12,6 +12,7 @@ class StoresController < ApplicationController
       flash[:success] = "Store created!"
 	    redirect_edit_times(@store)
     else
+      flash[:warning] = "Please fill out all the fields."
       render 'stores/new'
     end
   end

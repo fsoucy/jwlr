@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   has_many :messages, class_name: "Message", foreign_key: "sender", dependent: :destroy
   has_many :buying_deals, class_name: "Deal", foreign_key: "buyer_id", dependent: :destroy
   has_many :selling_deals, class_name: "Deal", foreign_key: "seller_id", dependent: :destroy
-  has_attached_file :profile_picture, :convert_options => { :medium => '-gravity center -extent 300x300', :thumb => '-gravity center -extent 200x200', :thumbnail => '-gravity center -extent 50x50', :all => '-strip -quality 100 -alpha remove -background white' }, :styles => { :medium => ["300x300>", :png], :thumb => ["200x200>", :png], :thumbnail => ["50x50>", :png] }, default_url: "/assets/missing_:style.jpg"
+  has_attached_file :profile_picture, :convert_options => { :medium => '-gravity center -crop 300x300+0+0', :thumb => '-gravity center -crop 200x200+0+0', :thumbnail => '-gravity center -crop 50x50+0+0', :all => '-strip -quality 100 -alpha remove -background white' }, :styles => { :medium => ["300x300^", :png], :thumb => ["200x200^", :png], :thumbnail => ["50x50^", :png] }, default_url: "/assets/missing_:style.jpg"
   validates_attachment :profile_picture, :presence => true, :content_type => { :content_type => /\Aimage\/.*\Z/ }, :size => { :less_than => 10.megabyte }
   has_many :microposts, dependent: :destroy
   
@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
   def score
     reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("user_id != ? and deals.seller_id = ? or deals.buyer_id = ?", self.id, self.id, self.id)
     if reviews.count > 0
-      (reviews.select{|a| a.verdict == "Positive"}.count / reviews.count) * 100
+      ((reviews.select{|a| a.verdict == "Positive"}.count.to_f / reviews.count) * 100).to_i
     else
       return 0
     end

@@ -80,7 +80,7 @@ function defaultSelected()
     }
     if (countMethods('.deal_payment') == 1)
     {
-	$('deal_payment').prop('checked', true);
+	$('.deal_payment').prop('checked', true);
     }
 }
 
@@ -89,7 +89,7 @@ function defaultSelected()
 function checkDelivery()
 {
     var any_checked = false;
-    $('.deal_payment').each(function() {
+    $('.deal_payment_quick').each(function() {
 	if ($(this).prop('checked'))
 	{
 	    any_checked = true;
@@ -221,6 +221,10 @@ function addRedirectButton() //if necessary of course
 $(document).ready(function() {
     $('.selection').hide();
     $('.method_selection').show();
+
+    $(document).on('click', '.not_ready', function(e) {
+	e.preventDefault();
+    });
 
     $(document).on('click', '.inactive_form_element', function(e) {
 	e.preventDefault();

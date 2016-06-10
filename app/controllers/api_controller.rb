@@ -28,7 +28,23 @@ class ApiController < ApplicationController
     render json: returning.to_json, status: 200
   end
   
-
+  def getChildrenCategories
+    category = Category.find_by_id(params[:id])
+    if !category.nil?
+      returning = Array.new
+      categories = category.children
+      categories.each do |cat|
+        values = {}
+        values["name"] = cat.name
+        values["id"] = cat.id
+        returning.append(values)
+      end
+      render json: returning.to_json, status: 200
+    else
+      render json: nil, status: 400
+    end
+  end
+  
   def getToggleOptions
     category = Category.find_by_id(params[:id])
     if !category.nil?

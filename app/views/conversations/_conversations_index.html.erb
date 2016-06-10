@@ -3,16 +3,20 @@
     <div class="convo_index_page">
       <a href="<%= conversations_url(id: conversation.id) %>">
         <p>
-          <% if conversation.first_user_id == current_user.id %>
-            <%= image_tag conversation.second_user.profile_picture(:thumbnail) %>
-            <%= conversation.second_user.name %>
+          <% if conversation.group.nil? %>
+           <% if conversation.first_user_id == current_user.id %>
+              <%= image_tag conversation.second_user.profile_picture(:thumbnail) %>
+              <%= conversation.second_user.name %>
+            <% else %>
+              <%= image_tag conversation.first_user.profile_picture(:thumbnail) %>
+              <%= conversation.first_user.name %>
+            <% end %>
           <% else %>
-            <%= image_tag conversation.first_user.profile_picture(:thumbnail) %>
-            <%= conversation.first_user.name %>
+            <%= conversation.group.name %>
           <% end %>
           <br>
           <% message = conversation.messages.order(created_at: :desc).limit(1).first %>
-          <%= message.content.truncate(20) %>
+          <%= message.content.truncate(20) unless message.nil? %>
           <br>
           <%= time_ago_in_words(conversation.updated_at) + " ago" %>
         </p>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608024626) do
+ActiveRecord::Schema.define(version: 20160610153801) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 20160608024626) do
     t.integer  "first_user_id"
     t.integer  "second_user_id"
     t.boolean  "active"
+    t.integer  "group_id"
   end
 
   add_index "conversations", ["first_user_id"], name: "index_conversations_on_first_user_id"

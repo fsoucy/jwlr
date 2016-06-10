@@ -222,6 +222,10 @@ $(document).ready(function() {
     $('.selection').hide();
     $('.method_selection').show();
 
+    $(document).on('click', '.not_ready', function(e) {
+	e.preventDefault();
+    });
+
     $(document).on('click', '.inactive_form_element', function(e) {
 	e.preventDefault();
     });

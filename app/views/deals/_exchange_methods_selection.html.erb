@@ -5,7 +5,7 @@
   <% if (@deal.exchange_method.method == "Delivery" || @deal.exchange_method.method == "Pickup") && current_user == @deal.buyer && !@deal.deal_complete %>
     <%= form_for @deal do |f| %>
       <%= f.hidden_field :exchange_agreement_buyer, value: false %>
-      <%= f.submit "Unconfirm exchange agreement", class: "pure-button pure-button-primary deals_form_button" %>
+      <%= f.submit "Unconfirm exchange agreement", class: "pure-button button-error deals_form_button" %>
     <% end %>
   <% end %> 
 
@@ -46,7 +46,7 @@
       <% else %>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_seller, value: false %>
-          <%= f.submit "Unconfirm meetup agreement", class: "pure-button pure-button-primary deals_form_button" %>
+          <%= f.submit "Unconfirm meetup agreement", class: "pure-button button-error deals_form_button" %>
         <% end %>
       <% end %>
     <% elsif current_user.id == @deal.buyer_id %>
@@ -58,7 +58,7 @@
       <% else %>
         <%= form_for @deal do |f| %>
           <%= f.hidden_field :exchange_agreement_buyer, value: false %>
-          <%= f.submit "Unconfirm meetup agreement", class: "pure-button pure-button-primary deals_form_button" %>
+          <%= f.submit "Unconfirm meetup agreement", class: "pure-button button-error deals_form_button" %>
         <% end %>
       <% end %>
     <% end %>

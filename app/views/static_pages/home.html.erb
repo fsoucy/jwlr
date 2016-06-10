@@ -29,7 +29,7 @@
         <div class="pure-g">
           <% current_user.following.each do |follower| %>
             <div class="pure-u-1-3 pure-u-md-1-6">
-              <a href="<%= user_path(follower) %>"><%= image_tag follower.profile_picture(:thumb), class: "pure-img" %></a>
+              <a href="<%= user_path(follower) %>"><%= image_tag follower.profile_picture(:thumbnail), class: "pure-img" %></a>
             </div>
           <% end %>
         </div>

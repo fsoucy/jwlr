@@ -1,4 +1,18 @@
 class ApiController < ApplicationController
+  
+  def getUsers
+    search = User.search do
+      fulltext params[:search_string] do
+        boost_fields :name => 3.0
+      end
+      paginate :page => 1, :per_page => 10
+      order_by(:score, :desc)
+      order_by_geodist :location, current_user.latitude, current_user.longitude
+    end
+    
+    result = search.results.map{|e| {id: e.id, name: e.name, profile_picture: e.profile_picture(:thumbnail), following: current_user.following?(e)}}
+    render json: result.to_json, status: 200
+  end
 
   def isStreetAddress
     location = Geocoder.search params[:dropoff]

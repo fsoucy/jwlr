@@ -51,7 +51,7 @@ class PicturesController < ApplicationController
 
   def edit
     @picture = Picture.find(params[:id])
-    if @picture.photo.path.nil?
+    if Rails.env.production?
       img = MiniMagick::Image.open(@picture.photo.url)
     else
       img = MiniMagick::Image.open(@picture.photo.path)
@@ -70,7 +70,7 @@ class PicturesController < ApplicationController
 
   def add_cropped
     @picture = Picture.find(params[:id])
-    if @picture.photo.path.nil?
+    if Rails.env.production?
       img = MiniMagick::Image.open(@picture.photo.url)
     else
       img = MiniMagick::Image.open(@picture.photo.path)

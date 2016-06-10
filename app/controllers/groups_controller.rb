@@ -19,10 +19,12 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = current_user.groups.build(group_params)
+    @group = current_user.groups.build(user_id: current_user.id, name: params[:group][:name])
     if @group.save
       @group.add_user(current_user)
-      redirect_to @group
+      conversation = @group.conversations.new
+      conversation.save
+      redirect_to groups_path
     else
      render 'new'
     end
@@ -32,13 +34,13 @@ class GroupsController < ApplicationController
     group = Group.find(params[:id])
     group.destroy
     flash[:success] = "Group deleted"
-    redirect_to root_url
+    redirect_to groups_path
   end
 
   def update
     @group = Group.find(params[:id])
     if @group.update_attributes(group_params)
-      redirect_to @group
+      redirect_to groups_path
     else
       render 'edit'
     end
@@ -46,7 +48,7 @@ class GroupsController < ApplicationController
 
   def add_user
     group = Group.find(params[:id])
-    member = group.members.find_or_initilize_by(user_id: params[:user_id])
+    member = group.members.find_or_initialize_by(user_id: params[:user_id])
     if member.persisted?
       member.destroy
       render json: nil, status: 200
@@ -65,7 +67,7 @@ class GroupsController < ApplicationController
 
   def correct_user
     @group = Group.find(params[:id])
-    if !current_user?(@group.owner)
+    if !current_user?(@group.user)
       redirect_to root_url
     end  
   end

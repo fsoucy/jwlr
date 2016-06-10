@@ -1,0 +1,54 @@
+.user * {
+  display: inline-block !important;
+  vertical-align: bottom !important;
+}
+
+.user {
+  width: 100%;
+  display: block;
+  height: 5em;
+}
+
+.user button {
+  float: right;
+  margin: 0.25em;
+}
+
+.user a {
+  float: left;
+  padding-left: 0.5em;
+}
+
+.user img {
+  float: left;
+}
+
+.users-list {
+  overflow-y: scroll;
+  border: 1px solid #5a8693;
+  background-color: white;
+}
+
+.users-list input {
+  width: 100%;
+}
+
+.groups-list {
+  background-color: white;
+  overflow-y: scroll;
+  height: 43vh;
+}
+
+.groups-list h3 {
+  color: #00A8E8 !important;
+}
+
+.group h3 {
+  color: #00171F !important;
+}
+
+.group {
+  border: 1px solid #00171F;
+  padding: 1em;
+  margin-bottom: 0.25em;
+}

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'api/isStreetAddress'
   get 'api/getLikes'
   get 'api/getChildrenCategories'
+  get 'api/getUsers'
   
   root 'static_pages#home'
   get 'help' =>  'static_pages#help'

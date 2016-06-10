@@ -29,18 +29,35 @@ class ConversationsController < ApplicationController
   end
 
   def index
-    @message_edit = true
-    @conversations = Conversation.where("first_user_id = ? OR second_user_id = ?", current_user.id, current_user.id).order(updated_at: :desc)
+    @message_edit = true   
+    conversations_group = Array.new
+    current_user.groups.each do |group|
+      conversations_group.append(group.conversations.first)
+    end
+    conversations_normal = Conversation.where('second_user_id = ? OR first_user_id = ?', current_user.id, current_user.id).order(updated_at: :desc).all
+    @conversations = conversations_group + conversations_normal
+    @conversations = @conversations.sort_by{ |convo| -convo.updated_at.to_time.to_i }
   end
 
   def conversations_index
-    @conversations = Conversation.where("first_user_id = ? OR second_user_id = ?", current_user.id, current_user.id).order(updated_at: :desc)
+    conversations_group = Array.new
+    current_user.groups.each do |group|
+      conversations_group.append(group.conversations.first)
+    end
+    conversations_normal = Conversation.where('second_user_id = ? OR first_user_id = ?', current_user.id, current_user.id).order(updated_at: :desc).all
+    @conversations = conversations_group + conversations_normal
+    @conversations = @conversations.sort_by{ |convo| -convo.updated_at.to_time.to_i }
   end
 
   private
     
     def correct_user
       conversation = Conversation.find(params[:id])
+      if !conversation.group.nil?
+        if conversation.group.user_member?(current_user)
+          return true
+        end
+      end
       if !(current_user.id == conversation.first_user_id || current_user.id == conversation.second_user_id) 
         redirect_to root_url
       end

@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
   def score
     reviews = Review.joins("INNER JOIN deals ON deals.id = reviews.deal_id").where("user_id != ? and deals.seller_id = ? or deals.buyer_id = ?", self.id, self.id, self.id)
     if reviews.count > 0
-      ((reviews.select{|a| a.verdict == "Positive"}.count.to_f / reviews.count) * 100) % 10
+      ((reviews.select{|a| a.verdict == "Positive"}.count.to_f / reviews.count) * 100).to_i
     else
       return 0
     end

@@ -133,7 +133,7 @@ class ProductsController < ApplicationController
       if @product.deals.count == 0
         redirect_to @product
       else
-        redirect_to @product.deal
+        redirect_to @product.deals.first
       end
     end
     if current_user.stores.length > 0

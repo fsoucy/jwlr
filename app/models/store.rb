@@ -8,7 +8,7 @@ class Store < ActiveRecord::Base
   has_many :shares, as: :post, dependent: :destroy
   geocoded_by :full_street_address
   after_validation :geocode
-  has_attached_file :profile_picture, :styles => { :medium => ["300x300>", :png], :thumb => ["200x200>", :png], :thumbnail => ["50x50>", :png] }, default_url: "/assets/missing_:style.jpg"
+  has_attached_file :profile_picture, :convert_options => { :medium => '-extent 300x300', :thumb => '-extent 200x200', :thumbnail => '-extent 50x50', :all => '-gravity center -strip -quality 100 -alpha remove -background white' }, :styles => { :medium => ["300x300>", :png], :thumb => ["200x200>", :png], :thumbnail => ["50x50>", :png] }, default_url: "/assets/missing_:style.jpg"
   validates_attachment :profile_picture, :presence => true, :content_type => { :content_type => /\Aimage\/.*\Z/ }, :size => { :less_than => 10.megabyte }
 
   def selected_times

@@ -10,7 +10,8 @@ class ProductsController < ApplicationController
     @exchange_methods = ExchangeMethod.all
     @product = current_user.products.build
     @picture = Picture.new
-
+    @product_activated = 0
+    @has_picture = @product.pictures.count
     if current_user.stores.length > 0
       @has = true
       stos = Array.new
@@ -106,6 +107,12 @@ class ProductsController < ApplicationController
     @payment_methods = PaymentMethod.all
     @exchange_methods = ExchangeMethod.all
     @product = Product.find(params[:id])
+    @has_picture = @product.pictures.count
+    if @product.activated
+      @product_activated = 1
+    else
+      @product_activated = 0
+    end
     if @product.hold && @product.activated
       if @product.deals.count == 0
         redirect_to @product

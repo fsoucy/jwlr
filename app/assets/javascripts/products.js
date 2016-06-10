@@ -1,4 +1,3 @@
-
 function getToggleOptions(category_id)
 {
     $.ajax({
@@ -70,7 +69,7 @@ function toggleOptions()
 
 function productPicture()
 {
-    return $('.dz-success').length > 0 || $('.edit').val() === "true" ;
+    return $('.dz-success').length > 0 || parseInt($('#has_picture').val()) > 0;
 }
 
 function deliveryAndPaypal()
@@ -173,29 +172,16 @@ function readyToSave()
 
 function evaluateSubmit()
 {
+    evaluateSave();
     if (ready())
     {
 	$('.submit_product').removeClass('not_ready');
 	$('.submit_product_picture').removeClass('not_ready');
-	$('.submit_product').prop('value', 'Submit product');
-	$('.submit_product_piture').prop('value', 'Submit product');
     }
     else
     {
-	if (readyToSave())
-	{
-	    $('.submit_product').removeClass('not_ready');
-	    $('.submit_product_picture').removeClass('not_ready');
-	    $('.submit_product').prop('value', 'Save product');
-	    $('.submit_product_piture').prop('value', 'Save product');
-	}
-	else
-	{
-	    $('.submit_product').addClass('not_ready');
-	    $('.submit_product_picture').addClass('not_ready');
-	    $('.submit_product').prop('value', 'Save product');
-	    $('.submit_product_piture').prop('value', 'Save product');
-	}
+	$('.submit_product').addClass('not_ready');
+	$('.submit_product_picture').addClass('not_ready');
     }
 }
 
@@ -451,6 +437,27 @@ function checkDeliveryQuick()
     }
 }
 
+function evaluateSave()
+{
+    console.log('happened');
+    if (ready() || parseInt($('#activated').val()) > 0)
+    {
+	$('.save').hide();
+    }
+    else
+    {
+	$('.save').show();
+    }
+    if (readyToSave())
+    {
+	$('.save').removeClass("not_ready");
+    }
+    else
+    {
+	$('.save').addClass("not_ready");
+    }
+}
+
 $(document).ready(function() {
     $('.cropped_show').click(function() {
 	console.log('hi');
@@ -475,6 +482,11 @@ $(document).ready(function() {
     });
 
     $('.submit_product_picture').click(function(e) {
+	e.preventDefault();
+	$('.submit_product').trigger('click');
+    });
+
+    $('.submit_prod_picture').click(function(e) {
 	e.preventDefault();
 	$('.submit_product').trigger('click');
     });
@@ -643,8 +655,7 @@ $(document).ready(function() {
     
 
     $('.submit_product').click(function(e) {
-	//var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods() && productPicture() && deliveryAndPaypal();
-	var forms = readyToSave();
+	var forms = mainDetails() && paymentMethods() && sellingMethods() && exchangeMethods() && productPicture() && deliveryAndPaypal();
 	if (!forms)
 	{
 	    e.preventDefault();

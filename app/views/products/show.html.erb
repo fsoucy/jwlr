@@ -10,7 +10,7 @@
 	<div class="pure-u-1 pure-u-md-1-5 product_view pad-box">
   
   	<% if !@product.pictures.first.nil? %>
-  	  <a id="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
+  	  <a class="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
    		  <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "pad-box product_image pure-img" %>
   	  </a>
   		<% if current_user?(@product.user) and logged_in? %>

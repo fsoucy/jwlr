@@ -266,19 +266,24 @@ function evaluateAll()
 
 $(document).ready(function() {
     $('.cropped_show').click(function() {
-	console.log('hi');
-	smallImage = $(this).attr('src');
-	smallLink = $(this).siblings('.pathway').val();
-	$('.cropped_show').removeClass('pic_active');
-	$(this).addClass('pic_active');
+	    smallImage = $(this).attr('src');
+	    smallLink = $(this).siblings('.pathway').val();
+	    $(this).parent().siblings().children("img").removeClass('pic_active');
+	    $(this).addClass('pic_active');
 
 
-	$('.product_image').attr('src', smallImage.replace('thumbnail', 'medium'));
-	$('#magnifier').next().attr('href', smallLink);
-	var picLink = $(this).siblings('.mag_link').val();
+	    $(this).parent().siblings(".magnifier").children('.product_image').attr('src', smallImage.replace('thumbnail', 'medium'));
+	    $(this).parent().siblings(".magnifier").next().attr('href', smallLink);
+	    var picLink = $(this).siblings('.mag_link').val();
 	
-	$('#magnifier').attr('href', picLink);
-	$('.loupe img').attr('src', $('#magnifier').attr('href'));
+	    $(this).parent().siblings(".magnifier").attr('href', picLink);
+      $(".loupe").remove();
+      $(".magnifier").data("loupe", null);
+      $(".magnifier").loupe({
+        width: 300, // width of magnifier
+        height: 300, // height of magnifier
+        loupe: 'loupe' // css class for magnifier
+      });
     });
 
     $('.category_name').change(function() {
@@ -470,12 +475,6 @@ $(document).ready(function() {
 	}
 	
     });
-
-$('#magnifier').loupe({
-  width: 600, // width of magnifier
-  height: 600, // height of magnifier
-  loupe: 'loupe' // css class for magnifier
-});
 
 $('.magnifier').loupe({
   width: 300, // width of magnifier

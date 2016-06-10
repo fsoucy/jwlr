@@ -1,7 +1,6 @@
 function setMessages(message_data, append)
 {
     var thing = message_data;
-    debugger;
 
     if (thing[4] == 0)
     {
@@ -228,8 +227,11 @@ $(document).ready(function()
         
     $(document).on('click', '#message_submit', function(event) {
 	event.preventDefault();
-	$.post('/messages', $('#message_form').serialize());
-	refreshMessages();
+  if($('#message_form').children("input[type=text]").val().trim() != "")
+  {
+	  $.post('/messages', $('#message_form').serialize());
+	}
+  refreshMessages();
 	$('.message_container').scrollTop(10000000);
 	$('#message_input').val('');
 

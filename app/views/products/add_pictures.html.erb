@@ -1,5 +1,9 @@
 <% if @picture.nil? %>
-  <h1>Hi</h1>
+  <% @product.user.pictures.each do |pic| %>
+    <%= image_tag pic.photo_cropped(:medium), class: "pad-box product_image pure-img" %>    
+    <%= hidden_field_tag :pic_id, pic.id %>
+    <button class="pure-button pure-button-primary">Use image</button>
+  <% end %>
 <% else %>
   <div class="picture">
     <div class="modal-body">
@@ -21,8 +25,11 @@
                                        data: { confirm: "Are you sure?" } %>
       <%= link_to "Cancel", @product %>
       <br>
+      <br>
       <button id="rotate_ccw" class= "pure-button pure-button-primary" type="button">Rotate counterclockwise</button>
       <button id="rotate_cw" class= "pure-button pure-button-primary" type="button">Rotate clockwise</button>
+      <br>
+      <button class="pure-button button-error" type="button">Go back</button>
     </div>
   </div>
 <% end %>

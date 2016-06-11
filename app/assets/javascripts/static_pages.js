@@ -32,8 +32,11 @@ $(document).ready(function(){
       var dropzone = this;
       $('#new_micropost').submit(function(event) {
         event.preventDefault();
+        if(!dropzone.getQueuedFiles().length)
+        { 
+          location.reload();
+        }
         $.ajax({url: '/microposts', type: 'POST', context: this, data: $(this).serialize(), success: function(data) {
-          debugger;
           dropzone.options.url = '/microposts/' + data.id + '/pictures';
           dropzone.options.params = {post_type: "Micropost"};
           dropzone.options.autoProcessQueue = true;

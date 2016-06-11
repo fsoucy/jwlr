@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment, :share, :show]
-  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment, :share]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment, :share, :show, :wishlist, :save_product]
+  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment, :share, :save_product]
   before_action :admin_user, only: :destroy  
   
   def new
@@ -173,6 +173,30 @@ class UsersController < ApplicationController
     end
 
     render json: nil, status: 200
+  end
+
+  def wishlist
+    @saved_products = current_user.saved_products.all
+  end
+
+  def save_product
+    product = Product.find(params[:product_id])
+    if product.nil?
+      render json: nil, status: 400 
+    else
+      product = current_user.saved_products.find_by(product_id: params[:product_id])
+      if product.nil?
+        product = current_user.saved_products.build(product_id: params[:product_id])
+        if product.save
+          render json: nil, status: 200
+        else
+          render json: nil, status: 400
+        end
+      else
+        product.destroy
+        render json: nil, status: 200
+      end
+    end
   end
 
   private

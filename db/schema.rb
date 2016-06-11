@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610153801) do
+ActiveRecord::Schema.define(version: 20160611190029) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -356,6 +356,17 @@ ActiveRecord::Schema.define(version: 20160610153801) do
   add_index "reviews", ["deal_id"], name: "index_reviews_on_deal_id"
   add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
 
+  create_table "saved_products", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "saved_products", ["product_id"], name: "index_saved_products_on_product_id"
+  add_index "saved_products", ["user_id", "product_id"], name: "index_saved_products_on_user_id_and_product_id", unique: true
+  add_index "saved_products", ["user_id"], name: "index_saved_products_on_user_id"
+
   create_table "search_relationships", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "search_id"
@@ -391,6 +402,15 @@ ActiveRecord::Schema.define(version: 20160610153801) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "settings", force: :cascade do |t|
+    t.string   "attribute"
+    t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "settings", ["attribute"], name: "index_settings_on_attribute", unique: true
 
   create_table "shares", force: :cascade do |t|
     t.integer  "post_id"
@@ -505,12 +525,12 @@ ActiveRecord::Schema.define(version: 20160610153801) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "full_street_address"
-    t.integer  "business_days_pickup"
-    t.decimal  "default_delivery_cost"
     t.text     "interests"
     t.integer  "products_bought"
     t.integer  "products_sold"
     t.text     "identifies_as"
+    t.integer  "business_days_pickup"
+    t.decimal  "default_delivery_cost"
     t.string   "profile_picture_file_name"
     t.string   "profile_picture_content_type"
     t.integer  "profile_picture_file_size"

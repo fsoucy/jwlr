@@ -48,6 +48,8 @@ class User < ActiveRecord::Base
   has_many :groupings, class_name: "Groupmember", foreign_key: "user_id", dependent: :destroy
   has_many :groups, through: :groupings
 
+  has_many :saved_products, dependent: :destroy
+  
   searchable do
     text :name
     text :email

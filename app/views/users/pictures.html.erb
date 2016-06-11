@@ -1,0 +1,4 @@
+<h1>Pictures</h1>
+<% @pictures.each do |pic| %>
+  <%= image_tag pic.photo_cropped(:medium), class: "pad-box product_image pure-img" %>
+<% end %>

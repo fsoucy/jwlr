@@ -278,6 +278,51 @@ class ProductsController < ApplicationController
     end
   end
 
+  def add_pictures
+    @product = Product.find(params[:id])
+    if params[:picture_id]
+      @picture = Picture.find_by(id: params[:picture_id])
+      @picture = @product.user.pictures.first
+      if Rails.env.production?
+        img = MiniMagick::Image.open(@picture.photo.url)
+      else
+        img = MiniMagick::Image.open(@picture.photo.path)
+      end
+      maxDim = img.height
+      maxDim = img.width unless img.height > img.width
+      @factor = 600.0 / maxDim
+    else
+      @picture = nil
+    end
+  end
+
+  def add_cropped
+    @product = Product.find(params[:id])
+    @picture = Picture.find(params[:picture_id])
+    if Rails.env.production?
+      img = MiniMagick::Image.open(@picture.photo.url)
+    else
+      img = MiniMagick::Image.open(@picture.photo.path)
+    end
+    maxDim = img.height
+    maxDim = img.width unless img.height > img.width
+    scale = maxDim / 600.0
+    toCropX = params[:x].to_f * scale
+    toCropY = params[:y].to_f * scale
+    rotation = params[:rotate].to_f
+    size = "" + params[:width] + "x" + params[:height] + "+"
+    cropString = size + toCropX.to_s + "+" + toCropY.to_s
+    img.rotate(rotation)
+    img.crop(cropString)
+    @new_picture = @product.pictures.build
+    @new_picture.photo = File.open(img.path)
+    @new_picture.photo_cropped = @new_picture.photo
+    @new_picture.save
+    @new_picture.photo_cropped.reprocess!
+    @new_picture.save
+    redirect_to @new_picture.post
+  end
+
   private
   def product_params
     params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title, :min_accepted_price, :delivery_cost, :hold, :sold)

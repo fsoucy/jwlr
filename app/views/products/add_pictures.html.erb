@@ -1,0 +1,28 @@
+<% if @picture.nil? %>
+  <h1>Hi</h1>
+<% else %>
+  <div class="picture">
+    <div class="modal-body">
+      <%= image_tag @picture.photo(:original), :id => "image", :class => "my_cropper_img pan_cropper_img" %>
+    </div>
+
+    <%= form_tag add_cropped_product_path(@product.id), :method => "Post" %>
+    <%= hidden_field_tag :x, 0 %>
+    <%= hidden_field_tag :y, 0 %>
+    <%= hidden_field_tag :width, 300 %>
+    <%= hidden_field_tag :height, 300 %>
+    <%= hidden_field_tag :rotate, 0 %>
+    <%= hidden_field_tag :picture_id, @picture.id %>
+    <%= hidden_field_tag :factor, @factor %>
+    
+    <div class="submit_the_form">
+      <%= submit_tag "Done cropping", class: 'pure-button pure-button-primary' %>
+      <%= link_to "Delete", @picture, method: :delete,
+                                       data: { confirm: "Are you sure?" } %>
+      <%= link_to "Cancel", @product %>
+      <br>
+      <button id="rotate_ccw" class= "pure-button pure-button-primary" type="button">Rotate counterclockwise</button>
+      <button id="rotate_cw" class= "pure-button pure-button-primary" type="button">Rotate clockwise</button>
+    </div>
+  </div>
+<% end %>

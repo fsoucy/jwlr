@@ -10,6 +10,30 @@ class UsersController < ApplicationController
   def index
     @users = User.all.paginate(page: params[:page], per_page: 5)
   end
+
+  def new_picture
+    @picture = Picture.new
+  end
+
+  def upload_picture
+    if User.find(params[:id]).pictures.count < 8
+      @picture = User.find(params[:id]).pictures.build(picture_params)
+      if @picture.save
+        render json: { message: "success", fileID: @picture.id }, :status => 200
+        @picture.photo_cropped = @picture.photo
+        @picture.save
+        @picture.user.save
+      else
+        render json: { error: @picture.errors.full_messages.join(',')}, :status => 400
+      end
+    else
+      render json: { error: "Maxiumum picture count of 8 reached" }, :status => 400
+    end
+  end
+
+  def pictures
+    @pictures = User.find(params[:id]).pictures
+  end
   
   def show
     @user = User.find(params[:id])

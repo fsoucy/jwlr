@@ -92,7 +92,7 @@
           <h3>Recommended users to follow</h3>
           <div id="user_list" class="user_list pad-box">
             <% @recommended_users.each do |user| %>
-              <% if current_user.id != user[:id] %>
+              <% if current_user.id != user[:id] and !user[:following] %>
                 <div class="user">
                   <img class="pure-img" src="<%= user[:profile_picture] %>">
                   <a href="/users/<%= user[:id] %>">

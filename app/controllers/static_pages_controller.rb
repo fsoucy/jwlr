@@ -80,7 +80,7 @@ class StaticPagesController < ApplicationController
 
       @feed_items = @feed_items.sort_by(&:updated_at).reverse.paginate(:page => page, :per_page => per_page)
 
-      if @feed_items.length < 5
+      if @feed_items.length < 5 and page == 1
         search = User.search do
         order_by_geodist :location, current_user.latitude, current_user.longitude
         paginate :page => 1, :per_page => 10

@@ -282,7 +282,6 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     if params[:picture_id]
       @picture = Picture.find_by(id: params[:picture_id])
-      @picture = @product.user.pictures.first
       if Rails.env.production?
         img = MiniMagick::Image.open(@picture.photo.url)
       else

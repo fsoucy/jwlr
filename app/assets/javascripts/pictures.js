@@ -101,4 +101,17 @@ $(document).ready(function(){
 	$('#rotate').val(angle);
     })
 
+    $('.choose_picture').click(function() {
+	var id = $(this).siblings('.choose_picture_id').val();
+	var str = "?picture_id=" + id;
+	var url = window.location.href;
+	window.location.href = url + str;
+    });
+
+    $('.choose_picture_return').click(function() {
+	var str = window.location.href;
+	var index = str.indexOf("?");
+	var loc = str.substring(0, index);
+	window.location.href = loc;
+    });
 });

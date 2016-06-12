@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
     text :email
     text :full_street_address
     boolean :admin
+    boolean :activated
     integer :id
     latlon(:location) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
   end

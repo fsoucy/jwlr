@@ -80,6 +80,7 @@ class StaticPagesController < ApplicationController
       if @feed_items.length < 5 and page == 1
         search = User.search do
         order_by_geodist :location, current_user.latitude, current_user.longitude
+        with :activated, true
         paginate :page => 1, :per_page => 10
         end
 

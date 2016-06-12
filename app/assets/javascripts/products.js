@@ -528,6 +528,14 @@ $(document).ready(function() {
 	$('.submit_product').trigger('click');
     });
 
+    $('#pan_img').click(function(e) {
+	e.preventDefault();
+	$('#has_picture').val('1');
+	$('#product_redirect_pictures').val('1');
+	evaluateSubmit();
+	$('.submit_product').trigger('click');
+    });
+
     $('.submit_prod_picture').click(function(e) {
 	e.preventDefault();
 	$('.submit_product').trigger('click');

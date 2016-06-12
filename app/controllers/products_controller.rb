@@ -228,6 +228,7 @@ class ProductsController < ApplicationController
           @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
         end
       end
+
       
       has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links.count > 0 && @product.payment_method_links.count > 0
       if !@product.store.nil?
@@ -235,6 +236,14 @@ class ProductsController < ApplicationController
       elsif @product.full_street_address.nil?
         @product.full_street_address = @product.user.full_street_address
       end
+
+      debugger
+      if params[:product][:redirect_pictures].to_i == 1
+        @product.save
+        redirect_to add_pictures_product_path(@product.id)
+        return
+      end
+      
       if @product.save
         if params[:product][:on_deals]
           deal = Deal.find(params[:product][:deal_id])
@@ -313,12 +322,14 @@ class ProductsController < ApplicationController
     cropString = size + toCropX.to_s + "+" + toCropY.to_s
     img.rotate(rotation)
     img.crop(cropString)
+    debugger
     @new_picture = @product.pictures.build
     @new_picture.photo = File.open(img.path)
     @new_picture.photo_cropped = @new_picture.photo
+
     @new_picture.save
-    @new_picture.photo_cropped.reprocess!
-    @new_picture.save
+    @product.save
+
     redirect_to @new_picture.post
   end
 

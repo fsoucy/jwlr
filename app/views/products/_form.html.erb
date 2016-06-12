@@ -7,7 +7,7 @@
     <fieldset id="product_form">
       <legend>Upload Product</legend>
       <%= render 'shared/error_messages', object: f.object %>
-    
+      <%= f.hidden_field :redirect_pictures, value: 0 %>
       <%= f.text_field :title, placeholder: 'Title', id: 'product_title', class: 'main_field' %>
 
       $ <%= f.number_field :price, placeholder: 'Price', id: 'product_price', class: 'main_field' %>

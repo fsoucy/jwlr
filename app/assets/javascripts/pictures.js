@@ -105,7 +105,10 @@ $(document).ready(function(){
 	var id = $(this).siblings('.choose_picture_id').val();
 	var str = "?picture_id=" + id;
 	var url = window.location.href;
-	window.location.href = url + str;
+	var loc = url + str;// + " .inner_pan_cropper";
+	window.location.href = loc;
+	//$('.pan_cropper').load(loc, function() {
+	//});
     });
 
     $('.choose_picture_return').click(function() {
@@ -114,4 +117,5 @@ $(document).ready(function(){
 	var loc = str.substring(0, index);
 	window.location.href = loc;
     });
+
 });

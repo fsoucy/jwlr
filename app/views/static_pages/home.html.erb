@@ -87,6 +87,28 @@
         <% end %>
         <% item_number += 1 %>      
       <% end %>
+      <% if !@recommended_users.nil? %>
+        <div class="feed_item">
+          <h3>Recommended users to follow</h3>
+          <div id="user_list" class="user_list pad-box">
+            <% @recommended_users.each do |user| %>
+              <% if current_user.id != user[:id] and !user[:following] %>
+                <div class="user">
+                  <img class="pure-img" src="<%= user[:profile_picture] %>">
+                  <a href="/users/<%= user[:id] %>">
+                    <h4><%= user[:name] %></h4>
+                  </a>
+                  <% following_text = "Follow" %>
+                  <% if user[:following] %>
+                    <% following_text = "Unfollow" %>
+                  <% end %>
+                  <button class="pure-button" id="follow_<%= user[:id] %>"><%= following_text %></button>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
       </div>
     </div>
     <div class="pure-u-1 pure-u-md-1-4 fixed">

@@ -76,6 +76,15 @@
       <h1><%= @product.user.name %></h1>
     <% end %>
     <p>
+    
+    <% if logged_in? %>
+      <% if current_user.saved_products.find_by(product_id: @product.id).nil? %>
+        <button class="pure-button pure-button-primary" id="save_product_<%= @product.id %>_<%= current_user.id %>">Add to wishlist</button>
+      <% else %>
+        <button class="pure-button pure-button-primary" id="save_product_<%= @product.id %>_<%= current_user.id %>">Remove from wishlist</button>
+      <% end %>
+    <% end %>
+    <br>
 
     <% if !@product.sold && !@product.hold %>
   		<% if current_user?(@product.user) %>

@@ -39,9 +39,6 @@ class StaticPagesController < ApplicationController
       @for_you = results
       @feed_items = Array.new
 
-      @micropost = current_user.microposts.find_or_initialize_by(content: " ")
-      @micropost.save      
-      
       page = params[:page].to_i     
       page = 1 if page < 1
       per_page = 15
@@ -79,6 +76,16 @@ class StaticPagesController < ApplicationController
       end
 
       @feed_items = @feed_items.sort_by(&:updated_at).reverse.paginate(:page => page, :per_page => per_page)
+
+      if @feed_items.length < 5 and page == 1
+        search = User.search do
+        order_by_geodist :location, current_user.latitude, current_user.longitude
+        with :activated, true
+        paginate :page => 1, :per_page => 10
+        end
+
+        @recommended_users = search.results.map{|e| {id: e.id, name: e.name, profile_picture: e.profile_picture(:thumbnail), following: current_user.following?(e)}}
+      end
 
       conversations_group = Array.new
       current_user.groups.each do |group|

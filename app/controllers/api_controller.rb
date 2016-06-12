@@ -5,6 +5,7 @@ class ApiController < ApplicationController
       fulltext params[:search_string] do
         boost_fields :name => 3.0
       end
+      with :activated, true
       paginate :page => 1, :per_page => 10
       order_by(:score, :desc)
       order_by_geodist :location, current_user.latitude, current_user.longitude

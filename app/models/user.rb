@@ -48,12 +48,15 @@ class User < ActiveRecord::Base
   has_many :groupings, class_name: "Groupmember", foreign_key: "user_id", dependent: :destroy
   has_many :groups, through: :groupings
   has_many :pictures, as: :post, dependent: :destroy
+
+  has_many :saved_products, dependent: :destroy
   
   searchable do
     text :name
     text :email
     text :full_street_address
     boolean :admin
+    boolean :activated
     integer :id
     latlon(:location) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
   end

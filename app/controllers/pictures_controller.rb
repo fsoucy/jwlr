@@ -120,12 +120,18 @@ class PicturesController < ApplicationController
     def correct_user
       if params[:post_type] == "Micropost"
         post = current_user.microposts
+        exist = post.exists?(params[:id])
+        redirect_to root_url if !exist
+      elsif params[:post_type] == "User"
+        post = current_user
+        exist = current_user?(User.find_by(id: params[:id]))
+        redirect_to root_url if !exist
       else
         post = current_user.products
+        exist = post.exists?(params[:id])
+        redirect_to root_url if !exist
       end
 
-      post = post.exists?(params[:id])
-      redirect_to root_url if !post
     end
 
     def correct_user_picture

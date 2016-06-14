@@ -59,8 +59,6 @@ $(document).ready(function(){
 	  init: function() {
 	    var dropzone = this;
 	    dropzone.options.params = {post_type: "User"};
-	    dropzone.on('queuecomplete', function() {
-	    });
 	  }
   });
-});
+});    

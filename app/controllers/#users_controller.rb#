@@ -28,7 +28,7 @@ class UsersController < ApplicationController
       end
     else
       render json: { error: "Maxiumum picture count of 8 reached" }, :status => 400
-    end
+1;2c    end
   end
 
   def pictures
@@ -86,9 +86,9 @@ class UsersController < ApplicationController
         render 'edit'
       end
     else
-      DefaultSellingMethodLink.where("user_id=?", @user.id).destroy_all
+      DefaultSellingMethodLinkk.where("user_id=?", @user.id).destroy_all
       DefaultExchangeMethodLink.where("user_id=?", @user.id).destroy_all
-      DefaultPaymentMethodLink.where("user_id=?", @user.id).destroy_all
+      DefaultPaymentMethodLink.where("user_id=?". @user.id).destroy_all
       PaymentUponTransactionLink.where("user_id=?", @user.id).destroy_all
       params[:selling_method_links].each do |method, value|
         if value["id"].to_i == 1

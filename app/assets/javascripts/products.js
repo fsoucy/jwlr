@@ -63,7 +63,10 @@ function reloadProductType(category_id)
 
 function getCategoryDropdown()
 {
-    reloadProductType(parseInt($('.parent_category_name').val()));
+    if ($('.parent_category_name').length > 0)
+    {
+	reloadProductType(parseInt($('.parent_category_name').val()));
+    }
 }
 
 function addToggle(toggle_option)
@@ -497,24 +500,27 @@ function evaluateSave()
 
 $(document).ready(function() {
     $('.cropped_show').click(function() {
-	    smallImage = $(this).attr('src');
-	    smallLink = $(this).siblings('.pathway').val();
-	    $(this).parent().siblings().children("img").removeClass('pic_active');
-	    $(this).addClass('pic_active');
-
-
-	    $(this).parent().siblings(".magnifier").children('.product_image').attr('src', smallImage.replace('thumbnail', 'medium'));
-	    $(this).parent().siblings(".magnifier").next().attr('href', smallLink);
-	    var picLink = $(this).siblings('.mag_link').val();
+	var smallImage = $(this).attr('src');
+	var smallLink = $(this).siblings('.pathway').val();
+	var deleteLink = $(this).siblings('.delete_pathway').val();
 	
-	    $(this).parent().siblings(".magnifier").attr('href', picLink);
-      $(".loupe").remove();
-      $(".magnifier").data("loupe", null);
-      $(".magnifier").loupe({
-        width: 300, // width of magnifier
-        height: 300, // height of magnifier
-        loupe: 'loupe' // css class for magnifier
-      });
+	$(this).parent().siblings().children("img").removeClass('pic_active');
+	$(this).addClass('pic_active');
+	
+	
+	$(this).parent().siblings(".magnifier").children('.product_image').attr('src', smallImage.replace('thumbnail', 'medium'));
+	$(this).parent().siblings('.product_edit').attr('href', smallLink);
+	$(this).parent().siblings(".product_delete").attr('href', deleteLink);
+	var picLink = $(this).siblings('.mag_link').val();
+	
+	$(this).parent().siblings(".magnifier").attr('href', picLink);
+	$(".loupe").remove();
+	$(".magnifier").data("loupe", null);
+	$(".magnifier").loupe({
+            width: 300, // width of magnifier
+            height: 300, // height of magnifier
+            loupe: 'loupe' // css class for magnifier
+	});
     });
 
     $('.category_name').change(function() {
@@ -525,6 +531,14 @@ $(document).ready(function() {
 
     $('.submit_product_picture').click(function(e) {
 	e.preventDefault();
+	$('.submit_product').trigger('click');
+    });
+
+    $('.pan_img').click(function(e) {
+	e.preventDefault();
+	$('#has_picture').val('1');
+	$('#product_redirect_pictures').val('1');
+	evaluateSubmit();
 	$('.submit_product').trigger('click');
     });
 
@@ -631,7 +645,28 @@ $(document).ready(function() {
 	if (toggleOptions())
 	{
 	    $('#toggle_options_form').hide();
-	    $('#selling_methods_form').show();
+	    if (sellingMethods())
+	    {
+		if (exchangeMethods())
+		{
+		    if (paymentMethods())
+		    {
+			$('#dropper').show();
+		    }
+		    else
+		    {
+			$('#payment_methods_form').show();
+		    }
+		}
+		else
+		{
+		    $('#exchange_methods_form').show();
+		}
+	    }
+	    else
+	    {
+		$('#selling_methods_form').show();
+	    }
 	}
     });
     
@@ -644,7 +679,21 @@ $(document).ready(function() {
 	if (sellingMethods())
 	{
 	    $('#selling_methods_form').hide();
-	    $('#exchange_methods_form').show();
+	    if (exchangeMethods())
+	    {
+		if (paymentMethods())
+		{
+		    $('#dropper').show();
+		}
+		else
+		{
+		    $('#payment_methods_form').show();
+		}
+	    }
+	    else
+	    {
+		$('#exchange_methods_form').show();
+	    }
 	}
     });
 
@@ -657,7 +706,14 @@ $(document).ready(function() {
 	if (exchangeMethods())
 	{
 	    $('#exchange_methods_form').hide();
-	    $('#payment_methods_form').show();
+	    if (paymentMethods())
+	    {
+		$('#dropper').show();
+	    }
+	    else
+	    {
+		$('#payment_methods_form').show();
+	    }
 	}
     });
 
@@ -746,15 +802,14 @@ $('.magnifier').loupe({
     $('#selling_methods_form').hide();
     $('#exchange_methods_form').hide();
     $('#payment_methods_form').hide();
-    if (2 == 3)
-    {
-	showDeliveryCost();
-	defaultSelected();
-	defaultSelectedQuick();
-	evaluateDealSubmit();
-	evaluateDealSubmitQuick();
-	getCategoryDropdown();
-    }
+
+
+    showDeliveryCost();
+    defaultSelected();
+    defaultSelectedQuick();
+    evaluateDealSubmit();
+    evaluateDealSubmitQuick();
+    getCategoryDropdown();
     $('#toggle_options_button').click(function() {
 	$('fieldset').hide();
 	$('#dropper').hide();

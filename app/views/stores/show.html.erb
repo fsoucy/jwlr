@@ -79,6 +79,7 @@
 	    <%= form_for @message do |f| %>
 	    <%= f.hidden_field :sender_id, value: current_user.id %>
 	    <%= f.hidden_field :other_id, value: @store.user.id %>
+      <%= f.hidden_field :group_id, value: "" %>
 	    <%= f.text_area :content, class: "message_input", placeholder: "Send a message" %>
 	    <br>
 	    <%= f.submit "Send message", class: "form_submit pure-button pure-button-primary" %>

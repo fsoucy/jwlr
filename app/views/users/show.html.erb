@@ -21,6 +21,8 @@
       <%= link_to "Edit your description", edit_description_user_path(@user.id) %>
       <br>
       <%= link_to "Edit default selling, payment, and exchange methods", edit_default_preferences_user_path(@user.id) %>
+      <br>
+      <%= link_to "Multiple product image upload", new_picture_user_path(@user.id) %>
       <% end %>
     <p>Reputation: <%= @user.score %>% positive reviews</p>
     <p>Products sold: <%= Deal.where("deal_complete = ? and seller_id = ?", true, @user.id).count %></p>
@@ -110,6 +112,7 @@
       <%= form_for @message do |f| %>
         <%= f.hidden_field :sender_id, value: current_user.id %>
         <%= f.hidden_field :other_id, value: @user.id %>
+        <%= f.hidden_field :group_id, value: "" %>
         <%= f.text_area :content, class: "message_input", placeholder: "Send a message" %>
         <br>
         <%= f.submit "Send message", class: "form_submit pure-button pure-button-primary" %>

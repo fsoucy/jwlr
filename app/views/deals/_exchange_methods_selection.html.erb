@@ -1,5 +1,5 @@
 <!-- Migrate all text information to instructions page -->
-<% if !@deal.proposed_price_accepted && @deal.selling_method.method == "Negotiation" %>
+<% if !@deal.proposed_price_accepted && !@deal.selling_method.nil? && @deal.selling_method.method == "Negotiation" %>
 
 <% elsif @deal.agreement_achieved %>
   <% if (@deal.exchange_method.method == "Delivery" || @deal.exchange_method.method == "Pickup") && current_user == @deal.buyer && !@deal.deal_complete %>

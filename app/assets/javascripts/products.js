@@ -498,6 +498,18 @@ function evaluateSave()
     }
 }
 
+function evaluateUponTransaction()
+{
+    if ($("#payment_method_links_2_id").prop('checked'))
+    {
+	$('#upon_transaction').show();
+    }
+    else
+    {
+	$('#upon_transaction').hide();
+    }
+}
+
 $(document).ready(function() {
     $('.cropped_show').click(function() {
 	var smallImage = $(this).attr('src');
@@ -735,6 +747,10 @@ $(document).ready(function() {
 	$('#payment_methods_form').show();
     });
 
+    $(document).on('click', '#payment_method_links_2_id', function() {
+	evaluateUponTransaction();
+    });
+
     $('.quick_buy_information').hide();
     $(document).on('click', '.quick_buy', function(e) {
 	if ($('.buy_now_radio').length > 0)
@@ -810,6 +826,7 @@ $('.magnifier').loupe({
     evaluateDealSubmit();
     evaluateDealSubmitQuick();
     getCategoryDropdown();
+    evaluateUponTransaction();
     $('#toggle_options_button').click(function() {
 	$('fieldset').hide();
 	$('#dropper').hide();

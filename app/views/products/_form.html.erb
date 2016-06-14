@@ -146,6 +146,17 @@
       <% end %>
       <% end %>
       <%= f.check_box :payment_methods_default, checked: false, class: "pure-checkbox" %> Set these methods to default?
+      <div id="upon_transaction">
+      <legend>Upon Transaction Payment Methods</legend>
+      <% @transactions.each do |transaction| %>
+        <%= fields_for "payment_upon_transaction_links[#{transaction.id}]", transaction do |link| %>
+          <% boo = !PaymentUponTransactionLink.where("user_id=? AND payment_upon_transaction_id=?", @user.id, transaction.id).first.nil? %>
+          <label class="pure-checkbox for=payment_method">
+            <%= link.check_box :id, checked: boo, class: "pure-checkbox" %> <%= transaction.method %>
+          </label>
+        <% end %>
+      <% end %>
+      </div>
       <br>
       <button class="pure-button pure-button-primary product_previous_payment" type="button">Previous</button>
       <button class="pure-button pure-button-primary product_next_payment" type="button">Next</button>

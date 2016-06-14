@@ -10,6 +10,8 @@ class ProductsController < ApplicationController
     @exchange_methods = ExchangeMethod.all
     @product = current_user.products.build
     @categories = []
+    @transactions = PaymentUponTransaction.all
+    @user = current_user
     Category.all.each do |cat|
       if cat.children.count == 0
         # do nothing
@@ -117,6 +119,8 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @has_picture = @product.pictures.count
     @categories = []
+    @transactions = PaymentUponTransaction.all
+    @user = current_user
     Category.all.each do |cat|
       if cat.children.count == 0
         # do nothing
@@ -169,6 +173,7 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
+    @user = current_user
     if !@product.sold
       if params[:store_id] && store = Store.find_by(id: params[:store_id]) and store.id != @product.store.id
         @product.store.id = store.id
@@ -243,14 +248,22 @@ class ProductsController < ApplicationController
         end
         selling_methods.each do |id, selected|
           @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
-          if selected["id"] == 1 && params[:product][:selling_methods_default].to_i == 1
+          if selected["id"].to_i == 1 && params[:product][:selling_methods_default].to_i == 1
             def_sel = DefaultSellingMethodLink.new(selling_method_id: id, user_id: @product.user_id)
             def_sel.save
           end
         end
       end
 
+
+      PaymentUponTransactionLink.where("user_id=?", @user.id).destroy_all
+      params[:payment_upon_transaction_links].each do |method, value|
+        if value["id"].to_i == 1
+          PaymentUponTransactionLink.create(payment_upon_transaction_id: method.to_i, user_id: @user.id)
+        end
+      end
       
+
       has_methods = @product.selling_method_links.count > 0 && @product.exchange_method_links.count > 0 && @product.payment_method_links.count > 0
       if !@product.store.nil?
         @product.full_street_address = @product.store.full_street_address

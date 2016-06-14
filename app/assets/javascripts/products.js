@@ -642,7 +642,28 @@ $(document).ready(function() {
 	if (toggleOptions())
 	{
 	    $('#toggle_options_form').hide();
-	    $('#selling_methods_form').show();
+	    if (sellingMethods())
+	    {
+		if (exchangeMethods())
+		{
+		    if (paymentMethods())
+		    {
+			$('#dropper').show();
+		    }
+		    else
+		    {
+			$('#payment_methods_form').show();
+		    }
+		}
+		else
+		{
+		    $('#exchange_methods_form').show();
+		}
+	    }
+	    else
+	    {
+		$('#selling_methods_form').show();
+	    }
 	}
     });
     
@@ -655,7 +676,21 @@ $(document).ready(function() {
 	if (sellingMethods())
 	{
 	    $('#selling_methods_form').hide();
-	    $('#exchange_methods_form').show();
+	    if (exchangeMethods())
+	    {
+		if (paymentMethods())
+		{
+		    $('#dropper').show();
+		}
+		else
+		{
+		    $('#payment_methods_form').show();
+		}
+	    }
+	    else
+	    {
+		$('#exchange_methods_form').show();
+	    }
 	}
     });
 
@@ -668,7 +703,14 @@ $(document).ready(function() {
 	if (exchangeMethods())
 	{
 	    $('#exchange_methods_form').hide();
-	    $('#payment_methods_form').show();
+	    if (paymentMethods())
+	    {
+		$('#dropper').show();
+	    }
+	    else
+	    {
+		$('#payment_methods_form').show();
+	    }
 	}
     });
 

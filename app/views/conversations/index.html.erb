@@ -7,7 +7,7 @@
     <% if params[:id].nil? %>
       <% conversation = @conversations.first %>
     <% else %>
-      <% conversation = @conversations.find { |convo| convo.id = params[:id] } %>
+      <% conversation = @conversations.find { |convo| convo.id == params[:id].to_i } %>
     <% end %>
     <% if !conversation.nil? %>
       <%= render conversation %>

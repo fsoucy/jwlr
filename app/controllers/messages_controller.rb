@@ -43,6 +43,7 @@ class MessagesController < ApplicationController
           message.save
           group.conversations.first.update_attribute(:updated_at, Time.now)
           group.conversations.first.save
+          redirect_to(controller: 'conversations', action: 'index', id: group.conversations.first.id)
         else
           redirect_to root_url
         end

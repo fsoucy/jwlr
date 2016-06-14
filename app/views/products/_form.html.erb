@@ -89,6 +89,9 @@
       </label>
       <% end %>
       <% end %>
+      <label class="pure-checkbox" for="selling_method">
+      <%= f.check_box :selling_methods_default, checked: false, class: "pure-checkbox" %> Set these methods to default? 
+      </label>
       <br>
       <button class="pure-button pure-button-primary product_previous_selling" type="button">Previous</button>
       <button class="pure-button pure-button-primary product_next_selling" type="button">Next</button>
@@ -120,6 +123,7 @@
         $ <%= f.number_field :delivery_cost, id: "delivery_cost" %>
       <% end %>
       </div>
+      <%= f.check_box :exchange_methods_default, checked: false, class: "pure-checkbox" %> Set these methods to default?
       <br>
       <button class="pure-button pure-button-primary product_previous_exchange" type="button">Previous</button>
       <button class="pure-button pure-button-primary product_next_exchange" type="button">Next</button>
@@ -141,6 +145,7 @@
       </label>
       <% end %>
       <% end %>
+      <%= f.check_box :payment_methods_default, checked: false, class: "pure-checkbox" %> Set these methods to default?
       <br>
       <button class="pure-button pure-button-primary product_previous_payment" type="button">Previous</button>
       <button class="pure-button pure-button-primary product_next_payment" type="button">Next</button>

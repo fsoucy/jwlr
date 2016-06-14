@@ -210,22 +210,43 @@ class ProductsController < ApplicationController
           @product.save
         end
       end
-
+      
       if !payment_methods.nil?
+        if params[:product][:payment_methods_default].to_i == 1
+          @product.user.default_payment_method_links.destroy_all
+        end
         payment_methods.each do |id, selected|
           @product.payment_method_links.build(payment_method_id: id).save if selected["id"].to_i == 1
+          if selected["id"].to_i == 1 && params[:product][:payment_methods_default].to_i == 1
+            def_pay = DefaultPaymentMethodLink.new(payment_method_id: id, user_id: @product.user.id)
+            def_pay.save
+          end
         end
       end
 
       if !exchange_methods.nil?
+        if params[:product][:exchange_methods_default].to_i == 1
+          @product.user.default_exchange_method_links.destroy_all
+        end
         exchange_methods.each do |id, selected|
           @product.exchange_method_links.build(exchange_method_id: id).save if selected["id"].to_i == 1
+          if selected["id"].to_i == 1 && params[:product][:exchange_methods_default].to_i == 1
+            def_ex = DefaultExchangeMethodLink.new(exchange_method_id: id, user_id: @product.user_id)
+            def_ex.save
+          end 
         end
       end
 
       if !selling_methods.nil?
+        if params[:product][:selling_methods_default].to_i == 1
+          @product.user.default_selling_method_links.destroy_all
+        end
         selling_methods.each do |id, selected|
           @product.selling_method_links.build(selling_method_id: id).save if selected["id"].to_i == 1
+          if selected["id"] == 1 && params[:product][:selling_methods_default].to_i == 1
+            def_sel = DefaultSellingMethodLink.new(selling_method_id: id, user_id: @product.user_id)
+            def_sel.save
+          end
         end
       end
 

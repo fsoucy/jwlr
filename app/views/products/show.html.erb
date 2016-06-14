@@ -69,6 +69,15 @@
     <div class="pad-down">
       <h3>Product Description</h3>
       <p><%= @product.description %></p>
+
+      <% if @product.deals.count == 0 %>
+        <h3>This product is not engaged in any deals.</h3>
+      <% else %>
+        <h3>Current deals</h3>
+        <% @product.deals.each do |deal| %>
+          <p>Go to the deal between <%= deal.buyer.name %> and <%= deal.seller.name %></p>
+        <% end %>
+      <% end %>
     </div>
   </div>
 
@@ -223,6 +232,7 @@
         <%= f.hidden_field :sender_id, value: current_user.id %>
         <%= f.hidden_field :other_id, value: @product.user.id %>
         <%= f.hidden_field :product_id, value: @product.id %>
+        <%= f.hidden_field :group_id, value: "" %>
         <%= f.text_area :content, class: "message_input", placeholder: "Send a message" %>
         <br>
         <%= f.submit "Send message", class: "form_submit pure-button pure-button-primary" %>

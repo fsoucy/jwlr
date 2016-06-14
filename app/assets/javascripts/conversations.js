@@ -1,3 +1,4 @@
+
 function setMessages(message_data, append)
 {
     var thing = message_data;

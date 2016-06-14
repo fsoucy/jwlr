@@ -46,8 +46,8 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      get :edit_description, :user_stores, :selling, :buying, :edit_default_preferences, :wishlist
-      post :follow, :like, :comment, :share, :save_product
+      get :edit_description, :user_stores, :selling, :buying, :edit_default_preferences, :new_picture, :pictures, :wishlist
+      post :follow, :like, :comment, :share, :upload_picture, :save_product
       get 'reviews' => 'reviews#index'
       resources :notifications, only: [:update, :index] 
     end
@@ -64,6 +64,8 @@ Rails.application.routes.draw do
 
   resources :products, only: [:new, :show, :destroy, :edit, :update] do
     member do
+      get :add_pictures
+      post :add_cropped
       resources :pictures do
         member do
           post :add_cropped

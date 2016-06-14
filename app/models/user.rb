@@ -49,6 +49,7 @@ class User < ActiveRecord::Base
   has_many :groups, through: :groupings
 
   has_many :saved_products, dependent: :destroy
+  has_many :pictures, as: :post, dependent: :destroy
   
   searchable do
     text :name

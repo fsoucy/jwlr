@@ -92,6 +92,8 @@
 					    data: { confirm: "Are you sure you wish to delete this?" } %>
   		  <br>
         <%= link_to "Edit product", edit_product_path(@product.id) %>
+        <br>
+        <%= link_to "Add pictures", add_pictures_product_path(@product.id) %>
         <% if !@product.agreement_achieved %>
           <%= form_for @product do |f| %>
             <%= f.hidden_field :hold, value: true %>

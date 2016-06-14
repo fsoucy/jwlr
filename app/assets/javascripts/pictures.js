@@ -62,7 +62,6 @@ $(document).ready(function(){
 	    var x = cropBoxData.left;
 	    var y = cropBoxData.top;
 	    var factor = 1 / parseFloat($('#factor').val());
-	    console.log(x);
 	    var offsetX = (600.0 - $('.cropper-canvas').width()) / 2.0;
 	    var offsetY =  (600.0 - $('.cropper-canvas').height()) / 2.0;
 	    $('#x').val(x - offsetX);
@@ -102,4 +101,17 @@ $(document).ready(function(){
 	$('#rotate').val(angle);
     })
 
+    $('.choose_picture').click(function() {
+	var id = $(this).siblings('.choose_picture_id').val();
+	var str = "?picture_id=" + id;
+	var url = window.location.href;
+	window.location.href = url + str;
+    });
+
+    $('.choose_picture_return').click(function() {
+	var str = window.location.href;
+	var index = str.indexOf("?");
+	var loc = str.substring(0, index);
+	window.location.href = loc;
+    });
 });

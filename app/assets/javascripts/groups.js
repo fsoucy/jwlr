@@ -1,3 +1,4 @@
+
 $(document).on('input', '#user_name', function() {
   $.ajax({type: "GET", context: this, url: window.location.protocol + "//" + window.location.host + "/api/getUsers", data: {search_string: $(this).val()}, success: function(result) {
     $(this).siblings("#user_list").empty();
@@ -36,4 +37,3 @@ $(document).on('click', 'button[id*=groupadd_]', function() {
     refreshUserList($("#group_id").val());
   }});
 });
-

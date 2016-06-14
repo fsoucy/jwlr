@@ -746,12 +746,15 @@ $('.magnifier').loupe({
     $('#selling_methods_form').hide();
     $('#exchange_methods_form').hide();
     $('#payment_methods_form').hide();
-    showDeliveryCost();
-    defaultSelected();
-    defaultSelectedQuick();
-    evaluateDealSubmit();
-    evaluateDealSubmitQuick();
-    getCategoryDropdown();
+    if (2 == 3)
+    {
+	showDeliveryCost();
+	defaultSelected();
+	defaultSelectedQuick();
+	evaluateDealSubmit();
+	evaluateDealSubmitQuick();
+	getCategoryDropdown();
+    }
     $('#toggle_options_button').click(function() {
 	$('fieldset').hide();
 	$('#dropper').hide();

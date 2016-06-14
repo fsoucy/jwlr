@@ -63,7 +63,10 @@ function reloadProductType(category_id)
 
 function getCategoryDropdown()
 {
-    reloadProductType(parseInt($('.parent_category_name').val()));
+    if ($('.parent_category_name').length > 0)
+    {
+	reloadProductType(parseInt($('.parent_category_name').val()));
+    }
 }
 
 function addToggle(toggle_option)
@@ -528,7 +531,7 @@ $(document).ready(function() {
 	$('.submit_product').trigger('click');
     });
 
-    $('#pan_img').click(function(e) {
+    $('.pan_img').click(function(e) {
 	e.preventDefault();
 	$('#has_picture').val('1');
 	$('#product_redirect_pictures').val('1');
@@ -754,15 +757,14 @@ $('.magnifier').loupe({
     $('#selling_methods_form').hide();
     $('#exchange_methods_form').hide();
     $('#payment_methods_form').hide();
-    if (2 == 3)
-    {
-	showDeliveryCost();
-	defaultSelected();
-	defaultSelectedQuick();
-	evaluateDealSubmit();
-	evaluateDealSubmitQuick();
-	getCategoryDropdown();
-    }
+
+
+    showDeliveryCost();
+    defaultSelected();
+    defaultSelectedQuick();
+    evaluateDealSubmit();
+    evaluateDealSubmitQuick();
+    getCategoryDropdown();
     $('#toggle_options_button').click(function() {
 	$('fieldset').hide();
 	$('#dropper').hide();

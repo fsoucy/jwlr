@@ -44,6 +44,8 @@ $(document).ready(function(){
 	    });
 	}
     });
+
+});
     
 $(document).on('click', 'button[id*=save_product_]', function (event) {
   $.ajax({url: '/users/' + this.id.split("_")[3] + '/save_product', type: 'POST', data: {product_id: this.id.split("_")[2]}, context: this, success: function() {

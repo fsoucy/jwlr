@@ -237,7 +237,6 @@ class ProductsController < ApplicationController
         @product.full_street_address = @product.user.full_street_address
       end
 
-      debugger
       if params[:product][:redirect_pictures].to_i == 1
         @product.save
         redirect_to add_pictures_product_path(@product.id)
@@ -322,7 +321,6 @@ class ProductsController < ApplicationController
     cropString = size + toCropX.to_s + "+" + toCropY.to_s
     img.rotate(rotation)
     img.crop(cropString)
-    debugger
     @new_picture = @product.pictures.build
     @new_picture.photo = File.open(img.path)
     @new_picture.photo_cropped = @new_picture.photo

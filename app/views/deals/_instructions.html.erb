@@ -81,6 +81,7 @@
             <% end %>
           <% else %>
             <h3>You have not yet dispatched the product to the buyer.</h3>
+            <h3>The dropoff location is <%= @deal.dropoff %>.</h3>
           <% end %>
           <% if @deal.payment_complete %>
             <h3>The user has completed his payment for the product.</h3>

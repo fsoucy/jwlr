@@ -89,6 +89,9 @@
       </label>
       <% end %>
       <% end %>
+      <label class="pure-checkbox" for="selling_method">
+      <%= f.check_box :selling_methods_default, checked: false, class: "pure-checkbox" %> Set these methods to default? 
+      </label>
       <br>
       <button class="pure-button pure-button-primary product_previous_selling" type="button">Previous</button>
       <button class="pure-button pure-button-primary product_next_selling" type="button">Next</button>
@@ -120,6 +123,7 @@
         $ <%= f.number_field :delivery_cost, id: "delivery_cost" %>
       <% end %>
       </div>
+      <%= f.check_box :exchange_methods_default, checked: false, class: "pure-checkbox" %> Set these methods to default?
       <br>
       <button class="pure-button pure-button-primary product_previous_exchange" type="button">Previous</button>
       <button class="pure-button pure-button-primary product_next_exchange" type="button">Next</button>
@@ -141,6 +145,18 @@
       </label>
       <% end %>
       <% end %>
+      <%= f.check_box :payment_methods_default, checked: false, class: "pure-checkbox" %> Set these methods to default?
+      <div id="upon_transaction">
+      <legend>Upon Transaction Payment Methods</legend>
+      <% @transactions.each do |transaction| %>
+        <%= fields_for "payment_upon_transaction_links[#{transaction.id}]", transaction do |link| %>
+          <% boo = !PaymentUponTransactionLink.where("user_id=? AND payment_upon_transaction_id=?", @user.id, transaction.id).first.nil? %>
+          <label class="pure-checkbox for=payment_method">
+            <%= link.check_box :id, checked: boo, class: "pure-checkbox" %> <%= transaction.method %>
+          </label>
+        <% end %>
+      <% end %>
+      </div>
       <br>
       <button class="pure-button pure-button-primary product_previous_payment" type="button">Previous</button>
       <button class="pure-button pure-button-primary product_next_payment" type="button">Next</button>

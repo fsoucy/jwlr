@@ -95,6 +95,12 @@ function checkDelivery()
 	    any_checked = true;
 	}
     });
+    $('.deal_payment').each(function() {
+	if ($(this).prop('checked'))
+	{
+	    any_checked = true;
+	}
+    });
     if (!($('#deal_payment_method_id_1').prop('checked')) && any_checked)
     {
 	addInactiveDelivery();

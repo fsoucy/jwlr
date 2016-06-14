@@ -171,7 +171,8 @@ function uponRefresh() {
 				}
 			}
 		}
-		window.location.href = toGo;
+	    window.location.href = toGo;
+
 	}
 
 }
@@ -190,6 +191,18 @@ $(document).ready(function () {
 	if ($('#search_page').length > 0) {
 		uponRefresh();
 	}
+
+    var arr = window.location.href.split("&");
+    for (var i = 0; i < arr.length; i++)
+    {
+	var val = arr[i];
+	if (val.indexOf("search_string") != -1)
+	{
+	    var search = val.substring(("search_string=").length);
+	    $('.search_string').val(search.replace("+", " "));
+	}
+    }
+    
 	$('.result').click(function () {
 		//$(this).append('<div class="buy_container"><p>Hello</p></div>');
 		//$('.search_actions').fadeIn(500);

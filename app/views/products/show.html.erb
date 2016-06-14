@@ -75,7 +75,9 @@
       <% else %>
         <h3>Current deals</h3>
         <% @product.deals.each do |deal| %>
-          <p>Go to the deal between <%= deal.buyer.name %> and <%= deal.seller.name %></p>
+          <% if current_user?(deal.seller) || current_user?(deal.buyer) %>
+            <p>Go to the <%= link_to "deal", deal %> between <%= link_to deal.buyer.name, deal.buyer %> and <%= link_to deal.seller.name, deal.seller %>.</p>
+          <% end %>
         <% end %>
       <% end %>
     </div>

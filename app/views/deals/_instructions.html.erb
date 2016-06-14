@@ -104,7 +104,7 @@
           <% end %>
         <% end %>
       <% elsif (@deal.exchange_method.method == "Pickup" || @deal.exchange_method.method == "Meetup") %>  
-        <% if @deal.payment_method.method == "Paypal" %>
+        <% if !@deal.payment_method_id.nil? && @deal.payment_method.method == "Paypal" %>
           <% if current_user.id == @deal.seller_id %>
             <% if @deal.payment_complete %>
               <h3>The buyer has completed his payment but has not picked up the product.</h3>

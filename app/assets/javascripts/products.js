@@ -53,9 +53,18 @@ function reloadProductType(category_id, change, cat_id)
 	    for (var i = 0; i < result.length; i++)
 	    {
 		var thing = result[i];
-		var thing_id = "child_" + thing["id"];
-		var html = "<option id='" + thing_id + "'" + "value='" + thing["id"] + "'>" + thing["name"] + "</option>";
-		$('.category_name').append(html);
+		console.log(thing["children"])
+		if (parseInt(thing["children"]) == 0)
+		{
+		    console.log('hi');
+		    var thing_id = "child_" + thing["id"];
+		    var html = "<option id='" + thing_id + "'" + "value='" + thing["id"] + "'>" + thing["name"] + "</option>";
+		    $('.category_name').append(html);
+		}
+		else
+		{
+		    //has children
+		}
 	    }
 	    if (change)
 	    {

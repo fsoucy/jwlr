@@ -65,7 +65,7 @@
     <% if @deal.exchange_method.method == "Pickup" %>
       <li class="deal_summary_bullet">The buyer will pick the product up at <%= @deal.product.full_street_address %></li>
     <% elsif @deal.exchange_method.method == "Delivery" %>
-      <li class="deal_summary_bullet">The seller will ship the product to <%= @deal.dropoff %> for <%= number_to_currency(@deal.user_proposed_price) %></li>
+      <li class="deal_summary_bullet">The seller will ship the product to <%= @deal.dropoff %> for <%= number_to_currency(@deal.product.delivery_cost) %>.</li>
     <% elsif @deal.exchange_method.method == "Meetup" %>
       <li class="deal_summary_bullet">Buyer and seller will meet up at the time and location they agreed upon in chat.</li>
     <% end %>

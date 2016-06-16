@@ -149,6 +149,7 @@ function uponRefresh() {
 		$('select').val(dict["sort_by"][0]);
 	}
 
+  /*
 	if ($('.result').length == 0) {
 		var urlString = window.location.href;
 		var hashSplit = urlString.split("&");
@@ -173,7 +174,7 @@ function uponRefresh() {
 		}
 	    window.location.href = toGo;
 
-	}
+	}*/
 
 }
 
@@ -308,7 +309,6 @@ $(document).ready(function () {
 					$('#sug_list > :first-child').addClass('active');
 					$('#sug_list').addClass("active");
 					strToSave = $('.search_string').val();
-					console.log(strToSave);
 					done = true;
 				}
 				if ($('#sug_list > .active').is('#sug_list > :last-child') && !done) {
@@ -336,7 +336,6 @@ $(document).ready(function () {
 					$('#sug_list > :first-child').removeClass('active');
 					$('#sug_list').removeClass('active');
 					done = true;
-					console.log(strToSave);
 					$('.search_string').val(strToSave);
 					strToSave = "";
 				}

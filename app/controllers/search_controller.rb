@@ -10,7 +10,7 @@ class SearchController < ApplicationController
         phrase_slop 1
         boost_fields :description => 1.0
       end
-    paginate :page => params[:page]
+    paginate :page => params[:page], :per_page => 25
     with :sold, false
     with :hold, false
     with :activated, true
@@ -99,6 +99,7 @@ class SearchController < ApplicationController
     @params = params
     @categories = search.facet(:category_id)
     @results = search.results
+    @hits = search.hits
     @selling_methods = SellingMethod.all
     @payment_methods = PaymentMethod.all
     @exchange_methods = ExchangeMethod.all

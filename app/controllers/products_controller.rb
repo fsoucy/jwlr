@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
-  before_action :logged_in_user, only: [:new, :create, :destroy]
-  before_action :correct_user, only: [:destroy]
+  before_action :logged_in_user, only: [:new, :create, :destroy, :confirm_upload]
+  before_action :correct_user, only: [:destroy, :confirm_upload]
   after_action :pickup, only: [:create, :update]
   
   def new
@@ -36,6 +36,13 @@ class ProductsController < ApplicationController
     end
     @product.save(validate: false)
   end
+
+  def confirm_upload
+    @product = Product.find_by(id: params[:id])
+    if @product.nil?
+      redirect_to root_url
+    end
+  end
   
   def show
     @product = Product.find_by(id: params[:id])
@@ -45,7 +52,13 @@ class ProductsController < ApplicationController
       return
     end
 
-    if (!@product.activated and @product.user.id != current_user.id)
+    if (!@product.confirmed and @product.user.id == current_user.id)
+      flash[:success] = "Now confirm your product upload."
+      redirect_to confirm_upload_product_path(@product)
+      return
+    end
+
+    if ((!@product.activated or !@product.confirmed) and @product.user.id != current_user.id)
       redirect_to @product.user
       return
     end
@@ -255,11 +268,12 @@ class ProductsController < ApplicationController
         end
       end
 
-
-      PaymentUponTransactionLink.where("user_id=?", @user.id).destroy_all
-      params[:payment_upon_transaction_links].each do |method, value|
-        if value["id"].to_i == 1
-          PaymentUponTransactionLink.create(payment_upon_transaction_id: method.to_i, user_id: @user.id)
+      if !params[:payment_upon_transaction_links].nil?
+        PaymentUponTransactionLink.where("user_id=?", @user.id).destroy_all
+        params[:payment_upon_transaction_links].each do |method, value|
+          if value["id"].to_i == 1
+            PaymentUponTransactionLink.create(payment_upon_transaction_id: method.to_i, user_id: @user.id)
+          end
         end
       end
       
@@ -288,6 +302,11 @@ class ProductsController < ApplicationController
             redirect_to deal
             return
           end
+        end
+        if params[:product][:confirmed].nil?
+          @product.confirmed = false
+          @product.save
+        else
         end
         flash[:success] = "You have successfully edited your product!"
         redirect_to @product
@@ -367,7 +386,7 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title, :min_accepted_price, :delivery_cost, :hold, :sold)
+    params.require(:product).permit(:price, :category_id, :full_street_address, :picture, :description, :store_id, :title, :min_accepted_price, :delivery_cost, :hold, :sold, :confirmed)
   end
   
   def correct_user

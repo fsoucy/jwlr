@@ -138,7 +138,7 @@ class ProductsController < ApplicationController
       if cat.children.count == 0
         # do nothing
       else
-        @categories.append(cat)
+        @categories.append( [cat, cat.depth] )
       end
     end
     if @product.activated

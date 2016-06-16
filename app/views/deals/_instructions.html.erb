@@ -59,6 +59,23 @@
       <h3>Agree with the seller on a transaction location and time in messaging.</h3>
     <% end %>
   <% end %>  
+  <h3 id="deal_summary">Deal Summary</h3>
+  <ul id="deal_summary_list">
+    <li class="deal_summary_bullet">Price: <%= number_to_currency(@deal.user_proposed_price) %></li>
+    <% if @deal.exchange_method.method == "Pickup" %>
+      <li class="deal_summary_bullet">The buyer will pick the product up at <%= @deal.product.full_street_address %></li>
+    <% elsif @deal.exchange_method.method == "Delivery" %>
+      <li class="deal_summary_bullet">The seller will ship the product to <%= @deal.dropoff %> for <%= number_to_currency(@deal.user_proposed_price) %></li>
+    <% elsif @deal.exchange_method.method == "Meetup" %>
+      <li class="deal_summary_bullet">Buyer and seller will meet up at the time and location they agreed upon in chat.</li>
+    <% end %>
+    <% if @deal.payment_method.method == "Paypal" %>
+      <li class="deal_summary_bullet">The buyer will pay for the product using Paypal.</li>
+    <% elsif @deal.payment_method.method == "Upon Transaction" %>
+      <li class="deal_summary_bullet">The buyer will pay for the product upon transaction.</li>
+    <% end %>
+    <h6>Note: you will not be allowed to cancel the deal after an agreement has been achieved.</h6>
+  </ul> 
 
 <% elsif @deal.agreement_achieved %>
   <%= hidden_field_tag :page, 4 %>

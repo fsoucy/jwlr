@@ -81,8 +81,8 @@
 
 <div class="pure-u-1 pure-u-md-1-3 pad-box">
   <%= form_for @product do |f| %><%= f.hidden_field :confirmed, value: true %><%= f.submit "Confirm upload", class: "pure-button button-success" %><% end %>
-  <button class="pure-button button-warning">Edit</button>
-  <button class="pure-button button-error">Delete</button>
+  <a href="<%= edit_product_path(@product) %>"><button class="pure-button button-warning">Edit</button></a>
+  <a href="<%= product_path(@product) %>" data-method="delete"><button class="pure-button button-error">Delete</button></a>
 </div>
 
 

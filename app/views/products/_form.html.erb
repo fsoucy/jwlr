@@ -15,7 +15,7 @@
       <label for="parent_category_id">Category</label>
       <select class="parent_category_name" name="parent_category_id">
         <% @categories.each do |cat| %>
-          <option value="<%= cat.id %>"><%= cat.name %></option>
+          <option value="<%= cat[0].id %>"><% (0...cat[1]).each do |n|  %>- <% end %><%= cat[0].name %></option>
         <% end %>
       </select>
 

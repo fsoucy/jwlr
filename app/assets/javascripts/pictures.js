@@ -54,6 +54,7 @@ $(document).ready(function(){
 	cropBoxResizable: true,
 	rotatable: true,
 	aspectRatio: 1.00,
+	movable: false,
 	built: function () {
 	    $image.cropper('setCanvasData', canvasData);
 	    $image.cropper('setCropBoxData', cropBoxData);

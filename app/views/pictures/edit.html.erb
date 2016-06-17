@@ -10,7 +10,13 @@
   <%= hidden_field_tag :width, 300 %>
   <%= hidden_field_tag :height, 300 %>
   <%= hidden_field_tag :rotate, 0 %>
-  
+  <% if @picture.post.class.name == "Product" %>
+    <% if @picture.post.main_picture_id == @picture.id %>
+      Main Picture: <%= check_box_tag 'main_picture', 1, true %>
+    <% else %>
+      Main Picture: <%= check_box_tag 'main_picture', 1, false %>
+    <% end %>
+  <% end %>
   <div class="submit_the_form">
     <%= submit_tag "Done cropping", class: 'pure-button pure-button-primary' %>
     <%= link_to "Delete", @picture, method: :delete,

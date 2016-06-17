@@ -58,6 +58,11 @@ class PicturesController < ApplicationController
       end
     else
       if @picture.destroy
+        if @picture.post.class.name == "Product"
+          @picture.post.main_picture_id = nil unless @picture.id != @picture.post.main_picture_id
+          @picture.post.activated = false unless @picture.post.pictures.any?
+          @picture.post.save
+        end
         flash[:success] = "Image deleted"
         redirect_to product
       else
@@ -108,6 +113,11 @@ class PicturesController < ApplicationController
     @picture.photo_cropped = File.open(img.path)
     @picture.photo_cropped.reprocess!
     @picture.save
+    
+    if params[:main_picture] == "1"  and @picture.post.class.name == "Product"
+      @picture.post.main_picture_id = @picture.id
+      @picture.post.save
+    end
     redirect_to @picture.post
   end
 

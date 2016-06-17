@@ -23,7 +23,6 @@ or sorting or ordering preferences updated */
 function leadToRefresh() {
 	var url = window.location.href;
 
-	debugger;
 	//here I'm going to clear the unnecessary hash in URL
 	$('input.toggle').each(function (index, data) {
 		var str = "&" + $(this).attr('name');
@@ -35,6 +34,10 @@ function leadToRefresh() {
 	if (url.indexOf("&sort_by") != -1) {
 		url = url.substring(0, url.indexOf("&sort_by"));
 	}
+
+  if (url.indexOf("&page") != -1) {
+    url = url.substring(0, url.indexOf("&page"));
+  }
 
 	//update sort by hash in the URL
 	url = sortBy(url);

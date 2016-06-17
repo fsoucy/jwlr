@@ -58,6 +58,10 @@ class PicturesController < ApplicationController
       end
     else
       if @picture.destroy
+        if @picture.post.class == "Product"
+          @picture.post.activated = false unless @picture.post.pictures.any?
+          @picture.post.save
+        end
         flash[:success] = "Image deleted"
         redirect_to product
       else

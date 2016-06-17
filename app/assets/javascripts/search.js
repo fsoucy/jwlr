@@ -1,3 +1,7 @@
+$(document).on('click', '#back', function() {
+  window.history.back();
+});
+
 /* this function iterates through each option in the sort_by
 select dropdown, and appends the selected to the URL */
 function sortBy(url) {

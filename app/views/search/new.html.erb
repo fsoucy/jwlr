@@ -120,6 +120,9 @@
 	</div>
     </div>
     <% end %>
+    <% if !@results.any? %>
+      <h3>This search returned no results</h3><button class="pure-button pure-button-primary" id="back">Go Back</button>
+    <% end %>
 <%= will_paginate @hits %>
 </div>
 </div>

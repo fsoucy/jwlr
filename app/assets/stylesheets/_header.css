@@ -73,7 +73,7 @@
   background-color: #00A8E8;
   color: #FFFFFF;
 }
-    
+
 @media (min-width: 48em) {
   .top-menu form {
     display: inline-block;
@@ -102,4 +102,21 @@
   .top-menu {
     position: absolute !important;
   }
+}
+
+
+@media (min-width: 69em)
+{
+    .o_drop
+    {
+	display: none !important;
+    }
+}
+
+@media (max-width: 69em)
+{
+    .other_dropdown
+    {
+	display: none !important;
+    }
 }

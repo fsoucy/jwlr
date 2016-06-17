@@ -8,7 +8,7 @@
 	      <li class="pure-menu-item exchange_button pure-menu-link">Exchange Method</li>
 	      <li class="pure-menu-item completed_button pure-menu-link">Deal Completion</li>
 	      <li class="pure-menu-item complaint_button pure-menu-link">File Complaint</li>
-        <% if !(@deal.product_dispatched || @deal.payment_complete || @deal.product_received) %>
+        <% if !@deal.agreement_achieved %>
           <li class="pure-menu-item cancel_button pure-menu-link">Cancel Deal</li>
         <% end %>
       </ul>

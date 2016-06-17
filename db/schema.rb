@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611190029) do
+ActiveRecord::Schema.define(version: 20160616003034) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -315,6 +315,7 @@ ActiveRecord::Schema.define(version: 20160611190029) do
     t.decimal  "delivery_cost"
     t.boolean  "featured"
     t.boolean  "activated",           default: false
+    t.boolean  "confirmed"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id"

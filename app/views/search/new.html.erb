@@ -98,7 +98,7 @@
   </div>
 </div>
 <div class="pure-u-1 pure-u-md-4-5 search-results">
-
+    <p class="float-right"><%= pluralize(@results.total_entries, 'product') %> found</p>
     <% @results.each do |prod| %>
 
     <div class="result">

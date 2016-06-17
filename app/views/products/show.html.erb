@@ -10,9 +10,15 @@
 	<div class="pure-u-1 pure-u-md-1-5 product_view pad-box">
   
   	<% if !@product.pictures.first.nil? %>
-  	  <a class="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
-   		  <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "pad-box product_image pure-img" %>
-  	  </a>
+      <% if !@product.main_picture_id.nil? %>
+            <a class="magnifier" href="<%= @product.pictures.find(@product.main_picture_id).photo_cropped(:large) %>">
+              <%= image_tag @product.pictures.find(@product.main_picture_id).photo_cropped(:thumb), class: "pad-box product_image pure-img" %>
+            </a>
+          <% else %>
+            <a class="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
+              <%= image_tag @product.pictures.first.photo_cropped(:thumb), class: "pad-box product_image pure-img" %>
+            </a>
+          <% end %>
   		<% if current_user?(@product.user) and logged_in? %>
   		<%= link_to("Edit Picture", edit_picture_path(@product.pictures.first), class: 'product_edit' ) %>
       <br>
@@ -22,7 +28,7 @@
   	<br>
   	<% @product.pictures.each do |picture| %>
 	<div class="pickers">
-  		<% if picture == @product.pictures.first %>
+  		<% if (picture == @product.pictures.first and @product.main_picture_id.nil?) or picture.id == @product.main_picture_id %>
   			<%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show pic_active" %>
   		<% else %>
   			<%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show" %>

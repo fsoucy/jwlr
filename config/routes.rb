@@ -64,7 +64,7 @@ Rails.application.routes.draw do
 
   resources :products, only: [:new, :show, :destroy, :edit, :update] do
     member do
-      get :add_pictures
+      get :add_pictures, :confirm_upload
       post :add_cropped
       resources :pictures do
         member do

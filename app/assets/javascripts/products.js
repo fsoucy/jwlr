@@ -6,6 +6,7 @@ $(document).ready(function() {
   }
 });
 
+
 function getToggleOptions(category_id)
 {
     $.ajax({
@@ -39,7 +40,7 @@ function getToggleOptions(category_id)
     });
 }
 
-function reloadProductType(category_id)
+function reloadProductType(category_id, change, cat_id)
 {
     $.ajax({
 	type: "GET",// GET in place of POST
@@ -52,8 +53,22 @@ function reloadProductType(category_id)
 	    for (var i = 0; i < result.length; i++)
 	    {
 		var thing = result[i];
-		var html = "<option value='" + thing["id"] + "'>" + thing["name"] + "</option>";
-		$('.category_name').append(html);
+		console.log(thing["children"])
+		if (parseInt(thing["children"]) == 0)
+		{
+		    console.log('hi');
+		    var thing_id = "child_" + thing["id"];
+		    var html = "<option id='" + thing_id + "'" + "value='" + thing["id"] + "'>" + thing["name"] + "</option>";
+		    $('.category_name').append(html);
+		}
+		else
+		{
+		    //has children
+		}
+	    }
+	    if (change)
+	    {
+		$('.category_name').val(cat_id);
 	    }
 	},
 	error: function (e){
@@ -65,7 +80,18 @@ function getCategoryDropdown()
 {
     if ($('.parent_category_name').length > 0)
     {
-	reloadProductType(parseInt($('.parent_category_name').val()));
+	reloadProductType(parseInt($('.parent_category_name').val()), false, 0);
+    }
+}
+
+function loadCategories()
+{
+    if ($('#edit').length > 0 && $('#edit').val() == "true")
+    {
+	var parent_id = $('#initial_parent_category').val().toString();
+	var cat_id = $('#initial_category').val().toString();
+	$('.parent_category_name').val(parent_id);
+	reloadProductType(parent_id, true, cat_id);
     }
 }
 
@@ -827,6 +853,7 @@ $('.magnifier').loupe({
     evaluateDealSubmitQuick();
     getCategoryDropdown();
     evaluateUponTransaction();
+    loadCategories();
     $('#toggle_options_button').click(function() {
 	$('fieldset').hide();
 	$('#dropper').hide();

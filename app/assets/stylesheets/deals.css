@@ -72,3 +72,13 @@
 {
     width: 100%;
 }
+
+#deal_summary
+{
+    text-decoration: underline;
+}
+
+#deal_summary_list
+{
+    border: 1px solid white;
+}

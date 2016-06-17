@@ -221,10 +221,42 @@ function addRedirectButton() //if necessary of course
     
 }
 
+function refreshDeals()
+{
+    var str = window.location.href;
+    var beginIndex = str.indexOf("deals/");
+    var id = str.substring(beginIndex + 6);
+    $('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
+    });
+    $('.selling_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
+    });
+    $('.payment_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
+    });
+    $('.completed_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
+    });
+    $('.guide_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
+    });
+    $('.instructions').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
+	addRedirectButton();
+    });
+}
+
 // if not right page, add special button "Lost?"
 // all that button does is call redirectToPage()
 
 $(document).ready(function() {
+
+    if ($('#on_the_deals_page').length > 0 && parseInt($('#on_the_deals_page').val()) == 1) //on deals
+    {
+	// refresh deals panel on an interval
+	window.dealsInterval = setInterval(refreshDeals, 3000);
+    }
+    else
+    {
+	// clear deals interval
+	clearInterval(window.dealsInterval);
+    }
+    
     $('.selection').hide();
     $('.method_selection').show();
 

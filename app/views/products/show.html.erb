@@ -20,10 +20,16 @@
             </a>
           <% end %>
   		<% if current_user?(@product.user) and logged_in? %>
-  		<%= link_to("Edit Picture", edit_picture_path(@product.pictures.first), class: 'product_edit' ) %>
-      <br>
-      <%= link_to("Delete Picture", @product.pictures.first, method: :delete, class: 'product_delete' ) %>
-  		<% end %>
+        <% if !@product.main_picture_id.nil? %>
+  		    <%= link_to("Edit Picture", edit_picture_path(@product.pictures.find(@product.main_picture_id)), class: 'product_edit' ) %>
+          <br>
+          <%= link_to("Delete Picture", @product.pictures.find(@product.main_picture_id), method: :delete, class: 'product_delete' ) %>
+  		  <% else %>
+          <%= link_to("Edit Picture", edit_picture_path(@product.pictures.first), class: 'product_edit' ) %>
+          <br>
+          <%= link_to("Delete Picture", @product.pictures.first, method: :delete, class: 'product_delete' ) %>
+        <% end %>
+      <% end %>
   	<% end %>
   	<br>
   	<% @product.pictures.each do |picture| %>

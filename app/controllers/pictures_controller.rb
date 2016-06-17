@@ -58,7 +58,8 @@ class PicturesController < ApplicationController
       end
     else
       if @picture.destroy
-        if @picture.post.class == "Product"
+        if @picture.post.class.name == "Product"
+          @picture.post.main_picture_id = nil unless @picture.id != @picture.post.main_picture_id
           @picture.post.activated = false unless @picture.post.pictures.any?
           @picture.post.save
         end

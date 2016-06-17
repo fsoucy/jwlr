@@ -1,22 +1,15 @@
 <div class="header">
   <div class="top-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-    <ul class="pure-menu-list top-menu-dropdown">
+    <ul class="pure-menu-list top-menu-dropdown">      
       <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
         <a href="#" class="pure-menu-link">Account Actions</a>
         <ul class="pure-menu-children">
           <% if logged_in? %>
-            <li class="pure-menu-item"><%= link_to "Users Index", users_path, class: 'pure-menu-link' %></li>
-            <li class="pure-menu-item"><%= link_to "Stores Index", stores_path, class: 'pure-menu-link' %></li>
-            <li class="pure-menu-item"><%= link_to "Upload Product", new_product_path, class: 'pure-menu-link' %></li>
             <li class="pure-menu-item"><%= link_to "Profile", current_user, class: 'pure-menu-link' %></li>
             <li class="pure-menu-item"><%= link_to "Settings", edit_user_path(current_user), class: 'pure-menu-link' %></li>
             <li class="pure-menu-item"><%= link_to "Bug report", new_bug_path, class: 'pure-menu-link' %></li>
-            <li class="pure-menu-item"><%= link_to "My Selling Deals", selling_user_path(current_user), class: 'pure-menu-link' %></li>
-            <li class="pure-menu-item"><%= link_to "My Buying Deals", buying_user_path(current_user), class: 'pure-menu-link' %></li>
             <li class="pure-menu-item"><%= link_to "Notifications", notifications_path(current_user), class: 'pure-menu-link' %></li>
             <li class="pure-menu-item"><%= link_to "Wishlist", wishlist_user_path(current_user), class: 'pure-menu-link' %></li>
-            <li class="pure-menu-item"><%= link_to "Messages", conversations_path, class: 'pure-menu-link' %></li>
-            <li class="pure-menu-item"><%= link_to "Groups", groups_path, class: 'pure-menu-link' %></li>
             <li class="pure-menu-item"><%= link_to "Log out", logout_path, method: "delete", class: 'pure-menu-link' %></li>
           <% else %>
             <li class="pure-menu-item"><%= link_to "Log in", login_path, class: 'pure-menu-link' %></li>
@@ -25,6 +18,41 @@
         </ul>
       </li>
     </ul>
+    <% if logged_in? %>
+      <ul class="pure-menu-list top-menu-dropdown">
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+          <a href="#" class="pure-menu-link">Find</a>
+          <ul class="pure-menu-children">
+            <li class="pure-menu-item"><%= link_to "Users", users_path, class: 'pure-menu-link' %></li>
+            <li class="pure-menu-item"><%= link_to "Stores", stores_path, class: 'pure-menu-link' %></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="pure-menu-list top-menu-dropdown">
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+          <a href="#" class="pure-menu-link">Network</a>
+          <ul class="pure-menu-children">
+            <li class="pure-menu-item"><%= link_to "Messages", conversations_path, class: 'pure-menu-link' %></li>
+            <li class="pure-menu-item"><%= link_to "Groups", groups_path, class: 'pure-menu-link' %></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="pure-menu-list top-menu-dropdown">
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+          <a href="#" class="pure-menu-link">Deals</a>
+          <ul class="pure-menu-children">
+            <li class="pure-menu-item"><%= link_to "Selling", selling_user_path(current_user), class: 'pure-menu-link' %></li>
+            <li class="pure-menu-item"><%= link_to "Buying", buying_user_path(current_user), class: 'pure-menu-link' %></li>
+
+          </ul>
+        </li>
+      </ul>
+      <ul class="pure-menu-list header_item">
+        <li class="pure-menu-item">
+          <a href="<%= new_product_path %>" class="pure-menu-link">Upload Product</a>
+        </li>
+      </ul>
+    <% end %>
     <%= link_to "iGold", root_path, class: 'pure-menu-heading search-header' %>
     <%= form_tag "/search", method: "get", class: 'pure-form' do %>
     <%= text_field_tag "search_string", "", placeholder: "Search for a product", autocomplete: 'off', class: 'search_string' %>

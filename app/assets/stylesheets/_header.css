@@ -86,6 +86,11 @@
   .top-menu-dropdown {
     float: right;
   }
+
+  .header_item
+  {
+      float: right;
+  }
   
   .top-menu input[type=text] {
     width: 20em;

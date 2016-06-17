@@ -11,6 +11,7 @@
         <% if !@deal.agreement_achieved %>
           <li class="pure-menu-item cancel_button pure-menu-link">Cancel Deal</li>
         <% end %>
+        <%= hidden_field_tag :on_the_deals_page, 1 %>
       </ul>
     </div>
     <div class="log-in-form marg deals_form">

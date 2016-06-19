@@ -30,7 +30,7 @@ class Product < ActiveRecord::Base
  
   def location_string
     address = Geocoder.search([self.latitude, self.longitude])
-    address[0].city + ", " + address[0].state_code
+    address[0].city + ", " + address[0].state_code unless (address[0].city.nil? or address[0].state_code.nil?)
   end
 
   def to_json(options = {})

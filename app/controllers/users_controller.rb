@@ -181,7 +181,7 @@ class UsersController < ApplicationController
       comment.save
     else
       comment = Comment.find_by(id: params[:comment_id], user_id: current_user.id)
-      comment.comment = params[:commment_string]
+      comment.comment = params[:comment_string]
       comment.save
     end
 

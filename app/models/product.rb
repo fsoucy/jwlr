@@ -154,7 +154,7 @@ class Product < ActiveRecord::Base
   private
   
     def activate
-      if self.toggle_options.count > 0 and self.selling_method_links.count > 0 and self.exchange_method_links.count > 0 and self.payment_method_links.count > 0 and self.pictures.count > 0
+      if self.toggle_options.count > 0 and self.selling_method_links.count > 0 and self.exchange_method_links.count > 0 and self.payment_method_links.count > 0 and self.pictures.count > 0 and self.location_string != ""
         self.activated = true
       else
         self.activated = false

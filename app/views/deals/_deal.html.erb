@@ -27,7 +27,7 @@
 <% if deal.deal_complete && !deal.reviews.where("user_id = ?", current_user.id).first.nil? %>
 <h3>Boo yah! Deal complete and successful.</h3>
 <% elsif deal.deal_complete %>
-<h3><%= link_to "Please sumbit a review for this deal", new_review_url(deal) %></h3>
+<h3><%= link_to "Please submit a review for this deal", new_review_url(deal) %></h3>
 <% else %>
 <h3>The product and payment have been received by respective parties but parties aren't completely satisfied.</h3>
 <% end %>

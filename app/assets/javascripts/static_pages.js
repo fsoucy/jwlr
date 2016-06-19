@@ -1,5 +1,3 @@
-
-
 function urlify(text) {
     var urlRegex = /(https?:\/\/[^\s]+)/g;
     return text.replace(urlRegex, function(url) {
@@ -64,7 +62,7 @@ $(document).on('click', 'a[id*=like_]', function(event) {
   $.ajax({url: '/users/' + this.id.split("_")[3] + '/like', type: 'POST', context: this, data: {post_id: this.id.split("_")[2], post_type: this.id.split("_")[1]}, success: function() {
     if($(this).text().trim() == "Like")
     {
-      $(this).text("Unike");
+      $(this).text("Unlike");
     }
     else
     {

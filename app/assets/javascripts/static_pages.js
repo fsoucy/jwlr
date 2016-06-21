@@ -118,11 +118,17 @@ $(document).on('mouseenter', 'a[id*=likes_]', function(event) {
       $(this).parent().siblings("ul[id*=likesList_]").show();
     }
   }});
-});
-
-$(document).on('mouseleave', 'a[id*=likes_]', function() {
+}).on('mouseout', 'a[id*=likes_]', function(event) {
   $(this).parent().siblings("ul[id*=likesList_]").hide();
 });
+
+$(document).on('mouseout', 'ul[id*=likesList_]', function(event) {
+  $(this).hide();
+});
+
+$(document).on('mouseout', '.feed_item', function(event) {
+  $('ul[id*=likesList_]').hide();
+}); 
 
 //Click like list
 $(document).on('click', 'a[id*=likes_]', function(event) { 

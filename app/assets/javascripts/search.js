@@ -17,6 +17,145 @@ function sortBy(url) {
 	return afterURL;
 }
 
+function cleanURL(url)
+{
+    var afterURL = url;
+    var hashIndex = afterURL.indexOf("&");
+    if (hashIndex == -1)
+    {
+	return afterURL;
+    }
+    return afterURL.substring(0, hashIndex);
+}
+
+function stringToArray(str)
+{
+    var arr = [];
+    for (var i = 0; i < str.length; i++)
+    {
+	arr.push(str.substring(i, i+1));
+    }
+    return arr;
+}
+
+// if in key and get =, inKey false and inVal true DONE
+// if not in key and get &, in key is true DONE
+//if in key and not =, add to key DONE
+// if in val and not &, add to val DONE
+// if adding to something and get plus, add space instead DONE
+// if end and key length not 0, add to dict DONE
+// if in val and get comma, add key and val to dict, val is "", key stays same, inVal still true DONE
+// if not in key and get an &, append to key, inKey is true, if key length not 0 add to dict DONE    
+function parseURL(url)
+{
+    var splitURL = stringToArray(url);
+    var dict = {};
+    var inKey = false;
+    var inVal = false;
+    var key = "";
+    var val = [];
+    var currentVal = "";
+    for (var i = 0; i < splitURL.length; i++)
+    {
+	var current = splitURL[i];
+
+
+	if (i == (splitURL.length - 1))
+	{	    
+	    if (key.length != 0)
+	    {
+		currentVal += current;
+		val.push(currentVal);
+		if (key in dict)
+		{
+		    for(var j = 0; j < val.length; j++)
+		    {
+			dict[key].push(val[j]);
+		    }
+		}
+		else
+		{
+		    dict[key] = val;
+		}
+	    }
+	}
+	else
+	{
+	    
+	    if (inKey)
+	    {
+		if (current == "=")
+		{
+		    inKey = false;
+		    inVal = true;
+		}
+		else
+		{
+		    if (current == "%20")
+		    {
+			key += " ";
+		    }
+		    else
+		    {
+			key += current;
+		    }
+		}
+	    }
+	    else
+	    {
+		if (current == "&")
+		{
+		    val.push(currentVal);
+		    if (key.length != 0)
+		    {
+			if (key in dict)
+			{
+			    for (var j = 0; j < val.length; j++)
+			    {
+				dict[key].push(val[j]);
+			    }
+			}
+			else
+			{
+			    dict[key] = val;
+			}
+		    }
+		    key = "";
+		    val = [];
+		    currentVal = "";
+		    inKey = true;
+		    inVal = false;
+		}
+		else
+		{
+		    if (inVal)
+		    {
+			if (current == ",")
+			{
+			    val.push(currentVal);
+			    currentVal = "";
+			}
+			else if (current == "%20")
+			{
+			    currentVal += " ";
+			}
+			else
+			{
+			    currentVal += current;
+			}
+		    }
+		}
+	    }
+	}
+	    
+    }
+    return dict;
+}
+
+function generateHash(dict)
+{
+}
+
 /*
 This function is called to update the URL when actions are taken with the toggle options
 or sorting or ordering preferences updated */

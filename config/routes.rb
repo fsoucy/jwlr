@@ -76,6 +76,7 @@ Rails.application.routes.draw do
 
   resources :deals do
     member do
+      get :updated_at
       resources :reviews, only: [:new, :create]
     end
   end

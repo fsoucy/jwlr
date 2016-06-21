@@ -1,6 +1,6 @@
 class DealsController < ApplicationController
   before_action :logged_in_user
-  before_action :correct_user, only: [:update, :show, :destroy]
+  before_action :correct_user, only: [:update, :show, :destroy, :updated_at]
   
   def create
     @deal = current_user.buying_deals.build(deals_params)
@@ -173,6 +173,11 @@ class DealsController < ApplicationController
       new_notification("Your deal on " + deal.product.title + " has been cancelled by the buyer.", deal.seller, deal_url(deal))
     end
     redirect_to deal.product
+  end
+
+  def updated_at
+    deal = Deal.find(params[:id])
+    render json: deal.updated_at.to_i, status: 200
   end
 
   private

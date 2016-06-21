@@ -226,18 +226,28 @@ function refreshDeals()
     var str = window.location.href;
     var beginIndex = str.indexOf("deals/");
     var id = str.substring(beginIndex + 6);
-    $('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
-    });
-    $('.selling_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
-    });
-    $('.payment_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
-    });
-    $('.completed_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
-    });
-    $('.guide_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
-    });
-    $('.instructions').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
-	addRedirectButton();
+    var updated_at = parseInt($('#updated_at').val());
+    $.ajax({
+      type: "GET",// GET in place of POST
+      url: window.location.protocol + "//" + window.location.host + "/deals/" + id.toString() + "/updated_at",
+      success: function(result) {
+        if(result > updated_at)
+        {
+          $('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
+          });
+          $('.selling_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
+          });
+          $('.payment_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
+          });
+          $('.completed_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
+          });
+          $('.guide_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
+          });
+        }
+        $('.instructions').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function() {
+	        addRedirectButton();
+        });
+      }
     });
 }
 

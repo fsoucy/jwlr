@@ -1,3 +1,45 @@
+$.fn.followTo = function(elem) {
+    var $this = this,
+        $window = $(window),
+        $bumper = $(elem),
+        bumperPos = $bumper.offset().top,
+        thisHeight = $this.outerHeight(),
+        setPosition = function(){
+            if($window.width() < 768)
+            {
+              $this.css({
+                position: 'relative'
+              });  
+            }
+            else
+            {
+              bumperPos = $bumper.offset().top;
+              thisHeight = $this.outerHeight();
+              if($window.scrollTop() > (bumperPos - thisHeight)) {
+                $this.css({
+                    position: 'absolute',
+                    top: (bumperPos - thisHeight)
+                });
+              } 
+              else 
+              {
+                $this.css({
+                    position: 'fixed',
+                    top: '5em'
+                });
+              }
+            }
+        };
+    $window.resize(function()
+    {
+        bumperPos = $bumper.offset().top;
+        thisHeight = $this.outerHeight();
+        setPosition();
+    });
+    $window.scroll(setPosition);
+    setPosition();
+};
+
 function urlify(text) {
     var urlRegex = /(https?:\/\/[^\s]+)/g;
     return text.replace(urlRegex, function(url) {
@@ -6,6 +48,10 @@ function urlify(text) {
 }
 
 $(document).ready(function(){
+
+  //Have the footer scroll when it collides with the sidebars
+  $('.fixed').followTo('.footer');
+
   // disable auto discover
   Dropzone.autoDiscover = false;
   $("#new_micropost_picture").dropzone({

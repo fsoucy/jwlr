@@ -2,7 +2,7 @@
   <%= render partial: "logged_out" %>
 <% else %>
   <div class="pure-g pad-box">
-    <div class="pure-u-1 pure-u-md-1-4 fixed">
+    <div class="pure-u-1 pure-u-md-1-4 fixed" id="sidebar">
       <%= image_tag current_user.profile_picture(:thumb) %>
       <div class="pure-menu restrict-width">
         <span class="pure-menu-heading"><%= current_user.name %></span>

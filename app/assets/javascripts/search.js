@@ -154,7 +154,132 @@ function parseURL(url)
 
 function generateHash(dict)
 {
+    var hash = "";
+    for (key in dict)
+    {
+	var toAdd = "";
+	toAdd += "&" + key + "=";
+	for (var i = 0; i < dict[key].length; i++)
+	{
+	    if (i == 0)
+	    {
+		toAdd += dict[key][i];
+	    }
+	    else
+	    {
+		toAdd += "," + dict[key][i];
+	    }
+	}
+	hash += toAdd;
+    }
+    return hash;
 }
+
+
+function dictToURL(dict)
+{
+    var hash = generateHash(dict);
+    var base = window.location.protocol + "//" + window.location.host + "/search?utf8=%E2%9C%93";
+    var str = base + hash;
+    return str.replace(' ', '%20');
+}
+
+function stringToDict()
+{
+    var dict = {};
+    dict["search_string"] = $('.search_string').val();
+    return dict;
+}
+
+function sortByToDict()
+{
+    var dict = {};
+    $('option').each(function (index, data) {
+	if ($(this).is(":selected"))
+	{
+	    dict["sort_by"] = [$(this).attr("value")];
+	}
+    });
+    return dict;
+}
+
+function checkboxToDict()
+{
+    var dict = {};
+    $('input.toggle').each(function (index, data) {
+	if ($(this).prop('checked'))
+	{
+	    var key = $(this).attr('name');
+	    var val = $(this).val();
+	    if (key in dict)
+	    {
+		dict[key].push(val);
+	    }
+	    else
+	    {
+		dict[key] = [val];
+	    }
+	}
+    });
+    return dict;
+    
+}
+
+function listsToDict()
+{
+    var dict = {};
+    $('.attr_long').each(function(index, data) {
+	if ($(this).hasClass('attr_active'))
+	{
+	    var val = $(this).siblings('h3').text();
+	    if ("attr" in dict)
+	    {
+		dict["attr"].push(val);
+	    }
+	    else
+	    {
+		dict["attr"] = [val];
+	    }
+	}
+    });
+    return dict;
+}
+
+function priceToDict()
+{
+    var dict = {};
+    var priceLower = parseInt($('#price_lower').val());
+    var priceUpper = parseInt($('#price_upper').val());
+    if (priceLower > 0)
+    {
+	dict["price_lower"] = [priceLower.toString()];
+    }
+    if (priceUpper > 0)
+    {
+	dict["price_upper"] = [priceUpper.toString()];
+    }
+    return dict;
+    
+}
+
+function elementsToDict()
+{
+    var commit = {};
+    commit["commit"] = ["Search"];
+    var dict = $.extend(stringToDict(), commit, sortByToDict(), checkboxToDict(), listsToDict(), priceToDict());
+    return dict;	
+}
+
+function URLFromElements()
+{
+    var dict = elementsToDict();
+    return dictToURL(dict);
+}
+
+
+
+
+    
 
 /*
 This function is called to update the URL when actions are taken with the toggle options
@@ -162,7 +287,6 @@ or sorting or ordering preferences updated */
 function leadToRefresh() {
 	var url = window.location.href;
 
-	debugger;
 	//here I'm going to clear the unnecessary hash in URL
 	$('input.toggle').each(function (index, data) {
 		var str = "&" + $(this).attr('name');
@@ -219,13 +343,11 @@ function leadToRefresh() {
 		var anotherHash = url.split("&");
 		for (i in anotherHash) {
 			var index = parseInt(i);
-			debugger;
+
 			if (anotherHash[index].indexOf("attribute_option_id") == -1) {
 				if (index == 0) {
-					debugger;
 					finalURL += anotherHash[index];
 				} else {
-					debugger;
 					finalURL += "&" + anotherHash[index];
 				}
 			} else {
@@ -233,7 +355,6 @@ function leadToRefresh() {
 			}
 		}
 	}
-	//debugger;
 	window.location.href = finalURL;
 }
 
@@ -299,7 +420,6 @@ function uponRefresh() {
 		var toGo = "";
 		// "attribute_option_id", "category_id", "selling_method_id", "exchange_method_id", "payment_method_id", "price"
 		for (uni in hashSplit) {
-			debugger;
 			unit = hashSplit[parseInt(uni)];
 			if (unit.indexOf("attribute_option_id") != -1 || unit.indexOf("category_id") != -1 || unit.indexOf("selling_method_id") != -1 || unit.indexOf("exchange_method_id") != -1 || unit.indexOf("payment_method_id") != -1 || unit.indexOf("price") != -1) {
 				//do nothing
@@ -404,16 +524,13 @@ $(document).ready(function () {
 	});
 
 	$('#sug_list').mousedown(function () {
-		debugger;
 		if ($(this).hasClass('active')) {
-			debugger;
 			var go = window.location.href;
 			var goSplit = go.split("/");
 			var url = goSplit[0];
 			url = url + "/search?&search_string=" + $('.search_string').val();
 			window.location.href = url;
 		} else {
-			debugger;
 		}
 	});
 

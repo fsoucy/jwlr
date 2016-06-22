@@ -87,7 +87,7 @@ function parseURL(url)
 	    }
 	    else
 	    {
-		if (current == "&")
+		if (current == "&" or current == "?")
 		{
 		    val.push(currentVal);
 		    if (key.length != 0)

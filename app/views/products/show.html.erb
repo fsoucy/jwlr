@@ -85,10 +85,15 @@
       <% if @product.deals.count == 0 %>
         <h3>This product is not engaged in any deals.</h3>
       <% else %>
-        <h3>Current deals</h3>
+        <h3>Current Deals</h3>
+        <% deals = false %>
         <% @product.deals.each do |deal| %>
           <% if current_user?(deal.seller) || current_user?(deal.buyer) %>
             <p>Go to the <%= link_to "deal", deal %> between <%= link_to deal.buyer.name, deal.buyer %> and <%= link_to deal.seller.name, deal.seller %>.</p>
+            <% deals = true %>
+          <% end %>
+          <% if !deals %>
+            <p>You have no deals associated with this product.</p>
           <% end %>
         <% end %>
       <% end %>
@@ -103,7 +108,7 @@
     <% end %>
     <p>
     
-    <% if logged_in? %>
+    <% if logged_in? and !@product.sold %>
       <% if current_user.saved_products.find_by(product_id: @product.id).nil? %>
         <button class="pure-button pure-button-primary" id="save_product_<%= @product.id %>_<%= current_user.id %>">Add to wishlist</button>
       <% else %>

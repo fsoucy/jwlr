@@ -2,30 +2,14 @@ $(document).on('click', '#back', function() {
   window.history.back();
 });
 
-/* this function iterates through each option in the sort_by
-select dropdown, and appends the selected to the URL */
-function sortBy(url) {
-	afterURL = url
-		$('option').each(function (index, data) {
-			if ($(this).is(":selected")) {
-				var optionString = "&sort_by=" + $(this).attr("value");
-
-				afterURL += optionString;
-
-			}
-		});
-	return afterURL;
-}
-
-function cleanURL(url)
+function replaceAll(string, toReplace, replaceWith)
 {
-    var afterURL = url;
-    var hashIndex = afterURL.indexOf("&");
-    if (hashIndex == -1)
+    var str = string;
+    while (str.indexOf(toReplace) != -1)
     {
-	return afterURL;
+	str = str.replace(toReplace, replaceWith);
     }
-    return afterURL.substring(0, hashIndex);
+    return str;
 }
 
 function stringToArray(str)
@@ -91,7 +75,7 @@ function parseURL(url)
 		}
 		else
 		{
-		    if (current == "%20")
+		    if (current == "+")
 		    {
 			key += " ";
 		    }
@@ -135,7 +119,7 @@ function parseURL(url)
 			    val.push(currentVal);
 			    currentVal = "";
 			}
-			else if (current == "%20")
+			else if (current == "+")
 			{
 			    currentVal += " ";
 			}
@@ -181,13 +165,14 @@ function dictToURL(dict)
     var hash = generateHash(dict);
     var base = window.location.protocol + "//" + window.location.host + "/search?utf8=%E2%9C%93";
     var str = base + hash;
-    return str.replace(' ', '%20');
+    debugger;
+    return replaceAll(str, " ", "+");
 }
 
 function stringToDict()
 {
     var dict = {};
-    dict["search_string"] = $('.search_string').val();
+    dict["search_string"] = [$('.search_string').val()];
     return dict;
 }
 
@@ -276,184 +261,91 @@ function URLFromElements()
     return dictToURL(dict);
 }
 
-
-
-
-    
-
-/*
-This function is called to update the URL when actions are taken with the toggle options
-or sorting or ordering preferences updated */
-function leadToRefresh() {
-	var url = window.location.href;
-
-	//here I'm going to clear the unnecessary hash in URL
-	$('input.toggle').each(function (index, data) {
-		var str = "&" + $(this).attr('name');
-		if (url.indexOf(str) != -1) {
-			url = url.substring(0, url.indexOf(str));
-		}
-	});
-	//clear the current sort by hash in URL
-	if (url.indexOf("&sort_by") != -1) {
-		url = url.substring(0, url.indexOf("&sort_by"));
-	}
-
-	//update sort by hash in the URL
-	url = sortBy(url);
-
-	//iterates through all checkboxes. if selected, add it to hash
-	$('input.toggle').each(function (index, data) {
-		if ($(this).prop('checked')) {
-			if (url.indexOf($(this).attr('name')) == -1) {
-				str = $(this).attr('name');
-				str = str.replace(' ', 'space');
-				url += "&" + $(this).attr('name') + '=' + $(this).val();
-			} else {
-				url += "," + $(this).val();
-			}
-		}
-	});
-
-	//if an attribute option is expanded, let hash know so it can stay expanded upon reload
-	$('.attr_long').each(function (index, data) {
-		if ($(this).hasClass('attr_active')) {
-
-			var attrString = "&" + "attr=" + $(this).siblings('h3').text();
-			if (url.indexOf(attrString) == -1) {
-				attrString = attrString.replace(" ", "_");
-				url += attrString;
-
-			}
-		}
-	});
-
-	if (parseInt($('#price_lower').val()) != 0) {
-		url += "&price_lower=" + $('#price_lower').val();
-	}
-
-	if (parseInt($('#price_upper').val()) != 0) {
-		url += "&price_upper=" + $('#price_upper').val();
-	}
-
-	//update URL
-	finalURL = url;
-	if (url.indexOf("category_id") == -1) {
-		var finalURL = "";
-		var anotherHash = url.split("&");
-		for (i in anotherHash) {
-			var index = parseInt(i);
-
-			if (anotherHash[index].indexOf("attribute_option_id") == -1) {
-				if (index == 0) {
-					finalURL += anotherHash[index];
-				} else {
-					finalURL += "&" + anotherHash[index];
-				}
-			} else {
-				// no more attribute option ids
-			}
-		}
-	}
-	window.location.href = finalURL;
+function executeSearch()
+{
+    window.location.href = URLFromElements();
 }
 
-function uponRefresh() {
-
-	var loc = window.location.href;
-	loc = loc.split("&");
-	for (thing in loc) {
-		x = loc[thing].indexOf('attr=');
-		if (x != -1) {
-			var attribute = '.' + loc[thing].substring(x + 5);
-			console.log(attribute);
-			//$(attribute).siblings('.attr_short').css('display', 'none').removeClass('attr_active');
-			$(attribute).siblings('.attr_long').css('display', 'block').addClass('attr_active');
-		}
-	}
-
-	var hash = window.location.href;
-	//if the hash is empty, return an empty hash. if not, only get relevant part of hash (after first &)
-	if (hash.indexOf('&') == -1 || hash.indexOf("=") == -1) {
-		hash = "";
-		return;
-	} else {
-		hash = hash.slice(hash.indexOf("&"), hash.length);
-	}
-
-	//delimits
-	var hashSplit = hash.split("&");
-	hashSplit = hashSplit.slice(1, hashSplit.length); // don't want first value
-	var dict = {}; // var dict = [];
-	//console.log(hashSplit.toString());
-	for (j in hashSplit) {
-		var s = hashSplit[j];
-		var thingString = s.slice(s.indexOf("=") + 1, s.length);
-		thingString = thingString.split(",");
-		var name = s.slice(s.indexOf("&") + 1, s.indexOf("="));
-		name = name.replace('space', ' ');
-		dict[name] = thingString;
-		//dict.push({
-		//    key: s.slice(s.indexOf("&") + 1, s.indexOf("=")),
-		//    value: thingString
-		//});
-	}
-	//we now have a hash. keys are the names of the params. values are an array of appropriate values for the param
-	$('input').each(function (index, data) {
-		var name = $(this).attr('name');
-		var val = $(this).val();
-		if (dict[name] != null && dict[name].indexOf(val) != -1) // && $(this).parent().hasClass('attr_active'))
-		{
-			//var todo = $(this).parent().attr('name') ==
-			$(this).prop('checked', true);
-		}
-	});
-
-	if (dict["sort_by"] != null) {
-		$('select').val(dict["sort_by"][0]);
-	}
-
-  /*
-	if ($('.result').length == 0) {
-		var urlString = window.location.href;
-		var hashSplit = urlString.split("&");
-		var toGo = "";
-		// "attribute_option_id", "category_id", "selling_method_id", "exchange_method_id", "payment_method_id", "price"
-		for (uni in hashSplit) {
-			unit = hashSplit[parseInt(uni)];
-			if (unit.indexOf("attribute_option_id") != -1 || unit.indexOf("category_id") != -1 || unit.indexOf("selling_method_id") != -1 || unit.indexOf("exchange_method_id") != -1 || unit.indexOf("payment_method_id") != -1 || unit.indexOf("price") != -1) {
-				//do nothing
-			} else {
-				if (parseInt(uni) == 0) {
-					toGo += unit;
-				} else {
-					if (unit.indexOf("search_string") == -1) {
-						toGo += "&" + unit;
-					} else {
-						toGo += "&" + "search_string=";
-					}
-				}
-			}
-		}
-	    window.location.href = toGo;
-
-	}*/
-
+function searchStringFromDict(dict)
+{
+    if ("search_string" in dict)
+    {
+	$('.search_string').val(dict["search_string"][0]);
+    }
 }
+
+function togglesFromDict(dict)
+{
+    $("input.toggle").each(function(index, data) {
+	var key = $(this).attr("name");
+	var val = $(this).val();
+	if (dict[key] != null && $.inArray(val, dict[key]) != -1)
+	{
+	    $(this).prop('checked', true);
+	}
+    });
+}
+
+function priceFromDict(dict)
+{
+    if (dict["price_lower"] != null && parseInt(dict["price_lower"]) > 0)
+    {
+	$('#price_lower').val(dict["price_lower"]);
+    }
+    if (dict["price_upper"] != null && parseInt(dict["price_upper"]) > 0)
+    {
+	$('#price_upper').val(dict["price_upper"]);
+    }
+}
+
+function sortByFromDict(dict)
+{
+    if (dict["sort_by"] != null)
+    {
+	$('#sort').val(dict["sort_by"]);
+    }
+}
+
+function listsFromDict(dict)
+{
+    if (dict["attr"] != null)
+    {
+	for (var i = 0; i < dict["attr"].length; i++)
+	{
+	    debugger;
+	    var thing = "." + dict["attr"][i];
+	    thing = thing.replace(" ", "_");
+	    $(thing).siblings('.attr_long').css('display', 'block').addClass("attr_active");
+	}
+    }
+}
+
+function uponRefresh()
+{
+    //unselect everything
+    $('input.toggle').prop('checked', false);
+    var dict = parseURL(window.location.href);
+    searchStringFromDict(dict);
+    togglesFromDict(dict);
+    priceFromDict(dict);
+    sortByFromDict(dict);
+    listsFromDict(dict);
+}
+
 
 $(document).ready(function () {
 	$('input.toggle').change(function () {
-		leadToRefresh();
+	    executeSearch();
 	});
 	$('select.searchpage').change(function () {
-		leadToRefresh();
+	    executeSearch();
 	});
 
 	$('#prices_man').click(function () {
-		leadToRefresh();
+	    executeSearch();
 	});
 	if ($('#search_page').length > 0) {
-		uponRefresh();
+	    uponRefresh();
 	}
 
     var arr = window.location.href.split("&");

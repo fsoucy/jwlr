@@ -10,6 +10,7 @@ id,value,category_option_id
 9,White Gold,2
 10,Rose Gold,2
 11,Other,2
+46,None,3
 12,Aquamarine,3
 13,Amethyst,3
 14,Citrine,3
@@ -155,7 +156,7 @@ id,value,category_option_id
 154,Chandelier,10
 155,Clip,10
 156,Cluster,10
-157,Dangle/Dtop,10
+157,Dangle/Drop,10
 158,Clamp,10
 159,Hoop,10
 160,Leverback,10
@@ -188,104 +189,79 @@ id,value,category_option_id
 187,Sports,12
 188,Other,12
 189,Not Specified,12
-190,Animals Awareness,13
-191,Baby,13
-192,Beach & Nautical,13
-193,Beauty,13
-194,Buildings & Monuments,13
-195,"Cartoons, TV & Movie Characters",13
-196,Celestial & Horoscope,13
-197,"Clothing, Handbags & Shoes",13
-198,Coins & Money,13
-199,Colleges & Universities,13
-200,Computer & Office,13
-201,Cowboy & Western,13
-202,Fairytale & Fantasy,13
-203,Family & Friends,13
-204,Flags & Political,13
-205,Flowers & Garden,13
-206,Food & Drink,13
-207,Gadgets & Tools,13
-208,Gambling/Casino,13
-209,Hobbies & Crafts,13
-210,Holiday,13
-211,Home,13
-212,"Letters, Numbers & Words",13
-213,Love & Hearts,13
-214,Luck,13
-215,Military & Weaponry,13
-216,Music,13
-217,Occupational,13
-218,Religious,13
-219,Signs & Symbols,13
-220,Skeletons & Skulls,13
-221,Special Occasion ,13
-222,Sports ,13
-223,Toys & Games ,13
-224,Travel & Places,13
-225,Vehicles/Transportation,13
-226,Tie Bar/Tie Clip,14
-227,Tie Chain,14
-228,Tie Tack,14
-229,Other,14
-230,Not Specified ,14
-231,Men',15
-232,Women's,15
-233,Unisex,15
-234,Not Specified,15
-235,Wristwatch,16
-236,Pocket Watch,16
-237,Other,16
-238,Watch Parts,16
-239,Automatic Mechanical,17
-240,Hand-Winding Mechanical,17
-241,Quartz Automatic,17
-242,Quartz Battery,17
-243,Quartz Solar Powered,17
-244,Other,17
-245,Not Specified,17
-246,Solid Gold,18
-247,Stainless Steel,18
-248,Leather,18
-249,Other,18
-250,Not Specified,18
-251,Casual,19
-252,Dress,19
-253,Fashion,19
-254,Luxury,19
-255,Sport,19
-256,Skeleton,19
-257,Other,19
-258,Not Specified,19
-259,Pre-1920,21
-260,1920-1929,21
-261,1930-1939,21
-262,1940-1949,21
-263,1950-1959,21
-264,1960-1969,21
-265,1970-1979,21
-266,1980-1989,21
-267,1990-1999,21
-268,2000-2009,21
-269,2010-Present,21
-270,Not Specified,21
-271,Beige,20
-272,Black,20
-273,Blue,20
-274,Brown,20
-275,Clear,20
-276,Gray,20
-277,Green,20
-278,Ivory,20
-279,Orange,20
-280,Pink,20
-281,Purple,20
-282,Red,20
-283,Rose Gold,20
-284,Silver,20
-285,White,20
-286,White Gold,20
-287,Yellow,20
-288,Yellow Gold,20
-289,Other,20
-290,Not Specified,20
+190,None,22
+191,Aquamarine,22
+192,Amethyst,22
+193,Citrine,22
+194,Diamonds,22
+195,Emerald,22
+196,Garnet,22
+197,Jade,22
+198,Lapis,22
+199,Opal,22
+200,Onyx,22
+201,Pearl,22
+202,Peridot,22
+203,Ruby,22
+204,Sapphire,22
+205,Tanzanite,22
+206,Topaz,22
+207,Turquoise,22
+208,Abalone,22
+209,Agate,22
+210,Alexandrite,22
+211,Amber,22
+212,Ametrine,22
+213,Beryl,22
+214,Carnelian,22
+215,Chrome Diopside,22
+216,Coral,22
+217,Iolite,22
+218,Malachite,22
+219,Moonstone,22
+220,Morganite,22
+221,Mother of Pearl,22
+222,Quartz,22
+223,Tigers Eye,22
+224,Not Specified,22
+225,New,13
+226,Pre-Owned,13
+227,Repairable,13
+228,Scrap,13
+229,Animal,14
+230,Baby,14
+231,Beach and Nautical,14
+232,Buildings and Monuments,14
+233,"Cartoon, TV or Movie Characters",14
+234,Clothing and Accessories,14
+235,Coins and Money,14
+236,Family and Friends,14
+237,Flowers and Garden,14
+238,Food and Drink,14
+239,Letters,14
+240,Numbers,14
+241,Heart and Love,14
+242,Occupation,14
+243,Religious,14
+244,Symbols,14
+245,Sports,14
+246,Other,14
+247,Not Specified,14
+248,Less than 7,15
+249,7-7.49,15
+250,7.5-7.99,15
+251,8-8.49 - Default,15
+252,8.5-8.99,15
+253,9-9.49,15
+254,9.5-10,15
+255,More than 10,15
+256,Adjustable,15
+248,Less than 7,16
+249,7-7.49,16
+250,7.5-7.99,16
+251,8-8.49 - Default,16
+252,8.5-8.99,16
+253,9-9.49,16
+254,9.5-10,16
+255,More than 10,16
+256,Adjustable,16

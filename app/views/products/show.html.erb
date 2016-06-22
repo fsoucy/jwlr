@@ -10,19 +10,31 @@
 	<div class="pure-u-1 pure-u-md-1-5 product_view pad-box">
   
   	<% if !@product.pictures.first.nil? %>
-  	  <a class="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
-   		  <%= image_tag @product.pictures.first.photo_cropped(:medium), class: "pad-box product_image pure-img" %>
-  	  </a>
+      <% if !@product.main_picture_id.nil? %>
+            <a class="magnifier" href="<%= @product.pictures.find(@product.main_picture_id).photo_cropped(:large) %>">
+              <%= image_tag @product.pictures.find(@product.main_picture_id).photo_cropped(:thumb), class: "pad-box product_image pure-img" %>
+            </a>
+          <% else %>
+            <a class="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
+              <%= image_tag @product.pictures.first.photo_cropped(:thumb), class: "pad-box product_image pure-img" %>
+            </a>
+          <% end %>
   		<% if current_user?(@product.user) and logged_in? %>
-  		<%= link_to("Edit Picture", edit_picture_path(@product.pictures.first), class: 'product_edit' ) %>
-      <br>
-      <%= link_to("Delete Picture", @product.pictures.first, method: :delete, class: 'product_delete' ) %>
-  		<% end %>
+        <% if !@product.main_picture_id.nil? %>
+  		    <%= link_to("Edit Picture", edit_picture_path(@product.pictures.find(@product.main_picture_id)), class: 'product_edit' ) %>
+          <br>
+          <%= link_to("Delete Picture", @product.pictures.find(@product.main_picture_id), method: :delete, class: 'product_delete' ) %>
+  		  <% else %>
+          <%= link_to("Edit Picture", edit_picture_path(@product.pictures.first), class: 'product_edit' ) %>
+          <br>
+          <%= link_to("Delete Picture", @product.pictures.first, method: :delete, class: 'product_delete' ) %>
+        <% end %>
+      <% end %>
   	<% end %>
   	<br>
   	<% @product.pictures.each do |picture| %>
 	<div class="pickers">
-  		<% if picture == @product.pictures.first %>
+  		<% if (picture == @product.pictures.first and @product.main_picture_id.nil?) or picture.id == @product.main_picture_id %>
   			<%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show pic_active" %>
   		<% else %>
   			<%= image_tag picture.photo_cropped(:thumbnail), class: "cropped_show" %>
@@ -73,10 +85,15 @@
       <% if @product.deals.count == 0 %>
         <h3>This product is not engaged in any deals.</h3>
       <% else %>
-        <h3>Current deals</h3>
+        <h3>Current Deals</h3>
+        <% deals = false %>
         <% @product.deals.each do |deal| %>
           <% if current_user?(deal.seller) || current_user?(deal.buyer) %>
             <p>Go to the <%= link_to "deal", deal %> between <%= link_to deal.buyer.name, deal.buyer %> and <%= link_to deal.seller.name, deal.seller %>.</p>
+            <% deals = true %>
+          <% end %>
+          <% if !deals %>
+            <p>You have no deals associated with this product.</p>
           <% end %>
         <% end %>
       <% end %>
@@ -91,7 +108,7 @@
     <% end %>
     <p>
     
-    <% if logged_in? %>
+    <% if logged_in? and !@product.sold %>
       <% if current_user.saved_products.find_by(product_id: @product.id).nil? %>
         <button class="pure-button pure-button-primary" id="save_product_<%= @product.id %>_<%= current_user.id %>">Add to wishlist</button>
       <% else %>

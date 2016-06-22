@@ -48,6 +48,7 @@ class DealsController < ApplicationController
   end
 
   def update
+    debugger
     @deal = Deal.find(params[:id])
     old_selling_method = @deal.selling_method.method
     old_exchange_method = @deal.exchange_method.method

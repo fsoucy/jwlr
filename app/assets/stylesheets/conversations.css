@@ -66,6 +66,7 @@
   width: 10%;
   height: 35px;
   margin-top: 5px;
+  min-width: 52px;
 }
 
 .convo_index_page p {

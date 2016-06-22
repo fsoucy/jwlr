@@ -30,7 +30,7 @@ class Product < ActiveRecord::Base
  
   def location_string
     address = Geocoder.search([self.latitude, self.longitude])
-    address[0].city + ", " + address[0].state_code
+    address[0].city + ", " + address[0].state_code unless (address[0].city.nil? or address[0].state_code.nil?)
   end
 
   def to_json(options = {})
@@ -154,7 +154,7 @@ class Product < ActiveRecord::Base
   private
   
     def activate
-      if self.toggle_options.count > 0 and self.selling_method_links.count > 0 and self.exchange_method_links.count > 0 and self.payment_method_links.count > 0 and self.pictures.count > 0
+      if self.toggle_options.count > 0 and self.selling_method_links.count > 0 and self.exchange_method_links.count > 0 and self.payment_method_links.count > 0 and self.pictures.count > 0 and self.location_string != ""
         self.activated = true
       else
         self.activated = false

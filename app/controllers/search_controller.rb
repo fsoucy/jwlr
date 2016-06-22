@@ -14,6 +14,7 @@ class SearchController < ApplicationController
     with :sold, false
     with :hold, false
     with :activated, true
+    with :confirmed, true
     case params[:sort_by]
       when "low"
         order_by(:price, :asc)

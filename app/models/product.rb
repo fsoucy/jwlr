@@ -147,6 +147,7 @@ class Product < ActiveRecord::Base
     boolean :sold
     boolean :hold
     boolean :activated
+    boolean :confirmed
     time :created_at    
     integer :category_id
   end

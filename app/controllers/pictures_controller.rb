@@ -136,7 +136,11 @@ class PicturesController < ApplicationController
 
     def correct_user_picture
       picture = Picture.find(params[:id])
-      redirect_to root_url if picture.post.user != current_user
+      if picture.post_type == "User"
+        redirect_to root_url if picture.post != current_user
+      else
+        redirect_to root_url if picture.post.user != current_user
+      end
     end
 
 end

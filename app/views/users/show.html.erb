@@ -23,6 +23,8 @@
       <%= link_to "Edit default selling, payment, and exchange methods", edit_default_preferences_user_path(@user.id) %>
       <br>
       <%= link_to "Multiple product image upload", new_picture_user_path(@user.id) %>
+      <br>
+      <%= link_to "Gallery images", pictures_user_path(@user.id) %>
       <% end %>
     <p>Reputation: <%= @user.score %>% positive reviews</p>
     <p>Products sold: <%= Deal.where("deal_complete = ? and seller_id = ?", true, @user.id).count %></p>

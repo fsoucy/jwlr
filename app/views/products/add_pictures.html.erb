@@ -1,6 +1,8 @@
 <div class="pan_cropper">
   <div class="inner_pan_cropper">
     <% if @picture.nil? %>
+      <% link = new_picture_user_url(current_user.id) + "?product_id=" + @product.id.to_s %>
+      <a href="<%= link %>"><button class="pure-button pure-button-primary button-success">Upload gallery image</button>
       <% @product.user.pictures.each do |pic| %>
         <div class="choose_div">
           <%= image_tag pic.photo_cropped(:medium), class: "pad-box product_image pure-img" %>    

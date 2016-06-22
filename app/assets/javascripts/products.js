@@ -6,6 +6,23 @@ $(document).ready(function() {
   }
 });
 
+function productFromGallery()
+{
+    var str = window.location.href;
+    var index = str.indexOf("?");
+    if (index != -1)
+    {
+	var idLoc = index + 12;
+	var id = str.substring(idLoc);
+	var link = "/products/" + id + "/add_pictures";
+	if ($('#users_picture_upload').length > 0)
+	{
+	    console.log(id.toString());
+	    $('#users_picture_upload').attr("href", link);
+	}
+    }
+}
+
 
 function getToggleOptions(category_id)
 {
@@ -537,6 +554,7 @@ function evaluateUponTransaction()
 }
 
 $(document).ready(function() {
+    productFromGallery();
     $('#product_redirect_pictures').val('0');
     $('.cropped_show').click(function() {
 	var smallImage = $(this).attr('src');

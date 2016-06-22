@@ -136,8 +136,19 @@ function parseURL(url)
     return dict;
 }
 
-function generateHash(dict)
+function containsCategory(dict)
 {
+    if (dict["category_id"] == null)
+    {
+	delete dict["attr"];
+	delete dict["attribute_option_id"];
+    }
+    return dict;
+}
+
+function generateHash(oldDict)
+{
+    var dict = containsCategory(oldDict);
     var hash = "";
     for (key in dict)
     {

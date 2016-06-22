@@ -22,7 +22,7 @@
           <% end %>
         <% else %>
           <%= form_for @deal do |f| %>
-            <%= f.hidden_field :seller_satisfied, value: false %>
+            <%= f.hidden_field :buyer_satisfied, value: false %>
             <%= f.submit "Unconfirm successful deal.", class: "pure-button button-error deals_form_button" %>
           <% end %>
         <% end %>

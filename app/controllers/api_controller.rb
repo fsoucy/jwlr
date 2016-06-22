@@ -38,6 +38,11 @@ class ApiController < ApplicationController
         values = {}
         values["name"] = cat.name
         values["id"] = cat.id
+        if cat.children.count == 0
+          values["children"] = 0
+        else
+          values["children"] = 1
+        end
         returning.append(values)
       end
       render json: returning.to_json, status: 200

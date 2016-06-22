@@ -511,6 +511,7 @@ function evaluateUponTransaction()
 }
 
 $(document).ready(function() {
+    $('#product_redirect_pictures').val('0');
     $('.cropped_show').click(function() {
 	var smallImage = $(this).attr('src');
 	var smallLink = $(this).siblings('.pathway').val();

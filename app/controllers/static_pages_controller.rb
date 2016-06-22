@@ -18,6 +18,7 @@ class StaticPagesController < ApplicationController
           with :sold, false
           with :hold, false
           with :activated, true
+          with :confirmed, true
         end
         results += search.results
         results = results.uniq
@@ -32,6 +33,7 @@ class StaticPagesController < ApplicationController
             with :sold, false
             with :hold, false
             with :activated, true
+            with :confirmed, true
           end
           results += search.results
          end
@@ -105,7 +107,7 @@ class StaticPagesController < ApplicationController
         index += 1
       end
       if !product.nil?
-        @for_you.append(product) unless !product.activated || product.sold || product.hold
+        @for_you.append(product) unless !product.activated || product.sold || product.hold || !product.confirmed
       end
     end
     
@@ -117,7 +119,7 @@ class StaticPagesController < ApplicationController
         index += 1
       end
       if !product.nil?
-        @featured.append(product) unless !product.activated || product.sold || product.hold
+        @featured.append(product) unless !product.activated || product.sold || product.hold || !product.confirmed
       end
     end
     

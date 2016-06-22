@@ -14,6 +14,7 @@ class SearchController < ApplicationController
     with :sold, false
     with :hold, false
     with :activated, true
+    with :confirmed, true
     case params[:sort_by]
       when "low"
         order_by(:price, :asc)
@@ -45,7 +46,7 @@ class SearchController < ApplicationController
       if !params[:attribute_option_id].nil?
         ids = params[:attribute_option_id].split(',')
         ids = ids.map(&:to_i)
-        all_of do
+        any_of do
           ids.each do |id|
             with(:attribute_option_id, id)
           end

@@ -377,7 +377,7 @@ $(document).ready(function() {
 	var beginIndex = str.indexOf("deals/");
 	var id = str.substring(beginIndex + 6);
 	var postLoc = '/deals/' + id.toString();
-	updateDeals(postLoc, $(this).parent('form'), function() {
+	updateDeals(postLoc, $(this).parent('h3').parent('form'), function() {
 	    $('.method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_method_selection", function() {
 	    });
 	    $('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
@@ -516,7 +516,7 @@ $(document).ready(function() {
 
     });
     
-    $(document).on('click', '.dropoff_button', function(e) {
+    $(document).on('click', '.dropoff_location', function(e) {
 	e.preventDefault();
 	if (isValidAddress($('#deal_dropoff').val()))
 	{

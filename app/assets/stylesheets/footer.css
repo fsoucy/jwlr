@@ -3,6 +3,13 @@
 }
 
 .footer_header {
-  text-align: left;
-  padding-left: 1.6em;
+  text-align: center;
+}
+
+@media (min-width: 48em)
+{
+  .footer_header {
+    text-align: left;
+    padding-left: 1.6em;
+  }
 }

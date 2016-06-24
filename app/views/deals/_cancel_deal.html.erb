@@ -1,5 +1,5 @@
 <% if !(@deal.payment_complete || @deal.product_received || @deal.product_dispatched) %>
-  <%= link_to "Cancel deal", @deal, confirm: "You sure?", :method => :delete %>
+  <%= link_to "Cancel deal", @deal, :method => :delete, data: { confirm: "Are you sure you wish to cancel this deal?" } %>
 <% else %>
   <h3>Agreement achieved, so you can't cancel the deal now.</h3>
 

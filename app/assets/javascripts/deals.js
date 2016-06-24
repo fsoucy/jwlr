@@ -77,6 +77,10 @@ function defaultSelected()
     if (countMethods('.deal_exchange') == 1)
     {
 	$('.deal_exchange').prop('checked', true);
+	if ($('#deal_exchange_method_id_1').length > 0 && $('#deal_exchange_method_id_1').prop('checked'))
+	{
+	    $('#deal_payment_method_id_1').prop('checked', true);
+	}
     }
     if (countMethods('.deal_payment') == 1)
     {

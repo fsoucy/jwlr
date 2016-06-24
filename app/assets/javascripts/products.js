@@ -481,6 +481,11 @@ function defaultSelectedQuick()
     if (countMethods('.deal_exchange_quick') == 1)
     {
 	$('.deal_exchange_quick').prop('checked', true);
+	if ($('#exchange_method_1').length > 0 && $('#exchange_method_1').prop('checked'))
+	{
+	    console.log('hi');
+	    $('#payment_method_1').prop('checked', true);
+	}
     }
     if (countMethods('.deal_payment_quick') == 1)
     {
@@ -823,7 +828,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.leave_quick_buy', function() {
 	$('.quick_buy_information').hide();
-	$('.in_quick_buy').addClass("quick_buy").removeClass("in_quick_buy");
+	$('.in_quick_buy').addClass("quick_buy").removeClass("in_quick_buy").removeClass("not_ready");
 	$('.deal_extended').show();
 	evaluateDealSubmitQuick();
     });

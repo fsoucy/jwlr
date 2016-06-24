@@ -679,6 +679,18 @@ $(document).ready(function() {
 	evaluateDealSubmitQuick();
     });
 
+
+    $(document).on('click', '.deal_selling_product', function() {
+	console.log('clicker');
+	if ($('#deal_selling_method_id_3').prop('checked'))
+	{
+	    $('.product_show_initiate_deal').val('Make offer');
+	}
+	else
+	{
+	    $('.product_show_initiate_deal').val('Buy this product');
+	}
+    });
     
 
     $(document).on('keyup', '#delivery_cost', function() {

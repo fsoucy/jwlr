@@ -105,13 +105,9 @@
         
         <% if !prod.pictures.first.nil? %>
           <% if !prod.main_picture_id.nil? %>
-            <a class="magnifier" href="<%= prod.pictures.find(prod.main_picture_id).photo_cropped(:large) %>">
               <%= image_tag prod.pictures.find(prod.main_picture_id).photo_cropped(:thumb), class: "product_image_search" %>
-            </a>
           <% else %>
-            <a class="magnifier" href="<%= prod.pictures.first.photo_cropped(:large) %>">
               <%= image_tag prod.pictures.first.photo_cropped(:thumb), class: "product_image_search" %> 
-            </a>
           <% end %>
         <% end %>
 	<div class="result_info">

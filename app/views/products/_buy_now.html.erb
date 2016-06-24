@@ -1,7 +1,6 @@
 <%= form_for @deal, html: { class: "pure-form pure-form-stacked log-in-form methods" } do |f| %>
-  <%= f.submit "Quick buy", class: "pure-button pure-button-primary quick_buy" %>
-  <br>
   <div class="quick_buy_information">
+    <button class="leave_quick_buy pure-button pure-button-primary button-error" type="button">Leave quick buy</button><br>
     <%= f.hidden_field :instant, value: 1 %>
     <%= f.hidden_field :selling_method_id, value: 2 %> <!-- Needs to be changed depending upon different selling methods -->
     <h3>Exchange Methods (choose one)</h3>
@@ -27,6 +26,7 @@
     <%= f.hidden_field :product_id, value: @product.id %>
     <%= f.hidden_field :seller_id, value: @product.user.id %>
     <%= f.hidden_field :buyer_id, value: current_user.id %>
-    <br><button class="leave_quick_buy pure-button pure-button-primary button-error" type="button">Leave quick buy</button>
+    <br>
   </div>
+  <%= f.submit "Quick buy", class: "pure-button pure-button-primary quick_buy" %>
 <% end %>

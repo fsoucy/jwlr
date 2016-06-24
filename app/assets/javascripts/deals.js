@@ -196,6 +196,10 @@ function getCurrentPage()
     {
 	page = 5;
     }
+    if ($('.cancel_selection').is(":visible"))
+    {
+	page = 6;
+    }
     // if none are visible, then a complaint has been filed and page = 0
     // if page is 0, don't render button
     return page;

@@ -1,16 +1,19 @@
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@faq) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
+<div class="pure-g log-in">
+  <div class="pure-u-1 pure-u-md-1-3"></div>
+  <div class="pure-u-1 pure-u-md-1-3 log-in-form">
+    <%= form_for(@faq, html: {class: "pure-form pure-form-stacked"}) do |f| %>
+      <fieldset>
+        <legend>FAQ</legend>
+        <%= render 'shared/error_messages', object: f.object %>
 
-      <%= f.label :question, "Question" %>
-      <%= f.text_field :question, class: 'form-control' %>
+        <%= f.text_field :question, placeholder: "Question" %>
 
-      <%= f.label :answer, "Answer" %>
-      <%= f.text_area :answer, class: 'form-control' %>
+        <%= f.text_area :answer, placeholder: "Answer" %>
 
-      <%= f.submit "Save FAQ", class: "btn btn-primary" %>
+        <%= f.submit "Save FAQ", class: "pure-button pure-button-primary" %>
+      </fieldset>
     <% end %>
   </div>
+  <div class="pure-u-1 pure-u-md-1-3"></div>
 </div>
 

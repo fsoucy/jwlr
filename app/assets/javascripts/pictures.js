@@ -47,6 +47,13 @@ $(document).ready(function(){
     var cropBoxData = { width: 800 * factor, height: 800 * factor};
     var canvasData;
 
+    if ($('.modal-body').width() > $(window).width())
+    {
+	var size = $(window).width().toString() * .8;
+	$('.modal-body').css('width', size);
+	$('.modal-body').css('height', size);
+	$('#size_of_crop').val($('.modal-body').width().toString());
+    }
     
     $image.cropper({
 	zoomable: false,
@@ -56,15 +63,20 @@ $(document).ready(function(){
 	aspectRatio: 1.00,
 	movable: false,
 	built: function () {
+	    
 	    $image.cropper('setCanvasData', canvasData);
 	    $image.cropper('setCropBoxData', cropBoxData);
 	    cropBoxData = $image.cropper('getCropBoxData');
 	    canvasData = $image.cropper('getCanvasData');
 	    var x = cropBoxData.left;
 	    var y = cropBoxData.top;
+	    var thing = parseFloat($('#factor').val());
+	    var newFactor = thing / 600.0 * $('.modal-body').width();
+	    $('#factor').val(newFactor.toString());
 	    var factor = 1 / parseFloat($('#factor').val());
-	    var offsetX = (600.0 - $('.cropper-canvas').width()) / 2.0;
-	    var offsetY =  (600.0 - $('.cropper-canvas').height()) / 2.0;
+	    console.log($('.modal-body').width());
+	    var offsetX = ($('.modal-body').width() - $('.cropper-canvas').width()) / 2.0;
+	    var offsetY =  ($('.modal-body').height() - $('.cropper-canvas').height()) / 2.0;
 	    $('#x').val(x - offsetX);
 	    $('#y').val(y - offsetY);
 	    $('#width').val(cropBoxData.width * factor);
@@ -82,8 +94,9 @@ $(document).ready(function(){
 	var y = cropBoxData.top;
 	var factor = 1 / parseFloat($('#factor').val());
 	console.log(x);
-	var offsetX = (600.0 - $('.cropper-canvas').width()) / 2.0;
-	var offsetY =  (600.0 - $('.cropper-canvas').height()) / 2.0;
+
+	var offsetX = ($('.modal-body').width() - $('.cropper-canvas').width()) / 2.0;
+	var offsetY =  ($('.modal-body').height() - $('.cropper-canvas').height()) / 2.0;
 	$('#x').val(x - offsetX);
 	$('#y').val(y - offsetY);
 	$('#width').val(cropBoxData.width * factor);

@@ -10,6 +10,7 @@
   <%= hidden_field_tag :width, 300 %>
   <%= hidden_field_tag :height, 300 %>
   <%= hidden_field_tag :rotate, 0 %>
+  <%= hidden_field_tag :size_of_crop, 600 %>
   <% if @picture.post.class.name == "Product" %>
     <% if @picture.post.main_picture_id == @picture.id %>
       Main Picture: <%= check_box_tag 'main_picture', 1, true %>

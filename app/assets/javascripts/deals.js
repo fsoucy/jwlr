@@ -259,6 +259,19 @@ function refreshDeals()
     });
 }
 
+//getPostLoc()
+//refreshAll()
+//showAndRedirect()
+
+function getPostLoc()
+{
+    var str = window.location.href;
+    var beginIndex = str.indexOf("deals/");
+    var id = str.substring(beginIndex + 6);
+    var postLoc = '/deals/' + id.toString();
+    return postLoc;
+}
+
 // if not right page, add special button "Lost?"
 // all that button does is call redirectToPage()
 
@@ -381,10 +394,7 @@ $(document).ready(function() {
     
     $(document).on('click', '.methods_form_button', function(e) {
 	e.preventDefault();
-	var str = window.location.href;
-	var beginIndex = str.indexOf("deals/");
-	var id = str.substring(beginIndex + 6);
-	var postLoc = '/deals/' + id.toString();
+	var postLoc = getPostLoc();
 	updateDeals(postLoc, $(this).parent('h3').parent('form'), function() {
 	    $('.method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_method_selection", function() {
 	    });
@@ -418,10 +428,7 @@ $(document).ready(function() {
 	{
 	    $('.instructions_price_warning').remove();
 	    $('#price_proposal').removeClass('price_warning');
-	    var str = window.location.href;
-	    var beginIndex = str.indexOf("deals/");
-	    var id = str.substring(beginIndex + 6);
-	    var postLoc = '/deals/' + id.toString();
+	    var postLoc = getPostLoc();
 	    updateDeals(postLoc, $(this), function() {
 		$('.selling_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
 		});
@@ -431,10 +438,7 @@ $(document).ready(function() {
     
     $(document).on('click', '.deals_form_button', function(e) {
 	e.preventDefault();
-	var str = window.location.href;
-	var beginIndex = str.indexOf("deals/");
-	var id = str.substring(beginIndex + 6);
-	var postLoc = '/deals/' + id.toString();
+	var postLoc = getPostLoc();
 	updateDeals(postLoc, $(this).parent('form'), function() {
 	    $('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 	    });
@@ -454,10 +458,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.deals_form_button_accept_price', function(e) {
 	e.preventDefault();
-	var str = window.location.href;
-	var beginIndex = str.indexOf("deals/");
-	var id = str.substring(beginIndex + 6);
-	var postLoc = '/deals/' + id.toString();
+	var postLoc = getPostLoc();
 	updateDeals(postLoc, $(this).parent('h3').parent('form'), function() {
 	    $('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 	    });
@@ -477,10 +478,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.deals_form_button_in_header', function(e) {
 	e.preventDefault();
-	var str = window.location.href;
-	var beginIndex = str.indexOf("deals/");
-	var id = str.substring(beginIndex + 6);
-	var postLoc = '/deals/' + id.toString();
+	var postLoc = getPostLoc();
 	updateDeals(postLoc, $(this).parent('form'), function() {
 	    $('.exchange_method_selection').load("http://" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 	    });
@@ -500,10 +498,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.file_complaint_button', function(e) {
 	e.preventDefault();
-	var str = window.location.href;
-	var beginIndex = str.indexOf("deals/");
-	var id = str.substring(beginIndex + 6);
-	var postLoc = '/deals/' + id.toString();
+	var postLoc = getPostLoc();
 	updateDeals(postLoc, $(this).parent('form'), function() {
 	    $('.deals_form').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function() {
 	    });
@@ -512,10 +507,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.remove_complaint_button', function(e) {
 	e.preventDefault();
-	var str = window.location.href;
-	var beginIndex = str.indexOf("deals/");
-	var id = str.substring(beginIndex + 6);
-	var postLoc = '/deals/' + id.toString();
+	var postLoc = getPostLoc();
 	updateDeals(postLoc, $(this).parent('form'), function() {
 	    $('.deals_form').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function() {
 		redirectToPage();
@@ -528,10 +520,7 @@ $(document).ready(function() {
 	e.preventDefault();
 	if (isValidAddress($('#deal_dropoff').val()))
 	{
-	    var str = window.location.href;
-	    var beginIndex = str.indexOf("deals/");
-	    var id = str.substring(beginIndex + 6);
-	    var postLoc = '/deals/' + id.toString();
+	    var postLoc = getPostLoc();
 	    updateDeals(postLoc, $(this).parent('h3').parent('form'), function() {
 		$('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
 		});

@@ -34,8 +34,12 @@ class SearchController < ApplicationController
         order_by_geodist :location, geocode.latitude, geocode.longitude unless geocode.nil?
       end
     
-      if !params[:price_lower].nil? || !params[:price_upper].nil?
+      if !params[:price_lower].nil? and !params[:price_upper].nil?
         with(:price).between(Range.new(params[:price_lower].to_i, params[:price_upper].to_i))
+      elsif !params[:price_upper].nil?
+        with(:price).less_than(params[:price_upper].to_i)
+      elsif !params[:price_lower].nil?
+        with(:price).greater_than(params[:price_lower].to_i)
       end
 
       if !params[:category_id].nil?

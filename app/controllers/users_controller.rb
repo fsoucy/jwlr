@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment, :share, :show, :wishlist, :save_product]
-  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment, :share, :save_product]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment, :share, :show, :wishlist, :save_product, :edit_description, :edit_address, :change_profile_picture, :new_picture, :pictures]
+  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment, :share, :save_product, :edit_description, :edit_address, :change_profile_picture, :new_picture, :pictures]
   before_action :admin_user, only: :destroy  
   
   def new
@@ -69,6 +69,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def change_profile_picture
+    @user = User.find(params[:id])
+  end
+  
   def edit_description
     if current_user == User.find(params[:id])
       @user = User.find(params[:id])

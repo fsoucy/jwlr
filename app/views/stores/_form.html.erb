@@ -11,7 +11,11 @@
     <%= f.label :profile_picture, "Store Profile Picture" %>
     <%= f.file_field :profile_picture %>
       
-    <%= f.text_field :full_street_address, class: 'form_input', placeholder: 'Store location' %>
+    <%= f.text_field :address_line_1, placeholder: "Address Line One", :required => true %>
+        <%= f.text_field :address_line_2, placeholder: "Address Line Two", :required => false %>
+        <%= f.text_field :city, placeholder: "City", :required => true %>
+        <%= f.text_field :state, placeholder: "State", :required => true %>
+        <%= f.text_field :zipcode, placeholder: "Zipcode", :required => true %>
       
     <%= f.telephone_field :phone, class: 'form_input', id: 'phone_field', placeholder: 'Business phone number' %>
     

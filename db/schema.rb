@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617041944) do
+ActiveRecord::Schema.define(version: 20160625040355) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -484,6 +484,11 @@ ActiveRecord::Schema.define(version: 20160617041944) do
     t.datetime "profile_picture_updated_at"
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "address_line_1"
+    t.string   "address_line_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zipcode"
   end
 
   add_index "stores", ["user_id"], name: "index_stores_on_user_id"
@@ -529,6 +534,11 @@ ActiveRecord::Schema.define(version: 20160617041944) do
     t.integer  "profile_picture_file_size"
     t.datetime "profile_picture_updated_at"
     t.decimal  "acceptance_percentage"
+    t.string   "address_line_1"
+    t.string   "address_line_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zipcode"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

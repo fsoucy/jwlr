@@ -55,6 +55,7 @@ class UsersController < ApplicationController
     @user.products_sold = 0
     @user.products_bought = 0
     @user.default_delivery_cost = 0 if @user.default_delivery_cost.nil?
+    @user.full_street_address = @user.address_line_1 + ", " + @user.address_line_2 + ", " + @user.city + ", " + @user.state + ", " + @user.zipcode
     if @user.save
       @user.send_activation_email
       flash[:info] = "Please check your email to activate your account."
@@ -75,11 +76,21 @@ class UsersController < ApplicationController
       redirect_to root_url
     end
   end
+
+  def edit_address
+    if current_user = User.find(params[:id])
+      @user = User.find(params[:id])
+    else
+      redirect_to root_url
+    end
+  end
   
   def update
     @user = User.find(params[:id])
     if params[:selling_method_links].nil? and params[:exchange_method_links].nil? and params[:payment_method_links].nil?
       if @user.update_attributes(user_params)
+        @user.full_street_address = @user.address_line_1 + ", " + @user.address_line_2 + ", " + @user.city + ", " + @user.state + ", " + @user.zipcode
+        @user.save
         flash[:success] = "Profile updated"
         redirect_to @user
       else
@@ -231,7 +242,7 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
-      					  :password_confirmation, :public, :description, :full_street_address, :identifies_as, :interests, :profile_picture, :default_delivery_cost, :acceptance_percentage)
+      					  :password_confirmation, :public, :description, :full_street_address, :identifies_as, :interests, :profile_picture, :default_delivery_cost, :acceptance_percentage, :address_line_1, :address_line_2, :city, :state, :zipcode)
     end
 
     def correct_user

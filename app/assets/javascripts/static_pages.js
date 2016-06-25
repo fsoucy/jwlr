@@ -318,7 +318,7 @@ $(window).scroll(function() {
       {
         window.feed_page = 2;
       }
-      $.get(window.location.protocol + "//" + window.location.host + '/?page=' + window.feed_page, function(result) {
+      $.get(window.location.protocol + "//" + window.location.host + '/?page=' + window.feed_page + "&user=" + parseInt(parseURL(window.location.href)["user"]), function(result) {
         $('#feed').append($(result).find('#feed').children());      
         window.feed_scrolling = false;
       });

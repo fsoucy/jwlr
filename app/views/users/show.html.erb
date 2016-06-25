@@ -14,16 +14,16 @@
       </button>
     </p>
     <% if !current_user?(@user) %>
-      <div class="log-in">
-      <h2>Message this user</h2>
-      <%= form_for @message do |f| %>
-        <%= f.hidden_field :sender_id, value: current_user.id %>
-        <%= f.hidden_field :other_id, value: @user.id %>
-        <%= f.hidden_field :group_id, value: "" %>
-        <%= f.text_area :content, class: "message_input", placeholder: "Send a message" %>
-        <br>
-        <%= f.submit "Send message", class: "form_submit pure-button pure-button-primary" %>
-      <% end %>
+      <div class="log-in no-padding">
+        <h2>Message this user</h2>
+        <%= form_for @message do |f| %>
+          <%= f.hidden_field :sender_id, value: current_user.id %>
+          <%= f.hidden_field :other_id, value: @user.id %>
+          <%= f.hidden_field :group_id, value: "" %>
+          <%= f.text_area :content, class: "message_input", placeholder: "Send a message" %>
+          <br>
+          <%= f.submit "Send message", class: "form_submit pure-button pure-button-primary" %>
+        <% end %>
       </div>
     <% end %>
   </div>

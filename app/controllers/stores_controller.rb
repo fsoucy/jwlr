@@ -25,14 +25,28 @@ class StoresController < ApplicationController
     @store = Store.find_by(id: params[:id])
     if @store.update_attributes(store_params)
       flash[:success] = "Successfully updated your store!"
+      anything_open = false
+      if (@store.mondayopen or @store.tuesdayopen or @store.wednesdayopen or @store.thursdayopen or @store.fridayopen or @store.saturdayopen or @store.sundayopen)
+        anything_open = true
+      end
       if params[:store][:redirect_times]
-        redirect_to edit_times_store_path(@store)
-        return
+        if anything_open
+          redirect_to edit_times_store_path(@store)
+          return
+        end
       end
       redirect_to @store
     else
-      flash[:warning] = "You need a time for all your stuff!"
-      redirect_to edit_times_store_path(@store.id)
+      anything_open = false
+      if (@store.mondayopen or @store.tuesdayopen or @store.wednesdayopen or @store.thursdayopen or @store.fridayopen or @store.saturdayopen or @store.sundayopen)
+        anything_open = true
+      end
+      if anything_open
+        flash[:warning] = "You need a time for all your stuff!"
+        redirect_to edit_times_store_path(@store.id)
+      else
+        redirect_to @store
+      end
     end         
   end
     
@@ -72,7 +86,7 @@ class StoresController < ApplicationController
     @minutes.push(["Minute", -1])
     @hours.push(["Hour", -1])
     @minutes.push(["00", 0])
-    for i in 1..12
+    for i in 0..23
       @hours.push([(sprintf("%0.2d", i)).to_s, i])
     end
     @minutes.push(["15", 15])

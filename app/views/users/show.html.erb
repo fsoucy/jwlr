@@ -24,6 +24,8 @@
 	            <li class="pure-menu-item"><%= link_to "Default transaction methods", edit_default_preferences_user_path(@user.id), class: "pure-menu-link" %></li>
 	            <li class="pure-menu-item"><%= link_to "Change address", edit_address_user_path(@user.id), class: "pure-menu-link" %></li>
               <li class="pure-menu-item"><%= link_to "Change profile picture", change_profile_picture_user_path(@user.id), class: "pure-menu-link" %></li>
+              <li class="pure-menu-item"><%= link_to "Update profile", edit_user_path(@user.id), class: "pure-menu-link" %></li>
+              <li class="pure-menu-item"><%= link_to "Change password", reset_password_user_path(@user.id), class: "pure-menu-link" %></li>
 	          </ul>
 	        </li>
           <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">

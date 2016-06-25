@@ -12,126 +12,19 @@ function replaceAll(string, toReplace, replaceWith)
     return str;
 }
 
-function stringToArray(str)
-{
-    var arr = [];
-    for (var i = 0; i < str.length; i++)
-    {
-	arr.push(str.substring(i, i+1));
-    }
-    return arr;
-}
-
-// if in key and get =, inKey false and inVal true DONE
-// if not in key and get &, in key is true DONE
-//if in key and not =, add to key DONE
-// if in val and not &, add to val DONE
-// if adding to something and get plus, add space instead DONE
-// if end and key length not 0, add to dict DONE
-// if in val and get comma, add key and val to dict, val is "", key stays same, inVal still true DONE
-// if not in key and get an &, append to key, inKey is true, if key length not 0 add to dict DONE
 function parseURL(url)
 {
-    var splitURL = stringToArray(url);
+    var array = url.split(/[?&]+/);
     var dict = {};
-    var inKey = false;
-    var inVal = false;
-    var key = "";
-    var val = [];
-    var currentVal = "";
-    for (var i = 0; i < splitURL.length; i++)
+    for (var i = 0; i < array.length; i++)
     {
-	var current = splitURL[i];
-
-
-	if (i == (splitURL.length - 1))
+	var str = array[i];
+	if (str.indexOf("=") != -1)
 	{
-	    if (key.length != 0)
-	    {
-		currentVal += current;
-		val.push(currentVal);
-		if (key in dict)
-		{
-		    for(var j = 0; j < val.length; j++)
-		    {
-			dict[key].push(val[j]);
-		    }
-		}
-		else
-		{
-		    dict[key] = val;
-		}
-	    }
+	    var key = str.substring(0, str.indexOf("="));
+	    var val = str.substring(str.indexOf("=") + 1);
+	    dict[replaceAll(key, "+", " ")] = replaceAll(val, "+", " ").split(",");
 	}
-	else
-	{
-
-	    if (inKey)
-	    {
-		if (current == "=")
-		{
-		    inKey = false;
-		    inVal = true;
-		}
-		else
-		{
-		    if (current == "+")
-		    {
-			key += " ";
-		    }
-		    else
-		    {
-			key += current;
-		    }
-		}
-	    }
-	    else
-	    {
-		if (current == "&" || current == "?")
-		{
-		    val.push(currentVal);
-		    if (key.length != 0)
-		    {
-			if (key in dict)
-			{
-			    for (var j = 0; j < val.length; j++)
-			    {
-				dict[key].push(val[j]);
-			    }
-			}
-			else
-			{
-			    dict[key] = val;
-			}
-		    }
-		    key = "";
-		    val = [];
-		    currentVal = "";
-		    inKey = true;
-		    inVal = false;
-		}
-		else
-		{
-		    if (inVal)
-		    {
-			if (current == ",")
-			{
-			    val.push(currentVal);
-			    currentVal = "";
-			}
-			else if (current == "+")
-			{
-			    currentVal += " ";
-			}
-			else
-			{
-			    currentVal += current;
-			}
-		    }
-		}
-	    }
-	}
-
     }
     return dict;
 }

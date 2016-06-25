@@ -233,15 +233,12 @@ function refreshAll(completion)
 {
     $('.method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_method_selection", function() {
     });
-    $('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function(\
-																					   ) {
+    $('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {
     });
-    $('.selling_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() \
-					{
-					});
-    $('.payment_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() \
-					{
-					});
+    $('.selling_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function() {
+    });
+    $('.payment_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function() {
+    });
     $('.completed_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function() {
     });
     $('.guide_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function() {
@@ -268,11 +265,28 @@ function refreshDeals()
 		  addRedirectButton();
 	      });
 	  }
+      }
     });
 }
 
-//refreshAll()
-//showAndRedirect()
+function swapPage(showInstructions, toShow)
+{
+    $('.selection').hide();
+    $('.instructions_price_warning').remove();
+    $('.methods_submission').remove();
+    $('.valid_delivery').remove();
+    if (showInstructions)
+    {
+	$('.instructions').show();
+    }
+    else
+    {
+	$('.instructions').hide();
+    }
+    $(toShow).show();
+    addRedirectButton();
+}
+
 
 function getPostLoc()
 {
@@ -323,84 +337,36 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.guide_button', function() {
-	$('.selection').hide();
-	$('.instructions').show();
-	$('.instructions_price_warning').remove();
-	$('.methods_submission').remove();
-	$('.guide_selection').show();
-	$('.valid_delivery').remove();
-	addRedirectButton();
+	swapPage(true, '.guide_selection');
     });
 
     
     $(document).on('click', '.selling_button', function() {
-	$('.selection').hide();
-	$('.instructions').show();
-	$('.instructions_price_warning').remove();
-	$('.methods_submission').remove();
-	$('.selling_method_selection').show();
-	$('.valid_delivery').remove();
-	addRedirectButton();
+	swapPage(true, '.selling_method_selection');
     });
 
     $(document).on('click', '.methods_button', function() {
-	$('.selection').hide();
-	$('.instructions').show();
-	$('.instructions_price_warning').remove();
-	$('.methods_submission').remove();
-	$('.method_selection').show();
-	$('.valid_delivery').remove();
-	addRedirectButton();
+	swapPage(true, '.method_selection');
     });
     
     $(document).on('click', '.exchange_button', function() {
-	$('.selection').hide();
-	$('.instructions').show();
-	$('.instructions_price_warning').remove();
-	$('.methods_submission').remove();
-	$('.exchange_method_selection').show();
-	$('.valid_delivery').remove();
-	addRedirectButton();
+	swapPage(true, '.exchange_method_selection');
     });
 
     $(document).on('click', '.payment_button', function() {
-	$('.selection').hide();
-	$('.instructions').show();
-	$('.instructions_price_warning').remove();
-	$('.methods_submission').remove();
-	$('.payment_method_selection').show();
-	$('.valid_delivery').remove();
-	addRedirectButton();
+	swapPage(true, '.payment_method_selection');
     });
 
     $(document).on('click', '.completed_button', function() {
-	$('.selection').hide();
-	$('.instructions').show();
-	$('.instructions_price_warning').remove();
-	$('.methods_submission').remove();
-	$('.completed_selection').show();
-	$('.valid_delivery').remove();
-	addRedirectButton();
+	swapPage(true, '.completed_selection');
     });
 
     $(document).on('click', '.complaint_button', function() {
-	$('.selection').hide();
-	$('.instructions').hide();
-	$('.instructions_price_warning').remove();
-	$('.methods_submission').remove();
-	$('.complaint_selection').show();
-	$('.valid_delivery').remove();
-	addRedirectButton();
+	swapPage(false, '.complaint_selection');
     });
 
     $(document).on('click', '.cancel_button', function() {
-	$('.selection').hide();
-	$('.instructions').hide();
-	$('.instructions_price_warning').remove();
-	$('.methods_submission').remove();
-	$('.cancel_selection').show();
-	$('.valid_delivery').remove();
-	addRedirectButton();
+	swapPage(false, '.cancel_selection');
     });
     
     $(document).on('click', '.methods_form_button', function(e) {

@@ -111,6 +111,8 @@ class UsersController < ApplicationController
         end
       end
       flash[:success] = "Methods updated"
+      
+      @user.update_attributes(user_params)
       redirect_to @user
     end
   end

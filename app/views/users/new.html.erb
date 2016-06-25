@@ -19,13 +19,6 @@
 
         <%= f.text_field :full_street_address, placeholder: 'Full Street Address', :required => true %>
 
-	<%= f.label :acceptance_percentage, "Planning on negotiating prices with users? Add a minimum offer percentage." %>
-	
-        <%= f.label :default_delivery_cost, "Planning on delivering products to your customers? Add a default delivery cost." %>
-        <label>
-          $ <%= f.number_field :default_delivery_cost, placeholder: 'Default delivery cost' %>
-        </label>
-        
         <%= f.submit "Create my account", class: "pure-button pure-button-primary" %>
       </fieldset>
     <% end %>

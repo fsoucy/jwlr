@@ -8,7 +8,7 @@
       <%= fields_for "selling_method_links[#{selling_method.id}]", selling_method do |link| %>
       <% boo = !DefaultSellingMethodLink.where("user_id=? AND selling_method_id=?", @user.id, selling_method.id).first.nil? %>
       <label class="pure-checkbox" for="selling_method">
-	<%= link.check_box :id, checked: boo, class: "pure-checkbox"  %> <%= selling_method.method %>
+	    <%= link.check_box :id, checked: boo, class: "pure-checkbox"  %> <%= selling_method.method %>
       </label>
       <% end %>
       <% end %>
@@ -17,16 +17,20 @@
       <%= fields_for "exchange_method_links[#{exchange_method.id}]", exchange_method do |link| %>
       <% boo = !DefaultExchangeMethodLink.where("user_id=? AND exchange_method_id=?", @user.id, exchange_method.id).first.nil? %>
       <label class="pure-checkbox" for="exchange_method">
-	<%= link.check_box :id, checked: boo, class: "pure-checkbox"  %> <%= exchange_method.method %>
+	    <%= link.check_box :id, checked: boo, class: "pure-checkbox"  %> <%= exchange_method.method %>
       </label>
       <% end %>
       <% end %>
+      <%= f.label :default_delivery_cost, "Planning on delivering products to your customers? Add a default delivery cost." %>
+        <label>
+          $ <%= f.number_field :default_delivery_cost, placeholder: 'Default delivery cost' %>
+        </label>
       <legend>Payment Methods</legend>
       <% @payment_methods.each do |payment_method| %>
       <%= fields_for "payment_method_links[#{payment_method.id}]", payment_method do |link| %>
       <% boo = !DefaultPaymentMethodLink.where("user_id=? AND payment_method_id=?", @user.id, payment_method.id).first.nil? %>
       <label class="pure-checkbox" for="payment_method">
-	<%= link.check_box :id, checked: boo, class: "pure-checkbox"  %> <%= payment_method.method %>
+	    <%= link.check_box :id, checked: boo, class: "pure-checkbox"  %> <%= payment_method.method %>
       </label>
       <% end %>
       <% end %>

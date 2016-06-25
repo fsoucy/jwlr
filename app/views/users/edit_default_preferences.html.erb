@@ -23,7 +23,7 @@
       <% end %>
       <%= f.label :default_delivery_cost, "Planning on delivering products to your customers? Add a default delivery cost." %>
         <label>
-          $ <%= f.number_field :default_delivery_cost, placeholder: 'Default delivery cost' %>
+          $ <%= f.number_field :default_delivery_cost, placeholder: 'Default delivery cost', step: '0.01', min: '0' %>
         </label>
       <legend>Payment Methods</legend>
       <% @payment_methods.each do |payment_method| %>

@@ -12,8 +12,8 @@
 
 .modal-body
 {
-    width: 600px !important;
-    height: 600px !important;
+    width: 600px;
+    height: 600px;
     padding: 0 !important;
 }
 

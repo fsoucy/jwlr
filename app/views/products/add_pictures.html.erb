@@ -24,6 +24,7 @@
         <%= hidden_field_tag :rotate, 0 %>
         <%= hidden_field_tag :picture_id, @picture.id %>
         <%= hidden_field_tag :factor, @factor %>
+        <%= hidden_field_tag :size_of_crop, 600 %>
     
         <div class="submit_the_form">
           <%= submit_tag "Done cropping", class: 'pure-button pure-button-primary' %>

@@ -98,11 +98,12 @@ class PicturesController < ApplicationController
     else
       img = MiniMagick::Image.open(@picture.photo.path)
     end
+    size = params[:size_of_crop].to_f
     @picture.photo_cropped = @picture.photo
     @picture.save
     maxDim = img.height
     maxDim = img.width unless img.height > img.width
-    scale = maxDim / 600.0
+    scale = maxDim / size
     toCropX = params[:x].to_f * scale
     toCropY = params[:y].to_f * scale
     rotation = params[:rotate].to_f

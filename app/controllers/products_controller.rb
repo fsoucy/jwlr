@@ -88,6 +88,7 @@ class ProductsController < ApplicationController
       with(:sold, false)
       with(:hold, false)
       with :activated, true
+      with :confirmed, true
       boost_by_relevance true
       paginate :page => 1, :per_page => 5
     end

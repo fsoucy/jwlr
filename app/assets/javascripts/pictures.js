@@ -55,6 +55,7 @@ $(document).ready(function(){
 	rotatable: true,
 	aspectRatio: 1.00,
 	movable: false,
+  minCropBoxWidth: 300 * factor,
 	built: function () {
 	    $image.cropper('setCanvasData', canvasData);
 	    $image.cropper('setCropBoxData', cropBoxData);
@@ -81,7 +82,6 @@ $(document).ready(function(){
 	var x = cropBoxData.left;
 	var y = cropBoxData.top;
 	var factor = 1 / parseFloat($('#factor').val());
-	console.log(x);
 	var offsetX = (600.0 - $('.cropper-canvas').width()) / 2.0;
 	var offsetY =  (600.0 - $('.cropper-canvas').height()) / 2.0;
 	$('#x').val(x - offsetX);

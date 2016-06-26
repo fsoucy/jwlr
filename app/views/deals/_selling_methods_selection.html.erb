@@ -12,7 +12,7 @@
 <%= form_for @deal, html: {class: 'price_submission' }  do |f| %>
 <%= hidden_field_tag :min_price, value: @deal.product.min_accepted_price, id: "minimum_price" %>
 <h3>Offered price: <%= number_to_currency(@deal.user_proposed_price) %></h3> 
-<h3><%= f.number_field :user_proposed_price, value: @deal.user_proposed_price, id: "price_proposal" %>  <%= f.submit "Change offer", class: "propose_price pure-button pure-button-primary" %></h3>
+<h3><%= f.number_field :user_proposed_price, value: @deal.user_proposed_price, id: "price_proposal", step: '0.01', min: '0' %>  <%= f.submit "Change offer", class: "propose_price pure-button pure-button-primary" %></h3>
 <% end %>
 <% if !@deal.user_proposed_price.nil? && !@deal.proposed_price_accepted %>
 <h4>Offer made, waiting for seller to accept.</h4>

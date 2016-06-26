@@ -12,6 +12,7 @@
           Follow 
         <% end %>
       </button>
+      <a href="/?user=<%= @user.id %>"><button class="pure-button">See this user's posts</button></a>
     </p>
     <% if !current_user?(@user) %>
       <div class="log-in no-padding">

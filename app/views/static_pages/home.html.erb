@@ -58,6 +58,11 @@
         </div>
         <%= link_to "Add Images", '', id: "show_new_picture" %>
       </div>
+      <% if !params[:user].nil? %>
+        <div class="pad-down">
+          <a href="/"><button class="pure-button">Back to the feed</button></a>
+        </div>
+      <% end %>
       <div id="feed">
       <% item_number = 1 %>
       <% @feed_items.each do |item| %>

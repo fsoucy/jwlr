@@ -45,36 +45,45 @@ class StaticPagesController < ApplicationController
       page = 1 if page < 1
       per_page = 15
 
-      deals = current_user.buying_deals.order(updated_at: :desc).limit(per_page * page)
-      @feed_items += deals
+      _user = nil
 
-      deals = current_user.selling_deals.order(updated_at: :desc).limit(per_page * page)
-      @feed_items += deals      
+      if !params[:user].present? or params[:user].to_i == 0
+        _user = current_user
+        deals = _user.buying_deals.order(updated_at: :desc).limit(per_page * page)
+        @feed_items += deals
 
-      blogposts = current_user.blogposts.order(created_at: :desc).limit(per_page * page)
+        deals = _user.selling_deals.order(updated_at: :desc).limit(per_page * page)
+        @feed_items += deals
+      else
+        _user = User.find(params[:user].to_i)
+      end
+
+      blogposts = _user.blogposts.order(created_at: :desc).limit(per_page * page)
       @feed_items += blogposts
 
-      microposts = current_user.microposts.order(created_at: :desc).limit(per_page * page)
+      microposts = _user.microposts.order(created_at: :desc).limit(per_page * page)
       @feed_items += microposts
 
-      shares = current_user.shares.order(created_at: :desc).limit(per_page * page)
+      shares = _user.shares.order(created_at: :desc).limit(per_page * page)
       @feed_items += shares
 
-      products = current_user.products.where(activated: true).order(created_at: :desc).limit(per_page * page)
+      products = _user.products.where(activated: true).order(created_at: :desc).limit(per_page * page)
       @feed_items += products
 
-      current_user.following.each do |user|
-        microposts = user.microposts.order(created_at: :desc).limit(per_page * page)
-        @feed_items += microposts
+      if !params[:user].present? or params[:user].to_i == 0
+        current_user.following.each do |user|
+          microposts = user.microposts.order(created_at: :desc).limit(per_page * page)
+          @feed_items += microposts
 
-        blogposts = user.blogposts.order(created_at: :desc).limit(per_page * page)
-        @feed_items += blogposts
+          blogposts = user.blogposts.order(created_at: :desc).limit(per_page * page)
+          @feed_items += blogposts
 
-        shares = user.shares.order(created_at: :desc).limit(per_page * page)
-        @feed_items += shares
+          shares = user.shares.order(created_at: :desc).limit(per_page * page)
+          @feed_items += shares
 
-        products = user.products.where(activated: true).order(created_at: :desc).limit(per_page * page)
-        @feed_items += products
+          products = user.products.where(activated: true).order(created_at: :desc).limit(per_page * page)
+          @feed_items += products
+        end
       end
 
       @feed_items = @feed_items.sort_by(&:updated_at).reverse.paginate(:page => page, :per_page => per_page)

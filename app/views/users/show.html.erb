@@ -37,7 +37,7 @@
           </li>
         <% end %>
         <% if @user.stores.length == 0 %>
-          <% if logged_in && current_user?(@user) %>
+          <% if logged_in? && current_user?(@user) %>
             <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
               <%= link_to "Add store", new_store_path, class: "pure-menu-link" %>
             </li>

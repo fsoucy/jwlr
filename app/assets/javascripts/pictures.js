@@ -1,3 +1,20 @@
+function updateCropper()
+{
+    cropBoxData = $('#image').cropper('getCropBoxData');
+    canvasData = $('#image').cropper('getCanvasData');
+    var x = cropBoxData.left;
+    var y = cropBoxData.top;
+    var factor = 1 / parseFloat($('#factor').val());
+    console.log(x);
+    var offsetX = ($('.modal-body').width() - $('.cropper-canvas').width()) / 2.0;
+    var offsetY =  ($('.modal-body').height() - $('.cropper-canvas').height()) / 2.0;
+    $('#x').val(x - offsetX);
+    $('#y').val(y - offsetY);
+    $('#width').val(cropBoxData.width * factor);
+    $('#height').val(cropBoxData.height * factor);
+}
+
+
 
 $(document).ready(function(){
   // disable auto discover
@@ -53,6 +70,10 @@ $(document).ready(function(){
 	$('.modal-body').css('width', size);
 	$('.modal-body').css('height', size);
 	$('#size_of_crop').val($('.modal-body').width().toString());
+	var thing = parseFloat($('#factor').val());
+	var newFactor = thing / 600.0 * $('.modal-body').width();
+	$('#factor').val(newFactor.toString());
+	factor = parseFloat($('#factor').val());
     }
     
     $image.cropper({
@@ -62,6 +83,7 @@ $(document).ready(function(){
 	rotatable: true,
 	aspectRatio: 1.00,
 	movable: false,
+	minCropBoxWidth: 300 * factor,
 	built: function () {
 	    
 	    $image.cropper('setCanvasData', canvasData);
@@ -71,8 +93,6 @@ $(document).ready(function(){
 	    var x = cropBoxData.left;
 	    var y = cropBoxData.top;
 	    var thing = parseFloat($('#factor').val());
-	    var newFactor = thing / 600.0 * $('.modal-body').width();
-	    $('#factor').val(newFactor.toString());
 	    var factor = 1 / parseFloat($('#factor').val());
 	    console.log($('.modal-body').width());
 	    var offsetX = ($('.modal-body').width() - $('.cropper-canvas').width()) / 2.0;
@@ -88,21 +108,13 @@ $(document).ready(function(){
     //$('#image').cropper('rotate', -90)
     
     $('.modal-body').mouseup(function () {
-	cropBoxData = $image.cropper('getCropBoxData');
-	canvasData = $image.cropper('getCanvasData');
-	var x = cropBoxData.left;
-	var y = cropBoxData.top;
-	var factor = 1 / parseFloat($('#factor').val());
-	console.log(x);
-
-	var offsetX = ($('.modal-body').width() - $('.cropper-canvas').width()) / 2.0;
-	var offsetY =  ($('.modal-body').height() - $('.cropper-canvas').height()) / 2.0;
-	$('#x').val(x - offsetX);
-	$('#y').val(y - offsetY);
-	$('#width').val(cropBoxData.width * factor);
-	$('#height').val(cropBoxData.height * factor);
+	updateCropper();
     });
 
+    $(document).on('touchend', '.modal-body', function() {
+	updateCropper();
+    });
+    
     $('#rotate_ccw').click(function() {
 	$('#image').cropper('rotate', -90);
 	var angle = parseInt($('#rotate').val()) - 90;

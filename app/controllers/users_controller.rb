@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment, :share, :show, :wishlist, :save_product]
-  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment, :share, :save_product]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment, :share, :show, :wishlist, :save_product, :edit_description, :edit_address, :change_profile_picture, :new_picture, :pictures, :reset_password]
+  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment, :share, :save_product, :edit_description, :edit_address, :change_profile_picture, :new_picture, :pictures, :reset_password]
   before_action :admin_user, only: :destroy  
   
   def new
@@ -55,6 +55,7 @@ class UsersController < ApplicationController
     @user.products_sold = 0
     @user.products_bought = 0
     @user.default_delivery_cost = 0 if @user.default_delivery_cost.nil?
+    @user.full_street_address = @user.address_line_1 + ", " + @user.address_line_2 + ", " + @user.city + ", " + @user.state + ", " + @user.zipcode
     if @user.save
       @user.send_activation_email
       flash[:info] = "Please check your email to activate your account."
@@ -68,8 +69,24 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def reset_password
+    @user = User.find(params[:id])
+  end
+
+  def change_profile_picture
+    @user = User.find(params[:id])
+  end
+  
   def edit_description
     if current_user == User.find(params[:id])
+      @user = User.find(params[:id])
+    else
+      redirect_to root_url
+    end
+  end
+
+  def edit_address
+    if current_user = User.find(params[:id])
       @user = User.find(params[:id])
     else
       redirect_to root_url
@@ -80,6 +97,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if params[:selling_method_links].nil? and params[:exchange_method_links].nil? and params[:payment_method_links].nil?
       if @user.update_attributes(user_params)
+        @user.full_street_address = @user.address_line_1 + ", " + @user.address_line_2 + ", " + @user.city + ", " + @user.state + ", " + @user.zipcode
+        @user.save
         flash[:success] = "Profile updated"
         redirect_to @user
       else
@@ -233,7 +252,7 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
-      					  :password_confirmation, :public, :description, :full_street_address, :identifies_as, :interests, :profile_picture, :default_delivery_cost, :acceptance_percentage)
+      					  :password_confirmation, :public, :description, :full_street_address, :identifies_as, :interests, :profile_picture, :default_delivery_cost, :acceptance_percentage, :address_line_1, :address_line_2, :city, :state, :zipcode)
     end
 
     def correct_user

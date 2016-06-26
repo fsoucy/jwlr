@@ -8,6 +8,7 @@ class StoresController < ApplicationController
   
   def create
     @store = current_user.stores.build(store_params)
+    @store.full_street_address = @store.address_line_1 + ", " + @store.address_line_2 + ", " + @store.city + ", " + @store.state + ", " + @store.zipcode
     if @store.save
       flash[:success] = "Store created!"
 	    redirect_edit_times(@store)
@@ -24,15 +25,31 @@ class StoresController < ApplicationController
   def update
     @store = Store.find_by(id: params[:id])
     if @store.update_attributes(store_params)
+      @store.full_street_address = @store.address_line_1 + ", " + @store.address_line_2 + ", " + @store.city + ", " + @store.state + ", " + @store.zipcode
+      @store.save
       flash[:success] = "Successfully updated your store!"
+      anything_open = false
+      if (@store.mondayopen or @store.tuesdayopen or @store.wednesdayopen or @store.thursdayopen or @store.fridayopen or @store.saturdayopen or @store.sundayopen)
+        anything_open = true
+      end
       if params[:store][:redirect_times]
-        redirect_to edit_times_store_path(@store)
-        return
+        if anything_open
+          redirect_to edit_times_store_path(@store)
+          return
+        end
       end
       redirect_to @store
     else
-      flash[:warning] = "You need a time for all your stuff!"
-      redirect_to edit_times_store_path(@store.id)
+      anything_open = false
+      if (@store.mondayopen or @store.tuesdayopen or @store.wednesdayopen or @store.thursdayopen or @store.fridayopen or @store.saturdayopen or @store.sundayopen)
+        anything_open = true
+      end
+      if anything_open
+        flash[:warning] = "You need a time for all your stuff!"
+        redirect_to edit_times_store_path(@store.id)
+      else
+        redirect_to @store
+      end
     end         
   end
     
@@ -72,7 +89,7 @@ class StoresController < ApplicationController
     @minutes.push(["Minute", -1])
     @hours.push(["Hour", -1])
     @minutes.push(["00", 0])
-    for i in 1..12
+    for i in 0..23
       @hours.push([(sprintf("%0.2d", i)).to_s, i])
     end
     @minutes.push(["15", 15])
@@ -82,7 +99,7 @@ class StoresController < ApplicationController
 
   private
     def store_params
-      params.require(:store).permit(:description, :profile_picture, :full_street_address, :name, :phone, :business_days_pickup, :mondayopen, :mondaystarthour, :mondaystartminute, :mondaystartampm, :mondayendhour, :mondayendminute, :mondayendampm, :tuesdayopen, :tuesdaystarthour, :tuesdaystartminute, :tuesdaystartampm, :tuesdayendhour, :tuesdayendminute, :tuesdayendampm, :wednesdayopen, :wednesdaystarthour, :wednesdaystartminute, :wednesdaystartampm, :wednesdayendhour, :wednesdayendminute, :wednesdayendampm, :thursdayopen, :thursdaystarthour, :thursdaystartminute, :thursdaystartampm, :thursdayendhour, :thursdayendminute, :thursdayendampm, :fridayopen, :fridaystarthour, :fridaystartminute, :fridaystartampm, :fridayendhour, :fridayendminute, :fridayendampm, :saturdayopen, :saturdaystarthour, :saturdaystartminute, :saturdaystartampm, :saturdayendhour, :saturdayendminute, :saturdayendampm, :sundayopen, :sundaystarthour, :sundaystartminute, :sundaystartampm, :sundayendhour, :sundayendminute, :sundayendampm)
+      params.require(:store).permit(:description, :profile_picture, :full_street_address, :name, :phone, :business_days_pickup, :mondayopen, :mondaystarthour, :mondaystartminute, :mondaystartampm, :mondayendhour, :mondayendminute, :mondayendampm, :tuesdayopen, :tuesdaystarthour, :tuesdaystartminute, :tuesdaystartampm, :tuesdayendhour, :tuesdayendminute, :tuesdayendampm, :wednesdayopen, :wednesdaystarthour, :wednesdaystartminute, :wednesdaystartampm, :wednesdayendhour, :wednesdayendminute, :wednesdayendampm, :thursdayopen, :thursdaystarthour, :thursdaystartminute, :thursdaystartampm, :thursdayendhour, :thursdayendminute, :thursdayendampm, :fridayopen, :fridaystarthour, :fridaystartminute, :fridaystartampm, :fridayendhour, :fridayendminute, :fridayendampm, :saturdayopen, :saturdaystarthour, :saturdaystartminute, :saturdaystartampm, :saturdayendhour, :saturdayendminute, :saturdayendampm, :sundayopen, :sundaystarthour, :sundaystartminute, :sundaystartampm, :sundayendhour, :sundayendminute, :sundayendampm, :address_line_1, :address_line_2, :city, :state, :zipcode)
     end
 
     def correct_user

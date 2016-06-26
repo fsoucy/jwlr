@@ -43,3 +43,31 @@
 {
   text-align: center;
 }
+
+.edit_times_form select, .edit_times_form label
+{
+    display: inline-block;
+}
+
+.edit_times_form label
+{
+    width: 50%;
+}
+
+.times_right
+{
+    width: 50%;
+}
+
+@media (max-width: 1050px)
+{
+    .edit_times_form label
+    {
+	display: block;
+    }
+}
+
+#add_store
+{
+    
+}

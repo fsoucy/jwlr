@@ -16,9 +16,26 @@
         <%= f.password_field :password, placeholder: 'Password', :required => true %>
 
         <%= f.password_field :password_confirmation, placeholder: 'Password Confirmation', :required => true %>
+<<<<<<< HEAD
+        
+        <%= f.text_field :address_line_1, placeholder: "Address Line One", :required => true %>
+        <%= f.text_field :address_line_2, placeholder: "Address Line Two", :required => false %>
+        <%= f.text_field :city, placeholder: "City", :required => true %>
+        <%= f.text_field :state, placeholder: "State", :required => true %>
+        <%= f.text_field :zipcode, placeholder: "Zipcode", :required => true %>
+               
+	      <%= f.label :acceptance_percentage, "Planning on negotiating prices with users? Add a minimum offer percentage." %>
+	
+        <%= f.label :default_delivery_cost, "Planning on delivering products to your customers? Add a default delivery cost." %>
+        <label>
+          $ <%= f.number_field :default_delivery_cost, placeholder: 'Default delivery cost' %>
+        </label>
+        
+=======
 
         <%= f.text_field :full_street_address, placeholder: 'Full Street Address', :required => true %>
 
+>>>>>>> 1bee733e09483a95b188d38b52f9e014b5756731
         <%= f.submit "Create my account", class: "pure-button pure-button-primary" %>
       </fieldset>
     <% end %>

@@ -10,7 +10,7 @@ production:
 development:
   solr:
     hostname: localhost
-    port: 9071
+    port: 9000
     log_level: INFO
     path: /solr/development
 

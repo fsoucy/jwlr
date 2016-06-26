@@ -51,5 +51,45 @@ $(document).ready(function () {
 	$('.store_active').removeClass('store_active').addClass('store_inactive').fadeOut();
 	$('.store_about_within').removeClass('store_inactive').addClass('store_active').delay(260).fadeIn();
     });
+
+    $(document).on('input', '.start_hour', function() {
+	var value = $(this).val();
+	$('.start_hour').each(function(thing1, thing2) {
+	    if (parseInt($(this).val()) == -1)
+	    {
+		$(this).val(value);
+	    }
+	});
+    });
+
+    $(document).on('input', '.start_minute', function() {
+	var value = $(this).val();
+	$('.start_minute').each(function(thing1, thing2) {
+	    if (parseInt($(this).val()) == -1)
+	    {
+		$(this).val(value);
+	    }
+	});
+    });
+
+    $(document).on('input', '.end_hour', function() {
+	var value = $(this).val();
+	$('.end_hour').each(function(thing1, thing2) {
+	    if (parseInt($(this).val()) == -1)
+	    {
+		$(this).val(value);
+	    }
+	});
+    });
+
+    $(document).on('input', '.end_minute', function() {
+	var value = $(this).val();	
+	$('.end_minute').each(function(thing1, thing2) {
+	    if (parseInt( $(this).val()) == -1)
+	    {
+		$(this).val(value);
+	    }
+	});
+    });
     
 });

@@ -213,7 +213,7 @@
                   <% else %>
                     <%= f.label :selling_method, "Negotiation (listed price: $#{@deal.product.price})", class: "pure-radio deal_selling_label" %>
                   <% end %>
-                  <%= f.radio_button :selling_method_id, s.selling_method.id, class: "deal_selling deal_radio" %>
+                  <%= f.radio_button :selling_method_id, s.selling_method.id, class: "deal_selling deal_radio deal_selling_product" %>
                   <% if s.selling_method.method == "Negotiation" %>
                     <%= f.number_field :user_proposed_price %>
                   <% end %>

@@ -1,3 +1,14 @@
+$(document).on('click', '.deal_selling_product', function() {
+  if($('#deal_selling_method_id_3').prop('checked'))
+  {
+    $('.product_show_initiate_deal').val('Make offer');
+  }
+  else
+  {
+    $('.product_show_initiate_deal').val('Buy this product');
+  }
+});
+
 $(document).ready(function () {
 	if ($(".shares").length) {
 		$.getScript("//platform.twitter.com/widgets.js");
@@ -377,7 +388,11 @@ function defaultSelectedQuick() {
 	}
 	if (countMethods('.deal_exchange_quick') == 1) {
 		$('.deal_exchange_quick').prop('checked', true);
-	}
+	  if ($('#exchange_method_1').length > 0 && $('#exchange_method_1').prop('checked'))
+    {
+      $('#payment_method_1').prop('checked', true);
+    }
+  }
 	if (countMethods('.deal_payment_quick') == 1) {
 		$('.deal_payment_quick').prop('checked', true);
 	}
@@ -660,7 +675,7 @@ $(document).ready(function () {
 
 	$(document).on('click', '.leave_quick_buy', function () {
 		$('.quick_buy_information').hide();
-		$('.in_quick_buy').addClass("quick_buy").removeClass("in_quick_buy");
+    $('.in_quick_buy').addClass("quick_buy").removeClass("in_quick_buy").removeClass("not_ready");
 		$('.deal_extended').show();
 		evaluateDealSubmitQuick();
 	});

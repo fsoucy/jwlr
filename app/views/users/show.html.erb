@@ -121,21 +121,23 @@
 <% end %>
 <div class="pure-g pad-box">
   <div class="pure-u-md-1-2 pure-u-1 pad-box">
-    <h1>Blog <% if current_user?(@user) %></h1><a href="<%= new_blogpost_url %>"><button class="pure-button pure-button-primary">New</button></a><% end %>
-    <% @user.blogposts.each do |post| %>
-    <h2 class="post-title"><%= post.title %></h2>
-    <p class="post-meta">By <%= post.user.name %></p>
+    <% if current_user?(@user) %><a href="<%= new_blogpost_url %>"><button class="pure-button pure-button-primary">New Blogpost</button></a><% end %>
+    <% if @user.blogposts.any? %>
+      <h1>Blog</h1>
+      <% @user.blogposts.each do |post| %>
+        <h2 class="post-title"><%= post.title %></h2>
+        <p class="post-meta">By <%= post.user.name %></p>
 
-    <div class="post-description">
-      <p><%= post.content %></p>
-    </div>
-    <h4>
-      <% if current_user?(post.user) %>
-      <%= link_to "Delete", post, method: :delete, data: { confirm: "Are you sure?" } %> | <%= link_to "Edit", edit_blogpost_path(post) %>
+        <div class="post-description">
+          <p><%= post.content %></p>
+        </div>
+        <h4>
+          <% if current_user?(post.user) %>
+            <%= link_to "Delete", post, method: :delete, data: { confirm: "Are you sure?" } %> | <%= link_to "Edit", edit_blogpost_path(post) %>
+          <% end %>
+        </h4>
       <% end %>
-    </h4>
     <% end %>
-
   </div>
 
   <div class="pure-u-md-1-2 pure-u-1 pad-box"></div>

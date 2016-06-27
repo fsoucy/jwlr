@@ -80,8 +80,6 @@
 .product_image
 {
     border: 1px solid #003459;
-    height: 200px !important;
-    width: 200px !important;
 }
 
 .product_view h3, .product_view h1

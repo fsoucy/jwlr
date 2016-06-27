@@ -710,8 +710,8 @@ $(document).ready(function () {
 	});
 
 	$('.magnifier').loupe({
-		width : 800, // width of magnifier
-		height : 800, // height of magnifier
+		width : 1500, // width of magnifier
+		height : 1500, // height of magnifier
 		loupe : 'loupe' // css class for magnifier
 	});
 	$('#dropper').hide();

@@ -12,11 +12,11 @@
   	<% if !@product.pictures.first.nil? %>
       <% if !@product.main_picture_id.nil? %>
             <a class="magnifier" href="<%= @product.pictures.find(@product.main_picture_id).photo_cropped(:large) %>">
-              <%= image_tag @product.pictures.find(@product.main_picture_id).photo_cropped(:big), class: "pad-box product_image pure-img" %>
+              <%= image_tag @product.pictures.find(@product.main_picture_id).photo_cropped(:big), class: "product_image pure-img" %>
             </a>
           <% else %>
             <a class="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
-              <%= image_tag @product.pictures.first.photo_cropped(:big), class: "pad-box product_image pure-img" %>
+              <%= image_tag @product.pictures.first.photo_cropped(:big), class: "product_image pure-img" %>
             </a>
           <% end %>
   		<% if current_user?(@product.user) and logged_in? %>

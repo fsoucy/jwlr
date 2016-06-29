@@ -1,15 +1,20 @@
 <div class="pan_cropper">
   <div class="inner_pan_cropper">
+    <div class="pad-box">
     <% if @picture.nil? %>
+      <h1>Use gallery images</h1>
       <% link = new_picture_user_url(current_user.id) + "?product_id=" + @product.id.to_s %>
-      <a href="<%= link %>"><button class="pure-button pure-button-primary button-success">Upload gallery image</button></a>
-      <% @product.user.pictures.each do |pic| %>
-        <div class="choose_div">
+      <a href="<%= link %>"><button class="pure-button pure-button-primary button-success">New gallery image</button></a>
+      <%= will_paginate @pictures %>
+      <div class="gallery_page">
+      <% @pictures.each do |pic| %>
+        <div class="choose_div gallery_portion">
           <%= image_tag pic.photo_cropped(:medium), class: "pad-box product_image pure-img" %>    
           <%= hidden_field_tag :pic_id, pic.id, class: "choose_picture_id" %>
           <button class="pure-button pure-button-primary choose_picture">Use image</button>
         </div>
       <% end %>
+      </div>
     <% else %>
       <div class="picture">
         <div class="modal-body">
@@ -40,5 +45,6 @@
         </div>
       </div>
     <% end %>
+  </div>
   </div>
 </div>

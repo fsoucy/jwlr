@@ -130,7 +130,7 @@ $(document).on('click', 'a[id*=shares_]', function(event) {
   {
     var item = $(this).parent();
   }
-  if($(".store_header").length)
+  if($("#store_header").length)
   {
     var item = $(this).parent();
   }
@@ -140,6 +140,10 @@ $(document).on('click', 'a[id*=shares_]', function(event) {
   if(!item.children('#new_share').length)
   {
     item.append($('#new_share').clone());
+  }
+  else
+  {
+    item.children('#new_share').remove();
   }
   var share = this;
   item.children('#new_share').show();

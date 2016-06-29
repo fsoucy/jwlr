@@ -15,10 +15,14 @@
       <li class="pure-menu-item blog_butt"><a href="#blog" class="pure-menu-link">Blog</a></li>
     </ul>
   </div>
-  <h1 class="store_header"><%= @store.name %> <%= link_to "Edit", edit_store_url(@store) if current_user?(@store.user) %></h1>
-<div class="shares">
-  <%= link_to pluralize(@store.shares.count, "Share"), '', id: "shares_#{@store.class}_#{@store.id}_#{current_user.id}" %>
-  </div>  
+  <div class="pure-g pad-box">
+    <div class="pure-u-1 pad-box">
+      <h1 id="store_header"><%= @store.name %> <%= link_to "Edit", edit_store_url(@store) if current_user?(@store.user) %></h1>
+      <div class="shares">
+        <%= link_to pluralize(@store.shares.count, "Share"), '', id: "shares_#{@store.class}_#{@store.id}_#{current_user.id}" %>
+      </div>
+    </div>
+  </div>
   <!--GALLERY--->
   <div class="store_within store_gallery_within">
     <div class="pure-g log-in">

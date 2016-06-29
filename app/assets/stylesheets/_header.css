@@ -30,6 +30,11 @@
     padding-left: 0em !important;
 }
 
+.settings-menu .pure-menu-list li ul li
+{
+    padding-left: .3em !important;
+}
+
 .top-menu .pure-menu-heading {
   color: white;
   font-weight: 400;

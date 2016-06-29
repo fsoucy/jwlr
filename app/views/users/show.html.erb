@@ -95,14 +95,11 @@
     <h1>Product Gallery</h1>
   </div>
   <% if current_user?(@user) %>
-  <div class="pure-u-1 pad">
+  <div class="pure-u-1 pad-box">
     <a href="<%= new_product_url %>">
     <button class="pure-button pure-button-primary">New Product</button></a>
   </div>
   <% end %>
-  <br><br>
-</div>
-<div class="pad-box pure-g">
   <% @products.each do |prod| %>
   <div class="pure-u-md-1-5 pure-u-1">
     <%= render prod %>

@@ -1,44 +1,49 @@
 <h3><%= @user.score %>% positive reviews</h3>
-<% if @buying_reviews.empty? %>
-<% else %>
-  <% @buying_reviews.each do |review| %>
-    <div class="comment">
-    <%= image_tag review.deal.seller.profile_picture(:thumbnail), class: "pure-img" %>
-    <a href="<%= user_path(review.deal.seller) %>"><h4><%= review.deal.seller.name %></h4></a>
-    <button class="pure-button" id="follow_<%= review.deal.seller.id %>">
-      <% if current_user.following?(review.deal.seller) %>
-        Unfollow
-      <% elsif current_user.id == review.deal.seller.id %>
-        Me
-      <% else %>
-        Follow
+<% if @buying_reviews.any? %>
+  <h3>As a buyer</h3>
+  <table class="pure-table pure-table-striped">
+    <thead>
+      <tr>
+        <th>Verdict</th>
+        <th>Message</th>
+        <th>User</th>
+        <th>Product</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @buying_reviews.each do |review| %>
+        <tr>
+          <td><%= review.verdict %></td>
+          <td><%= review.message %></td>
+          <td><%= link_to review.deal.seller.name, user_path(review.deal.seller) %></td>
+          <td><%= link_to "View Product", product_url(review.deal.product) %></td>
+        </tr>
       <% end %>
-    </button>    
-    <h3><%= review.verdict %></h3>
-    <p><%= review.message %> <%= link_to "View Product", product_url(review.deal.product) %></p>
-    </div>
-  <% end %>
+    </tbody>
+  </table>
 <% end %>
-<br>
-<% if @selling_reviews.empty? %>
-<% else %>
-  <% @selling_reviews.each do |review| %>
-    <div class="comment">
-    <%= image_tag review.deal.buyer.profile_picture(:thumbnail), class: "pure-img" %>
-    <a href="<%= user_path(review.deal.buyer) %>"><h4><%= review.deal.buyer.name %></h4></a>
-    <button class="pure-button" id="follow_<%= review.deal.buyer.id %>">
-      <% if current_user.following?(review.deal.buyer) %>
-        Unfollow
-      <% elsif current_user.id == review.deal.buyer.id %>
-        Me
-      <% else %>
-        Follow
+<% if @selling_reviews.any? %>
+  <h3>As a seller</h3>
+  <table class="pure-table pure-table-striped">
+    <thead>
+      <tr>
+       <th>Verdict</th>
+       <th>Message</th>
+       <th>User</th>
+       <th>Product</th>
+     </tr>
+    </thead>
+    <tbody>
+      <% @selling_reviews.each do |review| %>
+        <tr>
+          <td><%= review.verdict %></td>
+          <td><%= review.message %></td>
+          <td><%= link_to review.deal.buyer.name, user_path(review.deal.buyer) %></td>
+          <td><%= link_to "View Product", product_url(review.deal.product) %></td>
+        </tr>
       <% end %>
-    </button>
-    <h3><%= review.verdict %></h3>
-    <p><%= review.message %> <%= link_to "View Product", product_url(review.deal.product) %></p>
-    </div>
-  <% end %>
+    </tbody>
+  </table>
 <% end %>
 
 

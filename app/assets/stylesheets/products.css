@@ -1,4 +1,19 @@
 
+.product_methods_show
+{
+    display: block;
+    clear: both;
+    margin-top: 2em;
+}
+
+.hold_sold_form
+{
+    display: block;
+    clear: none;
+    float: left;
+    margin-right: .3em;
+}
+
 .choose_picture
 {
     margin-top: .3em;

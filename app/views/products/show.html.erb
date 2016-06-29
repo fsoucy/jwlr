@@ -113,7 +113,6 @@
     <% else %>
       <h1><%= @product.user.name %></h1>
     <% end %>
-    <p>
     
     <% if logged_in? and !@product.sold %>
       <% if current_user.saved_products.find_by(product_id: @product.id).nil? %>
@@ -121,28 +120,26 @@
       <% else %>
         <button class="pure-button pure-button-primary" id="save_product_<%= @product.id %>_<%= current_user.id %>">Remove from wishlist</button>
       <% end %>
+      <br>
     <% end %>
-    <br>
 
     <% if !@product.sold && !@product.hold %>
   		<% if current_user?(@product.user) %>
-        <%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
-					    data: { confirm: "Are you sure you wish to delete this?" } %>
-  		  <br>
-        <%= link_to "Edit product", edit_product_path(@product.id) %>
+        <a href="<%= edit_product_path(@product.id) %>"><button class="pure-button pure-button-primary prod_cont">Edit product</button></a>
+        <a href="<%= add_pictures_product_path(@product.id) %>"><button class="pure-button pure-button-primary prod_cont">Add pictures</button></a>
+        <a href="<%= product_url(@product.id) %>" data-method="delete" data-confirm="Are you sure you wish to delete this product?"><button class="pure-button button-error prod_cont">Delete this product</button></a>
         <br>
-        <%= link_to "Add pictures", add_pictures_product_path(@product.id) %>
         <% if !@product.agreement_achieved %>
-          <%= form_for @product do |f| %>
+          <%= form_for @product, html: { class: "hold_sold_form" }  do |f| %>
             <%= f.hidden_field :hold, value: true %>
-            <%= f.submit "Put product on hold", class: "pure-button pure-button-primary" %>
+            <%= f.submit "Hold", class: "pure-button button-success prod_cont prod_show_button" %>
           <% end %>
         <% end %>
 
         <% if !@product.agreement_achieved %>
-          <%= form_for @product do |f| %>
+          <%= form_for @product, html: { class: "hold_sold_form" } do |f| %>
             <%= f.hidden_field :sold, value: true %>
-            <%= f.submit "Mark product as sold", class: "pure-button pure-button-primary" %>
+            <%= f.submit "Sold", class: "pure-button button-success prod_cont prod_show_button" %>
           <% end %>
         <% end %>
       <% end %>
@@ -151,28 +148,22 @@
     <% if current_user == @product.user %>
       <% if !@product.agreement_achieved %>
         <% if @product.sold %>
-          <%= form_for @product do |f| %>
+          <%= form_for @product, html: { class: "hold_sold_form" } do |f| %>
             <%= f.hidden_field :sold, value: false %>
-            <%= f.submit "Unmark product as sold", class: "pure-button pure-button-primary" %>
+            <%= f.submit "Off sold", class: "pure-button button-error prod_show_button" %>
           <% end %>  
         <% end %>
         <% if @product.hold %>
-          <%= form_for @product do |f| %>
+          <%= form_for @product, html: { class: "hold_sold_form" }  do |f| %>
             <%= f.hidden_field :hold, value: false %>
-            <%= f.submit "Take product off hold", class: "pure-button pure-button-primary" %>
+            <%= f.submit "Off hold", class: "pure-button button-error prod_cont prod_show_button" %>
           <% end %>
         <% end %>
       <% end %>  
     <% end %>
   
-    <% active_deal = Deal.where("product_id=?", @product.id).first %>
-    <% if @product.hold && active_deal.nil? && current_user == @product.user %>
-      <%= form_for @product do |f| %>
-        <%= f.hidden_field :hold, value: false %>
-        <%= f.submit "Product no longer on hold", class: "pure-button pure-button-primary" %>
-      <% end %>
-    <% end %>    
-  
+    <br>  
+    <div class="product_methods_show">
     <% if @product.user == current_user %>
     <div class="log-in-form">
       <a href="<%= edit_product_path(@product) %>"><h1 class = "method_alert">Selling Methods</h1></a>
@@ -251,7 +242,6 @@
         <h1>Product is unavailable for sale.</h1>
       <% end %>  
     <% end %>
-    </p>
     <% if !current_user?(@product.user) and logged_in? %>
       <h2>Message this user</h2>
       <%= form_for @message do |f| %>
@@ -264,7 +254,7 @@
         <%= f.submit "Send message", class: "form_submit pure-button pure-button-primary" %>
       <% end %>
     <% end %>
-    
+    </div>
   </div>
 </div>
 <h1 class="content-subhead">Related Products</h1>

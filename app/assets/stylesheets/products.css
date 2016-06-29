@@ -121,10 +121,13 @@
 }
 
 .pickers {
-  display: table-row;
+    display: table-row;
 }
 
-
+.prod_cont
+{
+    margin-top: 1em;
+}
 
 .quick_buy
 {

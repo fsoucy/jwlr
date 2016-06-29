@@ -35,11 +35,10 @@
     
       <%= f.text_area :description, placeholder: 'Description of product', id: 'product_description', class: 'main_field' %>
       
+      <button class="pure-button pure-button-primary prod_cont product_next_main" type="button">Next</button>
       <br>
-      <button class="pure-button pure-button-primary product_next_main" type="button">Next</button>
-      <br>
-      <%= f.submit "Save product", class: "pure-button pure-button-primary save" %>
-      <%= f.submit "Submit product", class: "pure-button pure-button-primary submit_product" %>
+      <%= f.submit "Save product", class: "pure-button prod_cont pure-button-primary save" %>
+      <%= f.submit "Submit product", class: "pure-button prod_cont pure-button-primary submit_product" %>
 
     </fieldset>
     <fieldset id="toggle_options_form">
@@ -71,12 +70,11 @@
       <% end %>
       <% end %>
       <% end %>
+      <button class="pure-button pure-button-primary prod_cont product_previous_toggle" type="button">Previous</button>
+      <button class="pure-button pure-button-primary prod_cont product_next_toggle" type="button">Next</button>
       <br class="toggle_br">
-      <button class="pure-button pure-button-primary product_previous_toggle" type="button">Previous</button>
-      <button class="pure-button pure-button-primary product_next_toggle" type="button">Next</button>
-      <br class="toggle_br">
-      <%= f.submit "Save product", class: "pure-button pure-button-primary save save_toggles" %>  
-      <%= f.submit "Submit product", class: "pure-button pure-button-primary submit_product submit_toggles" %>
+      <%= f.submit "Save product", class: "pure-button prod_cont pure-button-primary save save_toggles" %>  
+      <%= f.submit "Submit product", class: "pure-button prod_cont pure-button-primary submit_product submit_toggles" %>
     </fieldset>
     <fieldset id="selling_methods_form">
       <legend>Selling Methods</legend>
@@ -96,12 +94,11 @@
       <label class="pure-checkbox" for="selling_method">
       <%= f.check_box :selling_methods_default, checked: false, class: "pure-checkbox" %> Set these methods to default? 
       </label>
+      <button class="pure-button pure-button-primary prod_cont product_previous_selling" type="button">Previous</button>
+      <button class="pure-button pure-button-primary prod_cont product_next_selling" type="button">Next</button>
       <br>
-      <button class="pure-button pure-button-primary product_previous_selling" type="button">Previous</button>
-      <button class="pure-button pure-button-primary product_next_selling" type="button">Next</button>
-      <br>
-      <%= f.submit "Save product", class: "pure-button pure-button-primary save" %>
-      <%= f.submit "Submit product", class: "pure-button pure-button-primary submit_product" %>
+      <%= f.submit "Save product", class: "pure-button prod_cont pure-button-primary save" %>
+      <%= f.submit "Submit product", class: "pure-button prod_cont pure-button-primary submit_product" %>
     </fieldset>
     <fieldset id="exchange_methods_form">
       <legend>Exchange Methods</legend>
@@ -127,13 +124,14 @@
         $ <%= f.number_field :delivery_cost, id: "delivery_cost" %>
       <% end %>
       </div>
+      <label class="pure-checkbox" for="exchange_method">
       <%= f.check_box :exchange_methods_default, checked: false, class: "pure-checkbox" %> Set these methods to default?
+      </label>
+      <button class="pure-button pure-button-primary prod_cont product_previous_exchange" type="button">Previous</button>
+      <button class="pure-button pure-button-primary prod_cont product_next_exchange" type="button">Next</button>
       <br>
-      <button class="pure-button pure-button-primary product_previous_exchange" type="button">Previous</button>
-      <button class="pure-button pure-button-primary product_next_exchange" type="button">Next</button>
-      <br>
-      <%= f.submit "Save product", class: "pure-button pure-button-primary save" %>
-      <%= f.submit "Submit product", class: "pure-button pure-button-primary submit_product" %>
+      <%= f.submit "Save product", class: "pure-button prod_cont pure-button-primary save" %>
+      <%= f.submit "Submit product", class: "pure-button prod_cont pure-button-primary submit_product" %>
     </fieldset>
     <fieldset id="payment_methods_form">
       <legend>Payment Methods</legend>
@@ -149,7 +147,9 @@
       </label>
       <% end %>
       <% end %>
-      <%= f.check_box :payment_methods_default, checked: false, class: "pure-checkbox" %> Set these methods to default?
+      <label class="pure-checkbox" for="payment_method">
+      <%= f.check_box :payment_methods_default, checked: false, class: "pure-checkbox" %> Set these methods to default? 
+      </label>
       <div id="upon_transaction">
       <legend>Upon Transaction Payment Methods</legend>
       <% @transactions.each do |transaction| %>
@@ -161,12 +161,11 @@
         <% end %>
       <% end %>
       </div>
+      <button class="pure-button pure-button-primary prod_cont product_previous_payment" type="button">Previous</button>
+      <button class="pure-button pure-button-primary prod_cont product_next_payment" type="button">Next</button>
       <br>
-      <button class="pure-button pure-button-primary product_previous_payment" type="button">Previous</button>
-      <button class="pure-button pure-button-primary product_next_payment" type="button">Next</button>
-      <br>
-      <%= f.submit "Save product", class: "pure-button pure-button-primary save" %>
-      <%= f.submit "Submit product", class: "pure-button pure-button-primary submit_product" %>
+      <%= f.submit "Save product", class: "pure-button prod_cont pure-button-primary save" %>
+      <%= f.submit "Submit product", class: "pure-button prod_cont pure-button-primary submit_product" %>
     </fieldset>
     
     <% end %>

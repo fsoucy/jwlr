@@ -84,6 +84,19 @@
     width: 200px !important;
 }
 
+.gallery_portion
+{
+    display: block;
+    float: left;
+    clear: none;
+    padding: 1em;
+}
+
+.gallery_page
+{
+    overflow: auto;
+}
+
 .product_view h3, .product_view h1
 {
     margin-bottom: 1em;

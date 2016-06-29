@@ -45,8 +45,11 @@
   vertical-align: top;
   display: inline-block;
   text-align: left;
-  border: 1px solid #00171F;
+  border: 0.15em solid #00171F;
+  border-radius: 0.5em;
+  background-color: #e8e8e8;
   margin: 1em;
+  box-shadow: 5px 5px 20px 5px #888888;;
 }
 
 .product img {

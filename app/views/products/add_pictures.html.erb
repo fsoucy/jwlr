@@ -16,6 +16,8 @@
       <% end %>
       </div>
     <% else %>
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-md-3-5">
       <div class="picture">
         <div class="modal-body">
           <%= image_tag @picture.photo(:original), :id => "image", :class => "my_cropper_img pan_cropper_img" %>
@@ -30,19 +32,20 @@
         <%= hidden_field_tag :picture_id, @picture.id %>
         <%= hidden_field_tag :factor, @factor %>
         <%= hidden_field_tag :size_of_crop, 600 %>
-    
+    </div>
+</div>
+    <div class="pure-u-1 pure-u-md-2-5">
         <div class="submit_the_form">
           <%= submit_tag "Done cropping", class: 'pure-button pure-button-primary' %>
-          <%= link_to "Delete", @picture, method: :delete,
-                                       data: { confirm: "Are you sure?" } %>
-          <%= link_to "Cancel", @product %>
+          <a href="<%= picture_url(@picture.id) %>" data-method="delete" data-confirm="Are you sure?"><button class="pure-button button-error">Delete</button></a>
+          <a href="<%= product_url(@product.id) %>"><button class="pure-button button-error">Cancel</button></a>
           <br>
+          <button id="rotate_ccw" class= "pure-button pure-button-primary prod_cont" type="button">Rotate counterclockwise</button>
+          <button id="rotate_cw" class= "pure-button pure-button-primary prod_cont" type="button">Rotate clockwise</button>
           <br>
-          <button id="rotate_ccw" class= "pure-button pure-button-primary" type="button">Rotate counterclockwise</button>
-          <button id="rotate_cw" class= "pure-button pure-button-primary" type="button">Rotate clockwise</button>
-          <br>
-          <button class="pure-button button-error choose_picture_return" type="button">Go back</button>
+          <button class="pure-button button-error choose_picture_return prod_cont" type="button">Go back</button>
         </div>
+      </div>
       </div>
     <% end %>
   </div>

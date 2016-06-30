@@ -152,4 +152,9 @@ $(document).ready(function(){
 	window.location.href = loc;
     });
 
+    $('#cropper-finished-button').click(function(e) {
+	e.preventDefault();
+	$('.cropper-submit').trigger('click');
+    });
+
 });

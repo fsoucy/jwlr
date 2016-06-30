@@ -1,6 +1,7 @@
-
-
-    
+.cropper-submit
+{
+    display: none !important;
+}
 
 #photo_cropped
 {

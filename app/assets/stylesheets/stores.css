@@ -67,7 +67,7 @@
     }
 }
 
-#add_store
+.store-product div
 {
-    
+  box-shadow: none !important;
 }

@@ -7,16 +7,16 @@
       <% end %>
 </div>
 <div class="pure-g pad-box">
-	<div class="pure-u-1 pure-u-md-1-5 product_view pad-box">
+	<div class="pure-u-1 pure-u-md-2-5 product_view pad-box">
   
   	<% if !@product.pictures.first.nil? %>
       <% if !@product.main_picture_id.nil? %>
             <a class="magnifier" href="<%= @product.pictures.find(@product.main_picture_id).photo_cropped(:large) %>">
-              <%= image_tag @product.pictures.find(@product.main_picture_id).photo_cropped(:thumb), class: "pad-box product_image pure-img" %>
+              <%= image_tag @product.pictures.find(@product.main_picture_id).photo_cropped(:big), class: "product_image pure-img" %>
             </a>
           <% else %>
             <a class="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
-              <%= image_tag @product.pictures.first.photo_cropped(:thumb), class: "pad-box product_image pure-img" %>
+              <%= image_tag @product.pictures.first.photo_cropped(:big), class: "product_image pure-img" %>
             </a>
           <% end %>
   		<% if current_user?(@product.user) and logged_in? %>
@@ -99,7 +99,7 @@
     </div>
   </div>
 
-  <div class="pure-u-1 pure-u-md-2-5 product_view pad-box log-in">
+  <div class="pure-u-1 pure-u-md-1-5 product_view pad-box log-in">
     <% if @product.store != nil %>
       <h1><%= @product.store.name %></h1>
     <% else %>

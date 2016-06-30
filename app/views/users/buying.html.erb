@@ -1,7 +1,26 @@
-<div class="search-page">
-<h1>My Buying Deals</h1>
-<% if @buying.count == 0 %>
-<%= link_to "You have no buying deals. Click here to see some products.", "/search?" %>
-<% end %>
-<%= render @buying %>
+<div class="pure-g pad-box">
+  <div class="pure-u-1">
+    <h1>My Buying Deals</h1>
+  </div>
+  <% if !@buying.any? %>
+    <%= link_to "You have no buying deals. Click here to search for a product.", new_search_path %>
+  <% else %>
+    <div class="pure-u-1">
+      <table class="pure-table pure-table-striped">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Product</th>
+            <th>Seller</th>
+            <th>Exchange Method</th>
+            <th>Payment Method</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render @buying %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
 </div>

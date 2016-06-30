@@ -66,6 +66,13 @@
   width: 100%;
 }
 
+.top-menu input[type=submit] {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5em;
+}
+
 .suggestions ul {
   position: absolute;
   display: none;
@@ -113,6 +120,11 @@
   
   .top-menu input[type=text] {
     width: 20em;
+  }
+
+  .top-menu input[type=submit] {
+    display: inline;
+    margin-top: 0;
   }
 }
 

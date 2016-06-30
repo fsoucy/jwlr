@@ -2,19 +2,20 @@ $.fn.followTo = function(elem) {
     var $this = this,
         $window = $(window),
         $bumper = $(elem),
-        bumperPos = $bumper.offset().top,
-        thisHeight = $this.outerHeight(),
+        bumperPos = $bumper.offset().top - 300,
+        thisHeight = $this.outerHeight(true),
         setPosition = function(){
             if($window.width() < 768)
             {
               $this.css({
-                position: 'relative'
+                position: 'relative',
+                overflow: 'hidden'
               });  
             }
             else
             {
-              bumperPos = $bumper.offset().top;
-              thisHeight = $this.outerHeight();
+              bumperPos = $bumper.offset().top - 300;
+              thisHeight = $this.outerHeight(true);
               if($window.scrollTop() > (bumperPos - thisHeight)) {
                 $this.css({
                     position: 'absolute',
@@ -25,15 +26,15 @@ $.fn.followTo = function(elem) {
               {
                 $this.css({
                     position: 'fixed',
-                    top: '5em'
+                    top: '5em',
                 });
               }
             }
         };
     $window.resize(function()
     {
-        bumperPos = $bumper.offset().top;
-        thisHeight = $this.outerHeight();
+        bumperPos = $bumper.offset().top - 300;
+        thisHeight = $this.outerHeight(true);
         setPosition();
     });
     $window.scroll(setPosition);
@@ -51,6 +52,7 @@ $(document).ready(function(){
 
   //Have the footer scroll when it collides with the sidebars
   $('.fixed').followTo('.footer');
+
 
   // disable auto discover
   Dropzone.autoDiscover = false;
@@ -128,7 +130,7 @@ $(document).on('click', 'a[id*=shares_]', function(event) {
   {
     var item = $(this).parent();
   }
-  if($(".store_header").length)
+  if($("#store_header").length)
   {
     var item = $(this).parent();
   }
@@ -138,6 +140,10 @@ $(document).on('click', 'a[id*=shares_]', function(event) {
   if(!item.children('#new_share').length)
   {
     item.append($('#new_share').clone());
+  }
+  else
+  {
+    item.children('#new_share').remove();
   }
   var share = this;
   item.children('#new_share').show();

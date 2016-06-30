@@ -1,5 +1,5 @@
 <div class="pure-g pad-box user_top">
-  <div class="pure-u-md-1-3 pure-u-1 pad-box">
+  <div class="pure-u-md-1-4 pure-u-1 pad-box">
     <h1><%= @user.name %></h1>
     <%= image_tag @user.profile_picture(:thumb), class: "pure-img" %>
     <p>
@@ -72,7 +72,7 @@
     </div>
   </div>
   
-  <div class="pure-u-md-1-3 pure-u-1 pad-box">
+  <div class="pure-u-md-1-4 pure-u-1 pad-box">
     <h1>User Details</h1>
     <p><%= @user.description %></p>
     <p>Products sold: <%= Deal.where("deal_complete = ? and seller_id = ?", true, @user.id).count %></p>
@@ -80,7 +80,7 @@
     <p>Location: <%= @user.location_string %></p>
 
   </div>
-  <div class="pure-u-md-1-3 pure-u-1 pad-box">
+  <div class="pure-u-md-1-2 pure-u-1 pad-box">
     <div class="stores">
       <h1>Reviews</h1>
     </div>
@@ -95,14 +95,11 @@
     <h1>Product Gallery</h1>
   </div>
   <% if current_user?(@user) %>
-  <div class="pure-u-1 pad">
+  <div class="pure-u-1 pad-box">
     <a href="<%= new_product_url %>">
     <button class="pure-button pure-button-primary">New Product</button></a>
   </div>
   <% end %>
-  <br><br>
-</div>
-<div class="pad-box pure-g">
   <% @products.each do |prod| %>
   <div class="pure-u-md-1-5 pure-u-1">
     <%= render prod %>
@@ -121,21 +118,23 @@
 <% end %>
 <div class="pure-g pad-box">
   <div class="pure-u-md-1-2 pure-u-1 pad-box">
-    <h1>Blog <% if current_user?(@user) %></h1><a href="<%= new_blogpost_url %>"><button class="pure-button pure-button-primary">New</button></a><% end %>
-    <% @user.blogposts.each do |post| %>
-    <h2 class="post-title"><%= post.title %></h2>
-    <p class="post-meta">By <%= post.user.name %></p>
+    <% if current_user?(@user) %><a href="<%= new_blogpost_url %>"><button class="pure-button pure-button-primary">New Blogpost</button></a><% end %>
+    <% if @user.blogposts.any? %>
+      <h1>Blog</h1>
+      <% @user.blogposts.each do |post| %>
+        <h2 class="post-title"><%= post.title %></h2>
+        <p class="post-meta">By <%= post.user.name %></p>
 
-    <div class="post-description">
-      <p><%= post.content %></p>
-    </div>
-    <h4>
-      <% if current_user?(post.user) %>
-      <%= link_to "Delete", post, method: :delete, data: { confirm: "Are you sure?" } %> | <%= link_to "Edit", edit_blogpost_path(post) %>
+        <div class="post-description">
+          <p><%= post.content %></p>
+        </div>
+        <h4>
+          <% if current_user?(post.user) %>
+            <%= link_to "Delete", post, method: :delete, data: { confirm: "Are you sure?" } %> | <%= link_to "Edit", edit_blogpost_path(post) %>
+          <% end %>
+        </h4>
       <% end %>
-    </h4>
     <% end %>
-
   </div>
 
   <div class="pure-u-md-1-2 pure-u-1 pad-box"></div>

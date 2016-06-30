@@ -1,9 +1,14 @@
 <div class="pure-g pad-box">
   <div class="pure-u-1">
-    <h1>All Stores</h1>
+    <h1 class="pad-header">All Stores</h1>
+  </div>
+  <div class="pure-u-1">
+    <%= will_paginate %>
+  </div>
 
-      <%= render @stores %>
+  <%= render @stores %>
 
-      <%= will_paginate %>
+  <div class="pure-u-1">
+    <%= will_paginate %>
   </div>
 </div>

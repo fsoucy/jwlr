@@ -71,8 +71,11 @@
   vertical-align: top;
   display: inline-block;
   text-align: left;
-  border: 1px solid #00171F;
+  border: 0.15em solid #00171F;
+  border-radius: 0.5em;
+  background-color: #efefef;
   margin: 1em;
+  box-shadow: 5px 5px 20px 5px #888888;
 }
 
 .product img {
@@ -106,8 +109,6 @@
 .product_image
 {
     border: 1px solid #003459;
-    height: 200px !important;
-    width: 200px !important;
 }
 
 .gallery_portion

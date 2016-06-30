@@ -61,14 +61,6 @@
         <h3 class="inline-header">Views:</h3> 
         <%= @product.views %>
       </p>
-
-      <% if @product.exchange_methods.include?(ExchangeMethod.find(1)) %>
-        <p>
-          <h3 class="inline-header">Delivery Cost:</h3>
-          <%= number_to_currency(@product.delivery_cost) %>
-        </p>
-      <% end %>
-
       <table class="pure-table pure-table-bordered pure-table-striped product_attributes">
 	<tbody>
 	  <tr>
@@ -162,27 +154,51 @@
       <% end %>  
     <% end %>
   
-    <br>  
     <div class="product_methods_show">
     <% if @product.user == current_user %>
-    <div class="log-in-form">
-      <a href="<%= edit_product_path(@product) %>"><h1 class = "method_alert">Selling Methods</h1></a>
-      <% @product.selling_method_links.each do |s| %>
-        <h3><%= s.selling_method.method %></h3>
-      <% end %>
-  
-      <a href="<%= edit_product_path(@product) %>"><h1 class = "method_alert">Exchange Methods</h1></a>
-      <% @product.exchange_method_links.each do |s| %>
-        <h3><%= s.exchange_method.method %></h3>
-        <% if s.exchange_method.method == "Delivery" %>
-          <h4>Delivery cost: <%= number_to_currency(@product.delivery_cost) %></h4>
-        <% end %>
-      <% end %>
-      <a href="<%= edit_product_path(@product) %>"><h1 class = "method_alert">Payment Methods</h1></a>
-      <% @product.payment_method_links.each do |s| %>
-        <h3><%= s.payment_method.method %></h3>
-      <% end %>
-      </div>
+    <br>
+    <% has_delivery = false %>
+    <% has_upon_transaction = false %>
+    <table class="pure-table pure-table-bordered pure-table-striped product_attributes">
+  <tbody>
+    <tr>
+      <td>Selling Methods</td>
+      <td><% @product.selling_methods.each do |selling_method| %><%= selling_method.method %><br><% end %></td>
+    </tr>
+    <tr>
+      <td>Exchange Methods</td>
+      <td><% @product.exchange_methods.each do |exchange_method| %>
+            <%= exchange_method.method %><br>
+            <% if exchange_method.method == "Delivery" %>
+              <% has_delivery = true %>
+            <% end %>
+          <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Payment Methods</td>
+      <td><% @product.payment_methods.each do |payment_method| %>
+            <%= payment_method.method %><br>
+            <% if payment_method.method == "Upon Transaction" %>
+              <% has_upon_transaction = true %>
+            <% end %>
+          <% end %>
+      </td>
+    </tr>
+    <% if has_delivery %>
+      <tr>
+        <td>Delivery Cost</td>
+        <td><%= number_to_currency(@product.delivery_cost) %>
+      </tr>
+    <% end %>
+    <% if has_upon_transaction %>
+      <tr>
+        <td>Available payment methods</td>
+        <td><% @product.user.payment_upon_transactions.each do |u_t| %><%= u_t.method %><br><% end %></td>
+      </tr>
+    <% end %>
+    </table>
+
     <% else %>
       
       

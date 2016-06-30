@@ -13,6 +13,7 @@
   <%= hidden_field_tag :height, 300 %>
   <%= hidden_field_tag :rotate, 0 %>
   <%= hidden_field_tag :size_of_crop, 600 %>
+  <%= submit_tag "Done cropping", class: "pure-button pure-button-primary cropper-submit" %>
 
 </div>
 </div>
@@ -25,7 +26,7 @@
     <% end %>
   <% end %>
   <div class="submit_the_form">
-    <%= submit_tag "Done cropping", class: 'pure-button pure-button-primary' %>
+    <button class="pure-button pure-button-primary" id="cropper-finished-button">Done cropping</button>
     <a href="<%= picture_url(@picture.id) %>" data-method="delete" data-confirm="Are you sure?"><button class="pure-button button-error" type="button">Delete</button></a>
     <a href="<%= product_url(@picture.post) %>"><button class="pure-button button-error" type="button">Cancel</button></a>
     <br>

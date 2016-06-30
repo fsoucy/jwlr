@@ -1,0 +1,7 @@
+<div class="gallery_portion">
+  <%= image_tag picture.photo_cropped(:medium), class: "pad-box product_image pure-img" %>
+  <% if picture.post_type == "User" && picture.post_id == current_user.id %>
+    <%= link_to "Delete", picture, method: :delete,
+      data: { confirm: "Are you sure?" } %>
+  <% end %>
+</div>

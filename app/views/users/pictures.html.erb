@@ -1,8 +1,5 @@
+<div class="pad-box gallery_page">
 <h1>Pictures</h1>
-<% @pictures.each do |pic| %>
-  <%= image_tag pic.photo_cropped(:medium), class: "pad-box product_image pure-img" %>
-  <% if pic.post_type == "User" && pic.post_id == current_user.id %>
-    <%= link_to "Delete", pic, method: :delete,
-      data: { confirm: "Are you sure?" } %>
-  <% end %>
-<% end %>
+<%= will_paginate @pictures %>
+<%= render @pictures %>
+</div>

@@ -1,3 +1,29 @@
+
+.deal_extended
+{
+    margin-top: 1em;
+}
+
+.product_methods_show
+{
+    display: block;
+    clear: both;
+    margin-top: 2em;
+}
+
+.hold_sold_form
+{
+    display: block;
+    clear: none;
+    float: left;
+    margin-right: .3em;
+}
+
+.choose_picture
+{
+    margin-top: .3em;
+}
+
 .shares * {
   vertical-align: bottom;
 }
@@ -85,6 +111,19 @@
     border: 1px solid #003459;
 }
 
+.gallery_portion
+{
+    display: block;
+    float: left;
+    clear: none;
+    padding: 1em;
+}
+
+.gallery_page
+{
+    overflow: auto;
+}
+
 .product_view h3, .product_view h1
 {
     margin-bottom: 1em;
@@ -122,10 +161,13 @@
 }
 
 .pickers {
-  display: table-row;
+    display: table-row;
 }
 
-
+.prod_cont
+{
+    margin-top: 1em;
+}
 
 .quick_buy
 {

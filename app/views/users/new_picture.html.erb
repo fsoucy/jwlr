@@ -1,5 +1,12 @@
+
+<div class="pure-g log-in">
+  <div class="pure-u-1 pure-u-md-1-3"></div>
+  <div class="pure-u-1 pure-u-md-1-3 log-in-form">
 <div class="dropper">
 <%= form_for @picture, html: { id: "new_user_picture", multipart: true, class: "dropzone"} do |f|  %>
 <% end %>
-<a href="<%= user_url(params[:id]) %>" id="users_picture_upload"><button class="pure-button pure-button-primary submit_the_form">Done</button></a>
+<a href="<%= user_url(params[:id]) %>" id="users_picture_upload"><button class="pure-button pure-button-primary">Done</button></a>
+</div>
+</div>
+<div class="pure-u-1 pure-u-md-1-3"></div>
 </div>

@@ -353,7 +353,7 @@ class ProductsController < ApplicationController
       maxDim = img.width unless img.height > img.width
       @factor = 600.0 / maxDim
     else
-      @picture = nil
+      @pictures = @product.user.pictures.all.paginate(page: params[:page], per_page: 5)
     end
   end
 

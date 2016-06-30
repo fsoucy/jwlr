@@ -661,20 +661,23 @@ $(document).ready(function () {
 		evaluateUponTransaction();
 	});
 
-	$('.quick_buy_information').hide();
+    $('.quick_buy_information').hide();
+    $('.leave_quick_buy').hide();
 	$(document).on('click', '.quick_buy', function (e) {
 		if ($('.buy_now_radio').length > 0) {
 			e.preventDefault();
 			$('.quick_buy_information').show();
 			$(this).removeClass("quick_buy");
 			$('.deal_extended').hide();
-			$(this).addClass("in_quick_buy");
+		    $(this).addClass("in_quick_buy");
+		    $('.leave_quick_buy').show();
 		}
 		evaluateDealSubmitQuick();
 	});
 
 	$(document).on('click', '.leave_quick_buy', function () {
-		$('.quick_buy_information').hide();
+	    $('.quick_buy_information').hide();
+	    $('.leave_quick_buy').hide();
     $('.in_quick_buy').addClass("quick_buy").removeClass("in_quick_buy").removeClass("not_ready");
 		$('.deal_extended').show();
 		evaluateDealSubmitQuick();

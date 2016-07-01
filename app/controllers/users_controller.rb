@@ -173,11 +173,11 @@ class UsersController < ApplicationController
   end
 
   def selling
-    @selling = Deal.where("seller_id=?", params[:id])
+    @selling = Deal.where("seller_id=?", params[:id]).order(updated_at: :desc).paginate(page: params[:page], per_page: 30)
   end
 
   def buying
-    @buying = Deal.where("buyer_id=?", params[:id])
+    @buying = Deal.where("buyer_id=?", params[:id]).order(updated_at: :desc).paginate(page: params[:page], per_page: 30)
   end
 
   def follow

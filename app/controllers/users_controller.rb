@@ -8,7 +8,20 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all.paginate(page: params[:page], per_page: 30)
+    if !params[:search_string].present?
+      @users = User.all.paginate(page: params[:page], per_page: 30)
+    else
+      search = User.search do
+        fulltext params[:search_string] do
+        end        
+        with :activated, true
+        order_by :score, :desc
+        order_by_geodist :location, current_user.latitude, current_user.longitude
+        paginate :page => params[:page], :per_page => 30
+      end
+
+      @users = search.results
+    end
   end
 
   def new_picture

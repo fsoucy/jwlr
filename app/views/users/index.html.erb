@@ -2,6 +2,14 @@
   <div class="pure-u-1">
     <h1 class="pad-header">All Users</h1>
   </div>
+
+  <div class="pure-u-1 pad-box">
+    <%= form_tag "/users", method: "get", class: 'pure-form' do %>
+      <%= text_field_tag "search_string", "", placeholder: "Search for a user", autocomplete: 'off', class: 'search_string' %>
+      <%= submit_tag "Search", class: 'pure-button pure-button-primary' %>
+    <% end %>
+  </div>  
+
   <div class="pure-u-1 pad-header">
     <%= will_paginate %>
   </div>

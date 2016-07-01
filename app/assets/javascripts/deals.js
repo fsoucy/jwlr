@@ -231,6 +231,9 @@ function addRedirectButton() //if necessary of course
 
 function refreshAll(completion)
 {
+    var str = window.location.href;
+    var beginIndex = str.indexOf("deals/");
+    var id = str.substring(beginIndex + 6);
     $('.method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_method_selection", function() {
     });
     $('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function() {

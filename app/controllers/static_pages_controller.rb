@@ -1,6 +1,12 @@
 class StaticPagesController < ApplicationController
 
   def home
+    if logged_in?
+      @activities = []
+      @activities += current_user.selling_deals.order(updated_at: :desc).where(deal_complete: false)
+      @activities += current_user.buying_deals.order(updated_at: :desc).where(deal_complete: false)
+    end
+    
     @top_products = Product.joins(:productviews).order('productviews.views DESC').limit(9)
     if logged_in?
       searches = current_user.searches.order('`search_relationships`.`frequency` DESC').limit(3).pluck(:search_text)

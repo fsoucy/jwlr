@@ -79,7 +79,19 @@ class StoresController < ApplicationController
   end
 
   def index
-    @stores = Store.all.paginate(page: params[:page], per_page: 30)
+    if !params[:search_string].present?
+      @stores = Store.all.paginate(page: params[:page], per_page: 30)
+    else
+      search = Store.search do
+        fulltext params[:search_string] do
+        end
+        order_by :score, :desc
+        order_by_geodist :location, current_user.latitude, current_user.longitude
+        paginate :page => params[:page], :per_page => 30
+      end
+
+      @stores = search.results
+    end
   end
 
   def edit_times

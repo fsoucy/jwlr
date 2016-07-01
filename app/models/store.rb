@@ -11,6 +11,13 @@ class Store < ActiveRecord::Base
   has_attached_file :profile_picture, :convert_options => { :medium => '-gravity center -crop 300x300+0+0', :thumb => '-gravity center -crop 200x200+0+0', :thumbnail => '-gravity center -crop 50x50+0+0', :all => '-strip -quality 100 -alpha remove -background white' }, :styles => { :medium => ["300x300^", :png], :thumb => ["200x200^", :png], :thumbnail => ["50x50^", :png] }, default_url: "/assets/missing_:style.jpg"
   validates_attachment :profile_picture, :presence => true, :content_type => { :content_type => /\Aimage\/.*\Z/ }, :size => { :less_than => 10.megabyte }
 
+  searchable do
+    text :name
+    text :full_street_address
+    integer :id
+    latlon(:location) { Sunspot::Util::Coordinates.new(self.latitude, self.longitude) }
+  end  
+
   def selected_times
     things = []
     things.push(mondaystarthour, tuesdaystarthour, wednesdaystarthour, thursdaystarthour, fridaystarthour, saturdaystarthour, sundaystarthour, mondaystartminute, tuesdaystartminute, wednesdaystartminute, thursdaystartminute, fridaystartminute, saturdaystartminute, sundaystartminute, mondayendhour, tuesdayendhour, wednesdayendhour, thursdayendhour, fridayendhour, saturdayendhour, sundayendhour, mondayendminute, tuesdayendminute, wednesdayendminute, thursdayendminute, fridayendminute, saturdayendminute, sundayendminute)

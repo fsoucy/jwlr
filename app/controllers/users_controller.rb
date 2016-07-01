@@ -238,7 +238,7 @@ class UsersController < ApplicationController
   end
 
   def wishlist
-    @saved_products = current_user.saved_products.all
+    @saved_products = current_user.saved_products.all.paginate(page: params[:page], per_page: 30)
   end
 
   def save_product

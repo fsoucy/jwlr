@@ -1,3 +1,8 @@
+.cropper-submit
+{
+    display: none !important;
+}
+
 #photo_cropped
 {
     width: 300px;

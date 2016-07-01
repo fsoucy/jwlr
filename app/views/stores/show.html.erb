@@ -15,10 +15,14 @@
       <li class="pure-menu-item blog_butt"><a href="#blog" class="pure-menu-link">Blog</a></li>
     </ul>
   </div>
-  <h1 class="store_header"><%= @store.name %> <%= link_to "Edit", edit_store_url(@store) if current_user?(@store.user) %></h1>
-<div class="shares">
-  <%= link_to pluralize(@store.shares.count, "Share"), '', id: "shares_#{@store.class}_#{@store.id}_#{current_user.id}" %>
-  </div>  
+  <div class="pure-g pad-box">
+    <div class="pure-u-1 pad-box">
+      <h1 id="store_header"><%= @store.name %> <%= link_to "Edit", edit_store_url(@store) if current_user?(@store.user) %></h1>
+      <div class="shares">
+        <%= link_to pluralize(@store.shares.count, "Share"), '', id: "shares_#{@store.class}_#{@store.id}_#{current_user.id}" %>
+      </div>
+    </div>
+  </div>
   <!--GALLERY--->
   <div class="store_within store_gallery_within">
     <div class="pure-g log-in">
@@ -26,7 +30,7 @@
 	<div class="inner">
 	  <h3>Featured Products</h3>
 	  <% @products.each do |prod| %>
-	  <div class="pure-u-md-1-5 pure-u-1">
+	  <div class="pure-u-md-1-5 pure-u-1 store-product">
       <%= render prod %> 
 	  </div>
 	  <% end %>
@@ -124,32 +128,32 @@
 	<div class="hours">
 	  <p>
       Monday: <% if @store.mondayopen %>
-      <%= @store.mondaystarthour %>:<%= sprintf "%02d", @store.mondaystartminute %> --> <%= @store.mondayendhour %>:<%= sprintf "%02d", @store.mondayendminute %>
+      <%= @store.mondaystarthour %>:<%= sprintf "%02d", @store.mondaystartminute %> - <%= @store.mondayendhour %>:<%= sprintf "%02d", @store.mondayendminute %>
       <% else %>
       Closed
       <% end %>
       <br>Tuesday: <% if @store.tuesdayopen %>
-      <%= @store.tuesdaystarthour %>:<%= sprintf "%02d", @store.tuesdaystartminute %> --> <%= @store.tuesdayendhour %>:<%= sprintf "%02d", @store.tuesdayendminute %>
+      <%= @store.tuesdaystarthour %>:<%= sprintf "%02d", @store.tuesdaystartminute %> - <%= @store.tuesdayendhour %>:<%= sprintf "%02d", @store.tuesdayendminute %>
       <% else %>
       Closed
       <% end %>
       <br>Wednesday: <% if @store.wednesdayopen %>
-      <%= @store.wednesdaystarthour %>:<%= sprintf "%02d", @store.wednesdaystartminute %> --> <%= @store.wednesdayendhour %>:<%= sprintf "%02d", @store.wednesdayendminute %>
+      <%= @store.wednesdaystarthour %>:<%= sprintf "%02d", @store.wednesdaystartminute %> - <%= @store.wednesdayendhour %>:<%= sprintf "%02d", @store.wednesdayendminute %>
       <% else %>
       Closed
       <% end %>
       <br>Thursday: <% if @store.thursdayopen %>
-      <%= @store.thursdaystarthour %>:<%= sprintf "%02d", @store.thursdaystartminute %> --> <%= @store.thursdayendhour %>:<%= sprintf "%02d", @store.thursdayendminute %>
+      <%= @store.thursdaystarthour %>:<%= sprintf "%02d", @store.thursdaystartminute %> - <%= @store.thursdayendhour %>:<%= sprintf "%02d", @store.thursdayendminute %>
       <% else %>
       Closed
       <% end %>
       <br>Friday: <% if @store.fridayopen %>
-      <%= @store.fridaystarthour %>:<%= sprintf "%02d", @store.fridaystartminute %> --> <%= @store.fridayendhour %>:<%= sprintf "%02d", @store.fridayendminute %>
+      <%= @store.fridaystarthour %>:<%= sprintf "%02d", @store.fridaystartminute %> - <%= @store.fridayendhour %>:<%= sprintf "%02d", @store.fridayendminute %>
       <% else %>
       Closed
       <% end %>
       <br>Saturday: <% if @store.saturdayopen %>
-      <%= @store.saturdaystarthour %>:<%= sprintf "%02d", @store.saturdaystartminute %> --> <%= @store.saturdayendhour %>:<%= sprintf "%02d", @store.saturdayendminute %>
+      <%= @store.saturdaystarthour %>:<%= sprintf "%02d", @store.saturdaystartminute %> - <%= @store.saturdayendhour %>:<%= sprintf "%02d", @store.saturdayendminute %>
       <% else %>
       Closed
       <% end %>

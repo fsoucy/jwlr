@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all.paginate(page: params[:page], per_page: 5)
+    @users = User.all.paginate(page: params[:page], per_page: 30)
   end
 
   def new_picture
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   end
 
   def pictures
-    @pictures = User.find(params[:id]).pictures
+    @pictures = User.find(params[:id]).pictures.paginate(page: params[:page], per_page: 5)
   end
   
   def show

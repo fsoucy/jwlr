@@ -8,11 +8,11 @@
                   <div class="pure-u-1 pure-u-md-1-3">
                      <% if !item.main_picture_id.nil? %>
             <a class="magnifier" href="<%= item.pictures.find(item.main_picture_id).photo_cropped(:large) %>">
-              <%= image_tag item.pictures.find(item.main_picture_id).photo_cropped(:thumb), class: "pad-box product_image pure-img" %>
+              <%= image_tag item.pictures.find(item.main_picture_id).photo_cropped(:thumb), class: "product_image pure-img" %>
             </a>
           <% else %>
             <a class="magnifier" href="<%= item.pictures.first.photo_cropped(:large) %>">
-              <%= image_tag item.pictures.first.photo_cropped(:thumb), class: "pad-box product_image pure-img" %>
+              <%= image_tag item.pictures.first.photo_cropped(:thumb), class: "product_image pure-img" %>
             </a>
           <% end %>
                     <br>

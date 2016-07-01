@@ -49,11 +49,10 @@ function getToggleOptions(category_id) {
 			$('.product_previous_toggle').remove();
 			$('.product_next_toggle').remove();
 			$('.toggle_br').remove();
-			$('#toggle_options_form').append("<br class='toggle_br'>");
-			$('#toggle_options_form').append("<button class='pure-button pure-button-primary product_previous_toggle' type='button'>Previous</button>");
-			$('#toggle_options_form').append("<button class='pure-button pure-button-primary product_next_toggle' type='button'>Next</button>");
-			$('#toggle_options_form').append("<br class='toggle_br'><input type='submit' name='commit' value='Save product' class='pure-button pure-button-primary save save_toggles'>");
-			$('#toggle_options_form').append("<input type='submit' name='commit' value='Submit product' class='pure-button pure-button-primary submit_product submit_toggles'>");
+			$('#toggle_options_form').append("<button class='pure-button pure-button-primary prod_cont product_previous_toggle' type='button'>Previous</button>\n");
+			$('#toggle_options_form').append("<button class='pure-button pure-button-primary prod_cont product_next_toggle' type='button'>Next</button>");
+			$('#toggle_options_form').append("<br class='toggle_br'><input type='submit' name='commit' value='Save product' class='pure-button pure-button-primary prod_cont save save_toggles'>\n");
+			$('#toggle_options_form').append("<input type='submit' name='commit' value='Submit product' class='pure-button pure-button-primary prod_cont submit_product submit_toggles'>");
 			evaluateSubmit();
 		},
 		error : function (e) {}
@@ -713,8 +712,8 @@ $(document).ready(function () {
 	});
 
 	$('.magnifier').loupe({
-		width : 800, // width of magnifier
-		height : 800, // height of magnifier
+		width : 1500, // width of magnifier
+		height : 1500, // height of magnifier
 		loupe : 'loupe' // css class for magnifier
 	});
 	$('#dropper').hide();

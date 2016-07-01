@@ -1,6 +1,9 @@
 <h1 class="pad-header">Wishlist</h1>
 <div class="pure-g pad-box">
   <div class="pure-u-1">
+    <% if !@saved_products.any? %>
+      <h3 class="header-up">You have no products in your wishlist</h3>
+    <% end %>
     <% @saved_products.each do |saved| %>
       <% prod = saved.product %>
       <div class="result">
@@ -17,9 +20,6 @@
         </div>
         <button class="pure-button pure-button-primary" id="save_product_<%= prod.id %>_<%= current_user.id %>">Remove</button>
       </div>
-    <% end %>
-    <% if !@saved_products.any? %>
-      <h3>You have no products in your wishlist</h3>
     <% end %>
   </div>
 </div>

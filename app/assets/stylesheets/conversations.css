@@ -1,3 +1,7 @@
+#message_input {
+  margin-left: 0;
+}
+
 .margin-box
 {
   padding: 1em;
@@ -7,7 +11,7 @@
 .conversations_indexing
 {
   padding: 1em;
-  height: 50vh;
+  height: 70vh;
   overflow-y: scroll;
   overflow-x: hidden;
   background-color: white;
@@ -31,7 +35,7 @@
 
 .message_container
 {
-  height: 50vh;
+  height: 70vh;
   overflow-y: scroll;
   overflow-x: hidden;
   border: 1px solid #5a8693;

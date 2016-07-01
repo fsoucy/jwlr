@@ -1,11 +1,11 @@
-
-<div class="result">
-<%= link_to image_tag(store.profile_picture(:medium)), store %>
-<div class="result_info">
-<h3>Name: <%= store.name %></h3>
-<h3>Owner: <%= store.user.name %></h3>
-<h3>Location: <%= store.full_street_address %></h3>
-<h3>Products sold: <%= Deal.where("seller_id=? AND deal_complete=?", store.id, true).count %></h3>
-<h3>Products bought: <%= Deal.where("buyer_id=? AND deal_complete=?", store.id, true).count %></h3>
-</div>
+<div class="pure-u-1 pure-u-md-1-3 pure-u-lg-1-5">
+  <div class="product">
+    <%= link_to image_tag(store.profile_picture(:thumb)), store %>
+    <div class="product-info">
+      <%= link_to store.name, store %>
+      <h3>Owner: <%= link_to store.user.name, store.user %></h3>
+      <h3>Location: <%= store.full_street_address %></h3>
+      <h3>Products sold: <%= Deal.where("seller_id=? AND deal_complete=?", store.id, true).count %></h3>
+    </div>
+  </div>
 </div>

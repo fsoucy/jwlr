@@ -129,8 +129,16 @@ $(document).ready(function(){
 
     $('.choose_picture').click(function() {
 	var id = $(this).siblings('.choose_picture_id').val();
-	var str = "?picture_id=" + id;
 	var url = window.location.href;
+	if (url.indexOf("?") == -1)
+	{
+	    var str = "?picture_id=" + id;
+	}
+	else
+	{
+	    var str = "&picture_id=" + id;
+	}
+	
 	var loc = url + str;// + " .inner_pan_cropper";
 	window.location.href = loc;
 	//$('.pan_cropper').load(loc, function() {
@@ -139,9 +147,14 @@ $(document).ready(function(){
 
     $('.choose_picture_return').click(function() {
 	var str = window.location.href;
-	var index = str.indexOf("?");
-	var loc = str.substring(0, index);
+	var index = str.indexOf("picture_id");
+	var loc = str.substring(0, index - 1);
 	window.location.href = loc;
+    });
+
+    $('#cropper-finished-button').click(function(e) {
+	e.preventDefault();
+	$('.cropper-submit').trigger('click');
     });
 
 });

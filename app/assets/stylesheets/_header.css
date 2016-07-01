@@ -30,6 +30,11 @@
     padding-left: 0em !important;
 }
 
+.settings-menu .pure-menu-list li ul li
+{
+    padding-left: .3em !important;
+}
+
 .top-menu .pure-menu-heading {
   color: white;
   font-weight: 400;
@@ -59,6 +64,13 @@
 
 .top-menu input[type=text] {
   width: 100%;
+}
+
+.top-menu input[type=submit] {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5em;
 }
 
 .suggestions ul {
@@ -108,6 +120,11 @@
   
   .top-menu input[type=text] {
     width: 20em;
+  }
+
+  .top-menu input[type=submit] {
+    display: inline;
+    margin-top: 0;
   }
 }
 

@@ -7,16 +7,16 @@
       <% end %>
 </div>
 <div class="pure-g pad-box">
-	<div class="pure-u-1 pure-u-md-1-5 product_view pad-box">
+	<div class="pure-u-1 pure-u-md-2-5 product_view pad-box">
   
   	<% if !@product.pictures.first.nil? %>
       <% if !@product.main_picture_id.nil? %>
             <a class="magnifier" href="<%= @product.pictures.find(@product.main_picture_id).photo_cropped(:large) %>">
-              <%= image_tag @product.pictures.find(@product.main_picture_id).photo_cropped(:thumb), class: "pad-box product_image pure-img" %>
+              <%= image_tag @product.pictures.find(@product.main_picture_id).photo_cropped(:big), class: "product_image pure-img" %>
             </a>
           <% else %>
             <a class="magnifier" href="<%= @product.pictures.first.photo_cropped(:large) %>">
-              <%= image_tag @product.pictures.first.photo_cropped(:thumb), class: "pad-box product_image pure-img" %>
+              <%= image_tag @product.pictures.first.photo_cropped(:big), class: "product_image pure-img" %>
             </a>
           <% end %>
   		<% if current_user?(@product.user) and logged_in? %>
@@ -61,14 +61,6 @@
         <h3 class="inline-header">Views:</h3> 
         <%= @product.views %>
       </p>
-
-      <% if @product.exchange_methods.include?(ExchangeMethod.find(1)) %>
-        <p>
-          <h3 class="inline-header">Delivery Cost:</h3>
-          <%= number_to_currency(@product.delivery_cost) %>
-        </p>
-      <% end %>
-
       <table class="pure-table pure-table-bordered pure-table-striped product_attributes">
 	<tbody>
 	  <tr>
@@ -107,13 +99,12 @@
     </div>
   </div>
 
-  <div class="pure-u-1 pure-u-md-2-5 product_view pad-box log-in">
+  <div class="pure-u-1 pure-u-md-1-5 product_view pad-box log-in">
     <% if @product.store != nil %>
       <h1><%= @product.store.name %></h1>
     <% else %>
       <h1><%= @product.user.name %></h1>
     <% end %>
-    <p>
     
     <% if logged_in? and !@product.sold %>
       <% if current_user.saved_products.find_by(product_id: @product.id).nil? %>
@@ -121,28 +112,26 @@
       <% else %>
         <button class="pure-button pure-button-primary" id="save_product_<%= @product.id %>_<%= current_user.id %>">Remove from wishlist</button>
       <% end %>
+      <br>
     <% end %>
-    <br>
 
     <% if !@product.sold && !@product.hold %>
   		<% if current_user?(@product.user) %>
-        <%= link_to "Delete this product", @product, method: :delete, class: "btn btn-primary down",
-					    data: { confirm: "Are you sure you wish to delete this?" } %>
-  		  <br>
-        <%= link_to "Edit product", edit_product_path(@product.id) %>
+        <a href="<%= edit_product_path(@product.id) %>"><button class="pure-button pure-button-primary prod_cont">Edit product</button></a>
+        <a href="<%= add_pictures_product_path(@product.id) %>"><button class="pure-button pure-button-primary prod_cont">Add pictures</button></a>
+        <a href="<%= product_url(@product.id) %>" data-method="delete" data-confirm="Are you sure you wish to delete this product?"><button class="pure-button button-error prod_cont">Delete this product</button></a>
         <br>
-        <%= link_to "Add pictures", add_pictures_product_path(@product.id) %>
         <% if !@product.agreement_achieved %>
-          <%= form_for @product do |f| %>
+          <%= form_for @product, html: { class: "hold_sold_form" }  do |f| %>
             <%= f.hidden_field :hold, value: true %>
-            <%= f.submit "Put product on hold", class: "pure-button pure-button-primary" %>
+            <%= f.submit "Hold", class: "pure-button button-success prod_cont prod_show_button" %>
           <% end %>
         <% end %>
 
         <% if !@product.agreement_achieved %>
-          <%= form_for @product do |f| %>
+          <%= form_for @product, html: { class: "hold_sold_form" } do |f| %>
             <%= f.hidden_field :sold, value: true %>
-            <%= f.submit "Mark product as sold", class: "pure-button pure-button-primary" %>
+            <%= f.submit "Sold", class: "pure-button button-success prod_cont prod_show_button" %>
           <% end %>
         <% end %>
       <% end %>
@@ -151,47 +140,65 @@
     <% if current_user == @product.user %>
       <% if !@product.agreement_achieved %>
         <% if @product.sold %>
-          <%= form_for @product do |f| %>
+          <%= form_for @product, html: { class: "hold_sold_form" } do |f| %>
             <%= f.hidden_field :sold, value: false %>
-            <%= f.submit "Unmark product as sold", class: "pure-button pure-button-primary" %>
+            <%= f.submit "Off sold", class: "pure-button button-error prod_show_button" %>
           <% end %>  
         <% end %>
         <% if @product.hold %>
-          <%= form_for @product do |f| %>
+          <%= form_for @product, html: { class: "hold_sold_form" }  do |f| %>
             <%= f.hidden_field :hold, value: false %>
-            <%= f.submit "Take product off hold", class: "pure-button pure-button-primary" %>
+            <%= f.submit "Off hold", class: "pure-button button-error prod_cont prod_show_button" %>
           <% end %>
         <% end %>
       <% end %>  
     <% end %>
   
-    <% active_deal = Deal.where("product_id=?", @product.id).first %>
-    <% if @product.hold && active_deal.nil? && current_user == @product.user %>
-      <%= form_for @product do |f| %>
-        <%= f.hidden_field :hold, value: false %>
-        <%= f.submit "Product no longer on hold", class: "pure-button pure-button-primary" %>
-      <% end %>
-    <% end %>    
-  
+    <div class="product_methods_show">
     <% if @product.user == current_user %>
-    <div class="log-in-form">
-      <a href="<%= edit_product_path(@product) %>"><h1 class = "method_alert">Selling Methods</h1></a>
-      <% @product.selling_method_links.each do |s| %>
-        <h3><%= s.selling_method.method %></h3>
-      <% end %>
-  
-      <a href="<%= edit_product_path(@product) %>"><h1 class = "method_alert">Exchange Methods</h1></a>
-      <% @product.exchange_method_links.each do |s| %>
-        <h3><%= s.exchange_method.method %></h3>
-        <% if s.exchange_method.method == "Delivery" %>
-          <h4>Delivery cost: <%= number_to_currency(@product.delivery_cost) %></h4>
-        <% end %>
-      <% end %>
-      <a href="<%= edit_product_path(@product) %>"><h1 class = "method_alert">Payment Methods</h1></a>
-      <% @product.payment_method_links.each do |s| %>
-        <h3><%= s.payment_method.method %></h3>
-      <% end %>
-      </div>
+    <br>
+    <% has_delivery = false %>
+    <% has_upon_transaction = false %>
+    <table class="pure-table pure-table-bordered pure-table-striped product_attributes">
+  <tbody>
+    <tr>
+      <td>Selling Methods</td>
+      <td><% @product.selling_methods.each do |selling_method| %><%= selling_method.method %><br><% end %></td>
+    </tr>
+    <tr>
+      <td>Exchange Methods</td>
+      <td><% @product.exchange_methods.each do |exchange_method| %>
+            <%= exchange_method.method %><br>
+            <% if exchange_method.method == "Delivery" %>
+              <% has_delivery = true %>
+            <% end %>
+          <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Payment Methods</td>
+      <td><% @product.payment_methods.each do |payment_method| %>
+            <%= payment_method.method %><br>
+            <% if payment_method.method == "Upon Transaction" %>
+              <% has_upon_transaction = true %>
+            <% end %>
+          <% end %>
+      </td>
+    </tr>
+    <% if has_delivery %>
+      <tr>
+        <td>Delivery Cost</td>
+        <td><%= number_to_currency(@product.delivery_cost) %>
+      </tr>
+    <% end %>
+    <% if has_upon_transaction %>
+      <tr>
+        <td>Available payment methods</td>
+        <td><% @product.user.payment_upon_transactions.each do |u_t| %><%= u_t.method %><br><% end %></td>
+      </tr>
+    <% end %>
+    </table>
+
     <% else %>
       
       
@@ -251,7 +258,6 @@
         <h1>Product is unavailable for sale.</h1>
       <% end %>  
     <% end %>
-    </p>
     <% if !current_user?(@product.user) and logged_in? %>
       <h2>Message this user</h2>
       <%= form_for @message do |f| %>
@@ -264,7 +270,7 @@
         <%= f.submit "Send message", class: "form_submit pure-button pure-button-primary" %>
       <% end %>
     <% end %>
-    
+    </div>
   </div>
 </div>
 <h1 class="content-subhead">Related Products</h1>

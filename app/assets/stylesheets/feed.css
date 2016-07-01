@@ -1,5 +1,8 @@
 .feed_item {
-  border: 1px solid #00171F;
+  border: 0.15em solid #00171F;
+  border-radius: 0.5em;
+  box-shadow: 5px 5px 20px 5px #888888;
+  background-color: #efefef;
   padding: 1em;
   margin: 0.5em;
 }

@@ -1,17 +1,21 @@
 <div class="convo_index_page">
   <a href="<%= deal_url(activity.id) %>">
-  <% if current_user?(activity.seller) %>
-    <% if activity.selling_method == "Static Price" %>
-      <p><%= image_tag activity.product.pictures.first.photo_cropped(:thumbnail) %>Selling to <%= activity.buyer.name %></p>
-    <% else %>
-      <% if activity.user_proposed_price.nil? %>
-        <p><%= image_tag activity.product.pictures.first.photo_cropped(:thumbnail) %>Selling to <%= activity.buyer.name %></p>
-      <% else %>
-        <p><%= image_tag activity.product.pictures.first.photo_cropped(:thumbnail) %>Selling to <%= activity.buyer.name %></p>
-      <% end %>
-    <% end %>
+  <% if current_user?(activity.seller) %>    
+    <p><%= image_tag activity.product.pictures.first.photo_cropped(:thumbnail) %>Selling to <%= activity.buyer.name %>
   <% else %>
-    <p><%= image_tag activity.product.pictures.first.photo_cropped(:thumbnail) %>Buying from <%= activity.seller.name %></p>
+    <p><%= image_tag activity.product.pictures.first.photo_cropped(:thumbnail) %>Buying from <%= activity.seller.name %>
   <% end %>  
+  <% if activity.selling_method == "Static Price" %>
+    <br>
+    <%= number_to_currency(activity.product.price) %>
+  <% else %>
+    <% unless activity.user_proposed_price.nil? %>
+      <br>
+      <%= number_to_currency(activity.user_proposed_price) %>
+    <% end %>
+  <% end %>
+  <br>
+  <%= time_ago_in_words(activity.updated_at) + " ago" %>
+  </p>
   </a>
 </div>

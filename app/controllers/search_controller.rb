@@ -24,6 +24,14 @@ class SearchController < ApplicationController
         order_by(:score, :desc)
       end
 
+      if params[:user_id].present?
+        with :user_id, params[:user_id].to_i
+      end
+
+      if params[:store_id].present?
+        with :store_id, params[:store_id].to_i
+      end
+
       if !params[:place].nil?
         geocode = Geocoder.search(params[:place])
         order_by_geodist :location, geocode[0].latitude, geocode[0].longitude 

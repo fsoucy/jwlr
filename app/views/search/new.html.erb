@@ -99,6 +99,9 @@
 </div>
 <div class="pure-u-1 pure-u-md-4-5 search-results">
     <p class="float-right"><%= pluralize(@results.total_entries, 'product') %> found</p>
+    <% if params[:store_id].present? or params[:user_id].present? %>
+      <button class="pure-button pure-button-primary" id="search_all">Search All</button>
+    <% end %>
     <% @results.each do |prod| %>
 
     <div class="result">

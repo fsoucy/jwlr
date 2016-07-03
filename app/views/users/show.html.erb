@@ -94,6 +94,13 @@
   <div class="pure-u-1 pad-box">
     <h1>Product Gallery</h1>
   </div>
+  <div class="pure-u-1 pad-box">
+    <%= form_tag "/search", method: "get", class: 'pure-form' do %>
+      <%= text_field_tag "search_string", "", placeholder: "Search gallery", autocomplete: 'off', class: 'search_string' %>
+      <%= hidden_field_tag "user_id", @user.id %>
+      <%= submit_tag "Search", class: 'pure-button pure-button-primary' %>
+    <% end %>
+  </div>  
   <% if current_user?(@user) %>
   <div class="pure-u-1 pad-box">
     <a href="<%= new_product_url %>">
@@ -101,16 +108,18 @@
   </div>
   <% end %>
   <% @products.each do |prod| %>
-  <div class="pure-u-md-1-5 pure-u-1">
+  <div class="pure-u-md-1-3 pure-u-lg-1-5 pure-u-1">
     <%= render prod %>
   </div>
   <% end %>
 </div>
 <% if current_user?(@user) %>
-  <h1 class="pad-box">Draft Products</h1>
   <div class="pure-g pad-box">
+    <div class="pure-u-1 pad-box">
+      <h1>Draft Products</h1>
+    </div>
     <% @draft_products.each do |product| %>
-      <div class="pure-u-md-1-5 pure-u-1 pad-box">
+      <div class="pure-u-md-1-3 pure-u-lg-1-5 pure-u-1 pad-box">
         <%= render product %>
       </div>
     <% end %>

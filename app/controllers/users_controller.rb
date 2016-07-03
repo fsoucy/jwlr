@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment, :share, :show, :wishlist, :save_product, :edit_description, :edit_address, :change_profile_picture, :new_picture, :pictures, :reset_password]
-  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment, :share, :save_product, :edit_description, :edit_address, :change_profile_picture, :new_picture, :pictures, :reset_password]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment, :share, :show, :wishlist, :save_product, :edit_description, :edit_address, :change_profile_picture, :new_picture, :pictures, :reset_password, :followers, :following]
+  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment, :share, :save_product, :edit_description, :edit_address, :change_profile_picture, :new_picture, :pictures, :reset_password, :followers, :following]
   before_action :admin_user, only: :destroy  
   
   def new
@@ -259,6 +259,14 @@ class UsersController < ApplicationController
         render json: nil, status: 200
       end
     end
+  end
+
+  def followers
+    @users = current_user.followers.all.paginate(page: params[:page], per_page: 30)
+  end
+
+  def following
+    @users = current_user.following.all.paginate(page: params[:page], per_page: 30)
   end
 
   private

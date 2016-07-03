@@ -9,8 +9,8 @@
         <ul class="pure-menu-list">
           <li class="pure-menu-item"><a href="<%= root_url %>" class="pure-menu-link">Feed</a></li>
           <li class="pure-menu-item"><a href="<%= edit_user_path(current_user) %>" class="pure-menu-link">Edit Profile</a></li>
-          <li class="pure-menu-item"><a href="#" class="pure-menu-link">Followers</a></li>
-          <li class="pure-menu-item"><a href="#" class="pure-menu-link">Following</a></li>
+          <li class="pure-menu-item"><a href="<%= followers_user_path(current_user) %>" class="pure-menu-link">Followers</a></li>
+          <li class="pure-menu-item"><a href="<%= following_user_path(current_user) %>" class="pure-menu-link">Following</a></li>
           <li class="pure-menu-item"><a href="<%= groups_path %>" class="pure-menu-link">Groups</a></li>
         </ul>
       </div>

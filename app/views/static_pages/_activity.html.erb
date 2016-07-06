@@ -1,4 +1,4 @@
-<div class="convo_index_page">
+<div class="activity_index_page">
   <a href="<%= deal_url(activity.id) %>">
   <% if current_user?(activity.seller) %>    
     <p><%= image_tag activity.product.pictures.first.photo_cropped(:thumbnail) %>Selling to <%= activity.buyer.name %>

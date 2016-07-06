@@ -1,56 +1,38 @@
 <div class="pure-g log-in">
   <div class="pure-u-1 pure-u-md-2-3 leftside">
     <h1 class="deals_welcome">Welcome to the deal between <%= link_to @deal.seller.name, @deal.seller %> and <%= link_to @deal.buyer.name, @deal.buyer  %></h1>
-    <div class="pure-menu pure-menu-horizontal pure-menu-scrollable deals_menu">
-      <ul class="pure-menu-list">
-	      <li class="pure-menu-item methods_button pure-menu-link">Methods</li>
-	      <li class="pure-menu-item selling_button pure-menu-link">Selling Method</li>
-	      <li class="pure-menu-item exchange_button pure-menu-link">Exchange Method</li>
-	      <li class="pure-menu-item completed_button pure-menu-link">Deal Completion</li>
-	      <li class="pure-menu-item complaint_button pure-menu-link">File Complaint</li>
-        <% if !@deal.agreement_achieved %>
-          <li class="pure-menu-item cancel_button pure-menu-link">Cancel Deal</li>
-        <% end %>
-        <%= hidden_field_tag :on_the_deals_page, 1 %>
-      </ul>
-    </div>
-    <div class="log-in-form marg deals_form">
+    <%= hidden_field_tag :on_the_deals_page, 1 %>
+    <div class="marg deals_form">
       <div class="large_deals_form">
         <% if !@deal.complaint_buyer && !@deal.complaint_seller %>
-	        <div class="instructions">
+	        <div class="instructions log-in-form">
             <div class="inner_instructions">
               <%= render 'instructions' %>
             </div>
 	        </div>
-          <div class="method_selection selection">
+          <div class="method_selection selection log-in-form">
             <div class="inner_method_selection">
 	            <%= render 'method_selection' %>
             </div>
           </div>
-          <div class="selling_method_selection selection">
+          <div class="selling_method_selection selection log-in-form">
             <div class="inner_selling_method_selection">
 	            <%= render 'selling_methods_selection' %>
             </div>
           </div>
-          <div class="exchange_method_selection selection">
+          <div class="exchange_method_selection selection log-in-form">
             <div class="inner_exchange_method_selection">
 	            <%= render 'exchange_methods_selection' %>
             </div>
           </div>
-          <div class="completed_selection selection">
+          <div class="completed_selection selection log-in-form">
             <div class="inner_completed_selection">
 	            <%= render 'completed_selection' %>
             </div>
           </div>
-          <div class="complaint_selection selection">
-	          <%= render 'file_complaint' %>
+          <div class="complaint_selection selection log-in-form">
+            <%= render 'file_complaint' %>
           </div>
-          <% if !@deal.agreement_achieved %>
-            <div class="cancel_selection selection">
-              <%= render 'cancel_deal' %>
-            </div>
-          <% end %>
-          <button class="pure-button pure-button-primary" id="redirect_button">Lost?</button>
         <% else %>
           <% if @deal.complaint_buyer && @deal.complaint_seller %>
             <%= render 'both_complained' %>
@@ -77,4 +59,4 @@
       <%= render @conversation %>
     </div>
   </div>
-  </div>
+</div>

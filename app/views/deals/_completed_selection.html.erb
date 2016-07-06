@@ -1,5 +1,6 @@
 <!-- this is where it's at -->
 <% if @deal.agreement_achieved %>
+  <button class="pure-button button-error margin-bottom" id="file_complaint">File Complaint</button>
   <% if !@deal.deal_complete %>
     <% if @deal.payment_complete && @deal.product_received %> <!-- Confirm successful deal. -->
       <% if current_user.id == @deal.seller_id %>

@@ -19,7 +19,6 @@ function isValidAddress(dropoff) {
 
 function validDelivery() {
 	if (parseInt($('#need_exchange').val()) == 1) {
-		$('.selection').hide();
 		$('.method_selection').show();
 		$('.instructions').append("<h3 class='valid_delivery'>However, you can't get a product delivered without Paypal.</h3>");
 	}
@@ -98,7 +97,7 @@ function checkPaypal() {
 }
 
 function updateDeals(location, form, completion) {
-	formData = {}
+  formData = {}
 	$(form).find(':input').each(function () {
 		if ($(this).attr('type') != "radio" || $(this).prop("checked")) {
 			formData[$(this).attr('name')] = $(this).val();
@@ -116,23 +115,13 @@ function updateDeals(location, form, completion) {
 }
 
 function redirectToPage() {
-	$('#redirect_button').hide();
 	$('.valid_delivery').remove();
 	var page = parseInt($('#page').val());
-	$('.selection').hide();
 	if (page == 1) {
-		$('.instructions').show();
-		$('.method_selection').show();
 	} else if (page == 2) {
-		$('.instructions').show();
-		$('.selling_method_selection').show();
 	} else if (page == 3) {
-		$('.instructions').show();
-		$('.exchange_method_selection').show();
 	} else if (page == 4) {
-		$('.instructions').show();
-		$('.completed_selection').show();
-	}
+  }
 }
 
 function getCurrentPage() {
@@ -166,16 +155,6 @@ function isRightPage() {
 	return (currentPage == 0) || (actionPage == currentPage);
 }
 
-function addRedirectButton() //if necessary of course
-{
-	if (isRightPage()) {
-		$('#redirect_button').hide();
-	} else {
-		$('#redirect_button').show();
-	}
-
-}
-
 function refreshAll(completion) {
 	var str = window.location.href;
 	var beginIndex = str.indexOf("deals/");
@@ -202,16 +181,13 @@ function refreshDeals() {
 		url : window.location.protocol + "//" + window.location.host + "/deals/" + id.toString() + "/updated_at",
 		success : function (result) {
 			if (result > updated_at) {
-				refreshAll(function () {
-					addRedirectButton();
-				});
+				refreshAll();
 			}
 		}
 	});
 }
 
 function swapPage(showInstructions, toShow) {
-	$('.selection').hide();
 	$('.instructions_price_warning').remove();
 	$('.methods_submission').remove();
 	$('.valid_delivery').remove();
@@ -221,7 +197,6 @@ function swapPage(showInstructions, toShow) {
 		$('.instructions').hide();
 	}
 	$(toShow).show();
-	addRedirectButton();
 }
 
 function getPostLoc() {
@@ -246,19 +221,25 @@ $(document).ready(function () {
 		clearInterval(window.dealsInterval);
 	}
 
-	$('.selection').hide();
 	$('.method_selection').show();
+  $('.instructions').hide();
 
+  $(document).on('click', '#file_complaint', function() {
+    $('.selection').hide();
+    $('.complaint_selection').show();
+  });
+
+  $(document).on('click', '#cancel_complaint', function() {
+    $('.selection').show();
+    $('.complaint_selection').hide();
+  });
+  
 	$(document).on('click', '.not_ready', function (e) {
 		e.preventDefault();
 	});
 
 	$(document).on('click', '.inactive_form_element', function (e) {
 		e.preventDefault();
-	});
-
-	$(document).on('click', '#redirect_button', function () {
-		redirectToPage();
 	});
 
 	$(document).on('click', '.methods :input', function () {
@@ -304,7 +285,7 @@ $(document).ready(function () {
 	$(document).on('click', '.methods_form_button', function (e) {
 		e.preventDefault();
 		var postLoc = getPostLoc();
-		updateDeals(postLoc, $(this).parent('h3').parent('form'), function () {
+		updateDeals(postLoc, $(this).parent(), function () {
 			refreshAll(function () {
 				$('.instructions').append("<h3 class='methods_submission'>Congrats! You've successfully updated the methods of transaction.</h3>");
 				redirectToPage();
@@ -394,8 +375,8 @@ $(document).ready(function () {
 
 	// if on deals page
 
-	if ($('.deals_menu').length > 0) {
-		redirectToPage();
+	if ($('#on_the_deals_page').length > 0) {
+		//redirectToPage();
 		validDelivery();
 		checkDelivery();
 		checkPaypal();

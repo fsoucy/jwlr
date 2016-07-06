@@ -1,19 +1,12 @@
-<% if current_user.id == @deal.buyer_id %>
-  <h3>Submit this form if you would like to file a complaint and temporarily suspend the deal.</h3>
-  <%= form_for @deal do |f| %>
+<h3>Submit this form if you would like to file a complaint and temporarily suspend the deal.</h3>
+ <%= form_for @deal do |f| %>
+  <% if current_user.id == @deal.seller_id %>
     <%= f.hidden_field :complaint_buyer, value: true %>
-    <%= f.text_area :reason_complaint_buyer, placeholder: 'Site a reason for your complaint', class: "full_width_text" %>
-    <%= f.submit "File complaint", class: "button-error pure-button file_complaint_button" %>
-  <% end %>
-<% end %>
-
-<% if current_user.id == @deal.seller_id %>
-  <h3>Submit this form if you would like to file a complaint and temporarily suspend the deal.</h3>
-  <%= form_for @deal do |f| %>
+    <%= f.text_area :reason_complaint_buyer, placeholder: 'Cite a reason for your complaint', class: "full_width_text" %>
+  <% else %>
     <%= f.hidden_field :complaint_seller, value: true %>
-    <%= f.text_area :reason_complaint_seller, placeholder: 'Site a reason for your complaint', class: "full_width_text" %>
-    <%= f.submit "File complaint", class: "button-error pure-button file_complaint_button" %>
+    <%= f.text_area :reason_complaint_seller, placeholder: 'Cite a reason for your complaint', class: "full_width_text" %>
   <% end %>
+  <%= f.submit "File complaint", class: "pure-button pure-button-primary file_complaint_button margin-bottom" %>
 <% end %>
-
-
+<button class="pure-button button-error" id="cancel_complaint">Cancel</button>

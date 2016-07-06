@@ -1,3 +1,7 @@
+.selection {
+  margin-top: 1em;
+}
+
 .message_form {
     background-color: #003459;
     padding: 1em;
@@ -82,3 +86,12 @@
 {
     border: 1px solid white;
 }
+
+.complaint_selection {
+  display: none;
+}
+
+.margin-bottom, .deals_form_button {
+  margin-bottom: 1em;
+}
+

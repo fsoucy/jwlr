@@ -49,7 +49,7 @@ class Deal < ActiveRecord::Base
           end
         else
           if (self.selling_method.method == "Negotiation" && !self.proposed_price_accepted)
-            if (self.user_proposed_price.nil? or !self.user_proposed_price > 0.0)
+            if (self.user_proposed_price.nil? or !(self.user_proposed_price > 0.0))
               if seller
                 return ["Buyer needs to make an offer.", false]
               else

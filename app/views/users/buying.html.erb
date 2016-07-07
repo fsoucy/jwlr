@@ -3,7 +3,9 @@
     <h1>My Buying Deals</h1>
   </div>
   <% if !@buying.any? %>
-    <%= link_to "You have no buying deals. Click here to search for a product.", new_search_path %>
+    <p>
+      <%= link_to "You have no buying deals. Click here to search for a product.", new_search_path %>
+    </p>
   <% else %>
     <div class="pure-u-1">
       <table class="pure-table pure-table-striped">

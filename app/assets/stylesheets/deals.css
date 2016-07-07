@@ -99,3 +99,13 @@
   margin-top: 1em;
   margin-bottom: 0.25em;
 }
+
+.center {
+  text-align: center;
+}
+
+.waiting-bar {
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+}

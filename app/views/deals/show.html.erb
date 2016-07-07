@@ -7,7 +7,10 @@
         <% if !@deal.complaint_buyer && !@deal.complaint_seller %>
 	        <div class="instructions log-in-form">
             <div class="inner_instructions">
-              <%= render 'instructions' %>
+              <h3 class="center"><%= @deal.status(current_user?(@deal.seller))[0] %></h3>
+              <% if !@deal.status(current_user?(@deal.seller))[1] %>
+                <%= image_tag "/assets/squares.gif", class: "waiting-bar" %>
+              <% end %>
             </div>
 	        </div>
           <div class="method_selection selection log-in-form">

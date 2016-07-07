@@ -114,67 +114,43 @@ function updateDeals(location, form, completion) {
 	});
 }
 
-function redirectToPage() {
-	$('.valid_delivery').remove();
-	/*var page = parseInt($('#page').val());
-	if (page == 1) {
-	} else if (page == 2) {
-	} else if (page == 3) {
-	} else if (page == 4) {
-  }*/
+function completedVisible()
+{
+  if($('.inner_completed_selection').children().length && !$('.complaint_selection').is(":visible"))
+  {
+    $('.inner_completed_selection').parent().show();
+  }
+  else
+  {
+    $('.inner_completed_selection').parent().hide();
+  } 
 }
 
-function getCurrentPage() {
-	var page = 0;
-	if ($(".method_selection").is(":visible")) {
-		page = 1;
-	}
-	if ($(".selling_method_selection").is(":visible")) {
-		page = 2;
-	}
-	if ($(".exchange_method_selection").is(":visible")) {
-		page = 3;
-	}
-	if ($(".completed_selection").is(":visible")) {
-		page = 4;
-	}
-	if ($(".complaint_selection").is(":visible")) {
-		page = 5;
-	}
-	if ($('.cancel_selection').is(":visible")) {
-		page = 6;
-	}
-	// if none are visible, then a complaint has been filed and page = 0
-	// if page is 0, don't render button
-	return page;
-}
-
-function isRightPage() {
-	var actionPage = parseInt($('#page').val());
-	var currentPage = getCurrentPage();
-	return (currentPage == 0) || (actionPage == currentPage);
+function getDealId() {
+  var str = window.location.href;
+  var beginIndex = str.indexOf("deals/");
+  var id = str.substring(beginIndex + 6);
+  
+  return id;
 }
 
 function refreshAll(completion) {
-	var str = window.location.href;
-	var beginIndex = str.indexOf("deals/");
-	var id = str.substring(beginIndex + 6);
+	var id = getDealId();
 	$('.method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_method_selection", function () {});
 	$('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function () {});
 	$('.selling_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function () {});
 	$('.payment_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function () {});
-	$('.completed_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function () {});
+	$('.completed_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function () {
+    completedVisible();  
+  });
 	$('.guide_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function () {});
 	$('.instructions').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function () {
 		completion();
 	});
-
 }
 
 function refreshDeals() {
-	var str = window.location.href;
-	var beginIndex = str.indexOf("deals/");
-	var id = str.substring(beginIndex + 6);
+	var id = getDealId();
 	var updated_at = parseInt($('#updated_at').val());
 	$.ajax({
 		type : "GET", // GET in place of POST
@@ -187,28 +163,11 @@ function refreshDeals() {
 	});
 }
 
-function swapPage(showInstructions, toShow) {
-	$('.instructions_price_warning').remove();
-	$('.methods_submission').remove();
-	$('.valid_delivery').remove();
-	if (showInstructions) {
-		$('.instructions').show();
-	} else {
-		$('.instructions').hide();
-	}
-	$(toShow).show();
-}
-
 function getPostLoc() {
-	var str = window.location.href;
-	var beginIndex = str.indexOf("deals/");
-	var id = str.substring(beginIndex + 6);
+	var id = getDealId();
 	var postLoc = '/deals/' + id.toString();
 	return postLoc;
 }
-
-// if not right page, add special button "Lost?"
-// all that button does is call redirectToPage()
 
 $(document).ready(function() {
 	if ($('#on_the_deals_page').length > 0 && parseInt($('#on_the_deals_page').val()) == 1) //on deals
@@ -222,6 +181,8 @@ $(document).ready(function() {
 
 	$('.method_selection').show();
   $('.instructions').hide();
+
+  completedVisible();
 
   $(document).on('click', '#file_complaint', function() {
     $('.selection').hide();
@@ -249,45 +210,12 @@ $(document).ready(function() {
 		}
 	});
 
-	$(document).on('click', '.guide_button', function () {
-		swapPage(true, '.guide_selection');
-	});
-
-	$(document).on('click', '.selling_button', function () {
-		swapPage(true, '.selling_method_selection');
-	});
-
-	$(document).on('click', '.methods_button', function () {
-		swapPage(true, '.method_selection');
-	});
-
-	$(document).on('click', '.exchange_button', function () {
-		swapPage(true, '.exchange_method_selection');
-	});
-
-	$(document).on('click', '.payment_button', function () {
-		swapPage(true, '.payment_method_selection');
-	});
-
-	$(document).on('click', '.completed_button', function () {
-		swapPage(true, '.completed_selection');
-	});
-
-	$(document).on('click', '.complaint_button', function () {
-		swapPage(false, '.complaint_selection');
-	});
-
-	$(document).on('click', '.cancel_button', function () {
-		swapPage(false, '.cancel_selection');
-	});
-
 	$(document).on('click', '.methods_form_button', function (e) {
 		e.preventDefault();
 		var postLoc = getPostLoc();
 		updateDeals(postLoc, $(this).parent(), function () {
 			refreshAll(function () {
 				$('.instructions').append("<h3 class='methods_submission'>Congrats! You've successfully updated the methods of transaction.</h3>");
-				redirectToPage();
 				validDelivery();
 			});
 		});
@@ -313,9 +241,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		var postLoc = getPostLoc();
 		updateDeals(postLoc, $(this).parent('form'), function () {
-			refreshAll(function () {
-				redirectToPage();
-			});
+			refreshAll(function() {});
 		});
 	});
 
@@ -323,9 +249,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		var postLoc = getPostLoc();
 		updateDeals(postLoc, $(this).parent('h3').parent('form'), function () {
-			refreshAll(function () {
-				redirectToPage();
-			});
+			refreshAll(function() {});
 		});
 	});
 
@@ -333,9 +257,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		var postLoc = getPostLoc();
 		updateDeals(postLoc, $(this).parent('form'), function () {
-			refreshAll(function () {
-				redirectToPage();
-			});
+			refreshAll(function(){});
 		});
 	});
 
@@ -343,7 +265,8 @@ $(document).ready(function() {
 		e.preventDefault();
 		var postLoc = getPostLoc();
 		updateDeals(postLoc, $(this).parent('form'), function () {
-			$('.deals_form').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function () {});
+			var id = getDealId();
+      $('.deals_form').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function () {});
 		});
 	});
 
@@ -351,9 +274,8 @@ $(document).ready(function() {
 		e.preventDefault();
 		var postLoc = getPostLoc();
 		updateDeals(postLoc, $(this).parent('form'), function () {
-			$('.deals_form').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function () {
-				redirectToPage();
-			});
+			var id = getDealId();
+      $('.deals_form').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function () {});
 		});
 
 	});
@@ -363,7 +285,6 @@ $(document).ready(function() {
 		if (isValidAddress($('#deal_dropoff').val())) {
 			var postLoc = getPostLoc();
 			updateDeals(postLoc, $(this).parent('h3').parent('form'), function () {
-				$('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function () {});
 				$('.valid_address').remove();
 			});
 		} else {
@@ -375,7 +296,6 @@ $(document).ready(function() {
 	// if on deals page
 
 	if ($('#on_the_deals_page').length > 0) {
-		//redirectToPage();
 		validDelivery();
 		checkDelivery();
 		checkPaypal();

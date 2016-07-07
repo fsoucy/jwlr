@@ -8,16 +8,21 @@
   margin: 1em;
 }
 
-.conversations_indexing
+.conversations_indexing, #activities-panel
 {
   padding: 1em;
-  height: 70vh;
+  height: 40vh;
   overflow-y: scroll;
   overflow-x: hidden;
   background-color: white;
 }
 
-.conversations_indexing h3 {
+#conversations_index_page .conversations_indexing
+{
+    height: 70vh !important;
+}
+
+.conversations_indexing h3, #activities-panel h3{
   display: inline;
   color: #00A8E8 !important;
   vertical-align: top;
@@ -25,7 +30,7 @@
   padding-left: 0.5em;
 }
 
-.conversations_indexing img
+.conversations_indexing img, #activities-panel img
 {
   vertical-align: top;
   height: 50px;
@@ -73,17 +78,19 @@
   min-width: 52px;
 }
 
-.convo_index_page p {
+.convo_index_page p, .activity_index_page p {
   border: 1px solid #00171F;
   padding: 0.25em;
   margin: 0.25em;
   color: #00171F;
 }
 
-.convo_index_page a {
+.convo_index_page a, .activity_index_page a {
   text-decoration: none;
 }
 
-.convo_index_page {
+.convo_index_page, .activity_index_page {
   margin: 0;
 }
+
+

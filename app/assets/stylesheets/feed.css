@@ -26,3 +26,19 @@
   overflow-y: scroll;
   overflow-x: none;
 }
+
+#conversation-header, #activities-header {
+    margin-bottom: 0em;
+    padding-top: 0em;
+    padding-bottom: 0em;
+}
+
+#activities-header
+{
+    margin-top: 0em;
+}
+
+#conversation-header
+{
+    margin-top: 1em;
+}

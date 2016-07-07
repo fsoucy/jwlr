@@ -1,6 +1,40 @@
 class StaticPagesController < ApplicationController
 
+  def activities_index
+    if logged_in?
+      all_activities = []
+      all_activities += current_user.selling_deals.order(updated_at: :desc).where(deal_complete: false)
+      all_activities += current_user.buying_deals.order(updated_at: :desc).where(deal_complete: false)
+      action_needed = []
+      not_action_needed = []
+      all_activities.each do |activity|
+        if (current_user?(activity.seller) and activity.status(true)[1]) or (current_user?(activity.buyer) and activity.status(false)[1])
+          action_needed.append(activity)
+        else
+          not_action_needed.append(activity)
+        end
+      end
+      @activities = action_needed + not_action_needed
+    end
+  end
+  
   def home
+    if logged_in?
+      all_activities = []
+      all_activities += current_user.selling_deals.order(updated_at: :desc).where(deal_complete: false)
+      all_activities += current_user.buying_deals.order(updated_at: :desc).where(deal_complete: false)
+      action_needed = []
+      not_action_needed = []
+      all_activities.each do |activity|
+        if (current_user?(activity.seller) and activity.status(true)[1]) or (current_user?(activity.buyer) and activity.status(false)[1])
+          action_needed.append(activity)
+        else
+          not_action_needed.append(activity)
+        end
+      end
+      @activities = action_needed + not_action_needed
+    end
+    
     @top_products = Product.joins(:productviews).order('productviews.views DESC').limit(9)
     if logged_in?
       searches = current_user.searches.order('`search_relationships`.`frequency` DESC').limit(3).pluck(:search_text)

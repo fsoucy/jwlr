@@ -1,0 +1,5 @@
+<div id="activities-panel">
+  <% @activities.each do |activity| %>
+    <%= render partial: "activity", object: activity %>
+  <% end %>
+</div>

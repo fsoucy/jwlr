@@ -131,9 +131,24 @@ function refreshIndex()
   }
 }
 
+function refreshDealsIndex()
+{
+    if ($('#activities-header').length > 0)
+    {
+	$.get(window.location.protocol + "//" + window.location.host + '/static_pages/activities_index', function(data) {
+	    $('#activities-panel').replaceWith($(data).find("#activities-panel"));
+	});
+    }
+    else
+    {
+	clearInterval(window.interval3);
+    }
+}
+
 $(document).ready(function()
 {   
-  window.interval2 = setInterval(refreshIndex, 10000);
+    window.interval2 = setInterval(refreshIndex, 10000);
+    window.interval3 = setInterval(refreshDealsIndex, 10000);
     window.myname = $('#myname').val();
     $('#messages').bind('scroll', function(event) {
       if ($('#messages').scrollTop() < 10)

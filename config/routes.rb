@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get 'search_suggestions' => 'search#suggestions'
 
   get 'conversations/conversations_index'
+  get 'static_pages/activities_index'
 
   resources :conversations do
     member do

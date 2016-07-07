@@ -17,6 +17,11 @@
   background-color: white;
 }
 
+#conversations_index_page .conversations_indexing
+{
+    height: 70vh !important;
+}
+
 .conversations_indexing h3, #activities-panel h3{
   display: inline;
   color: #00A8E8 !important;

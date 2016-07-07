@@ -114,15 +114,15 @@ function updateDeals(location, form, completion) {
 	});
 }
 
-function completedVisible()
+function toggleVisible(section)
 {
-  if($('.inner_completed_selection').children().length && !$('.complaint_selection').is(":visible"))
+  if($('.inner_' + section + '_selection').children().length && !$('.complaint_selection').is(":visible"))
   {
-    $('.inner_completed_selection').parent().show();
+    $('.inner_' + section + '_selection').parent().show();
   }
   else
   {
-    $('.inner_completed_selection').parent().hide();
+    $('.inner_' + section + '_selection').parent().hide();
   } 
 }
 
@@ -137,11 +137,13 @@ function getDealId() {
 function refreshAll(completion) {
 	var id = getDealId();
 	$('.method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_method_selection", function () {});
-	$('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function () {});
+	$('.exchange_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_exchange_method_selection", function () {
+    toggleVisible('exchange_method');
+  });
 	$('.selling_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_selling_method_selection", function () {});
 	$('.payment_method_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_payment_method_selection", function () {});
 	$('.completed_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_completed_selection", function () {
-    completedVisible();  
+    toggleVisible('completed');  
   });
 	$('.guide_selection').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .guide_selection", function () {});
 	$('.instructions').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .inner_instructions", function () {
@@ -182,7 +184,8 @@ $(document).ready(function() {
 	$('.method_selection').show();
   $('.instructions').hide();
 
-  completedVisible();
+  toggleVisible('completed');
+  toggleVisible('exchange_method');
 
   $(document).on('click', '#file_complaint', function() {
     $('.selection').hide();

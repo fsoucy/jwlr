@@ -1,13 +1,9 @@
 <h3>Both parties have issued a complaint about the current deal. You can either remove your complaint now or communicate directly with iGold administration.</h3>
-<% if current_user.id == @deal.buyer_id %>
-  <%= form for @deal do |f| %>
+<%= form for @deal do |f| %>
+  <% if current_user.id == @deal.buyer_id %>
     <%= f.hidden_field :complaint_buyer, value: false %>
-    <%= f.submit "Complaint resolved", class: "pure-button pure-button-primary remove_complaint_button" %>    
+  <% else %>
+    <%= f.hidden_field :complaint_seller, value: false %>    
   <% end %>
-<% elsif current_user.id == @deal.seller_id %>
-  <%= form for @deal do |f| %>
-    <%= f.hidden_field :complaint_seller, value: false %>
-    <%= f.submit "Complaint resolved", class: "pure-button pure-button-primary remove_complaint_button" %>
-  <% end %>
-
+  <%= f.submit "Complaint resolved", class: "pure-button pure-button-primary remove_complaint_button" %>    
 <% end %>

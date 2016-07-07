@@ -29,7 +29,7 @@
         <h3>Your location for delivery: <%= @deal.dropoff %></h3>
       <% end %>
       <%= form_for @deal do |f| %>
-        <h3>Dropoff location: <%= f.text_field :dropoff %> <%= f.submit "Change delivery location", class: "pure-button pure-button-primary dropoff_location" %></h3>
+        <h3>Delivery location: <%= f.text_field :dropoff %> <%= f.submit "Change delivery location", class: "pure-button pure-button-primary dropoff_location" %></h3>
       <% end %>
       <%= form_for @deal do |f| %>
         <%= f.hidden_field :exchange_agreement_buyer, value: true %>
@@ -63,4 +63,5 @@
       <% end %>
     <% end %>
   <% end %>
+  <a href="<%= deal_url(@deal) %>" data-method="delete" data-confirm="Are you sure you would like to cancel this deal?"><button class="pure-button button-error">Cancel Deal</button></a>
 <% end %>

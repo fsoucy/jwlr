@@ -182,19 +182,23 @@ $(document).ready(function() {
 	}
 
 	$('.method_selection').show();
-  $('.instructions').hide();
+  $('.instructions').show();
 
   toggleVisible('completed');
   toggleVisible('exchange_method');
 
   $(document).on('click', '#file_complaint', function() {
+    $('.instructions').hide();
     $('.selection').hide();
     $('.complaint_selection').show();
   });
 
   $(document).on('click', '#cancel_complaint', function() {
     $('.selection').show();
+    $('.instructions').show();
     $('.complaint_selection').hide();
+    toggleVisible('completed');
+    toggleVisible('exchange_method');
   });
   
 	$(document).on('click', '.not_ready', function (e) {

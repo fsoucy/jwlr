@@ -1,6 +1,6 @@
 <h3>Submit this form if you would like to file a complaint and temporarily suspend the deal.</h3>
  <%= form_for @deal do |f| %>
-  <% if current_user.id == @deal.seller_id %>
+  <% if current_user.id == @deal.buyer_id %>
     <%= f.hidden_field :complaint_buyer, value: true %>
     <%= f.text_area :reason_complaint_buyer, placeholder: 'Cite a reason for your complaint', class: "full_width_text" %>
   <% else %>

@@ -271,7 +271,7 @@ $(document).ready(function() {
 	$(document).on('click', '.file_complaint_button', function (e) {
 		e.preventDefault();
 		var postLoc = getPostLoc();
-		updateDeals(postLoc, $(this).parent('form'), function () {
+    updateDeals(postLoc, $(this).parent('form'), function () {
 			var id = getDealId();
       $('.deals_form').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function () {});
 		});
@@ -282,7 +282,10 @@ $(document).ready(function() {
 		var postLoc = getPostLoc();
 		updateDeals(postLoc, $(this).parent('form'), function () {
 			var id = getDealId();
-      $('.deals_form').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function () {});
+      $('.deals_form').load(window.location.protocol + "//" + window.location.host + '/deals/' + id.toString() + " .large_deals_form", function () {
+        toggleVisible('completed');
+        toggleVisible('exchange_method');
+      });
 		});
 
 	});

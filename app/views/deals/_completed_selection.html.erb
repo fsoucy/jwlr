@@ -1,30 +1,29 @@
 <!-- this is where it's at -->
 <% if @deal.agreement_achieved %>
-  <button class="pure-button button-error margin-bottom" id="file_complaint">File Complaint</button>
   <% if !@deal.deal_complete %>
     <% if @deal.payment_complete && @deal.product_received %> <!-- Confirm successful deal. -->
       <% if current_user.id == @deal.seller_id %>
         <% if !@deal.seller_satisfied %>
           <%= form_for @deal do |f| %>
             <%= f.hidden_field :seller_satisfied, value: true %>
-            <%= f.submit "Confirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
+            <%= f.submit "Confirm successful deal", class: "pure-button pure-button-primary deals_form_button" %>
           <% end %>
         <% else %>
           <%= form_for @deal do |f| %>
             <%= f.hidden_field :seller_satisfied, value: false %>
-            <%= f.submit "Unconfirm successful deal.", class: "pure-button button-error deals_form_button" %>
+            <%= f.submit "Unconfirm successful deal", class: "pure-button button-error deals_form_button" %>
           <% end %>
         <% end %>
       <% elsif current_user.id == @deal.buyer_id %>
         <% if !@deal.buyer_satisfied %>
           <%= form_for @deal do |f| %>
             <%= f.hidden_field :buyer_satisfied, value: true %>
-            <%= f.submit "Confirm successful deal.", class: "pure-button pure-button-primary deals_form_button" %>
+            <%= f.submit "Confirm successful deal", class: "pure-button pure-button-primary deals_form_button" %>
           <% end %>
         <% else %>
           <%= form_for @deal do |f| %>
             <%= f.hidden_field :buyer_satisfied, value: false %>
-            <%= f.submit "Unconfirm successful deal.", class: "pure-button button-error deals_form_button" %>
+            <%= f.submit "Unconfirm successful deal", class: "pure-button button-error deals_form_button" %>
           <% end %>
         <% end %>
       <% end %>
@@ -149,9 +148,10 @@
   <!-- Review stuff -->
     <% review = @deal.reviews.where("user_id = ?", current_user.id).first %>
     <% if review.nil? && @deal.deal_complete %>
-      <%= link_to "Leave a review of this deal", new_review_url(@deal) %>
+      <a href="<%= new_review_url(@deal) %>"><button class="pure-button pure-buttom-primary margin-bottom">Leave a review of this deal</button></a>
+      <br>
     <% end %>
 
   <% end %>
-
+  <button class="pure-button button-error margin-bottom" id="file_complaint">File Complaint</button>
 <% end %>

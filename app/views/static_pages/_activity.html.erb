@@ -1,4 +1,8 @@
+<% if (current_user?(activity.seller) and activity.status(true)[1]) or (current_user?(activity.buyer) and activity.status(false)[1]) %>
+<div class="activity_index_page activity_action_needed">
+<% else %> 
 <div class="activity_index_page">
+<% end %>
   <a href="<%= deal_url(activity.id) %>">
   <% if current_user?(activity.seller) %>    
     <p><%= image_tag activity.product.pictures.first.photo_cropped(:thumbnail) %>Selling to <%= activity.buyer.name %>
@@ -16,6 +20,13 @@
   <% end %>
   <br>
   <%= time_ago_in_words(activity.updated_at) + " ago" %>
+  <% if current_user?(activity.seller) %>
+    <br>
+    <%= activity.status(true)[0] %>
+  <% elsif current_user?(activity.buyer) %>
+    <br>
+    <%= activity.status(false)[0] %>
+  <% end %>
   </p>
   </a>
 </div>

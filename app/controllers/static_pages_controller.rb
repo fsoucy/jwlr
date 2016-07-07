@@ -2,9 +2,19 @@ class StaticPagesController < ApplicationController
 
   def home
     if logged_in?
-      @activities = []
-      @activities += current_user.selling_deals.order(updated_at: :desc).where(deal_complete: false)
-      @activities += current_user.buying_deals.order(updated_at: :desc).where(deal_complete: false)
+      all_activities = []
+      all_activities += current_user.selling_deals.order(updated_at: :desc).where(deal_complete: false)
+      all_activities += current_user.buying_deals.order(updated_at: :desc).where(deal_complete: false)
+      action_needed = []
+      not_action_needed = []
+      all_activities.each do |activity|
+        if (current_user?(activity.seller) and activity.status(true)[1]) or (current_user?(activity.buyer) and activity.status(false)[1])
+          action_needed.append(activity)
+        else
+          not_action_needed.append(activity)
+        end
+      end
+      @activities = action_needed + not_action_needed
     end
     
     @top_products = Product.joins(:productviews).order('productviews.views DESC').limit(9)

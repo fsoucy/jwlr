@@ -116,12 +116,12 @@ function updateDeals(location, form, completion) {
 
 function redirectToPage() {
 	$('.valid_delivery').remove();
-	var page = parseInt($('#page').val());
+	/*var page = parseInt($('#page').val());
 	if (page == 1) {
 	} else if (page == 2) {
 	} else if (page == 3) {
 	} else if (page == 4) {
-  }
+  }*/
 }
 
 function getCurrentPage() {
@@ -181,7 +181,7 @@ function refreshDeals() {
 		url : window.location.protocol + "//" + window.location.host + "/deals/" + id.toString() + "/updated_at",
 		success : function (result) {
 			if (result > updated_at) {
-				refreshAll();
+				refreshAll(function(){});
 			}
 		}
 	});
@@ -210,8 +210,7 @@ function getPostLoc() {
 // if not right page, add special button "Lost?"
 // all that button does is call redirectToPage()
 
-$(document).ready(function () {
-
+$(document).ready(function() {
 	if ($('#on_the_deals_page').length > 0 && parseInt($('#on_the_deals_page').val()) == 1) //on deals
 	{
 		// refresh deals panel on an interval

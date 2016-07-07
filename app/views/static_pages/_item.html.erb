@@ -112,7 +112,11 @@
                 <h3>
                   <%= link_to "Your deal on #{item.product.title}", item %>
                 </h3>
-                <%= image_tag item.product.pictures.first.photo_cropped(:thumb) %>
+                <% if !item.product.main_picture_id.nil? %>
+                  <%= image_tag item.product.pictures.find(item.product.main_picture_id).photo_cropped(:thumb), class: "product_image pure-img" %>
+                <% else %>
+                  <%= image_tag item.product.pictures.first.photo_cropped(:thumb), class: "product_image pure-img" %>
+                <% end %>
                 <p>
                   Current status: 
                   <% if item.deal_complete %>

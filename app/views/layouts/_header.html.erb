@@ -6,10 +6,6 @@
         <ul class="pure-menu-children">
           <% if logged_in? %>
             <li class="pure-menu-item o_drop"><%= link_to "Upload Product", new_product_path, class: 'pure-menu-link' %></li>
-            <li class="pure-menu-item o_drop"><%= link_to "My Selling Deals", selling_user_path(current_user), class: 'pure-menu-link' %></li>
-            <li class="pure-menu-item o_drop"><%= link_to "My Buying Deals", buying_user_path(current_user), class: 'pure-menu-link' %></li>
-            <li class="pure-menu-item o_drop"><%= link_to "Messages", conversations_path, class: 'pure-menu-link' %></li>
-            <li class="pure-menu-item o_drop"><%= link_to "Groups", groups_path, class: 'pure-menu-link' %></li>
             <li class="pure-menu-item o_drop"><%= link_to "Users Index", users_path, class: 'pure-menu-link' %></li>
             <li class="pure-menu-item o_drop"><%= link_to "Stores Index", stores_path, class: 'pure-menu-link' %></li>
             <li class="pure-menu-item"><%= link_to "Profile", current_user, class: 'pure-menu-link' %></li>
@@ -31,24 +27,6 @@
           <ul class="pure-menu-children">
             <li class="pure-menu-item"><%= link_to "Users", users_path, class: 'pure-menu-link' %></li>
             <li class="pure-menu-item"><%= link_to "Stores", stores_path, class: 'pure-menu-link' %></li>
-          </ul>
-        </li>
-      </ul>
-      <ul class="pure-menu-list top-menu-dropdown other_dropdown">
-        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-          <a href="#" class="pure-menu-link">Network</a>
-          <ul class="pure-menu-children">
-            <li class="pure-menu-item"><%= link_to "Messages", conversations_path, class: 'pure-menu-link' %></li>
-            <li class="pure-menu-item"><%= link_to "Groups", groups_path, class: 'pure-menu-link' %></li>
-          </ul>
-        </li>
-      </ul>
-      <ul class="pure-menu-list top-menu-dropdown other_dropdown">
-        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-          <a href="#" class="pure-menu-link">Deals</a>
-          <ul class="pure-menu-children">
-            <li class="pure-menu-item"><%= link_to "Selling", selling_user_path(current_user), class: 'pure-menu-link' %></li>
-            <li class="pure-menu-item"><%= link_to "Buying", buying_user_path(current_user), class: 'pure-menu-link' %></li>
           </ul>
         </li>
       </ul>

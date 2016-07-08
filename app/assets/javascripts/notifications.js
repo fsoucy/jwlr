@@ -1,19 +1,25 @@
+
+
+
 $(document).ready(function() {
     $('.notification').hover(function() {
 
 	if ($(this).children('.read').length > 0)
 	{
-	    console.log('read');
 	}
 	else
 	{
-	    var str = $(this).children('.edit_notification').children('.n\
+	    var str = $(this).children('.notification_seen').children('.n\
 otification_id').val();
-	    var place = '/users/2/notifications/' + str;
-	    $.post(place, $(this).children('form').serialize());
-	    $(this).children('p').removeClass("not_read").addClass("read");
-	    $(this).removeClass('notification_not_read').addClass('notification_read');
+	    var place = '/users/' + $('#user_id').val() + '/notifications/' + str;
+	    $.post(place, $(this).children('.notification_seen').serialize());
 	}
+    });
+
+    $('.notification a').click(function(e) {
+	var str = $(this).parent().siblings('.notification_viewed').children('.notification_id').val();
+	var place = '/users/' + $('#user_id').val() + '/notifications/' + str;
+	$.post(place, $(this).parent().siblings('.notification_viewed').serialize());
     });
 
     $('.read').parent('.notification').addClass('notification_read');

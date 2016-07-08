@@ -15,7 +15,7 @@ class NotificationsController < ApplicationController
 
   private
     def notification_params
-      params.require(:notification).permit(:read)
+      params.require(:notification).permit(:read, :viewed)
     end
 
     def correct_user

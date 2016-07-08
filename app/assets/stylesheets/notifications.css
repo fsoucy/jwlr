@@ -4,24 +4,41 @@
     width: auto;
     padding: 1em;
     margin: 1em;
+    border: 1px solid #002C2B;
 }
+
+.notification p
+{
+    color: #002C2B;
+}
+
+.notification a
+{
+    color: #E9B104;
+}
+
+.notification_not_read a:hover
+{
+    color: #FF3D00;
+}
+
 
 .notification_read
 {
-    border: 2px solid green;
+
 }
 
 .notification_not_read
 {
-    border: 2px solid red;
+    background-color: #0A837F;
 }
 
 .notification .read
 {
-    color: black;
+
 }
 
 .notification .not_read
 {
-    color: red;
+
 }

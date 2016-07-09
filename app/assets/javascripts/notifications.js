@@ -48,10 +48,14 @@ otification_id').val();
     });
     */
 
+    $('.close_notification').click(function() {
+	$(this).parent().remove();
+	displaceFlashNotifications();
+    });
+
     $('.sees_notification').click(function(e) {
 	var str = "#notification" + $(this).attr("id").substring("notification".length);
 	var $form = $(str);
-	debugger;
 	var place = '/users/' + $('#user_id').val() + '/notifications/' + $(this).attr("id").substring("notification".length);
 	$.post(place, $form.serialize());
     });

@@ -22,6 +22,30 @@ otification_id').val();
 	$.post(place, $(this).parent().siblings('.notification_viewed').serialize());
     });
 
+    /*
+    $('.sees_notification').click(function(e) {
+	var place = '/users/' + $('#user_id').val() + '/notifications/' + $(this).attr("id").substring("notification".length);
+	$.ajax({
+	    type: "POST",
+	    contentType: "application/json; charset=utf-8",
+	    url: window.location.protocol + "//" + window.location.host + place,
+	    data: {read: true},
+	    dataType: "json",
+	    success: function (result) {
+	    },
+	    error: function (e){
+	    }
+	});
+    });
+    */
+
+    $('.sees_notification').click(function(e) {
+	var str = "#notification" + $(this).attr("id").substring("notification".length);
+	var $form = $(str);
+	var place = '/users/' + $('#user_id').val() + '/notifications/' + $(this).attr("id").substring("notification".length);
+	$.post(place, $form.serialize());
+    });
+    
     $('.read').parent('.notification').addClass('notification_read');
     $('.not_read').parent('.notification').addClass('notification_not_read');
 });

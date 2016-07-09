@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707022028) do
+ActiveRecord::Schema.define(version: 20160708034459) do
 
   create_table "attribute_options", force: :cascade do |t|
     t.integer  "category_option_id"
@@ -246,6 +246,7 @@ ActiveRecord::Schema.define(version: 20160707022028) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean  "viewed"
+    t.string   "url"
   end
 
   create_table "payment_method_links", force: :cascade do |t|

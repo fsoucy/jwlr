@@ -1,3 +1,5 @@
+
+<%= hidden_field_tag :auth, form_authenticity_token %>
 <div class="header">
   <div class="top-menu pure-menu pure-menu-horizontal pure-menu-fixed">
     <ul class="pure-menu-list top-menu-dropdown">      
@@ -27,6 +29,35 @@
           <ul class="pure-menu-children">
             <li class="pure-menu-item"><%= link_to "Users", users_path, class: 'pure-menu-link' %></li>
             <li class="pure-menu-item"><%= link_to "Stores", stores_path, class: 'pure-menu-link' %></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="pure-menu-list top-menu-dropdown other_dropdown">
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+          <% count = current_user.notifications.where(read: false).count.to_s %>
+          <a href="#" class="pure-menu-link">Notifications <span id="unread_count"><%= count %></span></a>
+          <% notifications = current_user.notifications.order(created_at: :desc).where(read: false) %>
+          <% if notifications.count < 4 %>
+            <% notifications += current_user.notifications.order(created_at: :desc).where(read: true) %>
+          <% end %>
+          <% if notifications.count > 4 %>
+            <% notifications = notifications[0...4] %>
+          <% end %>
+          <%= hidden_field_tag :user_id, current_user.id %>
+          <ul class="pure-menu-children">
+            <% notifications.each do |note| %>
+              <% note_id = "notification" +  note.id.to_s %>
+              <%= form_for(note, html: {id: note_id, class: "note_form_header"}) do |f| %>
+                <%= f.hidden_field :read, value: true %>
+                <%= f.hidden_field :viewed, value: true %>
+              <% end %>
+              <% if note.read %>
+                <li class="pure-menu-item"><a href="<%= note.url %>" class="pure-menu-link sees_notification" id="<%= note_id %>"><%= truncate(note.message, length: 15) %></a></li>
+              <% else %>
+                <li class="pure-menu-item unread_notification"><a href="<%= note.url %>" class="pure-menu-link sees_notification" id="<%= note_id %>"><%= truncate(note.message, length: 15) %></a></li>
+              <% end %>
+            <% end %>
+            <li class="pure-menu-item"><%= link_to "See all", notifications_path(current_user), class: "pure-menu-link" %></li>
           </ul>
         </li>
       </ul>

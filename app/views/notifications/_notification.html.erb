@@ -1,9 +1,9 @@
 
 <div class="notification">
 <% if notification.viewed %>
-<p class="read"><%= notification.message.html_safe %><br>Posted <%= notification.created_at.strftime("%A") + ", " + notification.created_at.strftime("%m/%d/%y") + " " + notification.created_at.strftime("at %I:%M%p") %></p>
+<p class="read"><a href="<%= notification.url %>"><%= notification.message.html_safe %></a><br>Posted <%= notification.created_at.strftime("%A") + ", " + notification.created_at.strftime("%m/%d/%y") + " " + notification.created_at.strftime("at %I:%M%p") %></p>
 <% else %>
-<p class="not_read"><%= notification.message.html_safe %><br>Posted <%= notification.created_at.strftime("%A") + ", " + notification.created_at.strftime("%m/%d/%y") + " " + notification.created_at.strftime("at %I:%M%p") %></p>
+<p class="not_read"><a href="<%= notification.url %>"><%= notification.message.html_safe %></a><br>Posted <%= notification.created_at.strftime("%A") + ", " + notification.created_at.strftime("%m/%d/%y") + " " + notification.created_at.strftime("at %I:%M%p") %></p>
 <% end %>
 <%= form_for(notification, html: { class: "notification_seen"}) do |f| %>
 <%= f.hidden_field :read, :value => true %>

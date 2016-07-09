@@ -136,7 +136,7 @@
 }
 
 
-@media (min-width: 69em)
+@media (min-width: 60em)
 {
     .o_drop
     {
@@ -144,7 +144,7 @@
     }
 }
 
-@media (max-width: 69em)
+@media (max-width: 60em)
 {
     .other_dropdown
     {

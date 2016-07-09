@@ -42,3 +42,27 @@
 {
 
 }
+
+.note_form_header
+{
+    display: none !important;
+    margin: 0;
+    padding: 0;
+}
+
+.unread_notification a
+{
+    background-color: red;
+    color: white;
+}
+
+.unread_notification a:hover
+{
+    background-color: green !important;
+    color: white !important;
+}
+
+#unread_count
+{
+    color: red;
+}

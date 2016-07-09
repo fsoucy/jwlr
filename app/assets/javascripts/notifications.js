@@ -1,5 +1,14 @@
 
 
+function displaceFlashNotifications()
+{
+    var count = 0;
+    $('.flash_note').each(function(index, data) {
+	var distance = count * 120
+	$(this).css("margin-top", distance.toString() + "px");
+	count += 1;
+    });
+}
 
 $(document).ready(function() {
     $('.notification').hover(function() {
@@ -46,6 +55,7 @@ otification_id').val();
 	$.post(place, $form.serialize());
     });
     
+    displaceFlashNotifications();
     $('.read').parent('.notification').addClass('notification_read');
     $('.not_read').parent('.notification').addClass('notification_not_read');
 });

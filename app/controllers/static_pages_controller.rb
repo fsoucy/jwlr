@@ -38,6 +38,8 @@ class StaticPagesController < ApplicationController
       if @notifications.count > 4
         @notifications = @notifications[0...4]
       end
+
+      @note = current_user.notifications.last
     end
     
     @top_products = Product.joins(:productviews).order('productviews.views DESC').limit(9)

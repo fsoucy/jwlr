@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'api/getLikes'
   get 'api/getChildrenCategories'
   get 'api/getUsers'
+  get 'api/getUnreadNotifications'
   
   root 'static_pages#home'
   get 'help' =>  'static_pages#help'

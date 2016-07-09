@@ -5,10 +5,11 @@
   <% flash_noties = flash_noties[0..4] if (flash_noties.count > 4) %>
   <% flash_noties.each do |flash| %>
     <div class="flash_note">
-      <% note_id = "notification" +  flash.id.to_s %>
-      <a href="<%= flash.url %>" class="sees_notification" id="<%= note_id %>"><%= flash.message %></a>
+      <% note_id = "notification_flash" +  flash.id.to_s %>
+      <% close_id = "notification_close" + flash.id.to_s %>
+      <a href="<%= flash.url %>" class="sees_notification_flash" id="<%= note_id %>"><%= flash.message %></a>
       <h4><%= time_ago_in_words(flash.created_at) %> ago</h4>
-      <h4 class="close_notification">Close</h4> 
+      <h4 class="close_notification sees_notification_close" id="<%= close_id %>">Close</h4> 
     </div>
   <% end %>
   <div class="pure-g pad-box">

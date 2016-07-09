@@ -1,5 +1,7 @@
 class ApiController < ApplicationController
-  
+  require 'action_view'
+  require 'action_view/helpers'
+  include ActionView::Helpers::DateHelper
   def getUsers
     search = User.search do
       fulltext params[:search_string] do
@@ -12,6 +14,13 @@ class ApiController < ApplicationController
     end
     
     result = search.results.map{|e| {id: e.id, name: e.name, profile_picture: e.profile_picture(:thumbnail), following: current_user.following?(e)}}
+    render json: result.to_json, status: 200
+  end
+
+  def getUnreadNotifications
+    user = User.find_by(id: params[:user_id])
+    notifications = current_user.notifications.where(read: false).order(created_at: :desc)
+    result = notifications.map{ |n| {id: n.id, message: n.message, url: n.url, time_ago: time_ago_in_words(n.created_at)}}
     render json: result.to_json, status: 200
   end
 

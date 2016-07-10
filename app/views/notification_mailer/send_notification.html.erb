@@ -6,7 +6,7 @@
   <body>
     <h1>New notification from igold.com, <%= @notification.user.name %></h1>
     <p>
-      <%= @notification.message.html_safe %>
+      <a href="<%= @notification.url %>"><%= @notification.message.html_safe %></a>
     </p>
   </body>
 </html>

@@ -6,5 +6,9 @@ class Notification < ActiveRecord::Base
     super(options)
   end
 
+  def send_notification_email
+    NotificationMailer.send_notification(self).deliver_now
+  end
+
 end
 

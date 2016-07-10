@@ -126,7 +126,7 @@ otification_id').val();
     */
 
     $('.close_notification').click(function() {
-	$(this).parent().remove();
+	$(this).parent().hide();
 	displaceFlashNotifications();
     });
 

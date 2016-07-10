@@ -5,6 +5,6 @@ module NotificationsHelper
     note.url = url
     notification.read = false
     notification.save
-    NotificationMailer.send_notification(notification).deliver_now
+    notification.send_notification_email
   end
 end

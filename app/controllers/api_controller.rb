@@ -1,7 +1,9 @@
 class ApiController < ApplicationController
+
   require 'action_view'
   require 'action_view/helpers'
   include ActionView::Helpers::DateHelper
+
   def getUsers
     search = User.search do
       fulltext params[:search_string] do

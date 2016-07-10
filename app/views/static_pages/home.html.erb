@@ -1,6 +1,7 @@
 <% if !logged_in? %>
   <%= render partial: "logged_out" %>
 <% else %>
+  <div class="flash_notifications">
   <% flash_noties = current_user.notifications.where(read: false).order(created_at: :desc) %>
   <% flash_noties = flash_noties[0..4] if (flash_noties.count > 4) %>
   <% flash_noties.each do |flash| %>
@@ -12,6 +13,7 @@
       <h4 class="close_notification sees_notification_close" id="<%= close_id %>">Close</h4> 
     </div>
   <% end %>
+  </div>
   <div class="pure-g pad-box">
     <div class="pure-u-1 pure-u-md-1-4 fixed">
       <%= image_tag current_user.profile_picture(:thumb) %>

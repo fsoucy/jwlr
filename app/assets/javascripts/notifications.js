@@ -103,14 +103,26 @@ otification_id').val();
 
     $('.notification a').click(function(e) {
 	var str = $(this).parent().siblings('.notification_viewed').children('.notification_id').val();
-	var place = '/users/' + $('#user_id').val() + '/notifications/' + str;
-	console.log(place);
-	$.post(place, $(this).parent().siblings('.notification_viewed').serialize());
+	var place = '/users/' + $('#user_id').val() + '/notifications/' + str + '?';
+	debugger;
+	$.ajax({
+	    type: "POST",
+	    contentType: "application/json; charset=utf-8",
+	    url: window.location.protocol + "//" + window.location.host + place,
+	    data: {read: true, viewed: true},
+	    dataType: "json",
+	    success: function (result) {
+	    },
+	    error: function (e){
+	    }
+	});   
     });
+
 
     /*
     $('.sees_notification').click(function(e) {
 	var place = '/users/' + $('#user_id').val() + '/notifications/' + $(this).attr("id").substring("notification".length);
+	debugger;
 	$.ajax({
 	    type: "POST",
 	    contentType: "application/json; charset=utf-8",
@@ -130,12 +142,14 @@ otification_id').val();
 	displaceFlashNotifications();
     });
 
+    
     $('.sees_notification').click(function(e) {
 	var str = "#notification" + $(this).attr("id").substring("notification".length);
 	var $form = $(str);
 	var place = '/users/' + $('#user_id').val() + '/notifications/' + $(this).attr("id").substring("notification".length);
 	$.post(place, $form.serialize());
     });
+    
 
     $('.sees_notification_flash').click(function(e) {
 	var str = "#note_drop" + $(this).attr("id").substring("notification_flash".length);

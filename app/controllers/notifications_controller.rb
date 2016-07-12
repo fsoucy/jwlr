@@ -4,6 +4,7 @@ class NotificationsController < ApplicationController
   before_action :correct_user_notification, only: [:update]
 
   def update
+    debugger
     notification = Notification.find(params[:id])
     notification.update_attributes(notification_params)
     redirect_to notifications_path(notification.user)
@@ -15,7 +16,7 @@ class NotificationsController < ApplicationController
 
   private
     def notification_params
-      params.require(:notification).permit(:read)
+      params.require(:notification).permit(:read, :viewed)
     end
 
     def correct_user

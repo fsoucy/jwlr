@@ -37,6 +37,12 @@ class ConversationsController < ApplicationController
     conversations_normal = Conversation.where('second_user_id = ? OR first_user_id = ?', current_user.id, current_user.id).order(updated_at: :desc).all
     @conversations = conversations_group + conversations_normal
     @conversations = @conversations.sort_by{ |convo| -convo.updated_at.to_time.to_i }
+    pertinent_notifications = Notification.where("url=? AND user_id=?", request.original_url, current_user.id)
+    pertinent_notifications.each do |n|
+      n.read = true
+      n.viewed = true
+      n.save
+    end
   end
 
   def conversations_index

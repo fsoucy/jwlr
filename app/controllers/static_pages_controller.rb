@@ -33,6 +33,13 @@ class StaticPagesController < ApplicationController
         end
       end
       @activities = action_needed + not_action_needed
+
+      @notifications = current_user.notifications.order(updated_at: :desc)
+      if @notifications.count > 4
+        @notifications = @notifications[0...4]
+      end
+
+      @note = current_user.notifications.last
     end
     
     @top_products = Product.joins(:productviews).order('productviews.views DESC').limit(9)

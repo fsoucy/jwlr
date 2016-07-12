@@ -1,3 +1,42 @@
+.flash_note
+{
+    display: block;
+    width: 30%;
+    margin-left: 35%;
+    margin-right: 35%;
+    height: auto;
+    background-color: green;
+    border: 1px solid white;
+    z-index: 1;
+    position: absolute;
+    padding: 1em;
+    min-height: 70px;
+    max-height: 118px;
+}
+
+.flash_note a
+{
+    color: white;
+    text-decoration: none;
+}
+
+.flash_note a:hover
+{
+    color: blue;
+}
+
+.flash_note h4
+{
+    margin: 0;
+}
+
+.close_notification
+{
+    cursor: pointer;
+    margin-top: 2px;
+    color: red;
+}
+
 .activity_action_needed p
 {
     border: 5px solid red !important;

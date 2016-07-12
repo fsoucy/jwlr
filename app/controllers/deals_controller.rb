@@ -159,6 +159,12 @@ class DealsController < ApplicationController
     start = 0 if start < 0
     @messages = @conversation.messages[(start)..last]
     @msg = @conversation.messages.build
+    pertinent_notifications = Notification.where("url=? AND user_id=?", request.original_url, current_user.id)
+    pertinent_notifications.each do |n|
+      n.read = true
+      n.viewed = true
+      n.save
+    end
   end
 
   def destroy

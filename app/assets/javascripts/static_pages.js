@@ -1,3 +1,6 @@
+
+
+
 $.fn.followTo = function(elem) {
     var $this = this,
         $window = $(window),
@@ -51,8 +54,7 @@ function urlify(text) {
 $(document).ready(function(){
 
   //Have the footer scroll when it collides with the sidebars
-  $('.fixed').followTo('.footer');
-
+    $('.fixed').followTo('.footer');
 
   // disable auto discover
   Dropzone.autoDiscover = false;

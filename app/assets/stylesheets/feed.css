@@ -5,6 +5,8 @@
   background-color: #efefef;
   padding: 1em;
   margin: 0.5em;
+  position: relative;
+  z-index: 2;
 }
 
 .feed_item img {

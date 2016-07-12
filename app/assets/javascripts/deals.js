@@ -154,7 +154,7 @@ function refreshAll(completion) {
 function refreshDeals() {
 	var id = getDealId();
 	var updated_at = parseInt($('#updated_at').val());
-	$.ajax({
+  $.ajax({
 		type : "GET", // GET in place of POST
 		url : window.location.protocol + "//" + window.location.host + "/deals/" + id.toString() + "/updated_at",
 		success : function (result) {
@@ -172,7 +172,7 @@ function getPostLoc() {
 }
 
 $(document).ready(function() {
-	if ($('#on_the_deals_page').length > 0 && parseInt($('#on_the_deals_page').val()) == 1) //on deals
+	if($('#on_the_deals_page').length > 0 && parseInt($('#on_the_deals_page').val()) == 1) //on deals
 	{
 		// refresh deals panel on an interval
 		window.dealsInterval = setInterval(refreshDeals, 3000);

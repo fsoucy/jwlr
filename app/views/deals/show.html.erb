@@ -4,6 +4,7 @@
     <%= hidden_field_tag :on_the_deals_page, 1 %>
     <div class="marg deals_form">
       <div class="large_deals_form">
+        <%= hidden_field_tag :updated_at, @deal.updated_at.to_i %>
         <% if !@deal.complaint_buyer && !@deal.complaint_seller %>
 	        <div class="instructions log-in-form">
             <div class="inner_instructions">

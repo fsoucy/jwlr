@@ -2,7 +2,7 @@ module NotificationsHelper
   def new_notification(message, user, url)
     notification = user.notifications.build
     notification.message = message
-    note.url = url
+    notification.url = url
     notification.read = false
     notification.save
     notification.send_notification_email

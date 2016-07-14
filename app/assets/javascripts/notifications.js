@@ -85,6 +85,34 @@ function getNewNotifications()
     });
 }
 
+function notificationSeen(urlLocation)
+{
+    $.ajax({
+	url: urlLocation,
+	type: "PATCH",
+	context: this,
+	data: {notification: {read: true}},
+	success: function (result) {
+	},
+	error: function (e){
+	}
+    });
+}
+
+function notificationViewed(urlLocation)
+{
+    $.ajax({
+	url: urlLocation,
+	type: "PATCH",
+	context: this,
+	data: {notification: {read: true, viewed: true}},
+	success: function (result) {
+	},
+	error: function (e){
+	}
+    });
+}
+
 $(document).ready(function() {
     window.interval3 = setInterval(getNewNotifications, 10000);
     $('.notification').hover(function() {
@@ -94,48 +122,20 @@ $(document).ready(function() {
 	}
 	else
 	{
-	    var str = $(this).children('.notification_seen').children('.n\
-otification_id').val();
+	    var str = $(this).children(".notification_id").val();
 	    var place = '/users/' + $('#user_id').val() + '/notifications/' + str;
-	    $.post(place, $(this).children('.notification_seen').serialize());
+	    notificationSeen(place);
 	}
     });
 
     $('.notification a').click(function(e) {
+	e.preventDefault();
 	var str = $(this).parent().siblings('.notification_viewed').children('.notification_id').val();
-	var place = '/users/' + $('#user_id').val() + '/notifications/' + str + '?';
-	debugger;
-	$.ajax({
-	    type: "POST",
-	    contentType: "application/json; charset=utf-8",
-	    url: window.location.protocol + "//" + window.location.host + place,
-	    data: {read: true, viewed: true},
-	    dataType: "json",
-	    success: function (result) {
-	    },
-	    error: function (e){
-	    }
-	});   
+	var place = '/users/' + $('#user_id').val() + '/notifications/' + str;
+	notificationViewed(place);
+	window.location.href = $(this).attr('href');
     });
 
-
-    /*
-    $('.sees_notification').click(function(e) {
-	var place = '/users/' + $('#user_id').val() + '/notifications/' + $(this).attr("id").substring("notification".length);
-	debugger;
-	$.ajax({
-	    type: "POST",
-	    contentType: "application/json; charset=utf-8",
-	    url: window.location.protocol + "//" + window.location.host + place,
-	    data: {read: true},
-	    dataType: "json",
-	    success: function (result) {
-	    },
-	    error: function (e){
-	    }
-	});
-    });
-    */
 
     $('.close_notification').click(function() {
 	$(this).parent().hide();
@@ -147,30 +147,33 @@ otification_id').val();
 	var str = "#notification" + $(this).attr("id").substring("notification".length);
 	var $form = $(str);
 	var place = '/users/' + $('#user_id').val() + '/notifications/' + $(this).attr("id").substring("notification".length);
-	$.post(place, $form.serialize());
+	notificationViewed(place);
     });
     
 
     $('.sees_notification_flash').click(function(e) {
+	e.preventDefault();
 	var str = "#note_drop" + $(this).attr("id").substring("notification_flash".length);
 	var $form = $(str);
 	var place = '/users/' + $('#user_id').val() + '/notifications/' + $(this).attr("id").substring("notification_flash".length);
-	console.log(place);
-	$.post(place, $form.serialize());
+	notificationViewed(place);
+	window.location.href = $(this).attr('href');
     });
 
     $('.sees_notification_close').click(function(e) {
 	var str = "#note_drop" + $(this).attr("id").substring("notification_close".length);
 	var $form = $(str);
 	var place = '/users/' + $('#user_id').val() + '/notifications/' + $(this).attr("id").substring("notification_close".length);
-	$.post(place, $form.serialize());
+	notificationViewed(place);
     });
 
     $('.sees_notification_drop').click(function(e) {
+	e.preventDefault();
 	var str = "#note_drop" + $(this).attr("id").substring("notification_drop".length);
 	var $form = $(str);
 	var place = '/users/' + $('#user_id').val() + '/notifications/' + $(this).attr("id").substring("notification_drop".length);
-	$.post(place, $form.serialize());
+	notificationViewed(place);
+	window.location.href = $(this).attr('href');
     });
     
     displaceFlashNotifications();

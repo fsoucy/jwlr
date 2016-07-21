@@ -69,12 +69,10 @@
 
 .product {
   vertical-align: top;
-  display: inline-block;
   text-align: left;
   border: 0.15em solid #00171F;
   border-radius: 0.5em;
   background-color: #efefef;
-  margin: 1em;
   box-shadow: 5px 5px 20px 5px #888888;
 }
 

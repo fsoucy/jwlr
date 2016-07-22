@@ -6,7 +6,8 @@ class NotificationsController < ApplicationController
   def update
     notification = Notification.find(params[:id])
     notification.update_attributes(notification_params)
-    redirect_to notifications_path(notification.user)
+    #redirect_to notifications_path(notification.user)
+    render json: nil, status: 200
   end
 
   def index

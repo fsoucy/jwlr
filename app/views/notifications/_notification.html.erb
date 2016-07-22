@@ -5,14 +5,6 @@
 <% else %>
 <p class="not_read"><a href="<%= notification.url %>"><%= notification.message.html_safe %></a><br>Posted <%= notification.created_at.strftime("%A") + ", " + notification.created_at.strftime("%m/%d/%y") + " " + notification.created_at.strftime("at %I:%M%p") %></p>
 <% end %>
-<%= form_for(notification, html: { class: "notification_seen"}) do |f| %>
-<%= f.hidden_field :read, :value => true %>
-<%= f.hidden_field :id, value: notification.id, class: 'notification_id' %>
-<% end %>
-
-<%= form_for(notification, html: { class: "notification_viewed"}) do |f| %>
-  <%= f.hidden_field :viewed, :value => true %>
-  <%= f.hidden_field :id, value: notification.id, class: "notification_id" %>
-<% end %>
+<%= hidden_field_tag :id, notification.id, {class: "notification_id"} %>
 </div>
 

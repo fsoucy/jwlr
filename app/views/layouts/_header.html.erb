@@ -48,10 +48,6 @@
             <% notifications.each do |note| %>
               <% note_id = "notification_drop" +  note.id.to_s %>
               <% form_id = "note_drop" + note.id.to_s %>
-              <%= form_for(note, html: {id: form_id, class: "note_form_header"}) do |f| %>
-                <%= f.hidden_field :read, value: true %>
-                <%= f.hidden_field :viewed, value: true %>
-              <% end %>
               <% if note.read %>
                 <li class="pure-menu-item read_notification"><a href="<%= note.url %>" class="pure-menu-link sees_notification_drop" id="<%= note_id %>"><%= truncate(note.message, length: 15) %></a></li>
               <% else %>

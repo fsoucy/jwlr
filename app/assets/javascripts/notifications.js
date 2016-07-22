@@ -8,7 +8,7 @@ function addUnreadToFlash(dict)
 	{
 	    console.log('should add it');
 	    var content = "<div class='flash_note'><a href='" + dict["url"] + "' class='sees_notification_flash' id='notification_flash" + dict["id"] + "'>" +
-		dict["message"] + "</a>\n<h4>" + dict["time_ago"] + " ago</h4>\n<h4 class='close_notification sees_notification_close' id='notification_close'" +
+		dict["message"] + "</a>\n<h4>" + dict["time_ago"] + " ago</h4>\n<h4 class='close_notification sees_notification_close' id='notification_close" +
 		dict["id"] + "'>Close</h4>\n</div>";
 	    $('.flash_notifications').append(content);
 	}
@@ -137,7 +137,7 @@ $(document).ready(function() {
     });
 
 
-    $('.close_notification').click(function() {
+    $(document).on('click', '.close_notification', function(e) {
 	$(this).parent().hide();
 	displaceFlashNotifications();
     });
@@ -149,9 +149,8 @@ $(document).ready(function() {
 	var place = '/users/' + $('#user_id').val() + '/notifications/' + $(this).attr("id").substring("notification".length);
 	notificationViewed(place);
     });
-    
 
-    $('.sees_notification_flash').click(function(e) {
+    $(document).on('click', '.sees_notification_flash', function(e) {
 	e.preventDefault();
 	var str = "#note_drop" + $(this).attr("id").substring("notification_flash".length);
 	var $form = $(str);
@@ -160,14 +159,18 @@ $(document).ready(function() {
 	window.location.href = $(this).attr('href');
     });
 
-    $('.sees_notification_close').click(function(e) {
+    $(document).on('click', '.sees_notification_close', function(e) {
 	var str = "#note_drop" + $(this).attr("id").substring("notification_close".length);
 	var $form = $(str);
 	var place = '/users/' + $('#user_id').val() + '/notifications/' + $(this).attr("id").substring("notification_close".length);
+	var currentCount = parseInt($('#unread_count').text()) - 1;
+	$('#unread_count').text(currentCount.toString());
+	var dropId = "#notification_drop" + $(this).attr("id").substring("notification_close".length);
+	$(dropId).parent().removeClass("unread_notification").addClass("read_notification");
 	notificationViewed(place);
     });
 
-    $('.sees_notification_drop').click(function(e) {
+    $(document).on('click', '.sees_notification_drop', function(e) {
 	e.preventDefault();
 	var str = "#note_drop" + $(this).attr("id").substring("notification_drop".length);
 	var $form = $(str);

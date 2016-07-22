@@ -15,7 +15,7 @@ gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
-gem 'turbolinks'
+gem 'turbolinks', '2.5.3'
 gem 'jbuilder'     
 gem 'sdoc', group: :doc
 gem 'therubyracer',  platforms: :ruby

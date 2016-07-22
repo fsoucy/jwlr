@@ -150,6 +150,8 @@ class Product < ActiveRecord::Base
     boolean :confirmed
     time :created_at    
     integer :category_id
+    integer :user_id
+    integer :store_id
   end
 
   private

@@ -8,6 +8,10 @@
     </p>
   <% else %>
     <div class="pure-u-1">
+      <%= will_paginate @buying %>
+    </div>
+
+    <div class="pure-u-1">
       <table class="pure-table pure-table-striped">
         <thead>
           <tr>
@@ -23,6 +27,10 @@
           <%= render @buying %>
         </tbody>
       </table>
+    </div>
+
+    <div class="pure-u-1">
+      <%= will_paginate @buying %>
     </div>
   <% end %>
 </div>

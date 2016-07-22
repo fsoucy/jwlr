@@ -1,3 +1,10 @@
+$(document).on('click', '#search_all', function() {
+  var dict = parseURL(window.location.href);
+  delete dict["user_id"];
+  delete dict["store_id"];
+  window.location.href = dictToURL(dict);  
+});
+
 $(document).on('click', '#back', function() {
     window.history.back();
 });
@@ -69,7 +76,6 @@ function dictToURL(dict)
     var hash = generateHash(dict);
     var base = window.location.protocol + "//" + window.location.host + "/search?utf8=%E2%9C%93";
     var str = base + hash;
-    debugger;
     return replaceAll(str, " ", "+");
 }
 
@@ -156,6 +162,16 @@ function elementsToDict()
     var commit = {};
     commit["commit"] = ["Search"];
     var dict = $.extend(stringToDict(), commit, sortByToDict(), checkboxToDict(), listsToDict(), priceToDict());
+    debugger;
+    var oldUrl = parseURL(window.location.href);
+    if(typeof(oldUrl["user_id"]) != "undefined")
+    {
+      dict["user_id"] = oldUrl["user_id"];
+    }
+    if(typeof(oldUrl["store_id"]) != "undefined")
+    {
+      dict["store_id"] = oldUrl["store_id"];
+    }
     return dict;
 }
 
@@ -216,7 +232,6 @@ function listsFromDict(dict)
     {
 	for (var i = 0; i < dict["attr"].length; i++)
 	{
-	    debugger;
 	    var thing = "." + dict["attr"][i];
 	    thing = thing.replace(" ", "_");
 	    $(thing).siblings('.attr_long').css('display', 'block').addClass("attr_active");

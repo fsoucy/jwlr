@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment, :share, :show, :wishlist, :save_product, :edit_description, :edit_address, :change_profile_picture, :new_picture, :pictures, :reset_password]
-  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment, :share, :save_product, :edit_description, :edit_address, :change_profile_picture, :new_picture, :pictures, :reset_password]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :selling, :buying, :completed, :follow, :like, :comment, :share, :show, :wishlist, :save_product, :edit_description, :edit_address, :change_profile_picture, :new_picture, :pictures, :reset_password, :followers, :following]
+  before_action :correct_user, only: [:edit, :update, :selling, :buying, :completed, :like, :comment, :share, :save_product, :edit_description, :edit_address, :change_profile_picture, :new_picture, :pictures, :reset_password, :followers, :following]
   before_action :admin_user, only: :destroy  
   
   def new
@@ -8,7 +8,20 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all.paginate(page: params[:page], per_page: 30)
+    if !params[:search_string].present?
+      @users = User.all.paginate(page: params[:page], per_page: 30)
+    else
+      search = User.search do
+        fulltext params[:search_string] do
+        end        
+        with :activated, true
+        order_by :score, :desc
+        order_by_geodist :location, current_user.latitude, current_user.longitude
+        paginate :page => params[:page], :per_page => 30
+      end
+
+      @users = search.results
+    end
   end
 
   def new_picture
@@ -160,11 +173,11 @@ class UsersController < ApplicationController
   end
 
   def selling
-    @selling = Deal.where("seller_id=?", params[:id])
+    @selling = Deal.where("seller_id=?", params[:id]).order(updated_at: :desc).paginate(page: params[:page], per_page: 30)
   end
 
   def buying
-    @buying = Deal.where("buyer_id=?", params[:id])
+    @buying = Deal.where("buyer_id=?", params[:id]).order(updated_at: :desc).paginate(page: params[:page], per_page: 30)
   end
 
   def follow
@@ -225,7 +238,7 @@ class UsersController < ApplicationController
   end
 
   def wishlist
-    @saved_products = current_user.saved_products.all
+    @saved_products = current_user.saved_products.all.paginate(page: params[:page], per_page: 30)
   end
 
   def save_product
@@ -246,6 +259,14 @@ class UsersController < ApplicationController
         render json: nil, status: 200
       end
     end
+  end
+
+  def followers
+    @users = current_user.followers.all.paginate(page: params[:page], per_page: 30)
+  end
+
+  def following
+    @users = current_user.following.all.paginate(page: params[:page], per_page: 30)
   end
 
   private

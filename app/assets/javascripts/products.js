@@ -455,7 +455,7 @@ $(document).ready(function () {
 		$(this).parent().siblings().children("img").removeClass('pic_active');
 		$(this).addClass('pic_active');
 
-		$(this).parent().siblings(".magnifier").children('.product_image').attr('src', smallImage.replace('thumbnail', 'medium'));
+		$(this).parent().siblings(".magnifier").children('.product_image').attr('src', smallImage.replace('thumbnail', 'large'));
 		$(this).parent().siblings('.product_edit').attr('href', smallLink);
 		$(this).parent().siblings(".product_delete").attr('href', deleteLink);
 		var picLink = $(this).siblings('.mag_link').val();

@@ -32,11 +32,20 @@ function generateDropdownItem(dict)
 function addUnreadToDropdown(dict)
 {
     var id = "#notification_drop" + dict["id"];
+    var flashId = "#notification_flash" + dict["id"];
     if (($('.read_notification').length == 0) || (($(id).length > 0) && $(id).parent().hasClass('unread_notification')))
     {
 	//do nothing
 	console.log(id);
 	console.log('nothing');
+	if ($(flashId).length == 0)
+	{
+	    addUnreadToFlash(dict);
+	    displaceFlashNotifications();
+	    var count = parseInt($('#unread_count').text());
+	    console.log("plus one");
+	    $('#unread_count').text((count + 1).toString());
+	}
     }
     else
     {

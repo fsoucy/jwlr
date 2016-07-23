@@ -116,13 +116,13 @@ function notificationViewed(urlLocation)
 $(document).ready(function() {
     window.interval3 = setInterval(getNewNotifications, 10000);
     $('.notification').hover(function() {
-
+	var str = "";
 	if ($(this).children('.read').length > 0)
 	{
 	}
 	else
 	{
-	    var str = $(this).children(".notification_id").val();
+	    str = $(this).children(".notification_id").val();
 	    var place = '/users/' + $('#user_id').val() + '/notifications/' + str;
 	    notificationSeen(place);
 	}

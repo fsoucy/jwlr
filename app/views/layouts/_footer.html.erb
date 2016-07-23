@@ -25,3 +25,6 @@
     </div>
   </div>
 </div>
+<% logged_in? %>
+  <%= hidden_field_tag user_id, current_user.id %>
+<% end %>

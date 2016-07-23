@@ -70,10 +70,11 @@ function displaceFlashNotifications()
 
 function getNewNotifications()
 {
+    var user_id = $('#user_id').val();
     $.ajax({
 	type: "GET",// GET in place of POST
 	contentType: "application/json; charset=utf-8",
-	url: window.location.protocol + "//" + window.location.host + "/api/getUnreadNotifications?user_id=2",
+	url: window.location.protocol + "//" + window.location.host + "/api/getUnreadNotifications?user_id=" + user_id,
 	data: {},
 	dataType: "json",
 	success: function (result) {

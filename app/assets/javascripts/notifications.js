@@ -133,7 +133,7 @@ $(document).ready(function() {
 	    $('#unread_count').text(unread.toString());
 	}
 	var thing = "#notification_drop" + str;
-	$(thing).removeClass("unread_notification").addClass("read_notification");
+	$(thing).parent().removeClass("unread_notification").addClass("read_notification");
 	
 	
     });

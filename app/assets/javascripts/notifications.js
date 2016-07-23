@@ -138,7 +138,7 @@ $(document).ready(function() {
 
 
     $(document).on('click', '.close_notification', function(e) {
-	$(this).parent().hide();
+	$(this).parent().remove();
 	displaceFlashNotifications();
     });
 

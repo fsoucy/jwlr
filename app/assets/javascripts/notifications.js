@@ -31,6 +31,7 @@ function generateDropdownItem(dict)
 
 function addUnreadToDropdown(dict)
 {
+    debugger;
     var id = "#notification_drop" + dict["id"];
     var flashId = "#notification_flash" + dict["id"];
     if (($('.read_notification').length == 0) || (($(id).length > 0) && $(id).parent().hasClass('unread_notification')))

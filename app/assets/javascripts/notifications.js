@@ -126,6 +126,16 @@ $(document).ready(function() {
 	    var place = '/users/' + $('#user_id').val() + '/notifications/' + str;
 	    notificationSeen(place);
 	}
+	var unseen = $('#unread_count').text()
+	var unread = parseInt(unseen) - 1
+	if (unread >= 0)
+	{
+	    $('#unread_count').text(unread.toString());
+	}
+	var thing = "#notification_drop" + str;
+	$(thing).removeClass("unread_notification").addClass("read_notification");
+	
+	
     });
 
     $('.notification a').click(function(e) {

@@ -180,6 +180,7 @@ $(document).ready(function() {
 	$(dropId).parent().removeClass("unread_notification").addClass("read_notification");
 	notificationViewed(place);
 	displaceFlashNotifications();
+	debugger;
     });
 
     $(document).on('click', '.sees_notification_drop', function(e) {

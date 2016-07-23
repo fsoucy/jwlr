@@ -174,9 +174,9 @@ class DealsController < ApplicationController
     deal.product.save
     deal.destroy
     if deal.seller == current_user
-      new_notification("Your deal on " + deal.product.title + " has been cancelled by the seller.", deal.buyer, deal_url(deal))
+      new_notification("Your deal on " + deal.product.title + " has been cancelled by the seller.", deal.buyer, product_url(deal.product))
     else
-      new_notification("Your deal on " + deal.product.title + " has been cancelled by the buyer.", deal.seller, deal_url(deal))
+      new_notification("Your deal on " + deal.product.title + " has been cancelled by the buyer.", deal.seller, product_url(deal.product))
     end
     redirect_to deal.product
   end

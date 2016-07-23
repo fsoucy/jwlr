@@ -167,7 +167,7 @@
                 <button id="<%= "commentForm_" + item.class.to_s + "_" + item.id.to_s + "_" + current_user.id.to_s %>" class="align-right pure-button pure-button-primary">Comment</button>
               </fieldset>
               </form>
-              <div id="commentsBox_#{item.class}_#{item.id}_#{current_user.id}" class="comments_box">
+              <div id="commentsBox_<%= item.class %>_<%= item.id %>_<%= current_user.id %>" class="comments_box">
                 <div id="likesListLarge" class="large_likes_list">
                   <% item.likes.each do |like| %>                    <div class="like">
                       <%= image_tag like.user.profile_picture(:thumbnail), class: "pure-img" %>
@@ -214,7 +214,7 @@
                           <% end %>
                           <%= link_to pluralize(comment.likes.count, "Like"), '', id: "likes_#{comment.class}_#{comment.id}_#{current_user.id}" %>
                         </p>
-                        <ul id="likesList_#{item.class}_#{item.id}_#{current_user.id}" class="likes_list">
+                        <ul id="likesList_<%= item.class %>_<%= item.id %>_<%= current_user.id %>" class="likes_list">
                           <% comment.likes.each do |like| %>
                             <li><%= like.user.name %></li>
                           <% end %>
@@ -223,7 +223,7 @@
                     <% end %>
                   </div>
               </div>
-              <ul id="likesList_#{item.class}_#{item.id}_#{current_user.id}" class="likes_list">
+              <ul id="likesList_<%= item.class %>_<%= item.id %>_<%= current_user.id %>" class="likes_list">
                 <% item.likes.each do |like| %>
                   <li><%= like.user.name %></li>
                 <% end %>

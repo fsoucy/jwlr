@@ -168,6 +168,7 @@ $(document).ready(function() {
 	var dropId = "#notification_drop" + $(this).attr("id").substring("notification_close".length);
 	$(dropId).parent().removeClass("unread_notification").addClass("read_notification");
 	notificationViewed(place);
+	displaceFlashNotifications();
     });
 
     $(document).on('click', '.sees_notification_drop', function(e) {

@@ -1,6 +1,3 @@
-
-
-
 $.fn.followTo = function(elem) {
     var $this = this,
         $window = $(window),
@@ -168,7 +165,8 @@ $(document).on('mouseenter', 'a[id*=likes_]', function(event) {
       {
         $(this).parent().siblings("ul[id*=likesList_]").append("<li>" + data[i].name  + "</li>");
       }
-      $(this).parent().siblings("ul[id*=likesList_]").css({left: event.pageX, top: event.pageY});
+      var position = $(this).position();
+      $(this).parent().siblings("ul[id*=likesList_]").css({left: position.left, top: position.top});
       $(this).parent().siblings("ul[id*=likesList_]").show();
     }
   }});

@@ -447,7 +447,8 @@ $(document).ready(function () {
 
 	productFromGallery();
 	$('#product_redirect_pictures').val('0');
-	$('.cropped_show').click(function () {
+	$('.cropped_show').click(function (event) {
+    event.preventDefault();
 		var smallImage = $(this).attr('src');
 		var smallLink = $(this).siblings('.pathway').val();
 		var deleteLink = $(this).siblings('.delete_pathway').val();
@@ -455,7 +456,7 @@ $(document).ready(function () {
 		$(this).parent().siblings().children("img").removeClass('pic_active');
 		$(this).addClass('pic_active');
 
-		$(this).parent().siblings(".magnifier").children('.product_image').attr('src', smallImage.replace('thumbnail', 'medium'));
+		$(this).parent().siblings(".magnifier").children('.product_image').attr('src', smallImage.replace('thumbnail', 'large'));
 		$(this).parent().siblings('.product_edit').attr('href', smallLink);
 		$(this).parent().siblings(".product_delete").attr('href', deleteLink);
 		var picLink = $(this).siblings('.mag_link').val();
@@ -712,8 +713,8 @@ $(document).ready(function () {
 	});
 
 	$('.magnifier').loupe({
-		width : 1500, // width of magnifier
-		height : 1500, // height of magnifier
+		width : 300, // width of magnifier
+		height : 300, // height of magnifier
 		loupe : 'loupe' // css class for magnifier
 	});
 	$('#dropper').hide();

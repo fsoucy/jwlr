@@ -94,13 +94,14 @@ Rails.application.configure do
 }  
 
   config.paperclip_defaults = {
-  storage: :s3,
-  s3_protocol: :https,
-  s3_credentials: {
-    bucket: "igoldstorage",
-    access_key_id: "AKIAISZUVDB4O5PVVNOQ",
-    secret_access_key: "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",
+    storage: :s3,
+    s3_protocol: :https,
+    s3_credentials: {
+      bucket: "igoldstorage",
+      access_key_id: "AKIAISZUVDB4O5PVVNOQ",
+      secret_access_key: "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",
+    },
+    s3_region: "us-east-1"
   }
-}
 
 end

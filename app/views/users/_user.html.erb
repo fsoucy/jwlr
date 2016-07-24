@@ -1,6 +1,6 @@
 <div class="pure-u-1 pure-u-md-1-3 pure-u-lg-1-5">
   <div class="product">
-    <%= link_to image_tag(user.profile_picture(:thumb)), user %>
+    <%= link_to image_tag(user.profile_picture(:thumb), class: "pure-img"), user %>
     <div class="product-info">
       <%= link_to user.name, user %>
       <h3>Products sold: <%= Deal.where("seller_id=? AND deal_complete=?", user.id, true).count %></h3>

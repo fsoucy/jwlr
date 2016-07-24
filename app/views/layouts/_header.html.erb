@@ -38,10 +38,7 @@
           <a href="#" class="pure-menu-link">Notifications <span id="unread_count"><%= count %></span></a>
           <% notifications = current_user.notifications.order(created_at: :desc).where(read: false) %>
           <% if notifications.count < 4 %>
-            <% notifications += current_user.notifications.order(created_at: :desc).where(read: true) %>
-          <% end %>
-          <% if notifications.count > 4 %>
-            <% notifications = notifications[0...4] %>
+            <% notifications += current_user.notifications.order(created_at: :desc).where(read: true)[0..(4 - notifications.count)] %>
           <% end %>
           <%= hidden_field_tag :user_id, current_user.id %>
           <ul class="pure-menu-children notifications_dropdown">

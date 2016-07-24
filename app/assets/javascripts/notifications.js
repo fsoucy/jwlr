@@ -24,6 +24,7 @@ function generateDropdownItem(dict)
 	{
 	    message = message.substring(0, 12) + "...";
 	}
+	console.log(message);
 	return "<li class='pure-menu-item unread_notification'><a href='" + dict["url"] + "' class='pure-menu-link sees_notification_drop' id='notification_drop" + dict["id"]
 	    + "'>" + message + "</a></li>";
     }
@@ -31,40 +32,24 @@ function generateDropdownItem(dict)
 
 function addUnreadToDropdown(dict)
 {
-    debugger;
-    var id = "#notification_drop" + dict["id"];
-    var flashId = "#notification_flash" + dict["id"];
-    if (($('.read_notification').length == 0) || (($(id).length > 0) && $(id).parent().hasClass('unread_notification')))
+    // if not there in unread form, prepend to dropdown, make flash notification, counter should be number of unread_notification
+    var drop = "#notification_drop" + dict["id"];
+    if ($(drop).length == 0)
     {
-	//do nothing
-	console.log(id);
-	console.log('nothing');
-	if ($(flashId).length == 0)
-	{
-	    addUnreadToFlash(dict);
-	    displaceFlashNotifications();
-	    var count = parseInt($('#unread_count').text());
-	    console.log("plus one");
-	    $('#unread_count').text((count + 1).toString());
-	}
-    }
-    else
-    {
-	console.log(id);
-	if ($(id).length > 0)
-	{
-	    $(id).remove();
-	}
-	else
-	{
-	    $('.read_notification').last().remove();
-	}
 	$('.notifications_dropdown').prepend(generateDropdownItem(dict));
-	var count = parseInt($('#unread_count').text());
-	console.log("plus one");
-	$('#unread_count').text((count + 1).toString());
 	addUnreadToFlash(dict);
 	displaceFlashNotifications();
+	var count = $('.unread_notification').length.toString()
+	$('#unread_count').text(count);
+    }
+    else if (!($(drop).parent().hasClass("unread_notification")))
+    {
+	$(drop).parent().remove();
+	$('.notifications_dropdown').prepend(generateDropdownItem(dict));
+	addUnreadToFlash(dict);
+	displaceFlashNotifications();
+	var count = $('.unread_notification').length.toString()
+	$('#unread_count').text(count);
     }
 }
 
@@ -90,8 +75,13 @@ function getNewNotifications()
 	success: function (result) {
 	    for (var i = 0; i < result.length; i++)
 	    {
-		addUnreadToDropdown(result[i]);
+		var d = new Date(result[i]["updated_at"]);
+		if (d > window.notificationsUpdatedAt)
+		{
+		    addUnreadToDropdown(result[i]);
+		}
 	    }
+	    window.notificationsUpdatedAt = new Date();
 	},
     });
 }
@@ -125,6 +115,7 @@ function notificationViewed(urlLocation)
 }
 
 $(document).ready(function() {
+    window.notificationsUpdatedAt = new Date();
     window.interval3 = setInterval(getNewNotifications, 10000);
     $('.notification').hover(function() {
 	var str = "";
@@ -190,7 +181,6 @@ $(document).ready(function() {
 	$(dropId).parent().removeClass("unread_notification").addClass("read_notification");
 	notificationViewed(place);
 	displaceFlashNotifications();
-	debugger;
     });
 
     $(document).on('click', '.sees_notification_drop', function(e) {

@@ -22,7 +22,7 @@ class ApiController < ApplicationController
   def getUnreadNotifications
     user = User.find_by(id: params[:user_id])
     notifications = current_user.notifications.where(read: false).order(created_at: :desc)
-    result = notifications.map{ |n| {id: n.id, message: n.message, url: n.url, time_ago: time_ago_in_words(n.created_at)}}
+    result = notifications.map{ |n| {id: n.id, message: n.message, url: n.url, time_ago: time_ago_in_words(n.created_at), updated_at: n.updated_at}}
     render json: result.to_json, status: 200
   end
 

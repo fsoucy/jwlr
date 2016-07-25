@@ -2,7 +2,7 @@ $.fn.followTo = function(elem) {
     var $this = this,
         $window = $(window),
         $bumper = $(elem),
-        bumperPos = $bumper.offset().top - 300,
+        bumperPos = $bumper.offset().top,
         thisHeight = $this.outerHeight(true),
         setPosition = function(){
             if($window.width() < 768)
@@ -14,7 +14,7 @@ $.fn.followTo = function(elem) {
             }
             else
             {
-              bumperPos = $bumper.offset().top - 300;
+              bumperPos = $bumper.offset().top;
               thisHeight = $this.outerHeight(true);
               if($window.scrollTop() > (bumperPos - thisHeight)) {
                 $this.css({
@@ -33,7 +33,7 @@ $.fn.followTo = function(elem) {
         };
     $window.resize(function()
     {
-        bumperPos = $bumper.offset().top - 300;
+        bumperPos = $bumper.offset().top;
         thisHeight = $this.outerHeight(true);
         setPosition();
     });

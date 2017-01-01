@@ -107,14 +107,11 @@ $(document).ready(function(){
     
     //$('#image').cropper('rotate', -90)
     
-    $('.modal-body').mouseup(function () {
-	updateCropper();
-    });
 
-    $(document).on('touchend', '.modal-body', function() {
+    $('.modal-body').click(function () {
 	updateCropper();
     });
-    
+  
     $('#rotate_ccw').click(function() {
 	$('#image').cropper('rotate', -90);
 	var angle = parseInt($('#rotate').val()) - 90;

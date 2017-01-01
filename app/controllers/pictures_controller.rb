@@ -114,7 +114,7 @@ class PicturesController < ApplicationController
     @picture.photo_cropped = File.open(img.path)
     @picture.photo_cropped.reprocess!
     @picture.save
-    
+    byebug
     if params[:main_picture] == "1"  and @picture.post.class.name == "Product"
       @picture.post.main_picture_id = @picture.id
       @picture.post.save

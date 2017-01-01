@@ -9,15 +9,15 @@ production:
 
 development:
   solr:
-    hostname: localhost
-    port: 9069
+    hostname: ec2-54-88-80-66.compute-1.amazonaws.com
+    port: 8983
     log_level: INFO
     path: /solr/development
 
 test:
   solr:
     hostname: localhost
-    port: 8981
+    port: 8983
     log_level: WARNING
     path: /solr/test
     

@@ -40,8 +40,12 @@ Rails.application.configure do
   
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :test
-  host = 'localhost:3000'
+  host = 'http://ec2-54-88-80-66.compute-1.amazonaws.com' # change from localhost:3000
   config.action_mailer.default_url_options = { host: host }
+
+  # Paperclip config:
+  Paperclip.options[:image_magick_path] = "/opt/ImageMagick/bin"
+  Paperclip.options[:command_path] = "/opt/ImageMagick/bin"
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

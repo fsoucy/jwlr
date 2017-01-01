@@ -5,10 +5,10 @@
       <fieldset>
         <legend>Sign Up</legend>
         <%= render 'shared/error_messages', object: f.object %>
-
-        <%= f.label :profile_picture, "Upload Profile Picture" %>
-        <%= f.file_field :profile_picture, :required => true %>
       
+	<%= f.label :profile_picture, "Upload Profile Picture" %>
+        <%= f.file_field :profile_picture, :required => true %>
+
         <%= f.text_field :name, placeholder: 'Your name', :required => true %>
 
         <%= f.email_field :email, placeholder: 'Email', :required => true  %>

@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   validates :full_street_address, presence: true
   has_secure_password
   has_many :notifications, dependent: :destroy
-  has_many :statuses, dependent: :destroy
+  #has_many :statuses, dependent: :destroy
   has_many :products, dependent: :destroy
 
   has_many :default_selling_method_links, dependent: :destroy

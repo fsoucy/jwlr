@@ -79,25 +79,25 @@ Rails.application.configure do
 
   #config.action_mailer.raise_delivery_errors = true
   #config.action_mailer.delivery_method = :sendmail
-  host = 'aws.igold.com'
+  host = 'aws.jwlr.com' # TODO
   #config.action_mailer.default_url_options = { host: host }
 
   config.action_mailer.delivery_method = :smtp
   #host = 'limitless-earth-5876.herokuapp.com'
   config.action_mailer.default_url_options = { host: host }
   ActionMailer::Base.smtp_settings = {
-    :address        => 'mail.igold.com',
+    :address        => 'mail.jwlr.com', # TODO
     :port           => '587',
-    :user_name      => "noreply@igold.com",
+    :user_name      => "noreply@jwlr.com", # TODO
     :password       => "Con10t$d",
-    :domain         => 'igold.com',
+    :domain         => 'jwlr.com', # TODO
 }  
 
   config.paperclip_defaults = {
     storage: :s3,
     s3_protocol: :https,
     s3_credentials: {
-      bucket: "igoldstorage",
+      bucket: "jwlrstorage", # TODO
       access_key_id: "AKIAISZUVDB4O5PVVNOQ",
       secret_access_key: "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",
     },

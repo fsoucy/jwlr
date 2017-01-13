@@ -24,7 +24,7 @@ production:
   <<: *default
   adapter: 'mysql2'
   password: 'jfumkEQkJRaqhmY9Xs8jtYCy'
-  database: 'igold'
-  username: 'igold'
-  host: 'igold.cskmooh2lg23.us-east-1.rds.amazonaws.com'
+  database: 'jwlr'
+  username: 'jwlrTODO'
+  host: 'jwlr.cskmooh2lg23.us-east-1.rds.amazonaws.com'
 

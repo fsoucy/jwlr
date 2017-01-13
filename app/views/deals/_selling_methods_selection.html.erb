@@ -8,7 +8,7 @@
 <% else %>
 <% if current_user.id == @deal.buyer_id %>
 <h3>Listed price: <%= number_to_currency(@deal.product.price) %></h3>
-<!--<h3>iGold's suggested value for premium users</h3>-->
+<!--<h3>jwlr's suggested value for premium users</h3>-->
 <%= form_for @deal, html: {class: 'price_submission' }  do |f| %>
 <%= hidden_field_tag :min_price, value: @deal.product.min_accepted_price, id: "minimum_price" %>
 <h3>Offered price: <%= number_to_currency(@deal.user_proposed_price) %></h3> 

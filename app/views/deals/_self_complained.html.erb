@@ -1,4 +1,4 @@
-<h3>You have filed a complaint about this deal. You have the option to get in contact with iGold administration or remove your complaint (if satisfied).</h3>
+<h3>You have filed a complaint about this deal. You have the option to get in contact with jwlr administration or remove your complaint (if satisfied).</h3>
 <%= form_for @deal do |f| %>
   <% if current_user.id == @deal.buyer_id %>
     <%= f.hidden_field :complaint_buyer, value: false %>

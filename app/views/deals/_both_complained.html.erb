@@ -1,4 +1,4 @@
-<h3>Both parties have issued a complaint about the current deal. You can either remove your complaint now or communicate directly with iGold administration.</h3>
+<h3>Both parties have issued a complaint about the current deal. You can either remove your complaint now or communicate directly with jwlr administration.</h3>
 <%= form for @deal do |f| %>
   <% if current_user.id == @deal.buyer_id %>
     <%= f.hidden_field :complaint_buyer, value: false %>

@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   after_validation :geocode
   has_many :conversations, class_name: "Conversation", foreign_key: "first_user_id", dependent: :destroy
   has_many :conversations, class_name: "Conversation", foreign_key: "second_user_id", dependent: :destroy
-  has_many :messages, class_name: "Message", foreign_key: "sender", dependent: :destroy
+  #has_many :messages, class_name: "Message", foreign_key: "sender", dependent: :destroy
   has_many :buying_deals, class_name: "Deal", foreign_key: "buyer_id", dependent: :destroy
   has_many :selling_deals, class_name: "Deal", foreign_key: "seller_id", dependent: :destroy
   has_attached_file :profile_picture, :convert_options => { :medium => '-gravity center -crop 300x300+0+0', :thumb => '-gravity center -crop 200x200+0+0', :thumbnail => '-gravity center -crop 50x50+0+0', :all => '-strip -quality 100 -alpha remove -background white' }, :styles => { :medium => ["300x300^", :png], :thumb => ["200x200^", :png], :thumbnail => ["50x50^", :png] }, default_url: "/assets/missing_:style.jpg"

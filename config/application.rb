@@ -24,7 +24,7 @@ module IGold
   
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do
-        origins 'igold.ws'
+        origins 'jwlr.ws' # TODO
         resource '/search_suggestions', :headers => :any, :methods => [:get, :options]
         resource '/conversations/*', :headers => :any, :methods => [:get, :options]
       end

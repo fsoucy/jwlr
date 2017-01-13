@@ -45,7 +45,7 @@ class PaymentsController < ApplicationController
       http.use_ssl = true
       response = http.post(uri.request_uri, raw,
                          'Content-Length' => "#{raw.size}",
-                         'User-Agent' => "iGold payment processor"
+                         'User-Agent' => "jwlr payment processor"
                        ).body
   end
 end

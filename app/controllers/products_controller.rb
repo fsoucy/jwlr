@@ -3,6 +3,7 @@ class ProductsController < ApplicationController
   before_action :correct_user, only: [:destroy, :confirm_upload]
   after_action :pickup, only: [:create, :update]
   
+  # new comment
   def new
     @edit = false
     @selling_methods = SellingMethod.all
